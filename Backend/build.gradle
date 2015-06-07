@@ -1,0 +1,50 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'war'
+apply plugin: 'spring-boot'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.3.RELEASE")
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    compile("org.springframework.boot:spring-boot-starter-web") {
+        exclude module: "spring-boot-starter-tomcat"
+    }
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("org.springframework.boot:spring-boot-starter-jetty")
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+    compile("org.hibernate:hibernate-search-orm:5.2.0.Final")
+    compile("org.hibernate:hibernate-entitymanager:4.3.10.Final")
+   // compile("org.springframework.boot:spring-boot-starter-security")
+    runtime("org.postgresql:postgresql:9.4-1201-jdbc41")
+    testCompile("junit:junit")
+}
+
+war {
+    baseName = 'taxonomic-db'
+    version =  '0.1'
+}
+
+jar {
+    baseName = 'taxonomic-db-spring-boot'
+    version =  '0.1.0'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.3'
+}
