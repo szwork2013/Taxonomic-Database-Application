@@ -7,4 +7,4 @@ cd ./Taxonomic-Database-Application/Backend
 
 #Run the Rest API
 sudo chmod +x gradlew
-sudo ./gradlew bootRun --daemon
+sudo ./gradlew bootRun &
