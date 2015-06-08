@@ -8,6 +8,8 @@ sudo apt-get install -y git-core subversion curl
 sudo apt-get install -y unzip
 sudo apt-get install -y chkconfig
 
+sudo /vagrant/scripts/firewall_rules.sh
+
 #Install Java
 sudo /vagrant/scripts/java.sh
 
