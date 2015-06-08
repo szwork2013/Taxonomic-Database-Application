@@ -1,0 +1,17 @@
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+	config.vm.define "web", primary: true do |web|
+		web.vm.box = "precise64"
+    web.vm.box_url = "http://files.vagrantup.com/precise64.box"
+    web.vm.provision :shell, :path => "boostrap.sh"
+    web.vm.network :private_network, ip: '10.10.10.85'
+	end
+
+	config.vm.provider :virtualbox do |vb|
+		vb.customize ["modifyvm", :id, "--cpus", "2"]
+		vb.customize ["modifyvm", :id, "--memory", "2048"]
+	end
+
+end
