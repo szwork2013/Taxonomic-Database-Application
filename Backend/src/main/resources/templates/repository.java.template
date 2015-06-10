@@ -1,0 +1,6 @@
+package ${group}.repository;
+
+import com.unep.wcmc.model.${model};
+import org.springframework.data.repository.CrudRepository;
+
+public interface ${model}Repository extends CrudRepository<${model}, Long> {}

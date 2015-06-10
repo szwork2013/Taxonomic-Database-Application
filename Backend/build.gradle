@@ -3,6 +3,7 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'war'
 apply plugin: 'spring-boot'
+apply from: 'wcmc.gradle'
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
@@ -34,6 +35,7 @@ dependencies {
     runtime("org.postgresql:postgresql:9.4-1201-jdbc41")
     testCompile("junit:junit")
 }
+
 
 war {
     baseName = 'taxonomic-db'

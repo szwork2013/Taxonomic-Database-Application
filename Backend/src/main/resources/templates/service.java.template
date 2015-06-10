@@ -1,0 +1,41 @@
+package ${group}.service;
+
+
+import com.unep.wcmc.model.${model};
+import com.unep.wcmc.repository.${model}Repository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class ${model}Service implements BaseService<${model}> {
+
+    @Autowired
+    ${model}Repository ${model.toLowerCase()};
+
+    @Override
+    public ${model} save(${model} entity) {
+
+        return ${model.toLowerCase()}.save(entity);
+    }
+
+    @Override
+    public Iterable<${model}> list() {
+
+        return (List<${model}>) ${model.toLowerCase()}.findAll();
+    }
+
+    @Override
+    public Boolean delete(Long id) {
+        ${model.toLowerCase()}.delete(id);
+
+        return true;
+    }
+
+    @Override
+    public ${model} get(Long id) {
+
+        return ${model.toLowerCase()}.findOne(id);
+    }
+}

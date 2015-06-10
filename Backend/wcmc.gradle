@@ -1,0 +1,54 @@
+
+/**
+ * Commands for generate default classes
+ *
+ *
+ */
+def group = "com.unep.wcmc"
+def modelName = null
+
+task readLine(){
+
+    def console = System.console()
+
+    if (console) {
+        modelName = console.readLine('> Please enter your model name: ')
+        modelName = modelName.capitalize()
+    }
+}
+
+task model(type: Copy, dependsOn: readLine) {
+
+    from 'src/main/resources/templates'
+    into "src/main/java/com/unep/wcmc/model"
+    include 'model.java.template'
+    rename { file -> "${modelName.capitalize()}.java" }
+    expand(model: modelName, group: group)
+}
+
+task repository(type: Copy) {
+
+    from 'src/main/resources/templates'
+    into "src/main/java/com/unep/wcmc/repository"
+    include 'repository.java.template'
+    rename { file -> "${modelName.capitalize()}Repository.java" }
+    expand(model: modelName, group: group)
+}
+
+task service(type: Copy) {
+
+    from 'src/main/resources/templates'
+    into "src/main/java/com/unep/wcmc/service"
+    include 'service.java.template'
+    rename { file -> "${modelName.capitalize()}Service.java" }
+    expand(model: modelName, group: group)
+}
+
+task scaffold(type: Copy, dependsOn: [ model, repository, service]) {
+
+    from 'src/main/resources/templates'
+    into "src/main/java/com/unep/wcmc/controller"
+    include 'controller.java.template'
+    rename { file -> "${modelName.capitalize()}Controller.java" }
+    expand(model: modelName, group: group)
+}

@@ -1,0 +1,49 @@
+package ${group}.controller;
+
+import com.unep.wcmc.model.${model};
+import com.unep.wcmc.service.${model}Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/${model.toLowerCase()}")
+public class ${model}Controller {
+
+    @Autowired
+    ${model}Service ${model.toLowerCase()}Service;
+
+    @RequestMapping(method= RequestMethod.GET)
+    public List<${model}> index(){
+
+        return (List<${model}>) ${model.toLowerCase()}Service.list();
+    }
+
+    @RequestMapping(method= RequestMethod.POST)
+    public ${model} add(@RequestBody ${model} ${model.toLowerCase()}){
+
+        return ${model.toLowerCase()}Service.save(${model.toLowerCase()});
+    }
+
+    @RequestMapping(method= RequestMethod.PUT, value="{id}")
+    public ${model} edit(@RequestBody ${model} ${model.toLowerCase()}, @PathVariable String id){
+
+        ${model} obj = ${model.toLowerCase()}Service.get(Long.valueOf(id));
+
+        return ${model.toLowerCase()}Service.save(obj);
+    }
+
+    @RequestMapping(method= RequestMethod.GET, value="{id}")
+    public ${model} view(@PathVariable String id){
+
+        return ${model.toLowerCase()}Service.get(Long.valueOf(id));
+    }
+
+    @RequestMapping(method= RequestMethod.DELETE, value="{id}")
+    public void delete(@PathVariable String id){
+
+        ${model.toLowerCase()}Service.delete(Long.valueOf(id));
+    }
+}
+
