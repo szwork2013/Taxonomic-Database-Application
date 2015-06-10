@@ -12,4 +12,20 @@ public class PopulationTrend {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    private String populationSizeInBrazil;
+
+    private String percPopulationDecline;
+
+    private String declineReversibleAndCeased;
+
+    private String populationDeclinedBasedOn;
+
+    private String popDeclineJustification;
+
+    private String brazilPopulationSink;
+
+    private String extinctionProbabilityBrazil;
+
+    private String justificationExistinctProb;
+
 }

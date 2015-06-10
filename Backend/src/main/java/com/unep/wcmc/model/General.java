@@ -12,4 +12,16 @@ public class General {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    private String scientificName;
+
+    private String commonName;
+
+    private String coverMap;
+
+    private String coverPhoto;
+
+    private String icons;
+
+    private String extinctionRisk;
+
 }

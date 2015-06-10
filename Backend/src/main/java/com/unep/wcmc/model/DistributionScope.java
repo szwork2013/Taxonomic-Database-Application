@@ -12,4 +12,14 @@ public class DistributionScope {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    private boolean occursBrazil;
+
+    private boolean ocurranceProtectedAreas;
+
+    private boolean occurenceBiomes;
+
+    private boolean occurrenceRiverBasins;
+
+    private int otherRelevantAreas;
+
 }

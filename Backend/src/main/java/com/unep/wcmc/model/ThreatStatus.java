@@ -12,4 +12,18 @@ public class ThreatStatus {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    private String description;
+
+    private String municipality;
+
+    private String threat;
+
+    private String local;
+
+    private Long period;
+
+    private Long time;
+
+    private String trend;
+
 }

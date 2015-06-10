@@ -12,4 +12,14 @@ public class FeedingBehavior {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    private String trophicLevel;
+
+    private String eatingHabits;
+
+    private String expertSpecialist;
+
+    private String feedingAgregations;
+
+    private String eatingHabitsOtherComments;
+
 }

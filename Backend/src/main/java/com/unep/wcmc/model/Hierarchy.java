@@ -12,4 +12,20 @@ public class Hierarchy {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    private String kingdomName;
+
+    private String phylumName;
+
+    private String className;
+
+    private String orderName;
+
+    private String familyName;
+
+    private int genusName;
+
+    private String species;
+
+    private String subspecies;
+
 }

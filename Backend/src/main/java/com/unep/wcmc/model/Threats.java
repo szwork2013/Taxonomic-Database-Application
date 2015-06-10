@@ -12,4 +12,28 @@ public class Threats {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    private String populationAffected;
+
+    private String affectedArea;
+
+    private String descriptionImpact;
+
+    private String fishingScale;
+
+    private String fishingGrounds;
+
+    private String fishingPetrecho;
+
+    private String fishingEffort;
+
+    private String landingCatch;
+
+    private String cpue;
+
+    private String marketValue;
+
+    private String fishingTrend;
+
+    private String speciesResillience;
+
 }

@@ -12,4 +12,16 @@ public class ExtinctionRisk {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    private String nationalAssesConservStatus;
+
+    private String previousNationalAssessment;
+
+    private String reasonsForChange;
+
+    private String globalConservStatusAssess;
+
+    private String inNationalEndangeredFauna;
+
+    private String otherListsEndangeredSpecies;
+
 }

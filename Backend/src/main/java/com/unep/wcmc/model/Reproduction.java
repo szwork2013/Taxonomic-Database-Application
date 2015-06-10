@@ -6,18 +6,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Habitat {
+public class Reproduction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    private String habitat;
-
-    private String restrictedToPrimaryHabitats;
-
-    private String tolerantToHabitatMod;
-
-    private String variationInHabitatUse;
+    private int maximumSize;
 
 }
