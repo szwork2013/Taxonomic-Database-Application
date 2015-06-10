@@ -6,23 +6,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class ThreatStatus {
+public class Genus {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    private String description;
-
-    private String municipality;
-
-    private String threat;
-
-    private String local;
-
-    private Long period;
-
-    private Long time;
-
-    private String trend;
 }

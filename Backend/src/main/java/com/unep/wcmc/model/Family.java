@@ -3,29 +3,14 @@ package com.unep.wcmc.model;
 import javax.persistence.*;
 
 @Entity
-public class Hierarchy {
+public class Family {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @Column
-    private String kingdomName;
-
-    @Column
-    private Phylum phylum;
-
-    @Column
-    private String className;
-
-    @Column
-    private Order order;
-
-    @Column
-    private Family family;
-
-    @Column
-    private Genus genus;
+    private String name;
 
     public long getId() {
         return id;
@@ -35,5 +20,16 @@ public class Hierarchy {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString(){
+        return name;
+    }
 }

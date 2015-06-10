@@ -1,9 +1,6 @@
 package com.unep.wcmc.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Taxonomy {
@@ -12,9 +9,16 @@ public class Taxonomy {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @Column
     private String scientificName;
+
+    @Column
     private Integer speciesId;
+
+    @Column
     private Integer speciesPlusId;
+
+    @Embedded
     private Hierarchy hierarchy;
 
     public long getId() {

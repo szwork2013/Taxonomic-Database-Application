@@ -36,4 +36,5 @@ public class Threats {
 
     private String speciesResillience;
 
+    private ThreatStatus threatStatus;
 }
