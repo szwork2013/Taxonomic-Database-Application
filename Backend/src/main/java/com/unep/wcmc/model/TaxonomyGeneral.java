@@ -4,24 +4,25 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.List;
 
 @Entity
-public class General {
+public class TaxonomyGeneral {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    private String scientificName;
-
     private String commonName;
 
-    private String coverMap;
+    private Taxonomy taxonomy;
 
-    private String coverPhoto;
+    private Map coverMap;
 
-    private String icons;
+    private Image coverPhoto;
 
-    private String extinctionRisk;
+    private List<Image> icons;
+
+    private ExtinctionRisk extinctionRisk;
 
 }

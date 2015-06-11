@@ -1,29 +1,29 @@
 package com.unep.wcmc.service;
 
 
-import com.unep.wcmc.model.General;
-import com.unep.wcmc.repository.GeneralRepository;
+import com.unep.wcmc.model.TaxonomyGeneral;
+import com.unep.wcmc.repository.TaxonomyGeneralRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class GeneralService implements BaseService<General> {
+public class TaxonomyGeneralService implements BaseService<TaxonomyGeneral> {
 
     @Autowired
-    GeneralRepository general;
+    TaxonomyGeneralRepository general;
 
     @Override
-    public General save(General entity) {
+    public TaxonomyGeneral save(TaxonomyGeneral entity) {
 
         return general.save(entity);
     }
 
     @Override
-    public Iterable<General> list() {
+    public Iterable<TaxonomyGeneral> list() {
 
-        return (List<General>) general.findAll();
+        return (List<TaxonomyGeneral>) general.findAll();
     }
 
     @Override
@@ -34,7 +34,7 @@ public class GeneralService implements BaseService<General> {
     }
 
     @Override
-    public General get(Long id) {
+    public TaxonomyGeneral get(Long id) {
 
         return general.findOne(id);
     }

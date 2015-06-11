@@ -1,29 +1,29 @@
 package com.unep.wcmc.service;
 
 
-import com.unep.wcmc.model.Maps;
-import com.unep.wcmc.repository.MapsRepository;
+import com.unep.wcmc.model.Map;
+import com.unep.wcmc.repository.MapRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class MapsService implements BaseService<Maps> {
+public class MapService implements BaseService<Map> {
 
     @Autowired
-    MapsRepository maps;
+    MapRepository maps;
 
     @Override
-    public Maps save(Maps entity) {
+    public Map save(Map entity) {
 
         return maps.save(entity);
     }
 
     @Override
-    public Iterable<Maps> list() {
+    public Iterable<Map> list() {
 
-        return (List<Maps>) maps.findAll();
+        return (List<Map>) maps.findAll();
     }
 
     @Override
@@ -34,7 +34,7 @@ public class MapsService implements BaseService<Maps> {
     }
 
     @Override
-    public Maps get(Long id) {
+    public Map get(Long id) {
 
         return maps.findOne(id);
     }

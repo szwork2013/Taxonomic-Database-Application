@@ -5,18 +5,14 @@ import javax.persistence.*;
 @Entity
 public class Hierarchy {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-
     @Column
-    private String kingdomName;
+    private String kingdom;
 
     @Column
     private Phylum phylum;
 
     @Column
-    private String className;
+    private HierarchyClass hierarchyClass;
 
     @Column
     private Order order;
@@ -25,15 +21,8 @@ public class Hierarchy {
     private Family family;
 
     @Column
+    private Specie specie;
+
+    @Column
     private Genus genus;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-
 }
