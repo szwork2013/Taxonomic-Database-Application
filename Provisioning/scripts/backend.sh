@@ -2,7 +2,7 @@
 
 cd /opt
 
-git clone -b prod --single-branch https://github.com/unepwcmc/Taxonomic-Database-Application.git
+git clone -b prod https://github.com/unepwcmc/Taxonomic-Database-Application.git
 
 cd ./Taxonomic-Database-Application
 #Update script for new releases
