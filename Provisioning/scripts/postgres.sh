@@ -7,7 +7,7 @@ chkconfig postgresql on
 
 #Config the Server
 su - postgres -c "createdb taxonomic"
-su - postgres -c "psql -U postgres -d postgres -c \"alter user postgres with password 'postgres';\""
+su - postgres -c "psql -U postgres -d postgres -c \"alter user postgres with password ')fmK?jPeWhq6KMwm';\""
 
 sudo cp /vagrant/config/postgres/postgresql.conf /etc/postgresql/9.1/main/postgresql.conf
 sudo chown postgres:postgres /etc/postgresql/9.1/main/postgresql.conf

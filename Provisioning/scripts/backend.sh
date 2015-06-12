@@ -14,13 +14,9 @@ sudo chmod +x gradlew
 sudo ./gradlew build
 
 #Installing the backend application as Linux service
-#sudo cp /vagrant/config/spring-boot /etc/init.d/taxonomic-db
-#sudo chmod 755 /etc/init.d/taxonomic-db
-#sudo chkconfig --add taxonomic-db
-#sudo mkdir /var/log/taxonomic-db
-cd ./build/libs
-sudo link -s ./taxonomic-db-spring-boot-0.0.1.SNAPSHOT.jar /etc/init.d/taxonomic-db
+sudo cp /vagrant/config/spring-boot /etc/init.d/taxonomic-db
 sudo chmod 755 /etc/init.d/taxonomic-db
-sudo chkconfig --add taxonomic-db
+sudo update-rc.d taxonomic-db defaults
+sudo echo -e "\n\MODE=service" >> /etc/environment;
 
 service taxonomic-db start
