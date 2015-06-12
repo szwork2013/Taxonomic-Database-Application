@@ -21,5 +21,5 @@ sudo service wso2-esb start
 echo "Starting the backend REST API..."
 cd ./Backend
 sudo chmod +x ./gradlew
-sudo ./gradlew build
+sudo ./gradlew clean build
 sudo service taxonomic-db start
