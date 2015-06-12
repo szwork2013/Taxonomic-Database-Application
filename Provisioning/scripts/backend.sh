@@ -17,5 +17,6 @@ sudo ./gradlew build
 sudo cp /vagrant/config/spring-boot /etc/init.d/taxonomic-db
 sudo chmod 755 /etc/init.d/taxonomic-db
 sudo chkconfig --add taxonomic-db
+sudo mkdir /var/log/taxonomic-db
 
 service taxonomic-db start

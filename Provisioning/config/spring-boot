@@ -42,7 +42,8 @@ start() {
     echo -n $"Starting $PROJECT_NAME: "
 
     cd "$SPRINGBOOTAPP_HOME"
-    su $SERVICE_USER -c "nohup $SPRINGBOOTAPP_JAVA -jar \"$SPRINGBOOTAPP_WAR\"  >> \"$LOG\" 2>&1 &"
+    sudo nohup $SPRINGBOOTAPP_JAVA -jar \"$SPRINGBOOTAPP_WAR\" &
+    #su $SERVICE_USER -c "nohup $SPRINGBOOTAPP_JAVA -jar \"$SPRINGBOOTAPP_WAR\"  >> \"$LOG\" 2>&1 &"
 
     while { pid_of_spring_boot > /dev/null ; } &&
         ! { tail --lines=+$cnt "$LOG" | grep -q ' Started \S+ in' ; } ; do
