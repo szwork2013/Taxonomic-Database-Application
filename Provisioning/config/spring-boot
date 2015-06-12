@@ -4,7 +4,7 @@
 
 export JAVA_HOME=/usr/java/default
 export MODE=service
-export SPRING_BOOT_PROJECT='/opt/Taxonomic-Database-Application/Backend/build/libs/taxonomic-db-spring-boot-0.0.1.SNAPSHOT.jar'
+export SPRING_BOOT_PROJECT='/opt/Taxonomic-Database-Application/Backend/build/libs/taxonomic-db.jar'
 export SERVICE_NAME='taxonomic-db'
 
 startcmd="$SPRING_BOOT_PROJECT start > /dev/null &"

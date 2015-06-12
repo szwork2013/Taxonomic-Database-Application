@@ -46,12 +46,10 @@ dependencies {
 
 war {
     baseName = 'taxonomic-db'
-    version =  '0.0.1.SNAPSHOT'
 }
 
 jar {
     baseName = 'taxonomic-db-spring-boot'
-    version =  '0.0.1.SNAPSHOT'
 }
 
 task wrapper(type: Wrapper) {
