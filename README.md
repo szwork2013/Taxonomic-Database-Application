@@ -12,8 +12,7 @@ This will take a little while depending on your internet connection.Once you run
 you can access call 10.10.10.85:8080 for Rest API
 
 ###VMWare
-You can also download the VMWare environment VM done from this link below
-[VMWare VM](https://s3-sa-east-1.amazonaws.com/environment-vm/Taxonomic-DB_06122015.ova)
+You can also download the VMWare environment VM done from this [link](https://s3-sa-east-1.amazonaws.com/environment-vm/Taxonomic-DB_06122015.ova)
 
 ###Further Reading
 - [Vagrant Documentation](http://docs.vagrantup.com/v2/getting-started/index.html)
