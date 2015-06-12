@@ -2,27 +2,33 @@ package com.unep.wcmc.model;
 
 import javax.persistence.*;
 
-@Entity
+@Embeddable
 public class Hierarchy {
 
     @Column
     private String kingdom;
 
-    @Column
+    @ManyToOne
+    @JoinColumn(name="phylum_id")
     private Phylum phylum;
 
-    @Column
+    @ManyToOne
+    @JoinColumn(name="class_id")
     private HierarchyClass hierarchyClass;
 
-    @Column
+    @ManyToOne
+    @JoinColumn(name="order_id")
     private Order order;
 
-    @Column
+    @ManyToOne
+    @JoinColumn(name="family_id")
     private Family family;
 
-    @Column
+    @ManyToOne
+    @JoinColumn(name="specie_id")
     private Specie specie;
 
-    @Column
+    @ManyToOne
+    @JoinColumn(name="genus_id")
     private Genus genus;
 }

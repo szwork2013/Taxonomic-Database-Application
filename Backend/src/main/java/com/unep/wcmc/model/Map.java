@@ -1,9 +1,7 @@
 package com.unep.wcmc.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class Map {
@@ -11,5 +9,94 @@ public class Map {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    @Column
+    private byte[] file;
+    @Column
+    private String projection;
+    @Column
+    private String type;
+    @Column
+    private String auhtor;
+    @Column
+    private Date date;
+    @Column
+    private String caption;
+    @Column
+    private String description;
+    @Column
+    private Boolean isCover;
+
+    public byte[] getFile() {
+        return file;
+    }
+
+    public void setFile(byte[] file) {
+        this.file = file;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Boolean isCover() {
+        return isCover;
+    }
+
+    public void setIsCover(Boolean isCover) {
+        this.isCover = isCover;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getCaption() {
+        return caption;
+    }
+
+    public void setCaption(String caption) {
+        this.caption = caption;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public String getAuhtor() {
+        return auhtor;
+    }
+
+    public void setAuhtor(String auhtor) {
+        this.auhtor = auhtor;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getProjection() {
+        return projection;
+    }
+
+    public void setProjection(String projection) {
+        this.projection = projection;
+    }
+
 
 }
