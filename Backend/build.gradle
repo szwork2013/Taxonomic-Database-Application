@@ -3,7 +3,7 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'war'
 apply plugin: 'spring-boot'
-apply from: 'wcmc.gradle'
+//apply from: 'wcmc.gradle'
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
