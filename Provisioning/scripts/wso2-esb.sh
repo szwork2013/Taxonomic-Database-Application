@@ -8,6 +8,6 @@ unzip wso2esb-4.8.1.zip
 
 sudo cp /vagrant/config/wso2-esb/wso2-esb /etc/init.d/wso2-esb
 sudo chmod 755 /etc/init.d/wso2-esb
-sudo chkconfig --add wso2-esb
+sudo update-rc.d wso2-esb defaults
 
 service wso2-esb start

@@ -2,7 +2,7 @@
 
 cd /opt
 
-git clone -b prod https://github.com/unepwcmc/Taxonomic-Database-Application.git
+git clone -b release https://github.com/unepwcmc/Taxonomic-Database-Application.git
 
 cd ./Taxonomic-Database-Application
 #Update script for new releases
@@ -11,4 +11,12 @@ sudo chmod +x update.sh
 #Run the Rest API
 cd ./Backend
 sudo chmod +x gradlew
-sudo ./gradlew bootRun &
+sudo ./gradlew build
+
+#Installing the backend application as Linux service
+sudo cp /vagrant/config/spring-boot /etc/init.d/taxonomic-db
+sudo chmod 755 /etc/init.d/taxonomic-db
+sudo update-rc.d taxonomic-db defaults
+sudo echo -e "\n\MODE=service" >> /etc/environment;
+
+service taxonomic-db start
