@@ -3,22 +3,29 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'war'
 apply plugin: 'spring-boot'
-//apply from: 'wcmc.gradle'
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
+springBoot {
+    executable = true
+}
+
 buildscript {
     repositories {
-        mavenCentral()
+        jcenter()
+        maven { url "http://repo.spring.io/snapshot" }
+        maven { url "http://repo.spring.io/milestone" }
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.3.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.3.0.BUILD-SNAPSHOT")
     }
 }
 
 repositories {
-    mavenCentral()
+    jcenter()
+    maven { url "http://repo.spring.io/snapshot" }
+    maven { url "http://repo.spring.io/milestone" }
 }
 
 dependencies {
@@ -39,12 +46,10 @@ dependencies {
 
 war {
     baseName = 'taxonomic-db'
-    version =  '0.1'
 }
 
 jar {
     baseName = 'taxonomic-db-spring-boot'
-    version =  '0.1.0'
 }
 
 task wrapper(type: Wrapper) {
