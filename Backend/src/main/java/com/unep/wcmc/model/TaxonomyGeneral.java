@@ -1,14 +1,15 @@
 package com.unep.wcmc.model;
 
-import javax.persistence.*;
 import java.util.List;
 
-@Entity
-public class TaxonomyGeneral {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+@Entity
+public final class TaxonomyGeneral extends TaxonomicEntity {
 
     @Column
     private String commonName;
@@ -31,14 +32,6 @@ public class TaxonomyGeneral {
     @ManyToOne
     @JoinColumn(name="extinction_risk_id")
     private ExtinctionRisk extinctionRisk;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getCommonName() {
         return commonName;

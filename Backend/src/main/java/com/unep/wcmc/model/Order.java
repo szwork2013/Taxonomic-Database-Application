@@ -1,24 +1,13 @@
 package com.unep.wcmc.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 
 @Entity
-public class Order {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+public final class Order extends TaxonomicEntity {
 
     @Column
     private String name;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -32,5 +21,4 @@ public class Order {
     public String toString(){
         return name;
     }
-
 }

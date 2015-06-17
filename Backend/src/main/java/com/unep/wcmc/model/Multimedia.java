@@ -1,9 +1,12 @@
 package com.unep.wcmc.model;
 
 import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
+
 import java.util.Date;
 
-public class Multimedia {
+@MappedSuperclass
+public abstract class Multimedia extends TaxonomicEntity {
 
     @Column
     private String legend;

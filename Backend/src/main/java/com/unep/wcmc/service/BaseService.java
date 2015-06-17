@@ -1,6 +1,5 @@
 package com.unep.wcmc.service;
 
-
 public interface BaseService<T> {
 
     /**

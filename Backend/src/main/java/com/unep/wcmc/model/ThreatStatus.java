@@ -1,13 +1,11 @@
 package com.unep.wcmc.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 
 @Entity
-public class ThreatStatus {
+public final class ThreatStatus extends TaxonomicEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
     @Column
     private String description;
     @Column
@@ -22,14 +20,6 @@ public class ThreatStatus {
     private Long time;
     @Column
     private String trend;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getDescription() {
         return description;

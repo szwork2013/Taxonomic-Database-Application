@@ -1,13 +1,10 @@
 package com.unep.wcmc.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 
 @Entity
-public class Image extends Multimedia {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+public final class Image extends Multimedia {
 
     @Column
     private byte[] coverImage;

@@ -1,16 +1,9 @@
 package com.unep.wcmc.model;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 @Entity
-public class Conservation {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+public final class Conservation extends TaxonomicEntity {
 
     private String specificActionsInProtectedAreas;
 
@@ -19,14 +12,6 @@ public class Conservation {
     private String researchInProgress;
 
     private String necessaryResearchForConservation;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getSpecificActionsInProtectedAreas() {
         return specificActionsInProtectedAreas;

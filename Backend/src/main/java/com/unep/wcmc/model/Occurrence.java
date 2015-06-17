@@ -1,13 +1,12 @@
 package com.unep.wcmc.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
-public class Occurrence {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+public final class Occurrence extends TaxonomicEntity {
 
     @Column
     private Double latitude;
@@ -33,13 +32,5 @@ public class Occurrence {
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 }

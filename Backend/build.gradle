@@ -31,7 +31,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-actuator")
     compile("org.hibernate:hibernate-search-orm:5.2.0.Final")
     compile("org.hibernate:hibernate-entitymanager:4.3.10.Final")
-   // compile("org.springframework.boot:spring-boot-starter-security")
+    compile("org.springframework.boot:spring-boot-starter-security")
     runtime("org.postgresql:postgresql:9.4-1201-jdbc41")
     testCompile("junit:junit")
 }

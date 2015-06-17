@@ -1,15 +1,13 @@
 package com.unep.wcmc.model;
 
-import org.hibernate.annotations.CollectionId;
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
-public class Threats {
+public final class Threats extends TaxonomicEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
     @Column
     private String populationAffected;
     @Column
@@ -37,14 +35,6 @@ public class Threats {
     @ManyToOne
     @JoinColumn(name="threat_status_id")
     private ThreatStatus threatStatus;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getPopulationAffected() {
         return populationAffected;

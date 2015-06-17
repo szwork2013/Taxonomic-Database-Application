@@ -1,14 +1,13 @@
 package com.unep.wcmc.model;
 
-import javax.persistence.*;
 import java.util.Date;
 
-@Entity
-public class Map {
+import javax.persistence.Column;
+import javax.persistence.Entity;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+@Entity
+public final class Map extends TaxonomicEntity {
+
     @Column
     private byte[] file;
     @Column
@@ -32,14 +31,6 @@ public class Map {
 
     public void setFile(byte[] file) {
         this.file = file;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public Boolean isCover() {
