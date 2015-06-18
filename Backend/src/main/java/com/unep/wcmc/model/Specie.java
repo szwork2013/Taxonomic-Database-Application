@@ -33,7 +33,7 @@ public class Specie implements Serializable {
     private Conservation conservation;
 
     @OneToOne
-    private Threats threats;
+    private Threat threats;
 
     @OneToOne
     private Image coverPhoto;
@@ -109,11 +109,11 @@ public class Specie implements Serializable {
         this.conservation = conservation;
     }
 
-    public Threats getThreats() {
+    public Threat getThreats() {
         return threats;
     }
 
-    public void setThreats(Threats threats) {
+    public void setThreats(Threat threats) {
         this.threats = threats;
     }
 

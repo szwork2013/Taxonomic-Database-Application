@@ -1,34 +1,31 @@
 package com.unep.wcmc.model;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.io.Serializable;
 
-@Entity
+@Embeddable
 public class ThreatStatus implements Serializable {
 
-    @Column
-    private String description;
-    @Column
+    @Enumerated(value = EnumType.ORDINAL)
+    private ThreatCategory category;
+
+    @Column(name = "municipality")
     private String municipality;
-    @Column
-    private String threat;
-    @Column
+
+    @Column(name = "local")
     private String local;
-    @Column
+
+    @Column(name = "period")
     private Long period;
-    @Column
+
+    @Column(name = "time")
     private Long time;
-    @Column
+
+    @Column(name = "trend")
     private String trend;
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public String getMunicipality() {
         return municipality;
@@ -38,12 +35,12 @@ public class ThreatStatus implements Serializable {
         this.municipality = municipality;
     }
 
-    public String getThreat() {
-        return threat;
+    public ThreatCategory getCategory() {
+        return category;
     }
 
-    public void setThreat(String threat) {
-        this.threat = threat;
+    public void setCategory(ThreatCategory category) {
+        this.category = category;
     }
 
     public String getLocal() {
