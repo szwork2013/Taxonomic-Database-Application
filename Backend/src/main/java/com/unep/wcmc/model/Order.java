@@ -10,7 +10,7 @@ public class Order implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column
+    @Column(name = "order")
     private String name;
 
     public Long getId() {

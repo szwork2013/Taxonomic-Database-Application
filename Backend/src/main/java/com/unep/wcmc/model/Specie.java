@@ -11,10 +11,10 @@ public class Specie implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column
+    @Column(name = "common_name")
     private String commonName;
 
-    @Column
+    @Column(name = "scientific_name")
     private String scientificName;
 
     @Enumerated(value = EnumType.ORDINAL)

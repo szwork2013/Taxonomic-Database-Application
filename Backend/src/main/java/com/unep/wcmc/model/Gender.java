@@ -4,13 +4,13 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-public class HierarchyClass implements Serializable {
+public class Gender implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "class")
+    @Column(name = "gender")
     private String name;
 
     public Long getId() {
@@ -28,5 +28,4 @@ public class HierarchyClass implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
 }

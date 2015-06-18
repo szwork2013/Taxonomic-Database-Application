@@ -10,7 +10,7 @@ public class Family implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column
+    @Column(name = "family")
     private String name;
 
     public Long getId() {

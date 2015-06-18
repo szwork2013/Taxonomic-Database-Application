@@ -1,19 +1,25 @@
 package com.unep.wcmc.model;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 @Embeddable
 public class Habitat implements Serializable {
 
+    @Column(name = "habitat")
     private String description;
 
+    @Column(name = "restricted_to_primary_habitats")
     private Boolean restrictedToPrimaryHabitats;
 
+    @Column(name = "tolerant_to_habitat_mod")
     private String tolerantToHabitatModification;
 
+    @Column(name = "variation_in_habitat_use")
     private String variationInHabitatUse;
 
+    @Column(name = "cont_decline_habitat_quality")
     private Boolean continuingDeclineInHabitatQuality;
 
     public String getDescription() {

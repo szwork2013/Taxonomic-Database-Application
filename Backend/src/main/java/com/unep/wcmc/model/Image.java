@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 @Entity
 public class Image extends Multimedia {
 
-    @Column
+    @Column(name = "cover_image")
     private byte[] coverImage;
 
     public byte[] getCoverImage() {

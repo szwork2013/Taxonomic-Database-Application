@@ -1,19 +1,25 @@
 package com.unep.wcmc.model;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 @Embeddable
 public class FeedingBehavior implements Serializable {
 
+    @Column(name = "trophic_level")
     private String trophicLevel;
 
+    @Column(name = "eating_habits")
     private String eatingHabits;
 
+    @Column(name = "expert_specialist")
     private String expertSpecialist;
 
+    @Column(name = "feeding_agregations")
     private String feedingAgregations;
 
+    @Column(name = "eating_habits_other_comments")
     private String eatingHabitsOtherComments;
 
     public String getTrophicLevel() {

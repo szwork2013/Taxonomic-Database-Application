@@ -9,34 +9,34 @@ import java.io.Serializable;
 @Embeddable
 public class Hierarchy implements Serializable {
 
-    @Column
+    @Column(name = "kingdom")
     private String kingdom;
 
     @ManyToOne
-    @JoinColumn(name="phylum_id")
+    @JoinColumn(name = "phylum_id")
     private Phylum phylum;
 
     @ManyToOne
-    @JoinColumn(name="class_id")
+    @JoinColumn(name = "class_id")
     private HierarchyClass hierarchyClass;
 
     @ManyToOne
-    @JoinColumn(name="order_id")
+    @JoinColumn(name = "order_id")
     private Order order;
 
     @ManyToOne
-    @JoinColumn(name="family_id")
+    @JoinColumn(name = "family_id")
     private Family family;
 
-    @Column
+    @Column(name = "species")
     private String species;
 
-    @Column
+    @Column(name = "subspecies")
     private String subSpecies;
 
     @ManyToOne
-    @JoinColumn(name="genus_id")
-    private Genus genus;
+    @JoinColumn(name = "gender_id")
+    private Gender gender;
 
     public String getKingdom() {
         return kingdom;
@@ -94,11 +94,11 @@ public class Hierarchy implements Serializable {
         this.subSpecies = subSpecies;
     }
 
-    public Genus getGenus() {
-        return genus;
+    public Gender getGender() {
+        return gender;
     }
 
-    public void setGenus(Genus genus) {
-        this.genus = genus;
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 }

@@ -10,7 +10,7 @@ public class Phylum implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column
+    @Column(name = "phylum")
     private String name;
 
     public Long getId() {

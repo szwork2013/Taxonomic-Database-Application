@@ -1,29 +1,29 @@
 package com.unep.wcmc.model;
 
 import javax.persistence.*;
-
 import java.io.Serializable;
 import java.util.Date;
 
 @MappedSuperclass
 public class Multimedia implements Serializable {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column
+    @Column(name = "legend")
     private String legend;
 
-    @Column
+    @Column(name = "author")
     private String author;
 
-    @Column
+    @Column(name = "date")
     private Date date;
 
-    @Column
+    @Column(name = "site_description")
     private String site;
 
-    @Column
+    @Column(name = "file")
     private byte[] file;
 
     public Long getId() {
