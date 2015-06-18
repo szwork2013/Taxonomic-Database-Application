@@ -1,9 +1,6 @@
 package com.unep.wcmc.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -13,28 +10,42 @@ public class DistributionArea implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private boolean nativeBrazil;
+    @Column(name = "native_in_brazil")
+    private Boolean nativeBrazil;
 
+    @Column(name = "endemic_from_brasil")
     private Boolean endemicFromBrazil;
 
+    @Column(name = "national_distribution")
     private String nationalDistribution;
 
+    @Column(name = "only_from_few_localities")
     private Boolean onlyFromFewLocalities;
 
+    @Column(name = "the_region_is_well_sampled")
     private Boolean regionIsWellSampled;
 
+    @Column(name = "global_distribution")
     private String globalDistribution;
 
+    @Column(name = "occurrence_state")
     private String ocurrenceState;
 
+    @Column(name = "extent_of_occurrence")
     private Double extendOccurrence;
 
+    @Column(name = "fragmentation_level")
     private Integer framentationLevel;
 
+    @Column(name = "trend_in_extent_of_occurrence")
+    @Enumerated(value = EnumType.ORDINAL)
     private TrendOccurence trendExtendOccurence;
 
+    @Column(name = "area_of_ocuppancy")
     private Double occupancyArea;
 
+    @Column(name = "area_of_occupancy_trend")
+    @Enumerated(value = EnumType.ORDINAL)
     private TrendOccurence trendOccupancyArea;
 
     public Long getId() {
@@ -45,11 +56,11 @@ public class DistributionArea implements Serializable {
         this.id = id;
     }
 
-    public boolean getNativeBrazil() {
+    public Boolean getNativeBrazil() {
         return nativeBrazil;
     }
 
-    public void setNativeBrazil(boolean nativeBrazil) {
+    public void setNativeBrazil(Boolean nativeBrazil) {
         this.nativeBrazil = nativeBrazil;
     }
 

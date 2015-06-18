@@ -1,7 +1,6 @@
 package com.unep.wcmc.model;
 
-import javax.persistence.Embeddable;
-import javax.persistence.Embedded;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Embeddable
@@ -13,18 +12,26 @@ public class PopulationDynamics implements Serializable {
     @Embedded
     private DensityData densityData;
 
+    @Column(name = "number_of_mature_individuals")
     private Long matureIndividualsNumber;
 
+    @Column(name = "trend_in_mature_individuals")
+    @Enumerated(value = EnumType.ORDINAL)
     private TrendOccurence matureIndividualsNumberTrend;
 
+    @Column(name = "perc_and_period_of_decline")
     private Double declinePeriodPercent;
 
+    @Column(name = "max_no_of_mature_individuals")
     private Long matureIndividualsSubpopulationMaxNumber;
 
+    @Column(name = "perc_immature_individuals")
     private Double imatureIndividualsSubpopulationPercent;
 
+    @Column(name = "flutuation_mature_individuals")
     private Boolean extremeFlutuationInMatureIndividualsNumber;
 
+    @Column(name = "population_severely_fragmented")
     private Boolean populationSeverelyFragmented;
 
     public PopulationTrend getPopulationTrend() {
