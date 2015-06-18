@@ -20,28 +20,36 @@ public class Specie implements Serializable {
     @Enumerated(value = EnumType.ORDINAL)
     private ExtinctionRiskCategory extinctionRiskCategory;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "taxonomy_id")
     private Taxonomy taxonomy;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "distribution_id")
     private DistributionArea distributionArea;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "natural_history_id")
     private NaturalHistory naturalHistory;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "conservation_id")
     private Conservation conservation;
 
-    @OneToOne
-    private Threat threats;
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "threat_id")
+    private Threat threat;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "cover_photo_id")
     private Image coverPhoto;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "cover_map_id")
     private Map coverMap;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "specie_id")
     private List<Multimedia> medias;
 
     // Getters and setters
@@ -109,12 +117,12 @@ public class Specie implements Serializable {
         this.conservation = conservation;
     }
 
-    public Threat getThreats() {
-        return threats;
+    public Threat getThreat() {
+        return threat;
     }
 
-    public void setThreats(Threat threats) {
-        this.threats = threats;
+    public void setThreat(Threat threat) {
+        this.threat = threat;
     }
 
     public Image getCoverPhoto() {
