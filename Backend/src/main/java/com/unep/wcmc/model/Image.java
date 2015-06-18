@@ -4,8 +4,17 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 @Entity
-public final class Image extends Multimedia {
+public class Image extends Multimedia {
 
     @Column
     private byte[] coverImage;
+
+    public byte[] getCoverImage() {
+        return coverImage;
+    }
+
+    public void setCoverImage(byte[] coverImage) {
+        this.coverImage = coverImage;
+    }
+
 }

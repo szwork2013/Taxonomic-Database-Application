@@ -4,9 +4,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.io.Serializable;
 
 @Entity
-public final class Occurrence extends TaxonomicEntity {
+public class Occurrence implements Serializable {
 
     @Column
     private Double latitude;

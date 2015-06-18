@@ -1,9 +1,17 @@
 package com.unep.wcmc.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import java.io.Serializable;
 
 @Entity
-public final class DistributionArea extends TaxonomicEntity {
+public class DistributionArea implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     private boolean nativeBrazil;
 
@@ -19,13 +27,25 @@ public final class DistributionArea extends TaxonomicEntity {
 
     private String ocurrenceState;
 
-    private String extendOccurrence;
+    private Double extendOccurrence;
 
     private Integer framentationLevel;
 
-    private String trendExtendOccurence;
+    private TrendOccurence trendExtendOccurence;
 
-    public boolean isNativeBrazil() {
+    private Double occupancyArea;
+
+    private TrendOccurence trendOccupancyArea;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public boolean getNativeBrazil() {
         return nativeBrazil;
     }
 
@@ -33,7 +53,7 @@ public final class DistributionArea extends TaxonomicEntity {
         this.nativeBrazil = nativeBrazil;
     }
 
-    public Boolean isEndemicFromBrazil() {
+    public Boolean getEndemicFromBrazil() {
         return endemicFromBrazil;
     }
 
@@ -49,7 +69,7 @@ public final class DistributionArea extends TaxonomicEntity {
         this.nationalDistribution = nationalDistribution;
     }
 
-    public Boolean isOnlyFromFewLocalities() {
+    public Boolean getOnlyFromFewLocalities() {
         return onlyFromFewLocalities;
     }
 
@@ -57,7 +77,7 @@ public final class DistributionArea extends TaxonomicEntity {
         this.onlyFromFewLocalities = onlyFromFewLocalities;
     }
 
-    public Boolean isRegionIsWellSampled() {
+    public Boolean getRegionIsWellSampled() {
         return regionIsWellSampled;
     }
 
@@ -81,11 +101,11 @@ public final class DistributionArea extends TaxonomicEntity {
         this.ocurrenceState = ocurrenceState;
     }
 
-    public String getExtendOccurrence() {
+    public Double getExtendOccurrence() {
         return extendOccurrence;
     }
 
-    public void setExtendOccurrence(String extendOccurrence) {
+    public void setExtendOccurrence(Double extendOccurrence) {
         this.extendOccurrence = extendOccurrence;
     }
 
@@ -97,11 +117,27 @@ public final class DistributionArea extends TaxonomicEntity {
         this.framentationLevel = framentationLevel;
     }
 
-    public String getTrendExtendOccurence() {
+    public TrendOccurence getTrendExtendOccurence() {
         return trendExtendOccurence;
     }
 
-    public void setTrendExtendOccurence(String trendExtendOccurence) {
+    public void setTrendExtendOccurence(TrendOccurence trendExtendOccurence) {
         this.trendExtendOccurence = trendExtendOccurence;
+    }
+
+    public Double getOccupancyArea() {
+        return occupancyArea;
+    }
+
+    public void setOccupancyArea(Double occupancyArea) {
+        this.occupancyArea = occupancyArea;
+    }
+
+    public TrendOccurence getTrendOccupancyArea() {
+        return trendOccupancyArea;
+    }
+
+    public void setTrendOccupancyArea(TrendOccurence trendOccupancyArea) {
+        this.trendOccupancyArea = trendOccupancyArea;
     }
 }

@@ -1,24 +1,10 @@
 package com.unep.wcmc.model;
 
-import javax.persistence.Entity;
+import javax.persistence.Embeddable;
+import java.io.Serializable;
 
-@Entity
-public final class Interactions extends TaxonomicEntity {
+@Embeddable
+public class Interactions implements Serializable {
 
-    private String StringerdependentRelationship;
-
-    private String ontogeny;
-
-    private String sexRatio;
-
-    private String naturalMortalityRate;
-
-    private String populationSize;
-
-    private String groupsSize;
-
-    private String socialSpecies;
-
-    private String otherObservations;
 
 }

@@ -2,9 +2,10 @@ package com.unep.wcmc.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import java.io.Serializable;
 
 @Entity
-public final class ThreatStatus extends TaxonomicEntity {
+public class ThreatStatus implements Serializable {
 
     @Column
     private String description;

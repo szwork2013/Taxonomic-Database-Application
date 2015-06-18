@@ -1,9 +1,19 @@
 package com.unep.wcmc.model;
 
-import javax.persistence.Entity;
+import javax.persistence.Embeddable;
+import java.io.Serializable;
 
-@Entity
-public final class Reproduction extends TaxonomicEntity {
+@Embeddable
+public class Reproduction implements Serializable {
 
-    private int maximumSize;
+    private Integer maximumSize;
+
+    public Integer getMaximumSize() {
+        return maximumSize;
+    }
+
+    public void setMaximumSize(Integer maximumSize) {
+        this.maximumSize = maximumSize;
+    }
+
 }

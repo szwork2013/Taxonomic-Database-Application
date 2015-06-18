@@ -1,47 +1,42 @@
 package com.unep.wcmc.model;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public final class Conservation extends TaxonomicEntity {
+public class Conservation implements Serializable {
 
-    private String specificActionsInProtectedAreas;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-    private String actionPlans;
+    @Embedded
+    private ExtinctionRisk extinctionRisk;
 
-    private String researchInProgress;
+    @Embedded
+    private Conventions conventions;
 
-    private String necessaryResearchForConservation;
-
-    public String getSpecificActionsInProtectedAreas() {
-        return specificActionsInProtectedAreas;
+    public Long getId() {
+        return id;
     }
 
-    public void setSpecificActionsInProtectedAreas(String specificActionsInProtectedAreas) {
-        this.specificActionsInProtectedAreas = specificActionsInProtectedAreas;
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
+    public ExtinctionRisk getExtinctionRisk() {
+        return extinctionRisk;
     }
 
-    public String getActionPlans() {
-        return actionPlans;
+    public void setExtinctionRisk(ExtinctionRisk extinctionRisk) {
+        this.extinctionRisk = extinctionRisk;
     }
 
-    public void setActionPlans(String actionPlans) {
-        this.actionPlans = actionPlans;
+    public Conventions getConventions() {
+        return conventions;
     }
 
-    public String getResearchInProgress() {
-        return researchInProgress;
-    }
-
-    public void setResearchInProgress(String researchInProgress) {
-        this.researchInProgress = researchInProgress;
-    }
-
-    public String getNecessaryResearchForConservation() {
-        return necessaryResearchForConservation;
-    }
-
-    public void setNecessaryResearchForConservation(String necessaryResearchForConservation) {
-        this.necessaryResearchForConservation = necessaryResearchForConservation;
+    public void setConventions(Conventions conventions) {
+        this.conventions = conventions;
     }
 }

@@ -1,9 +1,10 @@
 package com.unep.wcmc.model;
 
-import javax.persistence.Entity;
+import javax.persistence.Embeddable;
+import java.io.Serializable;
 
-@Entity
-public final class Conventions extends TaxonomicEntity {
+@Embeddable
+public class Conventions implements Serializable {
 
     private String convention;
 

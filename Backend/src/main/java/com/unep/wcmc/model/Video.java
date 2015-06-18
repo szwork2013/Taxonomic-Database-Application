@@ -3,5 +3,6 @@ package com.unep.wcmc.model;
 import javax.persistence.Entity;
 
 @Entity
-public final class Video extends Multimedia {
+public class Video extends Multimedia {
+    // Empty
 }

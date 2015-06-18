@@ -1,9 +1,10 @@
 package com.unep.wcmc.model;
 
-import javax.persistence.Entity;
+import javax.persistence.Embeddable;
+import java.io.Serializable;
 
-@Entity
-public final class PopulationTrend extends TaxonomicEntity {
+@Embeddable
+public class PopulationTrend implements Serializable {
 
     private String populationSizeInBrazil;
 

@@ -1,29 +1,47 @@
 package com.unep.wcmc.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 @Entity
-public final class Map extends TaxonomicEntity {
+public class Map implements Serializable {
+
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     @Column
     private byte[] file;
+
     @Column
     private String projection;
+
     @Column
     private String type;
+
     @Column
     private String auhtor;
+
     @Column
     private Date date;
+
     @Column
     private String caption;
+
     @Column
     private String description;
+
     @Column
     private Boolean isCover;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public byte[] getFile() {
         return file;

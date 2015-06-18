@@ -1,9 +1,10 @@
 package com.unep.wcmc.model;
 
 import javax.persistence.Entity;
+import java.io.Serializable;
 
 @Entity
-public final class DensityData extends TaxonomicEntity {
+public class DensityData implements Serializable {
 
     private Integer subpopulationsNumber;
 

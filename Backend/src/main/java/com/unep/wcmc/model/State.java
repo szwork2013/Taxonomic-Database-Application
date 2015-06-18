@@ -1,12 +1,13 @@
 package com.unep.wcmc.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public final class State extends TaxonomicEntity {
+public class State implements Serializable {
+
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     @Column(unique = true, nullable = false)
     private String name;
@@ -14,6 +15,14 @@ public final class State extends TaxonomicEntity {
     @ManyToOne
     @JoinColumn(name="country_id")
     private Country country;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
