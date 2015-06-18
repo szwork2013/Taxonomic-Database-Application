@@ -1,16 +1,17 @@
 package com.unep.wcmc.model;
 
 import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
 import java.io.Serializable;
 
 @Embeddable
 public class PopulationDynamics implements Serializable {
 
-    private Double populationDeclinedIn10YearsPercent;
+    @Embedded
+    private PopulationTrend populationTrend;
 
-    private Boolean pastReductionInCaseOrReversiveCauseCeased;
-
-    private String basedPopulationDeclined;
+    @Embedded
+    private DensityData densityData;
 
     private Long matureIndividualsNumber;
 
@@ -24,36 +25,22 @@ public class PopulationDynamics implements Serializable {
 
     private Boolean extremeFlutuationInMatureIndividualsNumber;
 
-    private TrendOccurence numberSubpopulationsTrend;
-
-    private Boolean extremeFlutuationInSubpopulationsNumber;
-
     private Boolean populationSeverelyFragmented;
 
-    private Double brazilExtinctionProbability;
-
-    public Double getPopulationDeclinedIn10YearsPercent() {
-        return populationDeclinedIn10YearsPercent;
+    public PopulationTrend getPopulationTrend() {
+        return populationTrend;
     }
 
-    public void setPopulationDeclinedIn10YearsPercent(Double populationDeclinedIn10YearsPercent) {
-        this.populationDeclinedIn10YearsPercent = populationDeclinedIn10YearsPercent;
+    public void setPopulationTrend(PopulationTrend populationTrend) {
+        this.populationTrend = populationTrend;
     }
 
-    public Boolean getPastReductionInCaseOrReversiveCauseCeased() {
-        return pastReductionInCaseOrReversiveCauseCeased;
+    public DensityData getDensityData() {
+        return densityData;
     }
 
-    public void setPastReductionInCaseOrReversiveCauseCeased(Boolean pastReductionInCaseOrReversiveCauseCeased) {
-        this.pastReductionInCaseOrReversiveCauseCeased = pastReductionInCaseOrReversiveCauseCeased;
-    }
-
-    public String getBasedPopulationDeclined() {
-        return basedPopulationDeclined;
-    }
-
-    public void setBasedPopulationDeclined(String basedPopulationDeclined) {
-        this.basedPopulationDeclined = basedPopulationDeclined;
+    public void setDensityData(DensityData densityData) {
+        this.densityData = densityData;
     }
 
     public Long getMatureIndividualsNumber() {
@@ -104,22 +91,6 @@ public class PopulationDynamics implements Serializable {
         this.extremeFlutuationInMatureIndividualsNumber = extremeFlutuationInMatureIndividualsNumber;
     }
 
-    public TrendOccurence getNumberSubpopulationsTrend() {
-        return numberSubpopulationsTrend;
-    }
-
-    public void setNumberSubpopulationsTrend(TrendOccurence numberSubpopulationsTrend) {
-        this.numberSubpopulationsTrend = numberSubpopulationsTrend;
-    }
-
-    public Boolean getExtremeFlutuationInSubpopulationsNumber() {
-        return extremeFlutuationInSubpopulationsNumber;
-    }
-
-    public void setExtremeFlutuationInSubpopulationsNumber(Boolean extremeFlutuationInSubpopulationsNumber) {
-        this.extremeFlutuationInSubpopulationsNumber = extremeFlutuationInSubpopulationsNumber;
-    }
-
     public Boolean getPopulationSeverelyFragmented() {
         return populationSeverelyFragmented;
     }
@@ -128,11 +99,4 @@ public class PopulationDynamics implements Serializable {
         this.populationSeverelyFragmented = populationSeverelyFragmented;
     }
 
-    public Double getBrazilExtinctionProbability() {
-        return brazilExtinctionProbability;
-    }
-
-    public void setBrazilExtinctionProbability(Double brazilExtinctionProbability) {
-        this.brazilExtinctionProbability = brazilExtinctionProbability;
-    }
 }
