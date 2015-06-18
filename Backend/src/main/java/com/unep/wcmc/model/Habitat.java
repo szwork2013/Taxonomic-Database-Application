@@ -7,6 +7,8 @@ import java.io.Serializable;
 @Embeddable
 public class Habitat implements Serializable {
 
+    private HabitatType type;
+
     @Column(name = "habitat")
     private String description;
 
@@ -21,6 +23,14 @@ public class Habitat implements Serializable {
 
     @Column(name = "cont_decline_habitat_quality")
     private Boolean continuingDeclineInHabitatQuality;
+
+    public HabitatType getType() {
+        return type;
+    }
+
+    public void setType(HabitatType type) {
+        this.type = type;
+    }
 
     public String getDescription() {
         return description;

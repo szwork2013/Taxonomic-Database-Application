@@ -16,6 +16,9 @@ public class Conservation implements Serializable {
     @Embedded
     private Conventions conventions;
 
+    @Embedded
+    private ConservationAction conservationAction;
+
     public Long getId() {
         return id;
     }

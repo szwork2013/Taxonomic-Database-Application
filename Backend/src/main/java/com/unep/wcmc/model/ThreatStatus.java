@@ -2,14 +2,15 @@ package com.unep.wcmc.model;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
 @Embeddable
 public class ThreatStatus implements Serializable {
 
-    @Enumerated(value = EnumType.ORDINAL)
+    @ManyToOne
+    @JoinColumn(name = "threat_category_id")
     private ThreatCategory category;
 
     @Column(name = "municipality")
