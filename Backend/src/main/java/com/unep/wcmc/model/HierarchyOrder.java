@@ -12,6 +12,14 @@ public class HierarchyOrder implements BaseEntity {
     @Column(name = "name")
     private String name;
 
+    public HierarchyOrder() {
+        super();
+    }
+
+    public HierarchyOrder(String name) {
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
     }

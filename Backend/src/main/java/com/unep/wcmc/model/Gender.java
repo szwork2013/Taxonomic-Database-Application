@@ -12,6 +12,14 @@ public class Gender implements BaseEntity {
     @Column(name = "gender")
     private String name;
 
+    public Gender() {
+        super();
+    }
+
+    public Gender(String name) {
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
     }

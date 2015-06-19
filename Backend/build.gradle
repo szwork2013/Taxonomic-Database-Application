@@ -40,7 +40,9 @@ dependencies {
     compile("org.hibernate:hibernate-entitymanager:4.3.10.Final")
     compile("org.springframework.boot:spring-boot-starter-security")
     runtime("org.postgresql:postgresql:9.4-1201-jdbc41")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile("junit:junit")
+    testCompile("net.sf.opencsv:opencsv:2.3")
 }
 
 
