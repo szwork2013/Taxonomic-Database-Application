@@ -1,10 +1,9 @@
 package com.unep.wcmc.model;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
-public class DistributionArea implements Serializable {
+public class DistributionArea implements BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

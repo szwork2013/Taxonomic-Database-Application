@@ -1,31 +1,30 @@
 package com.unep.wcmc.controller;
 
-import java.util.List;
-
+import com.unep.wcmc.model.BaseEntity;
+import com.unep.wcmc.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.unep.wcmc.model.TaxonomicEntity;
-import com.unep.wcmc.service.BaseService;
+import java.util.List;
 
 /**
  * Abstract controller that encapsulates all boilerplate code needed to
  * create a simple controller object
- * 
+ *
  * @author Adriano Braga Alencar (adriano.alencar@integritas.com)
  *                               (adrianobragaalencar@gmail.com)
  *
- * @param <E> entity object that extends from {@link TaxonomicEntity}
+ * @param <E> entity object that extends from {@link BaseEntity}
  * @param <S> service that implements basic operations from {@link BaseService}
  */
-public abstract class AbstractController<E extends TaxonomicEntity, 
+public abstract class AbstractController<E extends BaseEntity,
 										 S extends BaseService<E>> {
 	@Autowired
 	protected S service;
-	
+
 	@RequestMapping(method= RequestMethod.GET)
     public List<E> index() {
         return (List<E>)service.list();

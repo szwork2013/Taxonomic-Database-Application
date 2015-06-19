@@ -1,11 +1,10 @@
 package com.unep.wcmc.model;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 
 @MappedSuperclass
-public class Multimedia implements Serializable {
+public class Multimedia implements BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

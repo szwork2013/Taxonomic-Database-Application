@@ -4,12 +4,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.io.Serializable;
 
 @Entity
-public class ConservationActionType implements Serializable {
+public class ConservationActionType implements BaseEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String description;
@@ -29,4 +29,5 @@ public class ConservationActionType implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
+
 }

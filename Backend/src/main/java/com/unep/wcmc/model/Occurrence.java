@@ -1,12 +1,12 @@
 package com.unep.wcmc.model;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
-@Entity
+@Embeddable
 public class Occurrence implements Serializable {
 
     @Column
@@ -16,7 +16,7 @@ public class Occurrence implements Serializable {
     private Double longitude;
 
     @ManyToOne
-    @JoinColumn(name="state_id")
+    @JoinColumn(name = "state_id")
     private State state;
 
     public Double getLatitude() {

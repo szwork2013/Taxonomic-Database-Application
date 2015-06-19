@@ -1,10 +1,9 @@
 package com.unep.wcmc.model;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
-public class Threat implements Serializable {
+public class Threat implements BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -127,4 +126,5 @@ public class Threat implements Serializable {
     public void setExtremeFlutuationLocationNumber(Long extremeFlutuationLocationNumber) {
         this.extremeFlutuationLocationNumber = extremeFlutuationLocationNumber;
     }
+    
 }

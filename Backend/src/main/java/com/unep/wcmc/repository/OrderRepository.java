@@ -1,6 +1,6 @@
 package com.unep.wcmc.repository;
 
-import com.unep.wcmc.model.Order;
+import com.unep.wcmc.model.HierarchyOrder;
 import org.springframework.data.repository.CrudRepository;
 
-public interface OrderRepository extends CrudRepository<Order, Long> {}
+public interface OrderRepository extends CrudRepository<HierarchyOrder, Long> {}

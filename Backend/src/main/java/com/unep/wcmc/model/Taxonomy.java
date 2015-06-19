@@ -1,10 +1,9 @@
 package com.unep.wcmc.model;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
-public class Taxonomy implements Serializable {
+public class Taxonomy implements BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

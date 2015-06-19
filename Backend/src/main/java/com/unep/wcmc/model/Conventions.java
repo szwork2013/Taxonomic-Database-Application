@@ -55,4 +55,5 @@ public class Conventions implements Serializable {
     public void setExSituManagement(String exSituManagement) {
         this.exSituManagement = exSituManagement;
     }
+
 }

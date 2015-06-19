@@ -4,10 +4,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.unep.wcmc.model.Gender;
-import com.unep.wcmc.service.GenusService;
+import com.unep.wcmc.service.GenderService;
 
 @RestController
 @RequestMapping("/genus")
-public class GenusController extends AbstractController<Gender, GenusService> {
+public class GenderController extends AbstractController<Gender, GenderService> {
 }
 

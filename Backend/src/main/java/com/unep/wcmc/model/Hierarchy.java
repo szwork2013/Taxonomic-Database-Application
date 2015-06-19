@@ -9,8 +9,9 @@ import java.io.Serializable;
 @Embeddable
 public class Hierarchy implements Serializable {
 
-    @Column(name = "kingdom")
-    private String kingdom;
+    @ManyToOne
+    @JoinColumn(name = "kingdom_id")
+    private Kingdom kingdom;
 
     @ManyToOne
     @JoinColumn(name = "phylum_id")
@@ -22,11 +23,15 @@ public class Hierarchy implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "order_id")
-    private Order order;
+    private HierarchyOrder order;
 
     @ManyToOne
     @JoinColumn(name = "family_id")
     private Family family;
+
+    @ManyToOne
+    @JoinColumn(name = "gender_id")
+    private Gender gender;
 
     @Column(name = "species")
     private String species;
@@ -34,15 +39,11 @@ public class Hierarchy implements Serializable {
     @Column(name = "subspecies")
     private String subSpecies;
 
-    @ManyToOne
-    @JoinColumn(name = "gender_id")
-    private Gender gender;
-
-    public String getKingdom() {
+    public Kingdom getKingdom() {
         return kingdom;
     }
 
-    public void setKingdom(String kingdom) {
+    public void setKingdom(Kingdom kingdom) {
         this.kingdom = kingdom;
     }
 
@@ -62,11 +63,11 @@ public class Hierarchy implements Serializable {
         this.hierarchyClass = hierarchyClass;
     }
 
-    public Order getOrder() {
+    public HierarchyOrder getOrder() {
         return order;
     }
 
-    public void setOrder(Order order) {
+    public void setOrder(HierarchyOrder order) {
         this.order = order;
     }
 

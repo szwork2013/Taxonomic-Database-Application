@@ -1,16 +1,15 @@
 package com.unep.wcmc.model;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
-public class Order implements Serializable {
+public class HierarchyOrder implements BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "order")
+    @Column(name = "name")
     private String name;
 
     public Long getId() {

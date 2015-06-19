@@ -1,11 +1,9 @@
 package com.unep.wcmc.model;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.List;
 
 @Entity
-public class Specie implements Serializable {
+public class Specie implements BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -47,10 +45,6 @@ public class Specie implements Serializable {
     @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "cover_map_id")
     private Map coverMap;
-
-    @OneToMany(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "specie_id")
-    private List<Multimedia> medias;
 
     // Getters and setters
     public Long getId() {
@@ -139,14 +133,6 @@ public class Specie implements Serializable {
 
     public void setCoverMap(Map coverMap) {
         this.coverMap = coverMap;
-    }
-
-    public List<Multimedia> getMedias() {
-        return medias;
-    }
-
-    public void setMedias(List<Multimedia> medias) {
-        this.medias = medias;
     }
 
 }

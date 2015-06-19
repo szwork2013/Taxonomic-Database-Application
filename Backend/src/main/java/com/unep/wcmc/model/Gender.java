@@ -1,10 +1,9 @@
 package com.unep.wcmc.model;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
-public class Gender implements Serializable {
+public class Gender implements BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

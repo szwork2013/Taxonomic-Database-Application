@@ -1,9 +1,8 @@
 package com.unep.wcmc.service;
 
+import com.unep.wcmc.model.BaseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
-
-import com.unep.wcmc.model.TaxonomicEntity;
 
 /**
  * Abstract service that encapsulates all boilerplate code needed to
@@ -12,10 +11,10 @@ import com.unep.wcmc.model.TaxonomicEntity;
  * @author Adriano Braga Alencar (adriano.alencar@integritas.com)
  *                               (adrianobragaalencar@gmail.com)
  *
- * @param <E> entity object that extends from {@link TaxonomicEntity}
+ * @param <E> entity object that extends from {@link BaseEntity}
  * @param <R> repository that implements basic operations from {@link CrudRepository}
  */
-public abstract class AbstractService<E extends TaxonomicEntity, R extends CrudRepository<E, Long>> implements BaseService<E> {
+public abstract class AbstractService<E extends BaseEntity, R extends CrudRepository<E, Long>> implements BaseService<E> {
 	
 	@Autowired
 	protected R repo;

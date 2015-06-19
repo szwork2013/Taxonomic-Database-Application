@@ -19,4 +19,5 @@ public class ConservationAction implements Serializable {
     public void setType(ConservationActionType type) {
         this.type = type;
     }
+
 }
