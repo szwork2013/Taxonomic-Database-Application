@@ -1,10 +1,9 @@
 package com.unep.wcmc.model;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
-public class NaturalHistory implements Serializable {
+public class NaturalHistory implements BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

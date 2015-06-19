@@ -1,7 +1,6 @@
 package com.unep.wcmc.service;
 
-import java.io.Serializable;
-
+import com.unep.wcmc.model.BaseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 
@@ -12,10 +11,10 @@ import org.springframework.data.repository.CrudRepository;
  * @author Adriano Braga Alencar (adriano.alencar@integritas.com)
  *                               (adrianobragaalencar@gmail.com)
  *
- * @param <E> entity object that extends from {@link Serializable}
+ * @param <E> entity object that extends from {@link BaseEntity}
  * @param <R> repository that implements basic operations from {@link CrudRepository}
  */
-public abstract class AbstractService<E extends Serializable, R extends CrudRepository<E, Long>> implements BaseService<E> {
+public abstract class AbstractService<E extends BaseEntity, R extends CrudRepository<E, Long>> implements BaseService<E> {
 	
 	@Autowired
 	protected R repo;

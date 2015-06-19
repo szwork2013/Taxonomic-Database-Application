@@ -1,15 +1,13 @@
 package com.unep.wcmc.model;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.Transient;
-
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Embeddable
 public class Habitat implements Serializable {
 
-	@Transient
+    @ManyToOne
+    @JoinColumn(name = "habitat_type_id")
     private HabitatType type;
 
     @Column(name = "habitat")

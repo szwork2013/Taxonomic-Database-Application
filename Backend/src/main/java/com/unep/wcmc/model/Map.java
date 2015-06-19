@@ -1,14 +1,13 @@
 package com.unep.wcmc.model;
 
-import java.io.Serializable;
+import javax.persistence.*;
 import java.util.Date;
 
-import javax.persistence.*;
-
 @Entity
-public class Map implements Serializable {
+public class Map implements BaseEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column

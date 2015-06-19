@@ -1,11 +1,10 @@
 package com.unep.wcmc.model;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 
 @MappedSuperclass
-public class Multimedia implements Serializable {
+public abstract class Multimedia implements BaseEntity {
 
     @Column(name = "legend")
     private String legend;

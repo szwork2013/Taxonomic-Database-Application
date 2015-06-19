@@ -1,10 +1,9 @@
 package com.unep.wcmc.model;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
-public class Conservation implements Serializable {
+public class Conservation implements BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,7 +25,7 @@ public class Conservation implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    
+
     public ExtinctionRisk getExtinctionRisk() {
         return extinctionRisk;
     }
@@ -42,4 +41,5 @@ public class Conservation implements Serializable {
     public void setConventions(Conventions conventions) {
         this.conventions = conventions;
     }
+
 }

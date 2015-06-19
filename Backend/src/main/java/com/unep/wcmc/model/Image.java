@@ -23,5 +23,14 @@ public class Image extends Multimedia {
     public void setCoverImage(byte[] coverImage) {
         this.coverImage = coverImage;
     }
+    
+	@Override
+	public Long getId() {
+		return id;
+	}
 
+	@Override
+	public void setId(Long id) {
+		this.id = id;
+	}
 }
