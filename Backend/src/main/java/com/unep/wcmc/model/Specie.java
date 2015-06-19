@@ -48,9 +48,9 @@ public class Specie implements Serializable {
     @JoinColumn(name = "cover_map_id")
     private Map coverMap;
 
-    @OneToMany(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "specie_id")
-    private List<Multimedia> medias;
+    //@OneToMany(cascade = CascadeType.REMOVE)
+    //@JoinColumn(name = "specie_id")
+    //private List<Multimedia> medias;
 
     // Getters and setters
     public Long getId() {
@@ -141,12 +141,12 @@ public class Specie implements Serializable {
         this.coverMap = coverMap;
     }
 
-    public List<Multimedia> getMedias() {
-        return medias;
-    }
+//    public List<Multimedia> getMedias() {
+ //       return medias;
+   // }
 
-    public void setMedias(List<Multimedia> medias) {
-        this.medias = medias;
-    }
+//    public void setMedias(List<Multimedia> medias) {
+  //      this.medias = medias;
+    //}
 
 }

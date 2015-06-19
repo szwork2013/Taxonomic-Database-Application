@@ -7,10 +7,6 @@ import java.util.Date;
 @MappedSuperclass
 public class Multimedia implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
     @Column(name = "legend")
     private String legend;
 
@@ -25,14 +21,6 @@ public class Multimedia implements Serializable {
 
     @Column(name = "file")
     private byte[] file;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getLegend() {
         return legend;

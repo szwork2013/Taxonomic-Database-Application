@@ -1,5 +1,6 @@
 package com.unep.wcmc.controller;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.unep.wcmc.model.TaxonomicEntity;
 import com.unep.wcmc.service.BaseService;
 
 /**
@@ -18,10 +18,10 @@ import com.unep.wcmc.service.BaseService;
  * @author Adriano Braga Alencar (adriano.alencar@integritas.com)
  *                               (adrianobragaalencar@gmail.com)
  *
- * @param <E> entity object that extends from {@link TaxonomicEntity}
+ * @param <E> entity object that extends from {@link Serializable}
  * @param <S> service that implements basic operations from {@link BaseService}
  */
-public abstract class AbstractController<E extends TaxonomicEntity, 
+public abstract class AbstractController<E extends Serializable, 
 										 S extends BaseService<E>> {
 	@Autowired
 	protected S service;
