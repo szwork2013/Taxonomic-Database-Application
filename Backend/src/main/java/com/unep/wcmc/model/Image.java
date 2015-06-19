@@ -10,7 +10,7 @@ import javax.persistence.Id;
 public class Image extends Multimedia {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "cover_image")

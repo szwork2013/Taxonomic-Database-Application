@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class Threat implements BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "threat_description")

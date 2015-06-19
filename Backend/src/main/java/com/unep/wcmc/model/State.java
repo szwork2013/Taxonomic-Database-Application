@@ -6,11 +6,13 @@ import javax.persistence.*;
 public class State implements BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(unique = true, nullable = false)
     private String name;
+
+    private String code;
 
     @ManyToOne
     @JoinColumn(name = "country_id")
@@ -30,6 +32,14 @@ public class State implements BaseEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public Country getCountry() {

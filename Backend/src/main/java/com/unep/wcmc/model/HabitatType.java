@@ -8,7 +8,7 @@ import javax.persistence.Id;
 @Entity
 public class HabitatType implements BaseEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
