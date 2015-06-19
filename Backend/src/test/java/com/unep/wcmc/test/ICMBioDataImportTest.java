@@ -5,7 +5,6 @@ import com.unep.wcmc.Application;
 import com.unep.wcmc.model.*;
 import com.unep.wcmc.repository.*;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,37 +47,6 @@ public class ICMBioDataImportTest {
 
     @Autowired
     private SpecieRepository specieRepository;
-
-    @Test
-    public void testImportOccurencesICMBioSpeciesFromCSV() throws Exception {
-        // CSV fields
-        //kingdom,phylum,class,order,family,genus,specificEpithet,infraspecificEpithet,species,scientificName,taxonRank,group,
-        //decimalLatitude,decimalLongitude,geodeticDatum,continent,country,stateProvince,municipality,locality,basisOfRecord,
-        // occurrenceRemarks,establishmentMeans,eventDate,habitat,locationRemarks,occurrenceStatus,georeferenceSources,compilador,references
-
-        CSVReader reader = new CSVReader(new FileReader("src/test/resources/Occurences_ICMBio_brazilian_species.csv"));
-        String[] line = reader.readNext();
-        while (line != null) {
-            List<Taxonomy> list = taxonomyRepository.findByHierarchySpeciesSoundex(line[8].trim());
-            Assert.assertNotNull(list);
-            Assert.assertFalse(list.isEmpty());
-            createOccurence(line, list.get(0));
-            line = reader.readNext();
-        }
-    }
-
-    private Occurrence createOccurence(String[] line, Taxonomy taxonomy) {
-        DistributionArea distributionArea = taxonomy.getSpecie().getDistributionArea();
-        if (distributionArea == null) {
-            distributionArea = new DistributionArea();
-        }
-        State state = stateRepository.findByCode(line[17].trim());
-        Map map = new Map(line[19].trim(), null, line[29].trim(), null, null, null, false);
-        Occurrence occurrence = new Occurrence(line[12].trim(), line[13].trim(), line[19].trim(), state, map);
-        distributionArea.getOccurrences().add(occurrence);
-        distributionAreaRepository.save(distributionArea);
-        return occurrence;
-    }
 
     @Test
     public void testImportTaxonomicICMBioSpeciesFromCSV() throws Exception {
@@ -182,6 +150,37 @@ public class ICMBioDataImportTest {
             gender = genderRepository.save(gender);
         }
         return gender;
+    }
+
+    @Test
+    public void testImportOccurencesICMBioSpeciesFromCSV() throws Exception {
+        // CSV fields
+        //kingdom,phylum,class,order,family,genus,specificEpithet,infraspecificEpithet,species,scientificName,taxonRank,group,
+        //decimalLatitude,decimalLongitude,geodeticDatum,continent,country,stateProvince,municipality,locality,basisOfRecord,
+        // occurrenceRemarks,establishmentMeans,eventDate,habitat,locationRemarks,occurrenceStatus,georeferenceSources,compilador,references
+
+        CSVReader reader = new CSVReader(new FileReader("src/test/resources/Occurences_ICMBio_brazilian_species.csv"));
+        String[] line = reader.readNext();
+        while (line != null) {
+            List<Taxonomy> list = taxonomyRepository.findByHierarchySpeciesSoundex(line[8].trim());
+            Assert.assertNotNull(list);
+            Assert.assertFalse(list.isEmpty());
+            createOccurence(line, list.get(0));
+            line = reader.readNext();
+        }
+    }
+
+    private Occurrence createOccurence(String[] line, Taxonomy taxonomy) {
+        DistributionArea distributionArea = taxonomy.getSpecie().getDistributionArea();
+        if (distributionArea == null) {
+            distributionArea = new DistributionArea();
+        }
+        State state = stateRepository.findByCode(line[17].trim());
+        Map map = new Map(line[19].trim(), null, line[29].trim(), null, null, null, false);
+        Occurrence occurrence = new Occurrence(line[12].trim(), line[13].trim(), line[19].trim(), state, map);
+        distributionArea.getOccurrences().add(occurrence);
+        distributionAreaRepository.save(distributionArea);
+        return occurrence;
     }
 
 }
