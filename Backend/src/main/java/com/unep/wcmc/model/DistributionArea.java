@@ -50,6 +50,7 @@ public class DistributionArea implements BaseEntity {
     private TrendOccurence trendOccupancyArea;
 
     @ElementCollection
+    @CollectionTable(name="ocurrence")
     private List<Occurrence> occurrences;
 
     public DistributionArea() {
