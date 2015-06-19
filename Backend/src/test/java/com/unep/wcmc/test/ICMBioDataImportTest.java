@@ -16,7 +16,7 @@ import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
-public class DatabaseImportTest {
+public class ICMBioDataImportTest {
 
     @Autowired
     private KingdomRepository kingdomRepository;
@@ -61,7 +61,7 @@ public class DatabaseImportTest {
             List<Taxonomy> list = taxonomyRepository.findByHierarchySpeciesSoundex(line[8].trim());
             Assert.assertNotNull(list);
             Assert.assertFalse(list.isEmpty());
-//            createOccurence(line, taxonomy);
+            createOccurence(line, list.get(0));
             line = reader.readNext();
         }
     }
