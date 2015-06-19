@@ -12,6 +12,14 @@ public class Phylum implements BaseEntity {
     @Column(name = "phylum")
     private String name;
 
+    public Phylum() {
+        super();
+    }
+
+    public Phylum(String name) {
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
     }

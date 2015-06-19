@@ -12,6 +12,14 @@ public class Family implements BaseEntity {
     @Column(name = "family")
     private String name;
 
+    public Family() {
+        super();
+    }
+
+    public Family(String name) {
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
     }

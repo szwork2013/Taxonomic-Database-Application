@@ -1,9 +1,6 @@
 package com.unep.wcmc.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Kingdom implements BaseEntity {
@@ -12,6 +9,14 @@ public class Kingdom implements BaseEntity {
     private Long id;
 
     private String name;
+
+    public Kingdom() {
+        super();
+    }
+
+    public Kingdom(String name) {
+        this.name = name;
+    }
 
     @Override
     public Long getId() {

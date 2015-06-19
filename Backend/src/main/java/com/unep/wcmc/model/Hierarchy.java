@@ -39,6 +39,22 @@ public class Hierarchy implements Serializable {
     @Column(name = "subspecies")
     private String subSpecies;
 
+    public Hierarchy() {
+        super();
+    }
+
+    public Hierarchy(Kingdom kingdom, Phylum phylum, HierarchyClass hierarchyClass, HierarchyOrder order,
+                     Family family, Gender gender, String species, String subSpecies) {
+        this.kingdom = kingdom;
+        this.phylum = phylum;
+        this.hierarchyClass = hierarchyClass;
+        this.order = order;
+        this.family = family;
+        this.gender = gender;
+        this.species = species;
+        this.subSpecies = subSpecies;
+    }
+
     public Kingdom getKingdom() {
         return kingdom;
     }

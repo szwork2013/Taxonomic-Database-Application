@@ -12,6 +12,14 @@ public class HierarchyClass implements BaseEntity {
     @Column(name = "class")
     private String name;
 
+    public HierarchyClass() {
+        super();
+    }
+
+    public HierarchyClass(String name) {
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
     }
