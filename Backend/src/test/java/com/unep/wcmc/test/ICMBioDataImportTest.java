@@ -4,8 +4,8 @@ import au.com.bytecode.opencsv.CSVReader;
 import com.unep.wcmc.Application;
 import com.unep.wcmc.model.*;
 import com.unep.wcmc.repository.*;
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +49,8 @@ public class ICMBioDataImportTest {
     @Autowired
     private SpecieRepository specieRepository;
 
-    //@Test // Ignoring this test case to not be executed all the time
+    @Test
+    @Ignore // Ignoring this test case to not be executed all the time
     public void testImportTaxonomicICMBioSpeciesFromCSV() throws Exception {
         // CSV fields
         //Reino,Filo,Classe,Ordem,Familia,Genero,Epiteto Especifico,Subespecie,species,Nome cientifico,Nome Comum
@@ -153,7 +154,8 @@ public class ICMBioDataImportTest {
         return gender;
     }
 
-    //@Test // ignoring this test case to not be executed all the time
+    @Test
+    @Ignore // ignoring this test case to not be executed all the time
     public void testImportOccurencesICMBioSpeciesFromCSV() throws Exception {
         // CSV fields
         //kingdom,phylum,class,order,family,genus,specificEpithet,infraspecificEpithet,species,scientificName,taxonRank,group,
