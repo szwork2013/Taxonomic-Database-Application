@@ -16,7 +16,7 @@ import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
-public class DatabaseImportTest {
+public class ICMBioDataImportTest {
 
     @Autowired
     private KingdomRepository kingdomRepository;
@@ -40,15 +40,22 @@ public class DatabaseImportTest {
     private TaxonomyRepository taxonomyRepository;
 
     @Autowired
+    private StateRepository stateRepository;
+
+    @Autowired
+    private DistributionAreaRepository distributionAreaRepository;
+
+    @Autowired
     private SpecieRepository specieRepository;
 
     @Test
     public void testImportTaxonomicICMBioSpeciesFromCSV() throws Exception {
+        // CSV fields
         //Reino,Filo,Classe,Ordem,Familia,Genero,Epiteto Especifico,Subespecie,species,Nome cientifico,Nome Comum
 
         CSVReader reader = new CSVReader(new FileReader("src/test/resources/Taxonomic_ICMBio_brazilian_species.csv"));
-        List<String[]> entries = reader.readAll();
-        for (String[] line : entries) {
+        String[] line = reader.readNext();
+        while (line != null) {
 
             Taxonomy taxonomy = createTaxonomy(line);
             Assert.assertNotNull(taxonomy);
@@ -57,6 +64,8 @@ public class DatabaseImportTest {
             Specie specie = createSpecie(line, taxonomy);
             Assert.assertNotNull(specie);
             Assert.assertNotNull(specie.getId());
+
+            line = reader.readNext();
         }
     }
 
@@ -141,6 +150,37 @@ public class DatabaseImportTest {
             gender = genderRepository.save(gender);
         }
         return gender;
+    }
+
+    @Test
+    public void testImportOccurencesICMBioSpeciesFromCSV() throws Exception {
+        // CSV fields
+        //kingdom,phylum,class,order,family,genus,specificEpithet,infraspecificEpithet,species,scientificName,taxonRank,group,
+        //decimalLatitude,decimalLongitude,geodeticDatum,continent,country,stateProvince,municipality,locality,basisOfRecord,
+        // occurrenceRemarks,establishmentMeans,eventDate,habitat,locationRemarks,occurrenceStatus,georeferenceSources,compilador,references
+
+        CSVReader reader = new CSVReader(new FileReader("src/test/resources/Occurences_ICMBio_brazilian_species.csv"));
+        String[] line = reader.readNext();
+        while (line != null) {
+            List<Taxonomy> list = taxonomyRepository.findByHierarchySpeciesSoundex(line[8].trim());
+            Assert.assertNotNull(list);
+            Assert.assertFalse(list.isEmpty());
+            createOccurence(line, list.get(0));
+            line = reader.readNext();
+        }
+    }
+
+    private Occurrence createOccurence(String[] line, Taxonomy taxonomy) {
+        DistributionArea distributionArea = taxonomy.getSpecie().getDistributionArea();
+        if (distributionArea == null) {
+            distributionArea = new DistributionArea();
+        }
+        State state = stateRepository.findByCode(line[17].trim());
+        Map map = new Map(line[19].trim(), null, line[29].trim(), null, null, null, false);
+        Occurrence occurrence = new Occurrence(line[12].trim(), line[13].trim(), line[19].trim(), state, map);
+        distributionArea.getOccurrences().add(occurrence);
+        distributionAreaRepository.save(distributionArea);
+        return occurrence;
     }
 
 }

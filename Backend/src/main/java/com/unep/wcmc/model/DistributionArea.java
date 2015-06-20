@@ -1,6 +1,8 @@
 package com.unep.wcmc.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class DistributionArea implements BaseEntity {
@@ -46,6 +48,15 @@ public class DistributionArea implements BaseEntity {
     @Column(name = "area_of_occupancy_trend")
     @Enumerated(value = EnumType.ORDINAL)
     private TrendOccurence trendOccupancyArea;
+
+    @ElementCollection
+    @CollectionTable(name="ocurrence")
+    private List<Occurrence> occurrences;
+
+    public DistributionArea() {
+        super();
+        this.occurrences = new ArrayList<>();
+    }
 
     public Long getId() {
         return id;
@@ -149,5 +160,13 @@ public class DistributionArea implements BaseEntity {
 
     public void setTrendOccupancyArea(TrendOccurence trendOccupancyArea) {
         this.trendOccupancyArea = trendOccupancyArea;
+    }
+
+    public List<Occurrence> getOccurrences() {
+        return occurrences;
+    }
+
+    public void setOccurrences(List<Occurrence> occurrences) {
+        this.occurrences = occurrences;
     }
 }

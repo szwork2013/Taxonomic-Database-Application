@@ -1,43 +1,60 @@
 package com.unep.wcmc.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 public class Map implements BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(name = "file")
     private byte[] file;
 
-    @Column
+    @Column(name = "projection")
     private String projection;
 
-    @Column
+    @Column(name = "type")
     private String type;
 
-    @Column
+    @Lob
+    @Column(name = "author")
     private String auhtor;
 
-    @Column
+    @Column(name = "date")
     private Date date;
 
-    @Column
+    @Column(name = "caption")
     private String caption;
 
-    @Column
+    @Column(name = "description")
     private String description;
 
-    @Column
+    @Column(name = "set_as_cover")
     private Boolean isCover;
 
+    public Map() {
+        super();
+    }
+
+    public Map(String projection, String type, String author, Date date, String caption, String description, Boolean isCover) {
+        this.projection = projection;
+        this.type = type;
+        this.auhtor = author;
+        this.date = date;
+        this.caption = caption;
+        this.description = description;
+        this.isCover = isCover;
+    }
+
+    @Override
     public Long getId() {
         return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
@@ -50,7 +67,7 @@ public class Map implements BaseEntity {
         this.file = file;
     }
 
-    public Boolean isCover() {
+    public Boolean getIsCover() {
         return isCover;
     }
 
