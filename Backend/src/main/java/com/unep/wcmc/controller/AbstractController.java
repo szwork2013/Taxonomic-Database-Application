@@ -1,7 +1,9 @@
 package com.unep.wcmc.controller;
 
 import com.unep.wcmc.model.BaseEntity;
+import com.unep.wcmc.model.ErrorMessage;
 import com.unep.wcmc.service.BaseService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,13 +39,15 @@ public abstract class AbstractController<E extends BaseEntity,
 
     @RequestMapping(method= RequestMethod.PUT, value="{id}")
     public E edit(@RequestBody E e, @PathVariable String id){
-        E obj = service.get(Long.valueOf(id));
+        final E obj = service.get(Long.valueOf(id));
         return service.save(obj);
     }
 
     @RequestMapping(method= RequestMethod.GET, value="{id}")
-    public E view(@PathVariable String id) {
-        return service.get(Long.valueOf(id));
+    public Object view(@PathVariable String id) {
+        final Long entityId = Long.valueOf(id);
+        final E entity = service.get(entityId);
+        return entity == null ? new ErrorMessage(entityId, "no matches found") : entity;
     }
 
     @RequestMapping(method= RequestMethod.DELETE, value="{id}")

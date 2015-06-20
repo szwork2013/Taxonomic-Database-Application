@@ -7,4 +7,8 @@ import com.unep.wcmc.repository.SpecieRepository;
 
 @Service
 public final class SpecieService extends AbstractService<Specie, SpecieRepository> {
+    
+    public Specie findByCommonName(String commonName) {
+        return repo.findByCommonName(commonName);
+    }
 }
