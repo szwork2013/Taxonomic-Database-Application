@@ -34,6 +34,9 @@ public class PopulationDynamics implements Serializable {
     @Column(name = "population_severely_fragmented")
     private Boolean populationSeverelyFragmented;
 
+    @Column(name = "captive_breeding_program")
+    private Boolean captiveBreedingProgram;
+
     public PopulationTrend getPopulationTrend() {
         return populationTrend;
     }
@@ -106,4 +109,11 @@ public class PopulationDynamics implements Serializable {
         this.populationSeverelyFragmented = populationSeverelyFragmented;
     }
 
+    public Boolean getCaptiveBreedingProgram() {
+        return captiveBreedingProgram;
+    }
+
+    public void setCaptiveBreedingProgram(Boolean captiveBreedingProgram) {
+        this.captiveBreedingProgram = captiveBreedingProgram;
+    }
 }

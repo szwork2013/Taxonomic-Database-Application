@@ -1,0 +1,42 @@
+package rules.extinction.risk;
+dialect  "mvel"
+
+import com.unep.wcmc.model.DistributionArea;
+import com.unep.wcmc.model.PopulationDynamics;
+import com.unep.wcmc.model.Specie
+import com.unep.wcmc.model.ExtinctionRiskCategory;
+
+global Specie specie;
+
+rule "Critically Endangered (CR)"
+    when
+        DistributionArea(extendOccurrence < 100, occupancyArea < 10)
+        PopulationDynamics(matureIndividualsNumber < 250)
+    then
+        System.out.println("Critically Endangered (CR)");
+        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.CRITICALLY_ENDANGERED);
+end
+
+rule "Endangered (EN)"
+    when
+        DistributionArea(extendOccurrence >= 100, occupancyArea >= 10)
+        DistributionArea(extendOccurrence < 5000, occupancyArea < 500)
+        PopulationDynamics(matureIndividualsNumber >= 250)
+        PopulationDynamics(matureIndividualsNumber < 2500)
+    then
+        System.out.println("Endangered (EN)");
+        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.ENDANGERED);
+end
+
+rule "Vulnerable (VU)"
+    when
+        DistributionArea(extendOccurrence >= 5000, occupancyArea >= 500)
+        DistributionArea(extendOccurrence < 20000, occupancyArea < 2000)
+        PopulationDynamics(matureIndividualsNumber >= 2500)
+        PopulationDynamics(matureIndividualsNumber < 10000)
+    then
+        System.out.println("Vulnerable (VU)");
+        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.VUNERABLE);
+end
+
+

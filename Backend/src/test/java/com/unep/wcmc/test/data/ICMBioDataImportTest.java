@@ -1,4 +1,4 @@
-package com.unep.wcmc.test;
+package com.unep.wcmc.test.data;
 
 import au.com.bytecode.opencsv.CSVReader;
 import com.unep.wcmc.Application;

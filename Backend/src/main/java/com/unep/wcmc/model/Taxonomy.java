@@ -15,6 +15,9 @@ public class Taxonomy implements BaseEntity {
     @OneToOne(mappedBy = "taxonomy")
     private Specie specie;
 
+    @Column(name = "limitations_for_assessment")
+    private Boolean limitationsForAssessment;
+
     public Long getId() {
         return id;
     }
@@ -37,5 +40,13 @@ public class Taxonomy implements BaseEntity {
 
     public void setSpecie(Specie specie) {
         this.specie = specie;
+    }
+
+    public Boolean getLimitationsForAssessment() {
+        return limitationsForAssessment;
+    }
+
+    public void setLimitationsForAssessment(Boolean limitationsForAssessment) {
+        this.limitationsForAssessment = limitationsForAssessment;
     }
 }

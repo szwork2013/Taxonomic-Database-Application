@@ -1,0 +1,52 @@
+package rules.extinction.risk;
+dialect  "mvel"
+
+import com.unep.wcmc.model.Taxonomy;
+import com.unep.wcmc.model.DistributionArea;
+import com.unep.wcmc.model.Conservation;
+import com.unep.wcmc.model.Specie
+import com.unep.wcmc.model.ExtinctionRiskCategory;
+
+global Specie specie;
+
+rule "Data Deficient (DD)"
+    when
+        Taxonomy(limitationsForAssessment == true)
+    or
+        Taxonomy(limitationsForAssessment == false)
+        Conservation(extinctionRisk.inNationalEndangeredFauna == null || extinctionRisk.inNationalEndangeredFauna == true)
+        DistributionArea(onlyFromFewLocalities == true, (regionIsWellSampled == false || regionIsWellSampled == null))
+    then
+        System.out.println("Data Deficient (DD)");
+        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.DATA_DEFICIENT);
+end
+
+
+rule "Near Threatened (NT)"
+    when
+        Taxonomy(limitationsForAssessment == false)
+        DistributionArea(onlyFromFewLocalities == true)
+    then
+        System.out.println("Near Threatened (NT)");
+        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.NEAR_THREATENED);
+end
+
+
+rule "Least Concern (LC)"
+    when
+        Taxonomy(limitationsForAssessment == false)
+        DistributionArea(onlyFromFewLocalities == true)
+    then
+        System.out.println("Least Concern (LC)");
+        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.LEAST_CONCERN);
+end
+
+rule "Not Applicable (NA)"
+    when
+        Taxonomy(limitationsForAssessment == false)
+        Conservation(extinctionRisk.inNationalEndangeredFauna == false)
+        DistributionArea(onlyFromFewLocalities == true)
+    then
+        System.out.println("Not Applicable (NA)");
+        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.NOT_APPLICABLE);
+end

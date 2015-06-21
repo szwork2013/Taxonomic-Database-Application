@@ -1,5 +1,6 @@
 package com.unep.wcmc.model;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 
@@ -19,6 +20,9 @@ public class ExtinctionRisk implements Serializable {
     private String researchInProgress;
 
     private String necessaryResearchForConservation;
+
+    @Column(name = "in_national_endangered_fauna")
+    private Boolean inNationalEndangeredFauna;
 
     public Boolean getNationalEvaluationElegible() {
         return nationalEvaluationElegible;
@@ -76,4 +80,11 @@ public class ExtinctionRisk implements Serializable {
         this.necessaryResearchForConservation = necessaryResearchForConservation;
     }
 
+    public Boolean getInNationalEndangeredFauna() {
+        return inNationalEndangeredFauna;
+    }
+
+    public void setInNationalEndangeredFauna(Boolean inNationalEndangeredFauna) {
+        this.inNationalEndangeredFauna = inNationalEndangeredFauna;
+    }
 }
