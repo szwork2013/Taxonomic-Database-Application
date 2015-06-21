@@ -3,6 +3,7 @@ dialect  "mvel"
 
 import com.unep.wcmc.model.DistributionArea;
 import com.unep.wcmc.model.ExtinctionRiskCategory;
+import com.unep.wcmc.model.ExtinctionRiskConfiguration;
 import com.unep.wcmc.model.NaturalHistory;
 import com.unep.wcmc.model.PopulationDynamics;
 import com.unep.wcmc.model.PopulationTrend;
@@ -11,15 +12,17 @@ import com.unep.wcmc.model.TrendOccurence;
 import com.unep.wcmc.model.Threat;
 
 global Specie specie;
+global java.util.List configuration;
 
 rule "Critically Endangered (CR) - A"
     activation-group "ExtinctionRisk"
     salience 0
     when
+        $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.CRITICALLY_ENDANGERED) from configuration
         // A1, A2, A3, A4 criteria
         PopulationTrend(declineReversibleAndCeased == false)
-        PopulationTrend(percPopulationDecline >= 90) // A1
-        PopulationTrend(percPopulationDecline >= 80) // A2, A3, A4
+        PopulationTrend(percPopulationDecline >= $config.percPopulationDecline) // A1
+        PopulationTrend(percPopulationDecline >= $config.percePopulationDecline2) // A2, A3, A4
     then
         specie.setExtinctionRiskCategory(ExtinctionRiskCategory.CRITICALLY_ENDANGERED);
 end
@@ -28,9 +31,10 @@ rule "Critically Endangered (CR) - B"
     activation-group "ExtinctionRisk"
     salience 0
     when
+        $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.CRITICALLY_ENDANGERED) from configuration
         // B1, B2 criteria
-        DistributionArea(extendOccurrence < 100) // B1 (EOD)
-        DistributionArea(occupancyArea < 10) // B2 (AOD)
+        DistributionArea(extendOccurrence < $config.occurrenceExtent) // B1 (EOD)
+        DistributionArea(occupancyArea < $config.occupancyArea) // B2 (AOD)
     and (
         // B(a) criteria
         PopulationDynamics(populationSeverelyFragmented == true)
@@ -38,7 +42,7 @@ rule "Critically Endangered (CR) - B"
             // B(a) criteria
             PopulationDynamics(populationSeverelyFragmented == false)
             and
-            Threat(geographicallyDistinctAreasNumber == 1)
+            Threat(geographicallyDistinctAreasNumber == $config.numberLocations)
         )
     )
     then
@@ -71,8 +75,9 @@ rule "Critically Endangered (CR) - D"
     activation-group "ExtinctionRisk"
     salience 0
     when
+        $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.CRITICALLY_ENDANGERED) from configuration
         // D criteria
-        PopulationDynamics(matureIndividualsNumber < 50)
+        PopulationDynamics(matureIndividualsNumber < $config.numberMatureIndividuals2)
     then
         specie.setExtinctionRiskCategory(ExtinctionRiskCategory.CRITICALLY_ENDANGERED);
 end
@@ -81,8 +86,9 @@ rule "Critically Endangered (CR) - E"
     activation-group "ExtinctionRisk"
     salience 0
     when
+        $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.CRITICALLY_ENDANGERED) from configuration
         // E criteria
-        PopulationTrend(brazilExtinctionProbability >= 10, brazilExtinctionProbability < 20)
+        PopulationTrend(brazilExtinctionProbability >= $config.probExtinctionInWild, brazilExtinctionProbability < 20)
     then
         specie.setExtinctionRiskCategory(ExtinctionRiskCategory.CRITICALLY_ENDANGERED);
 end
