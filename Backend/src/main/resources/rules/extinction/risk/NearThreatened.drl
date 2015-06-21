@@ -1,0 +1,83 @@
+package rules.extinction.risk;
+dialect  "mvel"
+
+import com.unep.wcmc.model.Conservation;
+import com.unep.wcmc.model.DistributionArea;
+import com.unep.wcmc.model.ExtinctionRiskCategory;
+import com.unep.wcmc.model.PopulationDynamics;
+import com.unep.wcmc.model.PopulationTrend;
+import com.unep.wcmc.model.Specie
+import com.unep.wcmc.model.Taxonomy;
+import com.unep.wcmc.model.Threat;
+import com.unep.wcmc.model.TrendOccurence;
+
+global Specie specie;
+
+/**
+ * Near Threatened (NT)
+ * Classification - A
+ */
+rule "Near Threatened (NT) - A"
+    activation-group "ExtinctionRisk"
+    salience 10
+    when
+        Taxonomy(limitationsForAssessment == false)
+        DistributionArea(onlyFromFewLocalities == true)
+        // A1, A2, A3, A4 criteria
+        PopulationTrend(declineReversibleAndCeased == false)
+        PopulationTrend(percPopulationDecline > 40, percPopulationDecline < 50) // A1
+        PopulationTrend(percPopulationDecline > 20, percPopulationDecline < 40) // A2, A3, A4
+    then
+        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.NEAR_THREATENED);
+end
+
+rule "Near Threatened (NT) - B"
+    activation-group "ExtinctionRisk"
+    salience 10
+    when
+        // B1, B2 criteria
+        DistributionArea(extendOccurrence >= 20000, extendOccurrence < 30000) // B1 (EOD)
+        DistributionArea(occupancyArea >= 2000, occupancyArea < 3000) // B2 (AOD)
+    and (
+        // B(a) criteria
+        PopulationDynamics(populationSeverelyFragmented == true)
+        or (
+            // B(a) criteria
+            PopulationDynamics(populationSeverelyFragmented == false)
+            and
+            Threat(geographicallyDistinctAreasNumber > 5, geographicallyDistinctAreasNumber <= 10)
+        )
+    )
+    then
+        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.NEAR_THREATENED);
+end
+
+rule "Near Threatened (NT) - C"
+    activation-group "ExtinctionRisk"
+    salience 10
+    when
+        // C criteria
+        PopulationDynamics(matureIndividualsNumber > 10000, matureIndividualsNumber < 15000)
+    and (
+            PopulationDynamics(declinePeriodPercent <= 10) // C1
+            or (
+                PopulationDynamics(matureIndividualsNumberTrend == TrendOccurence.DECLINING) // C2
+                and
+                PopulationDynamics(matureIndividualsSubpopulationMaxNumber > 10000,
+                    matureIndividualsSubpopulationMaxNumber < 15000) // a(i)
+            )
+        )
+    then
+        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.NEAR_THREATENED);
+end
+
+
+rule "Near Threatened (NT) - D"
+    activation-group "ExtinctionRisk"
+    salience 10
+    when
+        // D1 criteria
+        PopulationDynamics(matureIndividualsNumber > 1000, matureIndividualsNumber < 1500) // D1
+    then
+        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.NEAR_THREATENED);
+end

@@ -11,6 +11,9 @@ public class DistributionArea implements BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "occurs_in_brasil")
+    private Boolean ocurrsBrazil;
+
     @Column(name = "native_in_brazil")
     private Boolean nativeBrazil;
 
@@ -64,6 +67,14 @@ public class DistributionArea implements BaseEntity {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Boolean getOcurrsBrazil() {
+        return ocurrsBrazil;
+    }
+
+    public void setOcurrsBrazil(Boolean ocurrsBrazil) {
+        this.ocurrsBrazil = ocurrsBrazil;
     }
 
     public Boolean getNativeBrazil() {

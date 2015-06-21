@@ -1,0 +1,93 @@
+package rules.extinction.risk;
+dialect  "mvel"
+
+import com.unep.wcmc.model.DistributionArea;
+import com.unep.wcmc.model.ExtinctionRiskCategory;
+import com.unep.wcmc.model.NaturalHistory;
+import com.unep.wcmc.model.PopulationDynamics;
+import com.unep.wcmc.model.PopulationTrend;
+import com.unep.wcmc.model.Specie;
+import com.unep.wcmc.model.TrendOccurence;
+import com.unep.wcmc.model.Threat;
+
+global Specie specie;
+
+/**
+ * Endangered (EN)
+ */
+rule "Endangered (EN) - A"
+    activation-group "ExtinctionRisk"
+    salience 0
+    when
+        // A1, A2, A3, A4 criteria
+        PopulationTrend(declineReversibleAndCeased == false)
+        PopulationTrend(percPopulationDecline >= 70, percPopulationDecline < 90) // A1
+    or
+        PopulationTrend(percPopulationDecline >= 50, percPopulationDecline < 80) // A2, A3, A4
+    then
+        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.ENDANGERED);
+end
+
+rule "Endangered (EN) - B"
+    activation-group "ExtinctionRisk"
+    salience 0
+    when
+        // B1, B2 criteria
+        DistributionArea(extendOccurrence >= 100, extendOccurrence < 5000) // B1 (EOD)
+        DistributionArea(occupancyArea >= 10, occupancyArea < 500) // B2 (AOD)
+    and (
+        // B(a) criteria
+        PopulationDynamics(populationSeverelyFragmented == true)
+        or (
+            // B(a) criteria
+            PopulationDynamics(populationSeverelyFragmented == false)
+            and
+            Threat(geographicallyDistinctAreasNumber > 1, geographicallyDistinctAreasNumber <= 5)
+        )
+    )
+    then
+        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.ENDANGERED);
+end
+
+rule "Endangered (EN) - C"
+    activation-group "ExtinctionRisk"
+    salience 0
+    when
+        // C criteria
+        PopulationDynamics(matureIndividualsNumber >= 250, matureIndividualsNumber < 2500)
+    and (
+        PopulationDynamics(declinePeriodPercent >= 20) // C1
+        or
+        PopulationDynamics(matureIndividualsNumberTrend == TrendOccurence.DECLINING) // C2
+        and (
+                PopulationDynamics(matureIndividualsSubpopulationMaxNumber <= 250) // a(i)
+                or
+                PopulationDynamics(imatureIndividualsSubpopulationPercent >= 95)  // a(ii)
+                or
+                PopulationDynamics(extremeFlutuationInMatureIndividualsNumber == true) // b
+            )
+        )
+    then
+        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.ENDANGERED);
+end
+
+
+rule "Endangered (EN) - D"
+    activation-group "ExtinctionRisk"
+    salience 0
+    when
+        // D criteria
+        PopulationDynamics(matureIndividualsNumber < 250)
+    then
+        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.ENDANGERED);
+end
+
+rule "Endangered (EN) - E"
+    activation-group "ExtinctionRisk"
+    salience 0
+    when
+        // E criteria
+        PopulationTrend(brazilExtinctionProbability >= 20, brazilExtinctionProbability < 50)
+    then
+        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.ENDANGERED);
+end

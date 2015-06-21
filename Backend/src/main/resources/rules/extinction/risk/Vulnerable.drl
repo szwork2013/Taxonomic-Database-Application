@@ -1,0 +1,97 @@
+package rules.extinction.risk;
+dialect  "mvel"
+
+import com.unep.wcmc.model.DistributionArea;
+import com.unep.wcmc.model.ExtinctionRiskCategory;
+import com.unep.wcmc.model.NaturalHistory;
+import com.unep.wcmc.model.PopulationDynamics;
+import com.unep.wcmc.model.PopulationTrend;
+import com.unep.wcmc.model.Specie;
+import com.unep.wcmc.model.TrendOccurence;
+import com.unep.wcmc.model.Threat;
+
+global Specie specie;
+
+/**
+ * Vulnerable (VU)
+ * Classification - A
+ */
+rule "Vulnerable (VU) - A"
+    activation-group "ExtinctionRisk"
+    salience 0
+    when
+        // A1, A2, A3, A4 criteria
+        PopulationTrend(declineReversibleAndCeased == false)
+        PopulationTrend(percPopulationDecline >= 50, percPopulationDecline < 70) // A1
+        PopulationTrend(percPopulationDecline >= 30, percPopulationDecline < 50) // A2, A3, A4
+    then
+        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.VUNERABLE);
+end
+
+rule "Vulnerable (VU) - B"
+    activation-group "ExtinctionRisk"
+    salience 0
+    when
+        // B1, B2 criteria
+        DistributionArea(extendOccurrence >= 5000, extendOccurrence < 20000) // B1 (EOD)
+        DistributionArea(occupancyArea >= 500, occupancyArea < 2000) // B2 (AOD)
+    and (
+        // B(a) criteria
+        PopulationDynamics(populationSeverelyFragmented == true)
+        or (
+            // B(a) criteria
+            PopulationDynamics(populationSeverelyFragmented == false)
+            and
+            Threat(geographicallyDistinctAreasNumber > 5, geographicallyDistinctAreasNumber <= 10)
+        )
+    )
+    then
+        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.VUNERABLE);
+end
+
+rule "Vulnerable (VU) - C"
+    activation-group "ExtinctionRisk"
+    salience 0
+    when
+        // C criteria
+        PopulationDynamics(matureIndividualsNumber >= 2500, matureIndividualsNumber < 10000)
+    and (
+        PopulationDynamics(declinePeriodPercent >= 10) // C1
+        or
+        PopulationDynamics(matureIndividualsNumberTrend == TrendOccurence.DECLINING) // C2
+        and (
+                PopulationDynamics(matureIndividualsSubpopulationMaxNumber <= 1000) // a(i)
+                or
+                PopulationDynamics(imatureIndividualsSubpopulationPercent == 100)  // a(ii)
+                or
+                PopulationDynamics(extremeFlutuationInMatureIndividualsNumber == true) // b
+            )
+        )
+    then
+        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.VUNERABLE);
+end
+
+
+rule "Vulnerable (VU) - D"
+    activation-group "ExtinctionRisk"
+    salience 0
+    when
+        // D1 criteria
+        PopulationDynamics(matureIndividualsNumber < 1000) // D1
+        // D2 criteria
+        Threat(futureThreatExistence == true, geographicallyDistinctAreasNumber <= 5)
+        DistributionArea(occupancyArea < 2000) // (AOD)
+    then
+        System.out.println("Vulnerable (VU)");
+        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.VUNERABLE);
+end
+
+rule "Vulnerable (VU) - E"
+    activation-group "ExtinctionRisk"
+    salience 0
+    when
+        // E criteria
+        PopulationTrend(brazilExtinctionProbability >= 10, brazilExtinctionProbability < 20)
+    then
+        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.VUNERABLE);
+end

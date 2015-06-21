@@ -1,0 +1,21 @@
+package rules.extinction.risk;
+dialect  "mvel"
+
+import com.unep.wcmc.model.Specie;
+import com.unep.wcmc.model.PopulationDynamics;
+import com.unep.wcmc.model.ExtinctionRisk
+import com.unep.wcmc.model.ExtinctionRiskCategory;
+
+global Specie specie;
+
+rule "Regionally Extinct (RE)"
+    activation-group "ExtinctionRisk"
+    salience 10
+    when
+        PopulationDynamics(matureIndividualsNumber == 0)
+        // Captive breeding program for the species = NO  Endemic from Brazil = NO
+        PopulationDynamics(captiveBreedingProgram == false)
+        ExtinctionRisk(nationalEvaluationElegible == false)
+    then
+        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.REGIONALLY_EXTINCT);
+end

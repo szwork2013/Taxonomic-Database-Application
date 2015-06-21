@@ -1,0 +1,27 @@
+package rules.extinction.risk;
+dialect  "mvel"
+
+import com.unep.wcmc.model.Conservation;
+import com.unep.wcmc.model.DistributionArea;
+import com.unep.wcmc.model.ExtinctionRiskCategory;
+import com.unep.wcmc.model.PopulationDynamics;
+import com.unep.wcmc.model.PopulationTrend;
+import com.unep.wcmc.model.Specie
+import com.unep.wcmc.model.Taxonomy;
+
+global Specie specie;
+
+/*
+ * Species not eligible for regional assessment (in Brazil), usually occur in low numbers in the region or
+ * country having the marginal distribution (typically less than 1%)
+ */
+rule "Not Applicable (NA)"
+    activation-group "ExtinctionRisk"
+    salience 10
+    when
+        Taxonomy(limitationsForAssessment == false)
+        Conservation(extinctionRisk.inNationalEndangeredFauna == false)
+        DistributionArea(onlyFromFewLocalities == true)
+    then
+        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.NOT_APPLICABLE);
+end
