@@ -12,9 +12,6 @@ public class Taxonomy implements BaseEntity {
     @Embedded
     private Hierarchy hierarchy;
 
-    @OneToOne(mappedBy = "taxonomy")
-    private Specie specie;
-
     @Column(name = "limitations_for_assessment")
     private Boolean limitationsForAssessment;
 
@@ -32,14 +29,6 @@ public class Taxonomy implements BaseEntity {
 
     public void setHierarchy(Hierarchy hierarchy) {
         this.hierarchy = hierarchy;
-    }
-
-    public Specie getSpecie() {
-        return specie;
-    }
-
-    public void setSpecie(Specie specie) {
-        this.specie = specie;
     }
 
     public Boolean getLimitationsForAssessment() {
