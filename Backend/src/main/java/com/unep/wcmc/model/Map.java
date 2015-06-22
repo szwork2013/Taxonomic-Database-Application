@@ -19,7 +19,6 @@ public class Map implements BaseEntity {
     @Column(name = "type")
     private String type;
 
-    @Lob
     @Column(name = "author")
     private String auhtor;
 

@@ -40,7 +40,7 @@ public abstract class AbstractController<E extends BaseEntity,
     @RequestMapping(method= RequestMethod.PUT, value="{id}")
     public E edit(@RequestBody E e, @PathVariable String id){
         final E obj = service.get(Long.valueOf(id));
-        return service.save(obj);
+        return obj == null ? null : service.save(e);
     }
 
     @RequestMapping(method= RequestMethod.GET, value="{id}")

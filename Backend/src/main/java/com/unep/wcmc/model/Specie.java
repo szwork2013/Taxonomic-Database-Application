@@ -1,6 +1,15 @@
 package com.unep.wcmc.model;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Specie implements BaseEntity {
@@ -22,19 +31,19 @@ public class Specie implements BaseEntity {
     @JoinColumn(name = "taxonomy_id")
     private Taxonomy taxonomy;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "distribution_id")
     private DistributionArea distributionArea;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "natural_history_id")
     private NaturalHistory naturalHistory;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "conservation_id")
     private Conservation conservation;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "threat_id")
     private Threat threat;
 
@@ -42,7 +51,7 @@ public class Specie implements BaseEntity {
     @JoinColumn(name = "cover_photo_id")
     private Image coverPhoto;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cover_map_id")
     private Map coverMap;
 
