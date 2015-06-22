@@ -27,15 +27,15 @@ public class Specie implements BaseEntity {
     @Enumerated(value = EnumType.ORDINAL)
     private ExtinctionRiskCategory extinctionRiskCategory;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "taxonomy_id")
     private Taxonomy taxonomy;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "distribution_id")
     private DistributionArea distributionArea;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "natural_history_id")
     private NaturalHistory naturalHistory;
 
@@ -43,11 +43,11 @@ public class Specie implements BaseEntity {
     @JoinColumn(name = "conservation_id")
     private Conservation conservation;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "threat_id")
     private Threat threat;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cover_photo_id")
     private Image coverPhoto;
 

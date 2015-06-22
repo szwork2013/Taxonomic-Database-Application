@@ -2,6 +2,7 @@ package com.unep.wcmc.controller;
 
 import com.unep.wcmc.model.BaseEntity;
 import com.unep.wcmc.model.ErrorMessage;
+import com.unep.wcmc.model.SuccessMessage;
 import com.unep.wcmc.service.BaseService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import java.util.List;
  */
 public abstract class AbstractController<E extends BaseEntity, 
 										 S extends BaseService<E>> {
+    private static final SuccessMessage SUCCESS_MESSAGE = new SuccessMessage();
 	@Autowired
 	protected S service;
 
@@ -51,7 +53,11 @@ public abstract class AbstractController<E extends BaseEntity,
     }
 
     @RequestMapping(method= RequestMethod.DELETE, value="{id}")
-    public void delete(@PathVariable String id) {
-    	service.delete(Long.valueOf(id));
+    public Object delete(@PathVariable String id) {
+        if (service.delete(Long.valueOf(id))) {
+            return SUCCESS_MESSAGE;
+        }
+        final Long entityId = Long.valueOf(id);
+        return new ErrorMessage(entityId, "no matches found");
     }
 }
