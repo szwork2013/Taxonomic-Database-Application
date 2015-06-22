@@ -1,5 +1,9 @@
 package com.unep.wcmc.config;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+
 import javax.servlet.Filter;
 
 import org.springframework.beans.factory.InitializingBean;
@@ -11,13 +15,30 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 import com.unep.wcmc.model.Conservation;
+import com.unep.wcmc.model.Conventions;
+import com.unep.wcmc.model.Country;
+import com.unep.wcmc.model.DensityData;
 import com.unep.wcmc.model.DistributionArea;
+import com.unep.wcmc.model.ExtinctionRisk;
 import com.unep.wcmc.model.ExtinctionRiskCategory;
+import com.unep.wcmc.model.FeedingBehavior;
+import com.unep.wcmc.model.FishingThreat;
+import com.unep.wcmc.model.Habitat;
+import com.unep.wcmc.model.HabitatType;
+import com.unep.wcmc.model.Interactions;
 import com.unep.wcmc.model.Map;
 import com.unep.wcmc.model.NaturalHistory;
+import com.unep.wcmc.model.Occurrence;
+import com.unep.wcmc.model.PopulationDynamics;
+import com.unep.wcmc.model.PopulationTrend;
+import com.unep.wcmc.model.Reproduction;
 import com.unep.wcmc.model.Specie;
+import com.unep.wcmc.model.State;
 import com.unep.wcmc.model.Taxonomy;
 import com.unep.wcmc.model.Threat;
+import com.unep.wcmc.model.ThreatCategory;
+import com.unep.wcmc.model.ThreatStatus;
+import com.unep.wcmc.model.TrendOccurence;
 import com.unep.wcmc.service.SpecieService;
 
 /**
@@ -58,7 +79,6 @@ public class SpecieConfig {
             
             private void createSpecie() {
                 final Specie specie = new Specie();
-                specie.setId(0L);
                 specie.setCommonName("Specie-Test");
                 specie.setScientificName("Specie-Scientific-Test");
                 specie.setConservation(createConservation());
@@ -74,25 +94,116 @@ public class SpecieConfig {
             
             private Conservation createConservation() {
                 final Conservation conservation = new Conservation();
-                conservation.setId(1L);
+                final ExtinctionRisk extinctionRisk = new ExtinctionRisk(); 
+                final Conventions conventions = new Conventions();
+                extinctionRisk.setActionPlans("ActionPlans");
+                extinctionRisk.setChangeReasons("ChangeReasons");
+                extinctionRisk.setInNationalEndangeredFauna(true);
+                extinctionRisk.setNationalEvaluationElegible(true);
+                extinctionRisk.setNecessaryResearchForConservation("NecessaryResearchForConservation");
+                extinctionRisk.setPreviousNationalAssessment("PreviousNationalAssessment");
+                extinctionRisk.setResearchInProgress("ResearchInProgress");
+                extinctionRisk.setSpecificActionsInProtectedAreas("SpecificActionsInProtectedAreas");
+                conventions.setBenefitedFromActionPlan("BenefitedFromActionPlan");
+                conventions.setConvention("Convention");
+                conventions.setConventionOtherRelevantData("ConventionOtherRelevantData");
+                conventions.setExSituManagement("ExSituManagement");
+                conventions.setOtherActionsProtectSpecies("OtherActionsProtectSpecies");
+                conservation.setExtinctionRisk(extinctionRisk);
+                conservation.setConventions(conventions);
                 return conservation;
             }
             
             private Map createMap() {
                 final Map map = new Map();
-                map.setId(1L);
+                map.setAuhtor("Author");
+                map.setCaption("Caption");
+                map.setDate(new Date());
+                map.setDescription("Description");
+                map.setIsCover(true);
+                map.setProjection("Projection");
+                map.setType("Type");
                 return map;
             }
             
             private DistributionArea createDistributionArea() {
                 final DistributionArea distributionArea = new DistributionArea();
-                distributionArea.setId(1L);
+                final Occurrence occurrences = new Occurrence();
+                final State state = new State();
+                final Country country = new Country();
+                country.setName("Brazil");
+                state.setCode("1");
+                state.setName("CE");
+                state.setCountry(country);
+                occurrences.setLatitude("-3.731861600000000000");
+                occurrences.setLongitude("-38.526670400000000000");
+                occurrences.setProjection("Projection");
+                //occurrences.setState(state);
+                occurrences.setMap(createMap());
+                distributionArea.setEndemicFromBrazil(true);
+                distributionArea.setExtendOccurrence(100D);
+                distributionArea.setFramentationLevel(100);
+                distributionArea.setGlobalDistribution("GlobalDistribution");
+                distributionArea.setNationalDistribution("NationalDistribution");
+                distributionArea.setNativeBrazil(true);
+                distributionArea.setOccupancyArea(100D);
+                distributionArea.setOccurrences(Arrays.asList(occurrences));
+                distributionArea.setOcurrenceState("OcurrenceState");
+                distributionArea.setOcurrsBrazil(true);
+                distributionArea.setOnlyFromFewLocalities(true);
+                distributionArea.setRegionIsWellSampled(true);
+                distributionArea.setTrendExtendOccurence(TrendOccurence.DECLINING);
+                distributionArea.setTrendOccupancyArea(TrendOccurence.EXPANDING);
                 return distributionArea;
             }
             
             private NaturalHistory createNaturalHistory() {
                 final NaturalHistory naturalHistory = new NaturalHistory();
-                naturalHistory.setId(1L);
+                final FeedingBehavior feedingBehavior = new FeedingBehavior();
+                final Habitat habitat = new Habitat();
+                final Interactions interactions = new Interactions();
+                final PopulationDynamics populationDynamics = new PopulationDynamics();
+                final Reproduction reproduction = new Reproduction();
+                final HabitatType habitatType = new HabitatType();
+                final DensityData densityData = new DensityData();
+                final PopulationTrend populationTrend = new PopulationTrend();
+                habitatType.setId(1L);
+                feedingBehavior.setEatingHabits("EatingHabits");
+                feedingBehavior.setEatingHabitsOtherComments("EatingHabitsOtherComments");
+                feedingBehavior.setExpertSpecialist("ExpertSpecialist");
+                feedingBehavior.setFeedingAgregations("FeedingAgregations");
+                feedingBehavior.setTrophicLevel("TrophicLevel");
+                habitat.setContinuingDeclineInHabitatQuality(true);
+                habitat.setDescription("Description");
+                habitat.setRestrictedToPrimaryHabitats(true);
+                habitat.setTolerantToHabitatModification("true");
+                habitat.setType(habitatType);
+                habitat.setVariationInHabitatUse("VariationInHabitatUse");
+                densityData.setSubPopulationsDeclineNumber(100L);
+                densityData.setSubPopulationsFluctuationsNumber(100L);
+                densityData.setSubPopulationsNumber(100L);
+                densityData.setSubPopulationsNumberTrend(TrendOccurence.DECLINING);
+                populationTrend.setBrazilExtinctionProbability(100D);
+                populationTrend.setDeclineReversibleAndCeased(true);
+                populationTrend.setPercPopulationDecline(100D);
+                populationTrend.setPopDeclineJustification("PopDeclineJustification");
+                populationTrend.setPopulationDeclinedBasedOn("PopulationDeclinedBasedOn");
+                populationDynamics.setCaptiveBreedingProgram(true);
+                populationDynamics.setDeclinePeriodPercent(100D);
+                populationDynamics.setDensityData(densityData);
+                populationDynamics.setExtremeFlutuationInMatureIndividualsNumber(true);
+                populationDynamics.setImatureIndividualsSubpopulationPercent(100D);
+                populationDynamics.setMatureIndividualsNumber(100L);
+                populationDynamics.setMatureIndividualsNumberTrend(TrendOccurence.EXPANDING);
+                populationDynamics.setMatureIndividualsSubpopulationMaxNumber(100L);
+                populationDynamics.setPopulationSeverelyFragmented(true);
+                populationDynamics.setPopulationTrend(populationTrend);
+                reproduction.setMaximumSize(100);
+                naturalHistory.setFeedingBehavior(feedingBehavior);
+                naturalHistory.setHabitat(habitat);
+                naturalHistory.setInteractions(interactions);
+                naturalHistory.setPopulationDynamics(populationDynamics);
+                naturalHistory.setReproduction(reproduction);
                 return naturalHistory;
             }
             
@@ -104,7 +215,34 @@ public class SpecieConfig {
             
             private Threat createThreat() {
                 final Threat threat = new Threat();
-                threat.setId(1L);
+                final FishingThreat fishingThreat = new FishingThreat();
+                final ThreatStatus threatStatus = new ThreatStatus();
+                final ThreatCategory category = new ThreatCategory();
+                fishingThreat.setCpue("cpue");
+                fishingThreat.setFishingEffort("FishingEffort");
+                fishingThreat.setFishingGrounds("FishingGrounds");
+                fishingThreat.setFishingPetrecho("FishingPetrecho");
+                fishingThreat.setFishingScale("FishingScale");
+                fishingThreat.setFishingTrend("FishingTrend");
+                fishingThreat.setLandingCatch("LandingCatch");
+                fishingThreat.setMarketValue("MarketValue");
+                category.setId(1L);
+                threatStatus.setCategory(category);
+                threatStatus.setLocal("Local");
+                threatStatus.setMunicipality("Municipality");
+                threatStatus.setPeriod(1000L);
+                threatStatus.setTime(1000L);
+                threatStatus.setTrend("Trend");
+                threat.setAffectedArea(100D);
+                threat.setDeclineLocationsNumber(100L);
+                threat.setDescription("Description");
+                threat.setDescriptionImpact("DescriptionImpact");
+                threat.setExtremeFlutuationLocationNumber(100L);
+                threat.setFishingThreat(fishingThreat);
+                threat.setFutureThreatExistence(true);
+                threat.setGeographicallyDistinctAreasNumber(100L);
+                threat.setPopulationAffected(100000D);
+                threat.setThreatStatus(threatStatus);
                 return threat;
             }
         };
