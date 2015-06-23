@@ -46,6 +46,38 @@ public class ExtinctionRiskTest {
     }
 
     @Test
+    public void testVulnerable_VU() {
+        Specie specie = new Specie();
+        specie.setScientificName("Hypsiboas curupi Garcia, Faivovichi & Haddad, 2007");
+        kieSession.setGlobal("specie", specie);
+        kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
+
+        DistributionArea distributionArea = new DistributionArea();
+        distributionArea.setExtendOccurrence(8102.80d);
+        distributionArea.setOcurrsBrazil(true);
+        distributionArea.setNativeBrazil(true);
+        distributionArea.setEndemicFromBrazil(true);
+        kieSession.insert(distributionArea);
+
+        PopulationDynamics populationDynamics = new PopulationDynamics();
+        populationDynamics.setPopulationSeverelyFragmented(true);
+        kieSession.insert(populationDynamics);
+
+        ExtinctionRisk extinctionRisk = new ExtinctionRisk();
+        extinctionRisk.setNationalEvaluationElegible(true);
+
+        Threat threat = new Threat();
+        kieSession.insert(threat);
+
+        kieSession.fireAllRules();
+
+        Assert.assertNotNull(specie);
+        Assert.assertEquals(ExtinctionRiskCategory.VUNERABLE,
+                specie.getExtinctionRiskCategory());
+
+    }
+
+    @Test
     public void testEndangered_EN() {
         Specie specie = new Specie();
         specie.setCommonName("macaco-prego-galego");
