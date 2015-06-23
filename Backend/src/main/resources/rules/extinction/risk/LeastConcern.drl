@@ -6,10 +6,10 @@ import com.unep.wcmc.model.DistributionArea;
 import com.unep.wcmc.model.ExtinctionRiskCategory;
 import com.unep.wcmc.model.PopulationDynamics;
 import com.unep.wcmc.model.PopulationTrend;
-import com.unep.wcmc.model.Specie
+import com.unep.wcmc.model.Species;
 import com.unep.wcmc.model.Taxonomy;
 
-global Specie specie;
+global Species species;
 
 /*
  * Non-threatened species, which do not fit into other categories.
@@ -21,7 +21,7 @@ rule "Least Concern (LC)"
         Taxonomy(limitationsForAssessment == false)
         DistributionArea(onlyFromFewLocalities == true)
     then
-        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.LEAST_CONCERN);
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.LEAST_CONCERN);
 end
 
 

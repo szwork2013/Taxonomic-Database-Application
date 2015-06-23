@@ -7,11 +7,11 @@ import com.unep.wcmc.model.ExtinctionRiskConfiguration;
 import com.unep.wcmc.model.NaturalHistory;
 import com.unep.wcmc.model.PopulationDynamics;
 import com.unep.wcmc.model.PopulationTrend;
-import com.unep.wcmc.model.Specie;
+import com.unep.wcmc.model.Species;
 import com.unep.wcmc.model.TrendOccurence;
 import com.unep.wcmc.model.Threat;
 
-global Specie specie;
+global Species species;
 global java.util.List configuration;
 
 /**
@@ -28,7 +28,7 @@ rule "Endangered (EN) - A"
     or
         PopulationTrend(percPopulationDecline >= $config.percePopulationDecline2, percPopulationDecline < 80) // A2, A3, A4
     then
-        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.ENDANGERED);
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.ENDANGERED);
 end
 
 rule "Endangered (EN) - B"
@@ -50,7 +50,7 @@ rule "Endangered (EN) - B"
         )
     )
     then
-        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.ENDANGERED);
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.ENDANGERED);
 end
 
 rule "Endangered (EN) - C"
@@ -73,7 +73,7 @@ rule "Endangered (EN) - C"
             )
         )
     then
-        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.ENDANGERED);
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.ENDANGERED);
 end
 
 
@@ -85,7 +85,7 @@ rule "Endangered (EN) - D"
         // D criteria
         PopulationDynamics(matureIndividualsNumber < $config.numberMatureIndividuals2)
     then
-        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.ENDANGERED);
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.ENDANGERED);
 end
 
 rule "Endangered (EN) - E"
@@ -95,5 +95,5 @@ rule "Endangered (EN) - E"
         // E criteria
         PopulationTrend(brazilExtinctionProbability >= 20, brazilExtinctionProbability < 50)
     then
-        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.ENDANGERED);
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.ENDANGERED);
 end

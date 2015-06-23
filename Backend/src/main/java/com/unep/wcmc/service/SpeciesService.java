@@ -1,22 +1,22 @@
 package com.unep.wcmc.service;
 
-import com.unep.wcmc.model.Specie;
-import com.unep.wcmc.repository.SpecieRepository;
+import com.unep.wcmc.model.Species;
+import com.unep.wcmc.repository.SpeciesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public final class SpecieService extends AbstractService<Specie, SpecieRepository> {
+public final class SpeciesService extends AbstractService<Species, SpeciesRepository> {
 
     @Autowired
     private ExtinctionRiskService extinctionRiskService;
 
-    public Specie findByCommonName(String commonName) {
+    public Species findByCommonName(String commonName) {
         return repo.findByCommonName(commonName);
     }
 
     @Override
-    public Specie save(Specie specie) {
+    public Species save(Species specie) {
         extinctionRiskService.processExtinctionRiskCalculation(specie);
         return super.save(specie);
     }

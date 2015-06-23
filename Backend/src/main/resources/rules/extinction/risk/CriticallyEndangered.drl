@@ -7,11 +7,11 @@ import com.unep.wcmc.model.ExtinctionRiskConfiguration;
 import com.unep.wcmc.model.NaturalHistory;
 import com.unep.wcmc.model.PopulationDynamics;
 import com.unep.wcmc.model.PopulationTrend;
-import com.unep.wcmc.model.Specie;
+import com.unep.wcmc.model.Species;
 import com.unep.wcmc.model.TrendOccurence;
 import com.unep.wcmc.model.Threat;
 
-global Specie specie;
+global Species species;
 global java.util.List configuration;
 
 rule "Critically Endangered (CR) - A"
@@ -24,7 +24,7 @@ rule "Critically Endangered (CR) - A"
         PopulationTrend(percPopulationDecline >= $config.percPopulationDecline) // A1
         PopulationTrend(percPopulationDecline >= $config.percePopulationDecline2) // A2, A3, A4
     then
-        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.CRITICALLY_ENDANGERED);
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.CRITICALLY_ENDANGERED);
 end
 
 rule "Critically Endangered (CR) - B"
@@ -46,7 +46,7 @@ rule "Critically Endangered (CR) - B"
         )
     )
     then
-        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.CRITICALLY_ENDANGERED);
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.CRITICALLY_ENDANGERED);
 end
 
 rule "Critically Endangered (CR) - C"
@@ -68,7 +68,7 @@ rule "Critically Endangered (CR) - C"
             )
         )
     then
-        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.CRITICALLY_ENDANGERED);
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.CRITICALLY_ENDANGERED);
 end
 
 rule "Critically Endangered (CR) - D"
@@ -79,7 +79,7 @@ rule "Critically Endangered (CR) - D"
         // D criteria
         PopulationDynamics(matureIndividualsNumber < $config.numberMatureIndividuals2)
     then
-        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.CRITICALLY_ENDANGERED);
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.CRITICALLY_ENDANGERED);
 end
 
 rule "Critically Endangered (CR) - E"
@@ -90,5 +90,5 @@ rule "Critically Endangered (CR) - E"
         // E criteria
         PopulationTrend(brazilExtinctionProbability >= $config.probExtinctionInWild, brazilExtinctionProbability < 20)
     then
-        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.CRITICALLY_ENDANGERED);
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.CRITICALLY_ENDANGERED);
 end

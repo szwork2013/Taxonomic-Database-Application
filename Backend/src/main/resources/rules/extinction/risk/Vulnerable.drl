@@ -7,11 +7,11 @@ import com.unep.wcmc.model.ExtinctionRiskConfiguration;
 import com.unep.wcmc.model.NaturalHistory;
 import com.unep.wcmc.model.PopulationDynamics;
 import com.unep.wcmc.model.PopulationTrend;
-import com.unep.wcmc.model.Specie;
+import com.unep.wcmc.model.Species;
 import com.unep.wcmc.model.TrendOccurence;
 import com.unep.wcmc.model.Threat;
 
-global Specie specie;
+global Species species;
 global java.util.List configuration;
 
 /**
@@ -28,7 +28,7 @@ rule "Vulnerable (VU) - A"
         PopulationTrend(percPopulationDecline >= $config.percPopulationDecline, percPopulationDecline < 70) // A1
         PopulationTrend(percPopulationDecline >= $config.percePopulationDecline2, percPopulationDecline < 50) // A2, A3, A4
     then
-        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.VUNERABLE);
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.VUNERABLE);
 end
 
 rule "Vulnerable (VU) - B"
@@ -50,7 +50,7 @@ rule "Vulnerable (VU) - B"
         )
     )
     then
-        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.VUNERABLE);
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.VUNERABLE);
 end
 
 rule "Vulnerable (VU) - C"
@@ -73,7 +73,7 @@ rule "Vulnerable (VU) - C"
             )
         )
     then
-        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.VUNERABLE);
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.VUNERABLE);
 end
 
 
@@ -89,7 +89,7 @@ rule "Vulnerable (VU) - D"
         DistributionArea(occupancyArea < 2000) // (AOD)
     then
         System.out.println("Vulnerable (VU)");
-        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.VUNERABLE);
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.VUNERABLE);
 end
 
 rule "Vulnerable (VU) - E"
@@ -100,5 +100,5 @@ rule "Vulnerable (VU) - E"
         // E criteria
         PopulationTrend(brazilExtinctionProbability >= 10, brazilExtinctionProbability < 20)
     then
-        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.VUNERABLE);
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.VUNERABLE);
 end

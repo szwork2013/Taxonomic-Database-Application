@@ -30,8 +30,8 @@ public class Hierarchy implements Serializable {
     private Family family;
 
     @ManyToOne
-    @JoinColumn(name = "gender_id")
-    private Gender gender;
+    @JoinColumn(name = "genus_id")
+    private Genus genus;
 
     @Column(name = "species")
     private String species;
@@ -44,13 +44,13 @@ public class Hierarchy implements Serializable {
     }
 
     public Hierarchy(Kingdom kingdom, Phylum phylum, HierarchyClass hierarchyClass, HierarchyOrder order,
-                     Family family, Gender gender, String species, String subSpecies) {
+                     Family family, Genus genus, String species, String subSpecies) {
         this.kingdom = kingdom;
         this.phylum = phylum;
         this.hierarchyClass = hierarchyClass;
         this.order = order;
         this.family = family;
-        this.gender = gender;
+        this.genus = genus;
         this.species = species;
         this.subSpecies = subSpecies;
     }
@@ -111,11 +111,11 @@ public class Hierarchy implements Serializable {
         this.subSpecies = subSpecies;
     }
 
-    public Gender getGender() {
-        return gender;
+    public Genus getGenus() {
+        return genus;
     }
 
-    public void setGender(Gender gender) {
-        this.gender = gender;
+    public void setGenus(Genus genus) {
+        this.genus = genus;
     }
 }

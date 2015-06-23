@@ -31,14 +31,14 @@ import com.unep.wcmc.model.Occurrence;
 import com.unep.wcmc.model.PopulationDynamics;
 import com.unep.wcmc.model.PopulationTrend;
 import com.unep.wcmc.model.Reproduction;
-import com.unep.wcmc.model.Specie;
+import com.unep.wcmc.model.Species;
 import com.unep.wcmc.model.State;
 import com.unep.wcmc.model.Taxonomy;
 import com.unep.wcmc.model.Threat;
 import com.unep.wcmc.model.ThreatCategory;
 import com.unep.wcmc.model.ThreatStatus;
 import com.unep.wcmc.model.TrendOccurence;
-import com.unep.wcmc.service.SpecieService;
+import com.unep.wcmc.service.SpeciesService;
 
 /**
  * Initializer that creates mock specie for testing
@@ -50,14 +50,14 @@ import com.unep.wcmc.service.SpecieService;
 @EnableAutoConfiguration
 @Configuration
 @ComponentScan
-public class SpecieConfig {
+public class SpeciesConfig {
 
     @Bean
     public InitializingBean insertDefaultUsers() {
         return new InitializingBean() {
             
             @Autowired
-            private SpecieService specieService;
+            private SpeciesService specieService;
             
             /*
              * (non-Javadoc)
@@ -66,9 +66,9 @@ public class SpecieConfig {
             @Override
             public void afterPropertiesSet() {
                 try {
-                    final Specie specie = specieService.findByCommonName("Specie-Test");
+                    final Species specie = specieService.findByCommonName("Sagui-de-tufos-brancos");
                     if (specie == null) {
-                        createSpecie();    
+                        createSpecies();    
                     }
                 } catch (Exception e) {
                     System.err.println(e);
@@ -76,10 +76,10 @@ public class SpecieConfig {
                 }
             }
             
-            private void createSpecie() {
-                final Specie specie = new Specie();
-                specie.setCommonName("Specie-Test");
-                specie.setScientificName("Specie-Scientific-Test");
+            private void createSpecies() {
+                final Species specie = new Species();
+                specie.setCommonName("Sagui-de-tufos-brancos");
+                specie.setScientificName("Callithrix jacchus");
                 specie.setConservation(createConservation());
                 specie.setCoverMap(createMap());
                 specie.setDistributionArea(createDistributionArea());

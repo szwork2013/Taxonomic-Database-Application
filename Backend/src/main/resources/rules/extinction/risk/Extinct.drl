@@ -1,12 +1,12 @@
 package rules.extinction.risk;
 dialect  "mvel"
 
-import com.unep.wcmc.model.Specie;
+import com.unep.wcmc.model.Species;
 import com.unep.wcmc.model.PopulationDynamics;
 import com.unep.wcmc.model.ExtinctionRisk
 import com.unep.wcmc.model.ExtinctionRiskCategory;
 
-global Specie specie;
+global Species species;
 
 rule "Extinct (EX)"
     activation-group "ExtinctionRisk"
@@ -17,5 +17,5 @@ rule "Extinct (EX)"
         PopulationDynamics(captiveBreedingProgram == false)
         ExtinctionRisk(nationalEvaluationElegible == true)
     then
-        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.EXTINCT);
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.EXTINCT);
 end

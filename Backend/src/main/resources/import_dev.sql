@@ -18,14 +18,14 @@ INSERT INTO hierarchy_order (id, name) VALUES (1, 'Haplotaxida');
 -- Family data
 INSERT INTO family (id, family) VALUES (1, 'Glossoscolecidae');
 
--- Gender data
-INSERT INTO gender (id, gender) VALUES (1, 'Fimoscolex');
+-- Genus data
+INSERT INTO genus (id, genus) VALUES (1, 'Fimoscolex');
 
 -- Country data
 INSERT INTO country (id, name) VALUES (1, 'Brazil');
 
 -- Taxonomy data
-INSERT INTO taxonomy(id, species, subspecies, limitations_for_assessment, family_id, gender_id, class_id, kingdom_id, order_id, phylum_id) VALUES (1, 'Fimoscolex sporadochaetus', '', true, 1, 1, 1, 1, 1, 1);
+INSERT INTO taxonomy(id, species, subspecies, limitations_for_assessment, family_id, genus_id, class_id, kingdom_id, order_id, phylum_id) VALUES (1, 'Fimoscolex sporadochaetus', '', true, 1, 1, 1, 1, 1, 1);
 
 -- State data
 INSERT INTO state (id, name, country_id, code) VALUES (1, 'Acre', 1, 'AC');
@@ -200,6 +200,6 @@ INSERT INTO conservation_action_type (id, description) VALUES (1, '0. No Action'
 INSERT INTO habitat_type (id, name) VALUES (1, 'Amazonia - Rain Forest Alluvial');
 
 -- Specie data 
-INSERT INTO specie(id, common_name, extinction_risk_category, scientific_name, conservation_id, cover_map_id, cover_photo_id, distribution_id, natural_history_id, taxonomy_id, threat_id) VALUES (1, 'specie-test-1', 0, 'specie-test-1', NULL, NULL, NULL, NULL, NULL, 1, NULL);
+INSERT INTO species(id, common_name, extinction_risk_category, scientific_name, conservation_id, cover_map_id, cover_photo_id, distribution_id, natural_history_id, taxonomy_id, threat_id) VALUES (1, 'Arara-azul-de-lear', 0, 'Anodorhynchus leari', NULL, NULL, NULL, NULL, NULL, 1, NULL);
 
 COMMIT;

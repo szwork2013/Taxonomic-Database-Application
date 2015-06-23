@@ -1,10 +1,5 @@
 package com.unep.wcmc.service;
 
-import com.google.common.collect.Lists;
-import com.unep.wcmc.model.Specie;
-import com.unep.wcmc.repository.ExtinctionRiskConfigurationRepository;
-import com.unep.wcmc.repository.SpecieRepository;
-
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.slf4j.Logger;
@@ -13,7 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.util.Iterator;
+import com.google.common.collect.Lists;
+import com.unep.wcmc.model.Species;
+import com.unep.wcmc.repository.ExtinctionRiskConfigurationRepository;
+import com.unep.wcmc.repository.SpeciesRepository;
 
 @Service
 public class ExtinctionRiskService {
@@ -26,35 +24,34 @@ public class ExtinctionRiskService {
     private ExtinctionRiskConfigurationRepository configurationRepo;
 
     @Autowired
-    private SpecieRepository specieRepository;
+    private SpeciesRepository specieRepository;
 
     /**
      * Reprocess the extinction risk calculation for all species every day at midnight
      */
     @Scheduled(cron = "0 1 0 * * *")
     public void processExtinctionRisksForAllSpecies() {
-        Iterator<Specie> species = specieRepository.findAll().iterator();
-        while (species.hasNext()) {
-            processExtinctionRiskCalculation(species.next());
+        for (Species species : specieRepository.findAll()) {
+            processExtinctionRiskCalculation(species);
         }
     }
 
     /**
      * Process the Extinction Risks Algorithm calculation
-     * @param specie
+     * @param species
      */
-    public void processExtinctionRiskCalculation(Specie specie) {
+    public void processExtinctionRiskCalculation(Species species) {
         try {
             KieSession session = kieContainer.newKieSession("RulesSession");
-            session.setGlobal("specie", specie);
+            session.setGlobal("species", species);
             session.setGlobal("configuration", Lists.newArrayList(configurationRepo.findAll()));
             // set the business rules facts
-            session.insert(specie.getDistributionArea());
-            session.insert(specie.getNaturalHistory());
-            session.insert(specie.getNaturalHistory().getPopulationDynamics());
-            session.insert(specie.getNaturalHistory().getPopulationDynamics().getPopulationTrend());
-            session.insert(specie.getTaxonomy());
-            session.insert(specie.getThreat());
+            session.insert(species.getDistributionArea());
+            session.insert(species.getNaturalHistory());
+            session.insert(species.getNaturalHistory().getPopulationDynamics());
+            session.insert(species.getNaturalHistory().getPopulationDynamics().getPopulationTrend());
+            session.insert(species.getTaxonomy());
+            session.insert(species.getThreat());
             // firing all the rules
             session.fireAllRules();
             session.destroy();

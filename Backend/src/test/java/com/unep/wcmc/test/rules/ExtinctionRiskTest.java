@@ -47,7 +47,7 @@ public class ExtinctionRiskTest {
 
     @Test
     public void testVulnerable_VU() {
-        Specie specie = new Specie();
+        Species specie = new Species();
         specie.setScientificName("Hypsiboas curupi Garcia, Faivovichi & Haddad, 2007");
         kieSession.setGlobal("specie", specie);
         kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
@@ -79,7 +79,7 @@ public class ExtinctionRiskTest {
 
     @Test
     public void testEndangered_EN() {
-        Specie specie = new Specie();
+        Species specie = new Species();
         specie.setCommonName("macaco-prego-galego");
         specie.setScientificName("Sapajus flavius");
         kieSession.setGlobal("specie", specie);
@@ -119,7 +119,7 @@ public class ExtinctionRiskTest {
 
     @Test
     public void testExtinct_EX() {
-        Specie specie = new Specie();
+        Species specie = new Species();
         kieSession.setGlobal("specie", specie);
         kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
 
@@ -141,7 +141,7 @@ public class ExtinctionRiskTest {
 
     @Test
     public void testExtinctInTheWild_EW() {
-        Specie specie = new Specie();
+        Species specie = new Species();
         kieSession.setGlobal("specie", specie);
         kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
 
@@ -163,7 +163,7 @@ public class ExtinctionRiskTest {
 
     @Test
     public void testRegionallyExtinct_RE() {
-        Specie specie = new Specie();
+        Species specie = new Species();
         kieSession.setGlobal("specie", specie);
         kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
 

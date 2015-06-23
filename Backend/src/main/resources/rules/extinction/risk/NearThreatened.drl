@@ -7,12 +7,12 @@ import com.unep.wcmc.model.ExtinctionRiskCategory;
 import com.unep.wcmc.model.ExtinctionRiskConfiguration;
 import com.unep.wcmc.model.PopulationDynamics;
 import com.unep.wcmc.model.PopulationTrend;
-import com.unep.wcmc.model.Specie
+import com.unep.wcmc.model.Species;
 import com.unep.wcmc.model.Taxonomy;
 import com.unep.wcmc.model.Threat;
 import com.unep.wcmc.model.TrendOccurence;
 
-global Specie specie;
+global Species species;
 global java.util.List configuration;
 
 /**
@@ -32,7 +32,7 @@ rule "Near Threatened (NT) - A"
         PopulationTrend(percPopulationDecline > $config.percPopulationDecline, percPopulationDecline < 50) // A1
         PopulationTrend(percPopulationDecline > $config.percePopulationDecline2, percPopulationDecline < 40) // A2, A3, A4
     then
-        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.NEAR_THREATENED);
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.NEAR_THREATENED);
 end
 
 rule "Near Threatened (NT) - B"
@@ -54,7 +54,7 @@ rule "Near Threatened (NT) - B"
         )
     )
     then
-        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.NEAR_THREATENED);
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.NEAR_THREATENED);
 end
 
 rule "Near Threatened (NT) - C"
@@ -74,7 +74,7 @@ rule "Near Threatened (NT) - C"
             )
         )
     then
-        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.NEAR_THREATENED);
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.NEAR_THREATENED);
 end
 
 
@@ -86,5 +86,5 @@ rule "Near Threatened (NT) - D"
         // D1 criteria
         PopulationDynamics(matureIndividualsNumber > 1000, matureIndividualsNumber < 1500) // D1
     then
-        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.NEAR_THREATENED);
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.NEAR_THREATENED);
 end

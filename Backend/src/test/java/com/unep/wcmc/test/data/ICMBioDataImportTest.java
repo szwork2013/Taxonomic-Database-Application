@@ -35,7 +35,7 @@ public class ICMBioDataImportTest {
     private FamilyRepository familyRepository;
 
     @Autowired
-    private GenderRepository genderRepository;
+    private GenusRepository genusRepository;
 
     @Autowired
     private TaxonomyRepository taxonomyRepository;
@@ -47,7 +47,7 @@ public class ICMBioDataImportTest {
     private DistributionAreaRepository distributionAreaRepository;
 
     @Autowired
-    private SpecieRepository specieRepository;
+    private SpeciesRepository specieRepository;
 
     @Test
     @Ignore // Ignoring this test case to not be executed all the time
@@ -63,7 +63,7 @@ public class ICMBioDataImportTest {
             Assert.assertNotNull(taxonomy);
             Assert.assertNotNull(taxonomy.getId());
 
-            Specie specie = createSpecie(line, taxonomy);
+            Species specie = createSpecies(line, taxonomy);
             Assert.assertNotNull(specie);
             Assert.assertNotNull(specie.getId());
 
@@ -77,23 +77,23 @@ public class ICMBioDataImportTest {
         HierarchyClass hierarchyClass = getHierarchyClass(line[2].trim());
         HierarchyOrder order = getHierarchyOrder(line[3].trim());
         Family family = getFamily(line[4].trim());
-        Gender gender = getGender(line[5].trim());
+        Genus genus = getGenus(line[5].trim());
 
         String subespecies = line[7].trim();
         String species = line[8].trim();
 
         Hierarchy hierarchy = new Hierarchy(kingdom, phylum, hierarchyClass, order, family,
-                gender, species, subespecies);
+                genus, species, subespecies);
         Taxonomy taxonomy = new Taxonomy();
         taxonomy.setHierarchy(hierarchy);
         return taxonomyRepository.save(taxonomy);
     }
 
-    private Specie createSpecie(String[] line, Taxonomy taxonomy) {
+    private Species createSpecies(String[] line, Taxonomy taxonomy) {
         String scientificName = line[9].trim();
         String commonName = line[10].trim();
 
-        Specie specie = new Specie();
+        Species specie = new Species();
         specie.setCommonName(commonName);
         specie.setScientificName(scientificName);
         specie.setTaxonomy(taxonomy);
@@ -145,11 +145,11 @@ public class ICMBioDataImportTest {
         return family;
     }
 
-    private Gender getGender(String name) {
-        Gender gender = genderRepository.findByName(name);
+    private Genus getGenus(String name) {
+        Genus gender = genusRepository.findByName(name);
         if (gender == null) {
-            gender = new Gender(name);
-            gender = genderRepository.save(gender);
+            gender = new Genus(name);
+            gender = genusRepository.save(gender);
         }
         return gender;
     }
@@ -174,10 +174,7 @@ public class ICMBioDataImportTest {
     }
 
     private Occurrence createOccurence(String[] line, Taxonomy taxonomy) {
-        DistributionArea distributionArea = taxonomy.getSpecie().getDistributionArea();
-        if (distributionArea == null) {
-            distributionArea = new DistributionArea();
-        }
+        DistributionArea distributionArea = new DistributionArea();
         State state = stateRepository.findByCode(line[17].trim());
         Map map = new Map(line[19].trim(), null, line[29].trim(), null, null, null, false);
         Occurrence occurrence = new Occurrence(line[12].trim(), line[13].trim(), line[19].trim(), state, map);

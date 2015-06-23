@@ -6,10 +6,10 @@ import com.unep.wcmc.model.DistributionArea;
 import com.unep.wcmc.model.ExtinctionRiskCategory;
 import com.unep.wcmc.model.PopulationDynamics;
 import com.unep.wcmc.model.PopulationTrend;
-import com.unep.wcmc.model.Specie
+import com.unep.wcmc.model.Species;
 import com.unep.wcmc.model.Taxonomy;
 
-global Specie specie;
+global Species species;
 
 rule "Data Deficient (DD)"
     activation-group "ExtinctionRisk"
@@ -21,5 +21,5 @@ rule "Data Deficient (DD)"
         Conservation(extinctionRisk.inNationalEndangeredFauna == null || extinctionRisk.inNationalEndangeredFauna == true)
         DistributionArea(onlyFromFewLocalities == true, (regionIsWellSampled == false || regionIsWellSampled == null))
     then
-        specie.setExtinctionRiskCategory(ExtinctionRiskCategory.DATA_DEFICIENT);
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.DATA_DEFICIENT);
 end

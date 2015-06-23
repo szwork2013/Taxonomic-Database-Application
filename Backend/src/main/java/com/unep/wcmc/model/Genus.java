@@ -3,20 +3,20 @@ package com.unep.wcmc.model;
 import javax.persistence.*;
 
 @Entity
-public class Gender implements BaseEntity {
+public class Genus implements BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "gender")
+    @Column(name = "genus")
     private String name;
 
-    public Gender() {
+    public Genus() {
         super();
     }
 
-    public Gender(String name) {
+    public Genus(String name) {
         this.name = name;
     }
 
