@@ -4,8 +4,11 @@ import com.google.common.collect.Lists;
 import com.unep.wcmc.model.Specie;
 import com.unep.wcmc.repository.ExtinctionRiskConfigurationRepository;
 import com.unep.wcmc.repository.SpecieRepository;
+
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -15,6 +18,7 @@ import java.util.Iterator;
 @Service
 public class ExtinctionRiskService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExtinctionRiskService.class);
     @Autowired
     private KieContainer kieContainer;
 
@@ -40,19 +44,22 @@ public class ExtinctionRiskService {
      * @param specie
      */
     public void processExtinctionRiskCalculation(Specie specie) {
-        KieSession session = kieContainer.newKieSession("RulesSession");
-        session.setGlobal("specie", specie);
-        session.setGlobal("configuration", Lists.newArrayList(configurationRepo.findAll()));
-        // set the business rules facts
-        session.insert(specie.getDistributionArea());
-        session.insert(specie.getNaturalHistory());
-        session.insert(specie.getNaturalHistory().getPopulationDynamics());
-        session.insert(specie.getNaturalHistory().getPopulationDynamics().getPopulationTrend());
-        session.insert(specie.getTaxonomy());
-        session.insert(specie.getThreat());
-        // firing all the rules
-        session.fireAllRules();
-        session.destroy();
+        try {
+            KieSession session = kieContainer.newKieSession("RulesSession");
+            session.setGlobal("specie", specie);
+            session.setGlobal("configuration", Lists.newArrayList(configurationRepo.findAll()));
+            // set the business rules facts
+            session.insert(specie.getDistributionArea());
+            session.insert(specie.getNaturalHistory());
+            session.insert(specie.getNaturalHistory().getPopulationDynamics());
+            session.insert(specie.getNaturalHistory().getPopulationDynamics().getPopulationTrend());
+            session.insert(specie.getTaxonomy());
+            session.insert(specie.getThreat());
+            // firing all the rules
+            session.fireAllRules();
+            session.destroy();
+        } catch (Exception e) {
+            LOGGER.debug(e.getMessage());
+        }
     }
-
 }
