@@ -1,4 +1,4 @@
---BEGIN;
+BEGIN;
 
 -- ExtinctionRiskConfiguration data
 INSERT INTO extinction_risk_configuration (id, category, b2a_number_of_locations, c_number_of_mature_individuals, d_number_of_mature_individuals, c2a_number_of_mature_individuals_in_sub, b2_area_of_ocuppancy, b1_extent_of_occurrence, c2a_perc_mature_individuals_one_sub, a1_perc_population_decline, a2_perc_population_decline, e_prob_extinction_in_the_wild) VALUES (1, 'CRITICALLY_ENDANGERED', 1, 250, 50, 50, 10, 100, 90, 90.0, 80.0, 50.0);
@@ -199,4 +199,7 @@ INSERT INTO conservation_action_type (id, description) VALUES (1, '0. No Action'
 -- HabitatType data
 INSERT INTO habitat_type (id, name) VALUES (1, 'Amazonia - Rain Forest Alluvial');
 
---COMMIT;
+-- Specie data 
+INSERT INTO specie(id, common_name, extinction_risk_category, scientific_name, conservation_id, cover_map_id, cover_photo_id, distribution_id, natural_history_id, taxonomy_id, threat_id) VALUES (1, 'specie-test-1', 0, 'specie-test-1', NULL, NULL, NULL, NULL, NULL, 1, NULL);
+
+COMMIT;

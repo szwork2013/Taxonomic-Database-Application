@@ -5211,16 +5211,5 @@ INSERT INTO habitat_type (id, name) VALUES (203, 'Marine - open Sea');
 INSERT INTO habitat_type (id, name) VALUES (204, 'Marine - Coral Reefs');
 INSERT INTO habitat_type (id, name) VALUES (205, 'Marine - Gardens of algae, seaweed forests, Marine Meadows');
 INSERT INTO habitat_type (id, name) VALUES (206, 'Marine - Other');
--- Test Environment
--- NaturalHistory data
-INSERT INTO natural_history(id, eating_habits, eating_habits_other_comments, expert_specialist, feeding_agregations, trophic_level, cont_decline_habitat_quality, habitat, restricted_to_primary_habitats, tolerant_to_habitat_mod,  variation_in_habitat_use, perc_and_period_of_decline, subpopulations_decline, subpopulations_fluctuations, subpopulations_number_of, subpopulations_trend, flutuation_mature_individuals, perc_immature_individuals, number_of_mature_individuals, trend_in_mature_individuals, max_no_of_mature_individuals, population_severely_fragmented, extinction_probability_in_brazil, decline_reversible_and_ceased, perc_population_decline, justification_of_pop_decline, population_decline_based_on, maximum_size, habitat_type_id) VALUES (1, 'herbivore', 'herbivore', 'no', 'no', 'full', 'TRUE', 'animal', 'TRUE', 'no', 'no', '100', '0', '0', '0', '0', 'TRUE', '100', '1', '0', '1', 'TRUE', '0', 'TRUE', '0', 'false', 'false', '100', '1');
--- Thread data
-INSERT INTO threat(id, per_affected_area, decline_in_number_of_locations, threat_description, description_of_the_impact, location_fluctuation, cpue, fishing_effort, fishing_grounds, fishing_petrecho, fishing_scale, fishing_trend, landing_catch, value_of_mercado, future_threat, single_event, per_population_affected, local, municipality, period, "time", trend, threat_category_id) VALUES ('1', '100', '100', 'hunt', 'illegal hunting and black market', '100', 'cpue', 'effort', 'ground', 'pretrecho', 'scale', 'trend', 'catch', 'marketvalue', 'TRUE', '100', '100', 'brazil', 'ceara', '0', '0', 'trend', '1');
--- Conservation data
-INSERT INTO conservation(id, benefited_from_action_plan, convention, convention_other_relevant_data, ex_situ_management, other_actions_protect_species, action_plans, change_reasons, national_evaluation_elegible, necessary_research_for_conservation, previous_national_assessment, research_in_progress, specific_actions_in_protected_areas, type_id) VALUES (1, 'benefited_from_action_plan', 'convention', 'convention_other_relevant_data', 'ex_situ_management', 'other_actions_protect_species', 'action_plans', 'change_reasons', 'true', 'necessary_research_for_conservation', 'previous_national_assessment', 'research_in_progress', 'specific_actions_in_protected_areas', 1);
--- Map data
-INSERT INTO map(id, author, caption, date, description, file, set_as_cover, projection, type) VALUES (1, 'Brazil', 'Caption', '1999-01-08', 'Brazil', NULL, 'true', 'projection', 'local');
--- Distribution area data
-INSERT INTO distribution_area(id, endemic_from_brasil, extent_of_occurrence, fragmentation_level, global_distribution, national_distribution, native_in_brazil, area_of_ocuppancy, occurrence_state, only_from_few_localities, the_region_is_well_sampled, trend_in_extent_of_occurrence, area_of_occupancy_trend) VALUES (1, 'true', 0, 0, 'true', 'true', 'true', 0, 'state', 'true', 'true', 0, 0);
 
 COMMIT;
