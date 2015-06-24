@@ -41,8 +41,8 @@ public class ExtinctionRiskService {
      * @param species
      */
     public void processExtinctionRiskCalculation(Species species) {
+        final KieSession session = kieContainer.newKieSession("RulesSession");
         try {
-            KieSession session = kieContainer.newKieSession("RulesSession");
             session.setGlobal("species", species);
             session.setGlobal("configuration", Lists.newArrayList(configurationRepo.findAll()));
             // set the business rules facts
@@ -54,9 +54,10 @@ public class ExtinctionRiskService {
             session.insert(species.getThreat());
             // firing all the rules
             session.fireAllRules();
-            session.destroy();
         } catch (Exception e) {
             LOGGER.debug(e.getMessage());
+        } finally {
+            session.destroy();
         }
     }
 }
