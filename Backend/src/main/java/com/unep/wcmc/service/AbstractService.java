@@ -1,8 +1,11 @@
 package com.unep.wcmc.service;
 
+import com.google.common.collect.Lists;
 import com.unep.wcmc.model.BaseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
+
+import java.util.List;
 
 /**
  * Abstract service that encapsulates all boilerplate code needed to
@@ -33,8 +36,8 @@ public abstract class AbstractService<E extends BaseEntity, R extends CrudReposi
 	 * @see com.unep.wcmc.service.BaseService#list()
 	 */
 	@Override
-	public Iterable<E> list() {
-		return repo.findAll();
+	public List<E> list() {
+		return Lists.newArrayList(repo.findAll());
 	}
 
 	/*

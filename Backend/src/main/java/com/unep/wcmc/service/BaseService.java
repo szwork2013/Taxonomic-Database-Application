@@ -1,5 +1,7 @@
 package com.unep.wcmc.service;
 
+import java.util.List;
+
 public interface BaseService<T> {
 
     /**
@@ -9,14 +11,14 @@ public interface BaseService<T> {
      * @param entity
      * @return the saved entity
      */
-    public T save(T entity);
+    T save(T entity);
 
     /**
      * Returns all instances of the type.
      *
      * @return all entities
      */
-    Iterable<T> list();
+    List<T> list();
 
     /**
      * Deletes a given entity.
@@ -30,5 +32,5 @@ public interface BaseService<T> {
      *
      * @param id
      */
-    public T get(Long id);
+    T get(Long id);
 }
