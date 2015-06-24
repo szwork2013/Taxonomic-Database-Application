@@ -195,11 +195,51 @@ INSERT INTO threat_category (id, description) VALUES (135, '15. Unknown threat')
 
 -- Conservation Actions data
 INSERT INTO conservation_action_type (id, description) VALUES (1, '0. No Action');
+INSERT INTO conservation_action_type (id, description) VALUES (2, '1. Management Plans');
 
 -- HabitatType data
 INSERT INTO habitat_type (id, name) VALUES (1, 'Amazonia - Rain Forest Alluvial');
 
+-- Conversation data
+INSERT INTO conservation(id, benefited_from_action_plan, convention, convention_other_relevant_data, ex_situ_management, other_actions_protect_species, action_plans, change_reasons, in_national_endangered_fauna, national_evaluation_elegible, necessary_research_for_conservation, previous_national_assessment, research_in_progress, specific_actions_in_protected_areas, type_id) VALUES (1, 'no', 'convention', 'other convention', 'situation management', 'protected species', 'mitigation', 'change reasons', true, true, 'yes', 'yes', 'yes', 'yes', 1);
+INSERT INTO conservation(id, benefited_from_action_plan, convention, convention_other_relevant_data, ex_situ_management, other_actions_protect_species, action_plans, change_reasons, in_national_endangered_fauna, national_evaluation_elegible, necessary_research_for_conservation, previous_national_assessment, research_in_progress, specific_actions_in_protected_areas, type_id) VALUES (2, 'no', 'convention', 'other convention', 'situation management', 'protected species', 'mitigation', 'change reasons', true, true, 'yes', 'yes', 'yes', 'yes', 1);
+INSERT INTO conservation(id, benefited_from_action_plan, convention, convention_other_relevant_data, ex_situ_management, other_actions_protect_species, action_plans, change_reasons, in_national_endangered_fauna, national_evaluation_elegible, necessary_research_for_conservation, previous_national_assessment, research_in_progress, specific_actions_in_protected_areas, type_id) VALUES (3, 'no', 'convention', 'other convention', 'situation management', 'protected species', 'mitigation', 'change reasons', true, true, 'yes', 'yes', 'yes', 'yes', 1);
+
+-- Map data
+INSERT INTO map(id, author, caption, date, description, file, set_as_cover, projection, type) VALUES (1, 'Brazil', 'Brazil', '2015-01-01', 'Brazil Map', NULL, true, 'National', 'Map');
+INSERT INTO map(id, author, caption, date, description, file, set_as_cover, projection, type) VALUES (2, 'Eua', 'Eua', '2015-01-01', 'Eua Map', NULL, true, 'National', 'Map');
+INSERT INTO map(id, author, caption, date, description, file, set_as_cover, projection, type) VALUES (3, 'England', 'England', '2015-01-01', 'England Map', NULL, true, 'National', 'Map');
+
+-- DistributionArea data
+INSERT INTO distribution_area(id, endemic_from_brasil, extent_of_occurrence, fragmentation_level, global_distribution, national_distribution, native_in_brazil, area_of_ocuppancy, occurrence_state, occurs_in_brasil, only_from_few_localities, the_region_is_well_sampled, trend_in_extent_of_occurrence, area_of_occupancy_trend) VALUES (1, true, 1, 1, 'yes', 'yes', true, 1, 'ce', true, true, true, 1, 1);
+
+-- NaturalHistory data
+INSERT INTO natural_history(id, eating_habits, eating_habits_other_comments, expert_specialist, feeding_agregations, trophic_level, cont_decline_habitat_quality, habitat, restricted_to_primary_habitats, tolerant_to_habitat_mod, variation_in_habitat_use, captive_breeding_program, perc_and_period_of_decline, subpopulations_decline, subpopulations_fluctuations, subpopulations_number_of, subpopulations_trend, flutuation_mature_individuals, perc_immature_individuals, number_of_mature_individuals, trend_in_mature_individuals, max_no_of_mature_individuals, population_severely_fragmented, extinction_probability_in_brazil, decline_reversible_and_ceased, perc_population_decline, justification_of_pop_decline, population_decline_based_on, maximum_size, habitat_type_id) VALUES (1, 'herbivore', 'herbivore', 'none', 'no', 'level', true, 'brazil', true, 'no', 'yes', true, 50, 1, 1, 1, 1, true, 1, 1, 1, 1, true, 1, true, 1, 'hunting', 'hunting', 1, 1);
+
+-- Thrat data
+INSERT INTO threat(id, per_affected_area, decline_in_number_of_locations, threat_description, description_of_the_impact, location_fluctuation, cpue, fishing_effort, fishing_grounds, fishing_petrecho, fishing_scale, fishing_trend, landing_catch, value_of_mercado, future_threat, single_event, per_population_affected, local, municipality, period, "time", trend, threat_category_id) VALUES (1, 1, 1, 'hunting', 'large', 1, 'cpue', 'big', 'grounds', 'petrecho', 'scale', 'trend', 'catch', 'big', true, 1, 1, 'local', 'ce', 1, 1, 'trend', 1);
+
 -- Specie data 
-INSERT INTO species(id, common_name, extinction_risk_category, scientific_name, conservation_id, cover_map_id, cover_photo_id, distribution_id, natural_history_id, taxonomy_id, threat_id) VALUES (1, 'Arara-azul-de-lear', 0, 'Anodorhynchus leari', NULL, NULL, NULL, NULL, NULL, 1, NULL);
+INSERT INTO species(id, common_name, extinction_risk_category, scientific_name, conservation_id, cover_map_id, cover_photo_id, distribution_id, natural_history_id, taxonomy_id, threat_id) VALUES (1, 'Abelha', 1, 'Apis mellifera scutellata', 1, 1, NULL, 1, 1, 1, 1);
+INSERT INTO species(id, common_name, extinction_risk_category, scientific_name, conservation_id, cover_map_id, cover_photo_id, distribution_id, natural_history_id, taxonomy_id, threat_id) VALUES (2, 'Ácaro da Sarna', 2, 'Sarcoptes scabei', 2, 2, NULL, 1, 1, 1, 1);
+INSERT INTO species(id, common_name, extinction_risk_category, scientific_name, conservation_id, cover_map_id, cover_photo_id, distribution_id, natural_history_id, taxonomy_id, threat_id) VALUES (3, 'Águia chilena', 3, 'Geranoaetus melanoleucus', 3, 3, NULL, 1, 1, 1, 1);
+INSERT INTO species(id, common_name, extinction_risk_category, scientific_name, conservation_id, cover_map_id, cover_photo_id, distribution_id, natural_history_id, taxonomy_id, threat_id) VALUES (4, 'Águia cinzenta', 4, 'Harpyhaliaetus coronatus', 1, 1, NULL, 1, 1, 1, 1);
+INSERT INTO species(id, common_name, extinction_risk_category, scientific_name, conservation_id, cover_map_id, cover_photo_id, distribution_id, natural_history_id, taxonomy_id, threat_id) VALUES (5, 'Águia dourada', 5, 'Aquila chrysaetus', 2, 2, NULL, 1, 1, 1, 1);
+INSERT INTO species(id, common_name, extinction_risk_category, scientific_name, conservation_id, cover_map_id, cover_photo_id, distribution_id, natural_history_id, taxonomy_id, threat_id) VALUES (6, 'Albatroz', 6, 'Thalassarche melanophris', 3, 3, NULL, 1, 1, 1, 1);
+INSERT INTO species(id, common_name, extinction_risk_category, scientific_name, conservation_id, cover_map_id, cover_photo_id, distribution_id, natural_history_id, taxonomy_id, threat_id) VALUES (7, 'Alce', 7, 'Alces alce', 1, 1, NULL, 1, 1, 1, 1);
+INSERT INTO species(id, common_name, extinction_risk_category, scientific_name, conservation_id, cover_map_id, cover_photo_id, distribution_id, natural_history_id, taxonomy_id, threat_id) VALUES (8, 'Anta', 8, 'Tapirus terrestris', 2, 2, NULL, 1, 1, 1, 1);
+INSERT INTO species(id, common_name, extinction_risk_category, scientific_name, conservation_id, cover_map_id, cover_photo_id, distribution_id, natural_history_id, taxonomy_id, threat_id) VALUES (9, 'Antrax (bacilo do)', 9, 'Bacillus anthracis', 3, 3, NULL, 1, 1, 1, 1);
+INSERT INTO species(id, common_name, extinction_risk_category, scientific_name, conservation_id, cover_map_id, cover_photo_id, distribution_id, natural_history_id, taxonomy_id, threat_id) VALUES (10, 'Aranha caranguejeira ', 1, 'Grammostola mollicoma', 1, 1, NULL, 1, 1, 1, 1);
+INSERT INTO species(id, common_name, extinction_risk_category, scientific_name, conservation_id, cover_map_id, cover_photo_id, distribution_id, natural_history_id, taxonomy_id, threat_id) VALUES (11, 'Aranha marrom', 2, 'Loxosceles spp', 2, 2, NULL, 1, 1, 1, 1);
+INSERT INTO species(id, common_name, extinction_risk_category, scientific_name, conservation_id, cover_map_id, cover_photo_id, distribution_id, natural_history_id, taxonomy_id, threat_id) VALUES (12, 'Araponga', 3, 'Procnias nudicollis', 3, 3, NULL, 1, 1, 1, 1);
+INSERT INTO species(id, common_name, extinction_risk_category, scientific_name, conservation_id, cover_map_id, cover_photo_id, distribution_id, natural_history_id, taxonomy_id, threat_id) VALUES (13, 'Arara vermelha', 4, 'Ara macao', 1, 1, NULL, 1, 1, 1, 1);
+INSERT INTO species(id, common_name, extinction_risk_category, scientific_name, conservation_id, cover_map_id, cover_photo_id, distribution_id, natural_history_id, taxonomy_id, threat_id) VALUES (14, 'Aratu', 5, 'Aratus pisoni', 2, 2, NULL, 1, 1, 1, 1);
+INSERT INTO species(id, common_name, extinction_risk_category, scientific_name, conservation_id, cover_map_id, cover_photo_id, distribution_id, natural_history_id, taxonomy_id, threat_id) VALUES (15, 'Asno', 6, 'Equus asinus', 3, 3, NULL, 1, 1, 1, 1);
+INSERT INTO species(id, common_name, extinction_risk_category, scientific_name, conservation_id, cover_map_id, cover_photo_id, distribution_id, natural_history_id, taxonomy_id, threat_id) VALUES (16, 'Avestruz', 7, 'Struthio camelus', 1, 1, NULL, 1, 1, 1, 1);
+INSERT INTO species(id, common_name, extinction_risk_category, scientific_name, conservation_id, cover_map_id, cover_photo_id, distribution_id, natural_history_id, taxonomy_id, threat_id) VALUES (17, 'Bacilo do tifo', 8, 'Salmonella tiphosa', 2, 2, NULL, 1, 1, 1, 1);
+INSERT INTO species(id, common_name, extinction_risk_category, scientific_name, conservation_id, cover_map_id, cover_photo_id, distribution_id, natural_history_id, taxonomy_id, threat_id) VALUES (18, 'Baleia azul', 9, 'Baleanoptera musculus', 3, 3, NULL, 1, 1, 1, 1);
+INSERT INTO species(id, common_name, extinction_risk_category, scientific_name, conservation_id, cover_map_id, cover_photo_id, distribution_id, natural_history_id, taxonomy_id, threat_id) VALUES (19, 'Barata', 1, 'Blatta orientalis', 1, 1, NULL, 1, 1, 1, 1);
+INSERT INTO species(id, common_name, extinction_risk_category, scientific_name, conservation_id, cover_map_id, cover_photo_id, distribution_id, natural_history_id, taxonomy_id, threat_id) VALUES (20, 'Beija-flor ', 2, 'Hylocartis cyanus', 2, 2, NULL, 1, 1, 1, 1);
+INSERT INTO species(id, common_name, extinction_risk_category, scientific_name, conservation_id, cover_map_id, cover_photo_id, distribution_id, natural_history_id, taxonomy_id, threat_id) VALUES (21, 'Arara-azul-de-lear', 0, 'Anodorhynchus leari', NULL, NULL, NULL, NULL, NULL, 1, NULL);
 
 COMMIT;
