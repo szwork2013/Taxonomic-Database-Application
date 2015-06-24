@@ -31,7 +31,7 @@ public abstract class AbstractController<E extends BaseEntity,
 
 	@RequestMapping(method= RequestMethod.GET)
     public List<E> index() {
-        return (List<E>)service.list();
+        return service.list();
     }
 
     @RequestMapping(method= RequestMethod.POST)
