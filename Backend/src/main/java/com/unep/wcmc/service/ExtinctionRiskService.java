@@ -1,5 +1,9 @@
 package com.unep.wcmc.service;
 
+import com.google.common.collect.Lists;
+import com.unep.wcmc.model.Species;
+import com.unep.wcmc.repository.ExtinctionRiskConfigurationRepository;
+import com.unep.wcmc.repository.SpeciesRepository;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.slf4j.Logger;
@@ -7,13 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-
-import com.google.common.collect.Lists;
-import com.unep.wcmc.model.Species;
-import com.unep.wcmc.repository.ExtinctionRiskConfigurationRepository;
-import com.unep.wcmc.repository.SpeciesRepository;
-
-import java.util.Optional;
 
 @Service
 public class ExtinctionRiskService {
