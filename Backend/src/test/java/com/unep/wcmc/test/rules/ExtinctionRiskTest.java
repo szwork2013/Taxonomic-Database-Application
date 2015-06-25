@@ -46,66 +46,45 @@ public class ExtinctionRiskTest {
     }
 
     @Test
-    public void testVulnerable_VU() {
-        Species specie = new Species();
-        specie.setScientificName("Hypsiboas curupi Garcia, Faivovichi & Haddad, 2007");
-        kieSession.setGlobal("specie", specie);
-        kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
-
-        DistributionArea distributionArea = new DistributionArea();
-        distributionArea.setExtendOccurrence(8102.80d);
-        distributionArea.setOcurrsBrazil(true);
-        distributionArea.setNativeBrazil(true);
-        distributionArea.setEndemicFromBrazil(true);
-        kieSession.insert(distributionArea);
-
-        PopulationDynamics populationDynamics = new PopulationDynamics();
-        populationDynamics.setPopulationSeverelyFragmented(true);
-        kieSession.insert(populationDynamics);
-
-        ExtinctionRisk extinctionRisk = new ExtinctionRisk();
-        extinctionRisk.setNationalEvaluationElegible(true);
-
-        Threat threat = new Threat();
-        kieSession.insert(threat);
-
-        kieSession.fireAllRules();
-
-        Assert.assertNotNull(specie);
-        Assert.assertEquals(ExtinctionRiskCategory.VUNERABLE,
-                specie.getExtinctionRiskCategory());
-
-    }
-
-    @Test
     public void testEndangered_EN() {
         Species specie = new Species();
         specie.setCommonName("macaco-prego-galego");
         specie.setScientificName("Sapajus flavius");
-        kieSession.setGlobal("specie", specie);
+        kieSession.setGlobal("species", specie);
         kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
 
         DistributionArea distributionArea = new DistributionArea();
+        // Extent of Occurrence (km2) - EOO
         distributionArea.setExtendOccurrence(23000d);
+        // Occurs in Brasil
         distributionArea.setOcurrsBrazil(true);
+        // Native in Brasil
         distributionArea.setNativeBrazil(true);
+        // Endemic form Brasil
         distributionArea.setEndemicFromBrazil(true);
+        // Area of occupancy (km2) - AOO
         distributionArea.setOccupancyArea(150d);
+        // Trend in area of occupancy
         distributionArea.setTrendOccupancyArea(TrendOccurence.DECLINING);
         kieSession.insert(distributionArea);
 
         PopulationTrend trend = new PopulationTrend();
+        // % population decline in 10 years or 3 generations and period
         trend.setPercPopulationDecline(50d);
+        // In case of past reduction, is the cause reversible and has ceased?
         trend.setDeclineReversibleAndCeased(false);
         kieSession.insert(trend);
 
         PopulationDynamics populationDynamics = new PopulationDynamics();
+        // Number of mature individuals
         populationDynamics.setMatureIndividualsNumber(500l);
+        // Number of Subpopulations
         populationDynamics.setMatureIndividualsSubpopulationMaxNumber(250l);
+        // Population severely fragmented
         populationDynamics.setPopulationSeverelyFragmented(true);
+
         populationDynamics.setPopulationTrend(trend);
         kieSession.insert(populationDynamics);
-
 
         Threat threat = new Threat();
         kieSession.insert(threat);
@@ -120,7 +99,7 @@ public class ExtinctionRiskTest {
     @Test
     public void testExtinct_EX() {
         Species specie = new Species();
-        kieSession.setGlobal("specie", specie);
+        kieSession.setGlobal("species", specie);
         kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
 
         ExtinctionRisk extinctionRisk = new ExtinctionRisk();
@@ -142,7 +121,7 @@ public class ExtinctionRiskTest {
     @Test
     public void testExtinctInTheWild_EW() {
         Species specie = new Species();
-        kieSession.setGlobal("specie", specie);
+        kieSession.setGlobal("species", specie);
         kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
 
         ExtinctionRisk extinctionRisk = new ExtinctionRisk();
@@ -164,7 +143,7 @@ public class ExtinctionRiskTest {
     @Test
     public void testRegionallyExtinct_RE() {
         Species specie = new Species();
-        kieSession.setGlobal("specie", specie);
+        kieSession.setGlobal("species", specie);
         kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
 
         ExtinctionRisk extinctionRisk = new ExtinctionRisk();

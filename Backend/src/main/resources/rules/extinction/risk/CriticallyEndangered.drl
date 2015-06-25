@@ -22,7 +22,7 @@ rule "Critically Endangered (CR) - A"
         // A1, A2, A3, A4 criteria
         PopulationTrend(declineReversibleAndCeased == false)
         PopulationTrend(percPopulationDecline >= $config.percPopulationDecline) // A1
-        PopulationTrend(percPopulationDecline >= $config.percePopulationDecline2) // A2, A3, A4
+        //PopulationTrend(percPopulationDecline >= $config.percePopulationDecline2) // A2, A3, A4
     then
         species.setExtinctionRiskCategory(ExtinctionRiskCategory.CRITICALLY_ENDANGERED);
 end
@@ -53,14 +53,15 @@ rule "Critically Endangered (CR) - C"
     activation-group "ExtinctionRisk"
     salience 0
     when
+        $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.CRITICALLY_ENDANGERED) from configuration
         // C criteria
-        PopulationDynamics(matureIndividualsNumber < 250)
+        PopulationDynamics(matureIndividualsNumber <  $config.numberMatureIndividuals)
     and (
-        PopulationDynamics(declinePeriodPercent >= 25) // C1
+        PopulationDynamics(declinePeriodPercent >= $config.percPopulationDecline) // C1
         or
         PopulationDynamics(matureIndividualsNumberTrend == TrendOccurence.DECLINING) // C2
         and (
-                PopulationDynamics(matureIndividualsSubpopulationMaxNumber <= 50) // a(i)
+                PopulationDynamics(matureIndividualsSubpopulationMaxNumber <= $config.numberMatureIndividualsInSub) // a(i)
                 or
                 PopulationDynamics(imatureIndividualsSubpopulationPercent >= 90)  // a(ii)
                 or

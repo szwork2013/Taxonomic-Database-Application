@@ -13,6 +13,8 @@ import com.unep.wcmc.model.Species;
 import com.unep.wcmc.repository.ExtinctionRiskConfigurationRepository;
 import com.unep.wcmc.repository.SpeciesRepository;
 
+import java.util.Optional;
+
 @Service
 public class ExtinctionRiskService {
 
@@ -43,15 +45,31 @@ public class ExtinctionRiskService {
     public void processExtinctionRiskCalculation(Species species) {
         final KieSession session = kieContainer.newKieSession("RulesSession");
         try {
+            // global variables
             session.setGlobal("species", species);
             session.setGlobal("configuration", Lists.newArrayList(configurationRepo.findAll()));
             // set the business rules facts
-            session.insert(species.getDistributionArea());
-            session.insert(species.getNaturalHistory());
-            session.insert(species.getNaturalHistory().getPopulationDynamics());
-            session.insert(species.getNaturalHistory().getPopulationDynamics().getPopulationTrend());
-            session.insert(species.getTaxonomy());
-            session.insert(species.getThreat());
+            if (species != null) {
+                // set the Taxonomy facts
+                session.insert(species.getTaxonomy());
+                // set the Distribution Area facts
+                session.insert(species.getDistributionArea());
+                // set the Natural History facts
+                if (species.getNaturalHistory() != null) {
+                    session.insert(species.getNaturalHistory());
+                    if (species.getNaturalHistory().getPopulationDynamics() != null) {
+                        session.insert(species.getNaturalHistory().getPopulationDynamics());
+                        session.insert(species.getNaturalHistory().getPopulationDynamics().getPopulationTrend());
+                    }
+                }
+                // set the Conservation facts
+                if (species.getConservation() != null) {
+                    session.insert(species.getConservation());
+                    session.insert(species.getConservation().getExtinctionRisk());
+                }
+                // set the Threat facts
+                session.insert(species.getThreat());
+            }
             // firing all the rules
             session.fireAllRules();
         } catch (Exception e) {

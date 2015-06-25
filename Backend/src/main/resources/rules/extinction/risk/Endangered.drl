@@ -25,8 +25,8 @@ rule "Endangered (EN) - A"
         // A1, A2, A3, A4 criteria
         PopulationTrend(declineReversibleAndCeased == false)
         PopulationTrend(percPopulationDecline >= $config.percPopulationDecline, percPopulationDecline < 90) // A1
-    or
-        PopulationTrend(percPopulationDecline >= $config.percePopulationDecline2, percPopulationDecline < 80) // A2, A3, A4
+    //or
+        //PopulationTrend(percPopulationDecline >= $config.percePopulationDecline2, percPopulationDecline < 80) // A2, A3, A4
     then
         species.setExtinctionRiskCategory(ExtinctionRiskCategory.ENDANGERED);
 end

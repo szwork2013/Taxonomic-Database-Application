@@ -26,7 +26,7 @@ rule "Vulnerable (VU) - A"
         // A1, A2, A3, A4 criteria
         PopulationTrend(declineReversibleAndCeased == false)
         PopulationTrend(percPopulationDecline >= $config.percPopulationDecline, percPopulationDecline < 70) // A1
-        PopulationTrend(percPopulationDecline >= $config.percePopulationDecline2, percPopulationDecline < 50) // A2, A3, A4
+        //PopulationTrend(percPopulationDecline >= $config.percePopulationDecline2, percPopulationDecline < 50) // A2, A3, A4
     then
         species.setExtinctionRiskCategory(ExtinctionRiskCategory.VUNERABLE);
 end
