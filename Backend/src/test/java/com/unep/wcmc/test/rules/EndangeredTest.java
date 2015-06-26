@@ -17,7 +17,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
-public class ExtinctionRiskTest {
+public class EndangeredTest {
 
     private KieServices kieServices;
     private KieContainer kieContainer;
@@ -34,15 +34,6 @@ public class ExtinctionRiskTest {
         this.kieServices = KieServices.Factory.get();
         this.kieContainer = kieServices.getKieClasspathContainer();
         this.kieSession = kieContainer.newKieSession("RulesSession");
-    }
-
-    /**
-     * If this passes, then the {@link KieSession} was initialised and injected
-     * into the Spring components.
-     */
-    @Test
-    public void shouldConfigureDroolsComponents() {
-        Assert.assertNotNull(kieSession);
     }
 
     @Test
@@ -93,72 +84,6 @@ public class ExtinctionRiskTest {
 
         Assert.assertNotNull(specie);
         Assert.assertEquals(ExtinctionRiskCategory.ENDANGERED,
-                specie.getExtinctionRiskCategory());
-    }
-
-    @Test
-    public void testExtinct_EX() {
-        Species specie = new Species();
-        kieSession.setGlobal("species", specie);
-        kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
-
-        ExtinctionRisk extinctionRisk = new ExtinctionRisk();
-        extinctionRisk.setNationalEvaluationElegible(true);
-        kieSession.insert(extinctionRisk);
-
-        PopulationDynamics populationDynamics = new PopulationDynamics();
-        populationDynamics.setMatureIndividualsNumber(0l);
-        populationDynamics.setCaptiveBreedingProgram(false);
-        kieSession.insert(populationDynamics);
-
-        kieSession.fireAllRules();
-
-        Assert.assertNotNull(specie);
-        Assert.assertEquals(ExtinctionRiskCategory.EXTINCT,
-                specie.getExtinctionRiskCategory());
-    }
-
-    @Test
-    public void testExtinctInTheWild_EW() {
-        Species specie = new Species();
-        kieSession.setGlobal("species", specie);
-        kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
-
-        ExtinctionRisk extinctionRisk = new ExtinctionRisk();
-        extinctionRisk.setNationalEvaluationElegible(true);
-        kieSession.insert(extinctionRisk);
-
-        PopulationDynamics populationDynamics = new PopulationDynamics();
-        populationDynamics.setMatureIndividualsNumber(0l);
-        populationDynamics.setCaptiveBreedingProgram(true);
-        kieSession.insert(populationDynamics);
-
-        kieSession.fireAllRules();
-
-        Assert.assertNotNull(specie);
-        Assert.assertEquals(ExtinctionRiskCategory.EXTINCT_IN_THE_WILD,
-                specie.getExtinctionRiskCategory());
-    }
-
-    @Test
-    public void testRegionallyExtinct_RE() {
-        Species specie = new Species();
-        kieSession.setGlobal("species", specie);
-        kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
-
-        ExtinctionRisk extinctionRisk = new ExtinctionRisk();
-        extinctionRisk.setNationalEvaluationElegible(false);
-        kieSession.insert(extinctionRisk);
-
-        PopulationDynamics populationDynamics = new PopulationDynamics();
-        populationDynamics.setMatureIndividualsNumber(0l);
-        populationDynamics.setCaptiveBreedingProgram(false);
-        kieSession.insert(populationDynamics);
-
-        kieSession.fireAllRules();
-
-        Assert.assertNotNull(specie);
-        Assert.assertEquals(ExtinctionRiskCategory.REGIONALLY_EXTINCT,
                 specie.getExtinctionRiskCategory());
     }
 

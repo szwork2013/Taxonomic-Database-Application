@@ -1,10 +1,11 @@
 package rules.extinction.risk;
 dialect  "mvel"
 
-import com.unep.wcmc.model.Species;
-import com.unep.wcmc.model.PopulationDynamics;
+import com.unep.wcmc.model.DistributionArea;
 import com.unep.wcmc.model.ExtinctionRisk
 import com.unep.wcmc.model.ExtinctionRiskCategory;
+import com.unep.wcmc.model.PopulationDynamics;
+import com.unep.wcmc.model.Species;
 
 global Species species;
 
@@ -15,7 +16,7 @@ rule "Extinct (EX)"
         PopulationDynamics(matureIndividualsNumber == 0)
         // Captive breeding program for the species = NO  Endemic from Brazil = YES
         PopulationDynamics(captiveBreedingProgram == false)
-        ExtinctionRisk(nationalEvaluationElegible == true)
+        DistributionArea(endemicFromBrazil == true)
     then
         species.setExtinctionRiskCategory(ExtinctionRiskCategory.EXTINCT);
 end

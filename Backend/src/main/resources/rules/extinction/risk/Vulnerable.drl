@@ -24,9 +24,8 @@ rule "Vulnerable (VU) - A"
     when
         $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.VUNERABLE) from configuration
         // A1, A2, A3, A4 criteria
-        PopulationTrend(declineReversibleAndCeased == false)
+        //PopulationTrend(declineReversibleAndCeased == false)
         PopulationTrend(percPopulationDecline >= $config.percPopulationDecline, percPopulationDecline < 70) // A1
-        //PopulationTrend(percPopulationDecline >= $config.percePopulationDecline2, percPopulationDecline < 50) // A2, A3, A4
     then
         species.setExtinctionRiskCategory(ExtinctionRiskCategory.VUNERABLE);
 end
@@ -84,6 +83,7 @@ rule "Vulnerable (VU) - D"
         $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.VUNERABLE) from configuration
         // D1 criteria
         PopulationDynamics(matureIndividualsNumber < 1000) // D1
+    or
         // D2 criteria
         Threat(futureThreatExistence == true, geographicallyDistinctAreasNumber <= 5)
         DistributionArea(occupancyArea < 2000) // (AOD)
