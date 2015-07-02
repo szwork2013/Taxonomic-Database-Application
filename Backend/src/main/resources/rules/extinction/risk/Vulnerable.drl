@@ -25,7 +25,7 @@ rule "Vulnerable (VU) - A1"
     when
         $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.VUNERABLE) from configuration
         // criteria
-        PopulationTrend(percPopulationDecline >= $config.percPopulationDecline, percPopulationDecline < 70) // A1
+        PopulationTrend(percPopulationDecline >= 50, percPopulationDecline < 70) // A1
         PopulationTrend(declineReversibleAndCeased == null)
     then
         species.setExtinctionRiskCategory(ExtinctionRiskCategory.VUNERABLE);
@@ -37,7 +37,7 @@ rule "Vulnerable (VU) - A2"
     when
         $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.VUNERABLE) from configuration
         // criteria
-        PopulationTrend(percPopulationDecline >= $config.percePopulationDecline2, percPopulationDecline < 30) // A2, A3, A4
+        PopulationTrend(percPopulationDecline >= 30, percPopulationDecline < 50) // A2, A3, A4
         PopulationTrend(declineReversibleAndCeased == false)
     then
         species.setExtinctionRiskCategory(ExtinctionRiskCategory.VUNERABLE);
@@ -50,8 +50,8 @@ rule "Vulnerable (VU) - B"
         $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.VUNERABLE) from configuration
         // criteria
         // B1,B2 (EOD or AOD)
-        DistributionArea(extendOccurrence <= $config.occurrenceExtent, extendOccurrence > 5000) or
-        DistributionArea(occupancyArea <= $config.occupancyArea, occupancyArea > 500)
+        DistributionArea(extendOccurrence <= 20000, extendOccurrence > 5000) or
+        DistributionArea(occupancyArea <= 2000, occupancyArea > 500)
         // others
         (
             DistributionArea(trendExtendOccurence == TrendOccurence.DECLINING) or

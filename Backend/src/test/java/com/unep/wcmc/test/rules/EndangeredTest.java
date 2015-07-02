@@ -37,46 +37,99 @@ public class EndangeredTest {
     }
 
     @Test
-    public void testEndangered_EN() {
+    public void testEndangered_EN_1() {
+        Species specie = new Species();
+        kieSession.setGlobal("species", specie);
+        kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
+
+        PopulationTrend trend = new PopulationTrend();
+        // % population decline in 10 years or 3 generations and period
+        trend.setPercPopulationDecline(70d);
+        // In case of past reduction, is the cause reversible and has ceased?
+        kieSession.insert(trend);
+        kieSession.fireAllRules();
+
+        Assert.assertNotNull(specie);
+        Assert.assertEquals(ExtinctionRiskCategory.ENDANGERED,
+                specie.getExtinctionRiskCategory());
+    }
+
+    @Test
+    public void testEndangered_EN_2() {
+        Species specie = new Species();
+        kieSession.setGlobal("species", specie);
+        kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
+
+        PopulationTrend trend = new PopulationTrend();
+        // % population decline in 10 years or 3 generations and period
+        trend.setPercPopulationDecline(60d);
+        trend.setDeclineReversibleAndCeased(false);
+        // In case of past reduction, is the cause reversible and has ceased?
+        kieSession.insert(trend);
+        kieSession.fireAllRules();
+
+        Assert.assertNotNull(specie);
+        Assert.assertEquals(ExtinctionRiskCategory.ENDANGERED,
+                specie.getExtinctionRiskCategory());
+    }
+
+    @Test
+    public void testEndangered_EN_3() {
         Species specie = new Species();
         kieSession.setGlobal("species", specie);
         kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
 
         DistributionArea distributionArea = new DistributionArea();
         // Extent of Occurrence (km2) - EOO
-        distributionArea.setExtendOccurrence(23000d);
-        // Occurs in Brasil
-        distributionArea.setOcurrsBrazil(true);
-        // Native in Brasil
-        distributionArea.setNativeBrazil(true);
-        // Endemic form Brasil
-        distributionArea.setEndemicFromBrazil(true);
-        // Area of occupancy (km2) - AOO
-        distributionArea.setOccupancyArea(150d);
-        // Trend in area of occupancy
+        distributionArea.setExtendOccurrence(5000d);
+        distributionArea.setTrendExtendOccurence(TrendOccurence.DECLINING);
+        distributionArea.setTrendOccupancyArea(TrendOccurence.DECLINING);
+        kieSession.insert(distributionArea);
+        kieSession.fireAllRules();
+
+        Assert.assertNotNull(specie);
+        Assert.assertEquals(ExtinctionRiskCategory.ENDANGERED,
+                specie.getExtinctionRiskCategory());
+    }
+
+    @Test
+    public void testEndangered_EN_4() {
+        Species specie = new Species();
+        kieSession.setGlobal("species", specie);
+        kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
+
+        DistributionArea distributionArea = new DistributionArea();
+        // Extent of Occurrence (km2) - EOO
+        distributionArea.setExtendOccurrence(5000d);
+        distributionArea.setTrendExtendOccurence(TrendOccurence.DECLINING);
+        kieSession.insert(distributionArea);
+
+        Habitat habitat = new Habitat();
+        habitat.setContinuingDeclineInHabitatQuality(true);
+        kieSession.insert(habitat);
+
+        kieSession.fireAllRules();
+
+        Assert.assertNotNull(specie);
+        Assert.assertEquals(ExtinctionRiskCategory.ENDANGERED,
+                specie.getExtinctionRiskCategory());
+    }
+
+    @Test
+    public void testEndangered_EN_5() {
+        Species specie = new Species();
+        kieSession.setGlobal("species", specie);
+        kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
+
+        DistributionArea distributionArea = new DistributionArea();
+        // Extent of Occurrence (km2) - EOO
+        distributionArea.setExtendOccurrence(5000d);
         distributionArea.setTrendOccupancyArea(TrendOccurence.DECLINING);
         kieSession.insert(distributionArea);
 
-        PopulationTrend trend = new PopulationTrend();
-        // % population decline in 10 years or 3 generations and period
-        trend.setPercPopulationDecline(50d);
-        // In case of past reduction, is the cause reversible and has ceased?
-        trend.setDeclineReversibleAndCeased(false);
-        kieSession.insert(trend);
-
-        PopulationDynamics populationDynamics = new PopulationDynamics();
-        // Number of mature individuals
-        populationDynamics.setMatureIndividualsNumber(500l);
-        // Number of Subpopulations
-        populationDynamics.setMatureIndividualsSubpopulationMaxNumber(250l);
-        // Population severely fragmented
-        populationDynamics.setPopulationSeverelyFragmented(true);
-
-        populationDynamics.setPopulationTrend(trend);
-        kieSession.insert(populationDynamics);
-
-        Threat threat = new Threat();
-        kieSession.insert(threat);
+        Habitat habitat = new Habitat();
+        habitat.setContinuingDeclineInHabitatQuality(true);
+        kieSession.insert(habitat);
 
         kieSession.fireAllRules();
 

@@ -18,7 +18,7 @@ rule "Not Applicable (NA)"
     activation-group "ExtinctionRisk"
     salience 10
     when
-        Conservation(extinctionRisk.inNationalEndangeredFauna == false)
+        Conservation(extinctionRisk.nationalEvaluationElegible == false)
     then
         species.setExtinctionRiskCategory(ExtinctionRiskCategory.NOT_APPLICABLE);
 end
