@@ -2,9 +2,11 @@ package rules.extinction.risk;
 dialect  "mvel"
 
 import com.unep.wcmc.model.Conservation;
+import com.unep.wcmc.model.DensityData;
 import com.unep.wcmc.model.DistributionArea;
 import com.unep.wcmc.model.ExtinctionRiskCategory;
 import com.unep.wcmc.model.ExtinctionRiskConfiguration;
+import com.unep.wcmc.model.Habitat;
 import com.unep.wcmc.model.PopulationDynamics;
 import com.unep.wcmc.model.PopulationTrend;
 import com.unep.wcmc.model.Species;
@@ -16,75 +18,123 @@ global Species species;
 global java.util.List configuration;
 
 /**
- * Near Threatened (NT)
- * Classification - A
+ * Near Threatened (NT) rules
  */
-rule "Near Threatened (NT) - A"
+rule "Near Threatened (NT) - A1"
     activation-group "ExtinctionRisk"
-    salience 10
+    salience 0
     when
         $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.NEAR_THREATENED) from configuration
-        // A1, A2, A3, A4 criteria
-        Taxonomy(limitationsForAssessment == false)
-        DistributionArea(onlyFromFewLocalities == true)
+        // criteria
+        PopulationTrend(percPopulationDecline >= $config.percPopulationDecline, percPopulationDecline < 50) // A1
+        PopulationTrend(declineReversibleAndCeased == null)
+    then
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.NEAR_THREATENED);
+end
 
+rule "Near Threatened (NT) - A2"
+    activation-group "ExtinctionRisk"
+    salience 0
+    when
+        $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.NEAR_THREATENED) from configuration
+        // criteria
+        PopulationTrend(percPopulationDecline >= $config.percePopulationDecline2, percPopulationDecline < 40) // A2, A3, A4
         PopulationTrend(declineReversibleAndCeased == false)
-        PopulationTrend(percPopulationDecline > $config.percPopulationDecline, percPopulationDecline < 50) // A1
-        PopulationTrend(percPopulationDecline > $config.percePopulationDecline2, percPopulationDecline < 40) // A2, A3, A4
     then
         species.setExtinctionRiskCategory(ExtinctionRiskCategory.NEAR_THREATENED);
 end
 
-rule "Near Threatened (NT) - B"
+rule "Near Threatened (NT) - B1"
     activation-group "ExtinctionRisk"
-    salience 10
+    salience 0
     when
         $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.NEAR_THREATENED) from configuration
-        // B1, B2 criteria
-        DistributionArea(extendOccurrence >= $config.occurrenceExtent, extendOccurrence < 30000) // B1 (EOD)
-        DistributionArea(occupancyArea >= $config.occupancyArea, occupancyArea < 3000) // B2 (AOD)
-    and (
-        // B(a) criteria
-        PopulationDynamics(populationSeverelyFragmented == true)
-        or (
-            // B(a) criteria
-            PopulationDynamics(populationSeverelyFragmented == false)
-            and
-            Threat(geographicallyDistinctAreasNumber > 5, geographicallyDistinctAreasNumber <= 10)
+        // criteria
+        // B1,B2 (EOD or AOD)
+        DistributionArea(extendOccurrence <= 30000, extendOccurrence > 2000) or
+        DistributionArea(occupancyArea <= 3000, occupancyArea > 2000)
+        // others
+        (
+            DistributionArea(trendExtendOccurence == TrendOccurence.DECLINING) or
+            DistributionArea(trendOccupancyArea == TrendOccurence.DECLINING) or
+            Habitat(continuingDeclineInHabitatQuality == true) or
+            PopulationDynamics(matureIndividualsNumberTrend == TrendOccurence.DECLINING) or
+            PopulationDynamics(extremeFlutuationInMatureIndividualsNumber == true) or
+            DensityData(subPopulationsNumberTrend == TrendOccurence.DECLINING) or
+            PopulationDynamics(populationSeverelyFragmented == true) or
+            Threat(geographicallyDistinctAreasNumber <= 10)
         )
-    )
-    then
-        species.setExtinctionRiskCategory(ExtinctionRiskCategory.NEAR_THREATENED);
-end
-
-rule "Near Threatened (NT) - C"
-    activation-group "ExtinctionRisk"
-    salience 10
-    when
-        $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.NEAR_THREATENED) from configuration
-        // C criteria
-        PopulationDynamics(matureIndividualsNumber > 10000, matureIndividualsNumber < 15000)
-    and (
-            PopulationDynamics(declinePeriodPercent <= 10) // C1
-            or (
-                PopulationDynamics(matureIndividualsNumberTrend == TrendOccurence.DECLINING) // C2
-                and
-                PopulationDynamics(matureIndividualsSubpopulationMaxNumber > 10000,
-                    matureIndividualsSubpopulationMaxNumber < 15000) // a(i)
-            )
+    and
+        (
+            DistributionArea(trendExtendOccurence == TrendOccurence.DECLINING) or
+            DistributionArea(trendOccupancyArea == TrendOccurence.DECLINING) or
+            Habitat(continuingDeclineInHabitatQuality == true) or
+            PopulationDynamics(matureIndividualsNumberTrend == TrendOccurence.DECLINING) or
+            PopulationDynamics(extremeFlutuationInMatureIndividualsNumber == true) or
+            DensityData(subPopulationsNumberTrend == TrendOccurence.DECLINING) or
+            PopulationDynamics(populationSeverelyFragmented == true) or
+            Threat(geographicallyDistinctAreasNumber <= 10)
         )
     then
         species.setExtinctionRiskCategory(ExtinctionRiskCategory.NEAR_THREATENED);
 end
 
 
-rule "Near Threatened (NT) - D"
+rule "Near Threatened (NT) - B2"
     activation-group "ExtinctionRisk"
-    salience 10
+    salience 0
     when
         $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.NEAR_THREATENED) from configuration
-        // D1 criteria
-        PopulationDynamics(matureIndividualsNumber > 1000, matureIndividualsNumber < 1500) // D1
+        // criteria
+        // B1,B2 (EOD or AOD)
+        DistributionArea(extendOccurrence <= 20000, extendOccurrence > 5000) or
+        DistributionArea(occupancyArea <= 2000, occupancyArea > 500)
+        // others
+        (
+            DistributionArea(trendExtendOccurence == TrendOccurence.DECLINING) or
+            DistributionArea(trendOccupancyArea == TrendOccurence.DECLINING) or
+            Habitat(continuingDeclineInHabitatQuality == true) or
+            PopulationDynamics(matureIndividualsNumberTrend == TrendOccurence.DECLINING) or
+            PopulationDynamics(extremeFlutuationInMatureIndividualsNumber == true) or
+            DensityData(subPopulationsNumberTrend == TrendOccurence.DECLINING) or
+            PopulationDynamics(populationSeverelyFragmented == true) or
+            Threat(geographicallyDistinctAreasNumber <= 10)
+        )
+    then
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.NEAR_THREATENED);
+end
+
+rule "Near Threatened (NT) - C1"
+    activation-group "ExtinctionRisk"
+    salience 0
+    when
+        $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.NEAR_THREATENED) from configuration
+        // criteria
+        PopulationDynamics(matureIndividualsNumber >  10000, matureIndividualsNumber < 15000)
+        PopulationDynamics(declinePeriodPercent <= 10)
+    then
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.NEAR_THREATENED);
+end
+
+rule "Near Threatened (NT) - C2"
+    activation-group "ExtinctionRisk"
+    salience 0
+    when
+        $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.NEAR_THREATENED) from configuration
+        // criteria
+        PopulationDynamics(matureIndividualsSubpopulationMaxNumber > 1000, matureIndividualsNumber <= 1500)
+        DensityData(subPopulationsNumberTrend == TrendOccurence.DECLINING)
+    then
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.NEAR_THREATENED);
+end
+
+rule "Near Threatened (NT) - C3"
+    activation-group "ExtinctionRisk"
+    salience 0
+    when
+        $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.NEAR_THREATENED) from configuration
+        // criteria
+        PopulationDynamics(matureIndividualsNumber >  1000, matureIndividualsNumber <= 1500)
     then
         species.setExtinctionRiskCategory(ExtinctionRiskCategory.NEAR_THREATENED);
 end

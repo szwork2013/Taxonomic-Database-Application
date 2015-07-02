@@ -1,9 +1,11 @@
 package rules.extinction.risk;
 dialect  "mvel"
 
+import com.unep.wcmc.model.DensityData;
 import com.unep.wcmc.model.DistributionArea;
 import com.unep.wcmc.model.ExtinctionRiskCategory;
 import com.unep.wcmc.model.ExtinctionRiskConfiguration;
+import com.unep.wcmc.model.Habitat;
 import com.unep.wcmc.model.NaturalHistory;
 import com.unep.wcmc.model.PopulationDynamics;
 import com.unep.wcmc.model.PopulationTrend;
@@ -14,15 +16,29 @@ import com.unep.wcmc.model.Threat;
 global Species species;
 global java.util.List configuration;
 
-rule "Critically Endangered (CR) - A"
+/**
+ * Critically Endangered (CR) rules
+ */
+rule "Critically Endangered (CR) - A1"
     activation-group "ExtinctionRisk"
     salience 0
     when
         $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.CRITICALLY_ENDANGERED) from configuration
-        // A1, A2, A3, A4 criteria
-        PopulationTrend(declineReversibleAndCeased == false)
+        // criteria
         PopulationTrend(percPopulationDecline >= $config.percPopulationDecline) // A1
-        //PopulationTrend(percPopulationDecline >= $config.percePopulationDecline2) // A2, A3, A4
+        PopulationTrend(declineReversibleAndCeased == null)
+    then
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.CRITICALLY_ENDANGERED);
+end
+
+rule "Critically Endangered (CR) - A2"
+    activation-group "ExtinctionRisk"
+    salience 0
+    when
+        $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.CRITICALLY_ENDANGERED) from configuration
+        // criteria
+        PopulationTrend(percPopulationDecline >= $config.percePopulationDecline2) // A2, A3, A4
+        PopulationTrend(declineReversibleAndCeased == false)
     then
         species.setExtinctionRiskCategory(ExtinctionRiskCategory.CRITICALLY_ENDANGERED);
 end
@@ -32,19 +48,32 @@ rule "Critically Endangered (CR) - B"
     salience 0
     when
         $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.CRITICALLY_ENDANGERED) from configuration
-        // B1, B2 criteria
-        DistributionArea(extendOccurrence < $config.occurrenceExtent) // B1 (EOD)
-        DistributionArea(occupancyArea < $config.occupancyArea) // B2 (AOD)
-    and (
-        // B(a) criteria
-        PopulationDynamics(populationSeverelyFragmented == true)
-        or (
-            // B(a) criteria
-            PopulationDynamics(populationSeverelyFragmented == false)
-            and
-            Threat(geographicallyDistinctAreasNumber == $config.numberLocations)
+        // criteria
+        // B1,B2 (EOD or AOD)
+        DistributionArea(extendOccurrence <= $config.occurrenceExtent) or
+        DistributionArea(occupancyArea <= $config.occupancyArea)
+        // others
+        (
+            DistributionArea(trendExtendOccurence == TrendOccurence.DECLINING) or
+            DistributionArea(trendOccupancyArea == TrendOccurence.DECLINING) or
+            Habitat(continuingDeclineInHabitatQuality == true) or
+            PopulationDynamics(matureIndividualsNumberTrend == TrendOccurence.DECLINING) or
+            PopulationDynamics(extremeFlutuationInMatureIndividualsNumber == true) or
+            DensityData(subPopulationsNumberTrend == TrendOccurence.DECLINING) or
+            PopulationDynamics(populationSeverelyFragmented == true) or
+            Threat(geographicallyDistinctAreasNumber == 1)
         )
-    )
+    and
+        (
+            DistributionArea(trendExtendOccurence == TrendOccurence.DECLINING) or
+            DistributionArea(trendOccupancyArea == TrendOccurence.DECLINING) or
+            Habitat(continuingDeclineInHabitatQuality == true) or
+            PopulationDynamics(matureIndividualsNumberTrend == TrendOccurence.DECLINING) or
+            PopulationDynamics(extremeFlutuationInMatureIndividualsNumber == true) or
+            DensityData(subPopulationsNumberTrend == TrendOccurence.DECLINING) or
+            PopulationDynamics(populationSeverelyFragmented == true) or
+            Threat(geographicallyDistinctAreasNumber == 1)
+        )
     then
         species.setExtinctionRiskCategory(ExtinctionRiskCategory.CRITICALLY_ENDANGERED);
 end
@@ -54,19 +83,13 @@ rule "Critically Endangered (CR) - C"
     salience 0
     when
         $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.CRITICALLY_ENDANGERED) from configuration
-        // C criteria
-        PopulationDynamics(matureIndividualsNumber <  $config.numberMatureIndividuals)
-    and (
-        PopulationDynamics(declinePeriodPercent >= $config.percPopulationDecline) // C1
-        or
-        PopulationDynamics(matureIndividualsNumberTrend == TrendOccurence.DECLINING) // C2
-        and (
-                PopulationDynamics(matureIndividualsSubpopulationMaxNumber <= $config.numberMatureIndividualsInSub) // a(i)
-                or
-                PopulationDynamics(imatureIndividualsSubpopulationPercent >= 90)  // a(ii)
-                or
-                PopulationDynamics(extremeFlutuationInMatureIndividualsNumber == true) // b
-            )
+        // criteria
+        PopulationDynamics(matureIndividualsNumber <=  $config.numberMatureIndividuals)
+        (
+            PopulationDynamics(declinePeriodPercent >= 25) or
+            PopulationDynamics(matureIndividualsSubpopulationMaxNumber <= 50) or
+            PopulationDynamics(imatureIndividualsSubpopulationPercent >= 90) or
+            PopulationDynamics(extremeFlutuationInMatureIndividualsNumber == true)
         )
     then
         species.setExtinctionRiskCategory(ExtinctionRiskCategory.CRITICALLY_ENDANGERED);
@@ -77,19 +100,20 @@ rule "Critically Endangered (CR) - D"
     salience 0
     when
         $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.CRITICALLY_ENDANGERED) from configuration
-        // D criteria
-        PopulationDynamics(matureIndividualsNumber < $config.numberMatureIndividuals2)
+        // criteria
+        PopulationDynamics(matureIndividualsNumber <=  $config.numberMatureIndividuals2)
     then
         species.setExtinctionRiskCategory(ExtinctionRiskCategory.CRITICALLY_ENDANGERED);
 end
+
 
 rule "Critically Endangered (CR) - E"
     activation-group "ExtinctionRisk"
     salience 0
     when
         $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.CRITICALLY_ENDANGERED) from configuration
-        // E criteria
-        PopulationTrend(brazilExtinctionProbability >= $config.probExtinctionInWild, brazilExtinctionProbability < 20)
+        // criteria
+        PopulationTrend(brazilExtinctionProbability >= $config.probExtinctionInWild)
     then
         species.setExtinctionRiskCategory(ExtinctionRiskCategory.CRITICALLY_ENDANGERED);
 end

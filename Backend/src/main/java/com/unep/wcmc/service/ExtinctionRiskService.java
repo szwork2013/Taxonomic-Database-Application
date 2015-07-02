@@ -1,6 +1,7 @@
 package com.unep.wcmc.service;
 
 import com.google.common.collect.Lists;
+import com.unep.wcmc.model.ExtinctionRiskCategory;
 import com.unep.wcmc.model.Species;
 import com.unep.wcmc.repository.ExtinctionRiskConfigurationRepository;
 import com.unep.wcmc.repository.SpeciesRepository;
@@ -42,6 +43,8 @@ public class ExtinctionRiskService {
     public void processExtinctionRiskCalculation(Species species) {
         final KieSession session = kieContainer.newKieSession("RulesSession");
         try {
+            // using the LEAST CONCERN as default
+            species.setExtinctionRiskCategory(ExtinctionRiskCategory.LEAST_CONCERN);
             // global variables
             session.setGlobal("species", species);
             session.setGlobal("configuration", Lists.newArrayList(configurationRepo.findAll()));

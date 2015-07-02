@@ -39,8 +39,6 @@ public class EndangeredTest {
     @Test
     public void testEndangered_EN() {
         Species specie = new Species();
-        specie.setCommonName("macaco-prego-galego");
-        specie.setScientificName("Sapajus flavius");
         kieSession.setGlobal("species", specie);
         kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
 

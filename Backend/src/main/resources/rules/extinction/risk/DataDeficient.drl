@@ -11,14 +11,33 @@ import com.unep.wcmc.model.Taxonomy;
 
 global Species species;
 
-rule "Data Deficient (DD)"
+/**
+ * Data Deficient (DD) rules
+ */
+rule "Data Deficient (DD) - 1"
     activation-group "ExtinctionRisk"
     salience 10
     when
         Taxonomy(limitationsForAssessment == true)
-    or
-        Taxonomy(limitationsForAssessment == false)
-        Conservation(extinctionRisk.inNationalEndangeredFauna == null || extinctionRisk.inNationalEndangeredFauna == true)
+    then
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.DATA_DEFICIENT);
+end
+
+rule "Data Deficient (DD) - 2"
+    activation-group "ExtinctionRisk"
+    salience 10
+    when
+        // Presence in other Lists of endangered species (range / year / category / obs) ex: state lists == [UNKOWN / NO]
+        DistributionArea(onlyFromFewLocalities == true)
+    then
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.DATA_DEFICIENT);
+end
+
+rule "Data Deficient (DD) - 3"
+    activation-group "ExtinctionRisk"
+    salience 10
+    when
+        // Presence in other Lists of endangered species (range / year / category / obs) ex: state lists == [YES]
         DistributionArea(onlyFromFewLocalities == true, (regionIsWellSampled == false || regionIsWellSampled == null))
     then
         species.setExtinctionRiskCategory(ExtinctionRiskCategory.DATA_DEFICIENT);

@@ -1,8 +1,12 @@
 package com.unep.wcmc.test.rules;
 
+import com.google.common.collect.Lists;
 import com.unep.wcmc.Application;
+import com.unep.wcmc.model.*;
 import com.unep.wcmc.repository.ExtinctionRiskConfigurationRepository;
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
@@ -30,6 +34,55 @@ public class DataDeficientTest {
         this.kieServices = KieServices.Factory.get();
         this.kieContainer = kieServices.getKieClasspathContainer();
         this.kieSession = kieContainer.newKieSession("RulesSession");
+    }
+
+    @Test
+    public void testDataDeficient_EN_1() {
+        Species specie = new Species();
+        kieSession.setGlobal("species", specie);
+        kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
+
+        Taxonomy taxonomy = new Taxonomy();
+        taxonomy.setLimitationsForAssessment(true);
+        kieSession.insert(taxonomy);
+        kieSession.fireAllRules();
+
+        Assert.assertNotNull(specie);
+        Assert.assertEquals(ExtinctionRiskCategory.DATA_DEFICIENT,
+                specie.getExtinctionRiskCategory());
+    }
+
+    @Test
+    public void testDataDeficient_EN_2() {
+        Species specie = new Species();
+        kieSession.setGlobal("species", specie);
+        kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
+
+        DistributionArea distributionArea = new DistributionArea();
+        distributionArea.setOnlyFromFewLocalities(true);
+        kieSession.insert(distributionArea);
+        kieSession.fireAllRules();
+
+        Assert.assertNotNull(specie);
+        Assert.assertEquals(ExtinctionRiskCategory.DATA_DEFICIENT,
+                specie.getExtinctionRiskCategory());
+    }
+
+    @Test
+    public void testDataDeficient_EN_3() {
+        Species specie = new Species();
+        kieSession.setGlobal("species", specie);
+        kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
+
+        DistributionArea distributionArea = new DistributionArea();
+        distributionArea.setOnlyFromFewLocalities(true);
+        distributionArea.setRegionIsWellSampled(false);
+        kieSession.insert(distributionArea);
+        kieSession.fireAllRules();
+
+        Assert.assertNotNull(specie);
+        Assert.assertEquals(ExtinctionRiskCategory.DATA_DEFICIENT,
+                specie.getExtinctionRiskCategory());
     }
 
 }
