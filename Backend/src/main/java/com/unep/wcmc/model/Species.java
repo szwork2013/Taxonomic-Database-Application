@@ -1,26 +1,26 @@
 package com.unep.wcmc.model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import org.apache.solr.client.solrj.beans.Field;
+import org.hibernate.search.annotations.Store;
+import org.springframework.data.solr.core.mapping.Indexed;
+import org.springframework.data.solr.core.mapping.SolrDocument;
+
+import javax.persistence.*;
 
 @Entity
+@SolrDocument(solrCoreName = "Species")
 public class Species implements BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Indexed("common_name")
+    @Field("common_name")
     @Column(name = "common_name")
     private String commonName;
 
+    @Indexed("scientific_name")
     @Column(name = "scientific_name")
     private String scientificName;
 

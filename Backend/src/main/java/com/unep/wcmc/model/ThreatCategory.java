@@ -1,9 +1,6 @@
 package com.unep.wcmc.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class ThreatCategory implements BaseEntity {
@@ -12,6 +9,7 @@ public class ThreatCategory implements BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "description")
     private String description;
 
     public Long getId() {
