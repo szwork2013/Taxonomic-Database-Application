@@ -43,7 +43,7 @@ rule "Critically Endangered (CR) - A2"
         species.setExtinctionRiskCategory(ExtinctionRiskCategory.CRITICALLY_ENDANGERED);
 end
 
-rule "Critically Endangered (CR) - B"
+rule "Critically Endangered (CR) - B1"
     activation-group "ExtinctionRisk"
     salience 0
     when
@@ -53,8 +53,8 @@ rule "Critically Endangered (CR) - B"
         DistributionArea(extendOccurrence <= $config.occurrenceExtent) or
         DistributionArea(occupancyArea <= $config.occupancyArea)
         // others
+        DistributionArea(trendExtendOccurence == TrendOccurence.DECLINING)
         (
-            DistributionArea(trendExtendOccurence == TrendOccurence.DECLINING) or
             DistributionArea(trendOccupancyArea == TrendOccurence.DECLINING) or
             Habitat(continuingDeclineInHabitatQuality == true) or
             PopulationDynamics(matureIndividualsNumberTrend == TrendOccurence.DECLINING) or
@@ -63,16 +63,173 @@ rule "Critically Endangered (CR) - B"
             PopulationDynamics(populationSeverelyFragmented == true) or
             Threat(geographicallyDistinctAreasNumber == 1)
         )
-    and
+    then
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.CRITICALLY_ENDANGERED);
+end
+
+rule "Critically Endangered (CR) - B2"
+    activation-group "ExtinctionRisk"
+    salience 0
+    when
+        $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.CRITICALLY_ENDANGERED) from configuration
+        // criteria
+        // B1,B2 (EOD or AOD)
+        DistributionArea(extendOccurrence <= $config.occurrenceExtent) or
+        DistributionArea(occupancyArea <= $config.occupancyArea)
+        // others
+        DistributionArea(trendOccupancyArea == TrendOccurence.DECLINING)
         (
             DistributionArea(trendExtendOccurence == TrendOccurence.DECLINING) or
-            DistributionArea(trendOccupancyArea == TrendOccurence.DECLINING) or
             Habitat(continuingDeclineInHabitatQuality == true) or
             PopulationDynamics(matureIndividualsNumberTrend == TrendOccurence.DECLINING) or
             PopulationDynamics(extremeFlutuationInMatureIndividualsNumber == true) or
             DensityData(subPopulationsNumberTrend == TrendOccurence.DECLINING) or
             PopulationDynamics(populationSeverelyFragmented == true) or
             Threat(geographicallyDistinctAreasNumber == 1)
+        )
+    then
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.CRITICALLY_ENDANGERED);
+end
+
+rule "Critically Endangered (CR) - B3"
+    activation-group "ExtinctionRisk"
+    salience 0
+    when
+        $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.CRITICALLY_ENDANGERED) from configuration
+        // criteria
+        // B1,B2 (EOD or AOD)
+        DistributionArea(extendOccurrence <= $config.occurrenceExtent) or
+        DistributionArea(occupancyArea <= $config.occupancyArea)
+        // others
+        Habitat(continuingDeclineInHabitatQuality == true)
+        (
+            DistributionArea(trendOccupancyArea == TrendOccurence.DECLINING) or
+            DistributionArea(trendExtendOccurence == TrendOccurence.DECLINING) or
+            PopulationDynamics(matureIndividualsNumberTrend == TrendOccurence.DECLINING) or
+            PopulationDynamics(extremeFlutuationInMatureIndividualsNumber == true) or
+            DensityData(subPopulationsNumberTrend == TrendOccurence.DECLINING) or
+            PopulationDynamics(populationSeverelyFragmented == true) or
+            Threat(geographicallyDistinctAreasNumber == 1)
+        )
+    then
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.CRITICALLY_ENDANGERED);
+end
+
+rule "Critically Endangered (CR) - B4"
+    activation-group "ExtinctionRisk"
+    salience 0
+    when
+        $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.CRITICALLY_ENDANGERED) from configuration
+        // criteria
+        // B1,B2 (EOD or AOD)
+        DistributionArea(extendOccurrence <= $config.occurrenceExtent) or
+        DistributionArea(occupancyArea <= $config.occupancyArea)
+        // others
+        PopulationDynamics(matureIndividualsNumberTrend == TrendOccurence.DECLINING)
+        (
+            DistributionArea(trendOccupancyArea == TrendOccurence.DECLINING) or
+            DistributionArea(trendExtendOccurence == TrendOccurence.DECLINING) or
+            Habitat(continuingDeclineInHabitatQuality == true) or
+            PopulationDynamics(extremeFlutuationInMatureIndividualsNumber == true) or
+            DensityData(subPopulationsNumberTrend == TrendOccurence.DECLINING) or
+            PopulationDynamics(populationSeverelyFragmented == true) or
+            Threat(geographicallyDistinctAreasNumber == 1)
+        )
+    then
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.CRITICALLY_ENDANGERED);
+end
+
+rule "Critically Endangered (CR) - B5"
+    activation-group "ExtinctionRisk"
+    salience 0
+    when
+        $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.CRITICALLY_ENDANGERED) from configuration
+        // criteria
+        // B1,B2 (EOD or AOD)
+        DistributionArea(extendOccurrence <= $config.occurrenceExtent) or
+        DistributionArea(occupancyArea <= $config.occupancyArea)
+        // others
+        PopulationDynamics(extremeFlutuationInMatureIndividualsNumber == true)
+        (
+            DistributionArea(trendOccupancyArea == TrendOccurence.DECLINING) or
+            DistributionArea(trendExtendOccurence == TrendOccurence.DECLINING) or
+            Habitat(continuingDeclineInHabitatQuality == true) or
+            PopulationDynamics(matureIndividualsNumberTrend == TrendOccurence.DECLINING) or
+            DensityData(subPopulationsNumberTrend == TrendOccurence.DECLINING) or
+            PopulationDynamics(populationSeverelyFragmented == true) or
+            Threat(geographicallyDistinctAreasNumber == 1)
+        )
+    then
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.CRITICALLY_ENDANGERED);
+end
+
+rule "Critically Endangered (CR) - B6"
+    activation-group "ExtinctionRisk"
+    salience 0
+    when
+        $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.CRITICALLY_ENDANGERED) from configuration
+        // criteria
+        // B1,B2 (EOD or AOD)
+        DistributionArea(extendOccurrence <= $config.occurrenceExtent) or
+        DistributionArea(occupancyArea <= $config.occupancyArea)
+        // others
+        DensityData(subPopulationsNumberTrend == TrendOccurence.DECLINING)
+        (
+            DistributionArea(trendOccupancyArea == TrendOccurence.DECLINING) or
+            DistributionArea(trendExtendOccurence == TrendOccurence.DECLINING) or
+            Habitat(continuingDeclineInHabitatQuality == true) or
+            PopulationDynamics(matureIndividualsNumberTrend == TrendOccurence.DECLINING) or
+            PopulationDynamics(extremeFlutuationInMatureIndividualsNumber == true) or
+            PopulationDynamics(populationSeverelyFragmented == true) or
+            Threat(geographicallyDistinctAreasNumber == 1)
+        )
+    then
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.CRITICALLY_ENDANGERED);
+end
+
+rule "Critically Endangered (CR) - B7"
+    activation-group "ExtinctionRisk"
+    salience 0
+    when
+        $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.CRITICALLY_ENDANGERED) from configuration
+        // criteria
+        // B1,B2 (EOD or AOD)
+        DistributionArea(extendOccurrence <= $config.occurrenceExtent) or
+        DistributionArea(occupancyArea <= $config.occupancyArea)
+        // others
+        PopulationDynamics(populationSeverelyFragmented == true)
+        (
+            DistributionArea(trendOccupancyArea == TrendOccurence.DECLINING) or
+            DistributionArea(trendExtendOccurence == TrendOccurence.DECLINING) or
+            Habitat(continuingDeclineInHabitatQuality == true) or
+            PopulationDynamics(matureIndividualsNumberTrend == TrendOccurence.DECLINING) or
+            PopulationDynamics(extremeFlutuationInMatureIndividualsNumber == true) or
+            DensityData(subPopulationsNumberTrend == TrendOccurence.DECLINING) or
+            Threat(geographicallyDistinctAreasNumber == 1)
+        )
+    then
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.CRITICALLY_ENDANGERED);
+end
+
+rule "Critically Endangered (CR) - B8"
+    activation-group "ExtinctionRisk"
+    salience 0
+    when
+        $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.CRITICALLY_ENDANGERED) from configuration
+        // criteria
+        // B1,B2 (EOD or AOD)
+        DistributionArea(extendOccurrence <= $config.occurrenceExtent) or
+        DistributionArea(occupancyArea <= $config.occupancyArea)
+        // others
+        Threat(geographicallyDistinctAreasNumber == 1)
+        (
+            DistributionArea(trendOccupancyArea == TrendOccurence.DECLINING) or
+            DistributionArea(trendExtendOccurence == TrendOccurence.DECLINING) or
+            Habitat(continuingDeclineInHabitatQuality == true) or
+            PopulationDynamics(matureIndividualsNumberTrend == TrendOccurence.DECLINING) or
+            PopulationDynamics(extremeFlutuationInMatureIndividualsNumber == true) or
+            DensityData(subPopulationsNumberTrend == TrendOccurence.DECLINING) or
+            PopulationDynamics(populationSeverelyFragmented == true)
         )
     then
         species.setExtinctionRiskCategory(ExtinctionRiskCategory.CRITICALLY_ENDANGERED);
