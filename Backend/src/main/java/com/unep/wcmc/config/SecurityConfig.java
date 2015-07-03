@@ -1,10 +1,27 @@
 package com.unep.wcmc.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import com.unep.wcmc.filter.AuthenticationFilter;
+import com.unep.wcmc.filter.LoginFilter;
+import com.unep.wcmc.filter.LogoutHandler;
+import com.unep.wcmc.service.TokenAuthenticationService;
+import com.unep.wcmc.service.UserService;
 
 /**
  * Configuration responsible for setting all authorized 
@@ -17,18 +34,72 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Order(1)
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled=true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private TokenAuthenticationService tokenAuthenticationService;
+    
+    public SecurityConfig() {
+        super(true);
+    }
+    
 	/*
 	 * (non-Javadoc)
 	 * @see org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter#configure(org.springframework.security.config.annotation.web.builders.HttpSecurity)
 	 */
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
-		httpSecurity.authorizeRequests()
-				    .anyRequest()
-				    .permitAll();
-		httpSecurity.csrf()
-					.disable();
-	}	
+	    final LogoutHandler logoutHandler = new LogoutHandler(tokenAuthenticationService);
+	    httpSecurity.exceptionHandling().and()
+                    .anonymous().and()
+                    .servletApi().and()
+                    .headers().cacheControl();
+	    httpSecurity.authorizeRequests()
+		            .antMatchers("/greeting/**").permitAll()
+		            .antMatchers(HttpMethod.POST, "/login").permitAll();
+	    httpSecurity.logout()
+	                .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "POST"))
+	                .logoutSuccessHandler(logoutHandler)
+	                .addLogoutHandler(logoutHandler);
+	    httpSecurity.csrf()
+		            .disable();
+		httpSecurity.addFilterBefore(new LoginFilter("/login", tokenAuthenticationService, userService, authenticationManager()), UsernamePasswordAuthenticationFilter.class)
+		            .addFilterBefore(new AuthenticationFilter(tokenAuthenticationService), UsernamePasswordAuthenticationFilter.class);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter#configure(org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder)
+	 */
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+	    auth.userDetailsService(userService);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter#authenticationManagerBean()
+	 */
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter#userDetailsService()
+     */
+    @Override
+    protected UserDetailsService userDetailsService() {
+        return userService;
+    }
+    
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }    
 }
