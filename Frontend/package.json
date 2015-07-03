@@ -1,0 +1,21 @@
+{
+  "name": "TaxonomicDB",
+  "version": "0.1.0",
+  "description": "TaxonomicDB Grunt Tools",
+  "main": "Gruntfile.js",
+  "author": "Rodrigo Silva",
+  "dependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-uglify": "^0.6.0",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-copy": "^0.7.0",
+    "grunt-env": "^0.4.1",
+    "grunt-run": "^0.2.2",
+    "grunt-express": "^1.3.5",
+    "grunt-contrib-watch": "^0.6.1",
+    "angular-route": "^1.3.16"
+  },
+  "devDependencies": {
+    "grunt-express-server": "^0.4.19"
+  }
+}

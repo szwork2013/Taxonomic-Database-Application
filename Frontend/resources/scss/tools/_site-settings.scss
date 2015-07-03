@@ -1,0 +1,30 @@
+/** SITE SETTINGS */
+@import url(http://fonts.googleapis.com/css?family=Libre+Baskerville|Roboto:400,500,700,300);
+
+/** Fonts */
+
+$font-1 : 'Roboto', sans-serif;
+$font-2 : 'Libre Baskerville', serif;
+
+/** Colors */
+
+$green : #008937; // green
+$white : #ffffff;
+$gray-fonts : #7b5758; // header Gray
+$body-fonts : #735d5e; // body Gray
+
+
+/** Theme Settings */
+
+$primary-font 		: $font-1;
+$primary-weight 	: 500;
+$title-font 		: $font-1;
+$base-font-size 	: 14px;
+$base-line-height 	: 20px;
+
+
+/** Theme Colors */
+
+$body-bg 		: $green;
+$accent-color 	: $green;
+$font-color 	: $body-fonts;

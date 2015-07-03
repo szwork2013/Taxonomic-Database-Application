@@ -1,0 +1,138 @@
+/** FORM STYLES */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="search"],
+input[type="tel"],
+select{
+	border: 1px solid #ddd;
+	height: 40px;
+	border-radius: 0px;
+	box-shadow: none;
+	outline: none;
+
+	&:focus,&:active{
+		box-shadow: none;
+		border: 1px solid #ddd;
+	}	
+}
+
+select.form-control{
+	box-shadow: none;
+	border-radius: 0 !important;
+	-webkit-appearance : none;
+	-moz-appearance : none;
+
+	&:focus,&:active{
+		box-shadow: none;
+		border:1px solid #ddd;
+	}
+}
+
+.select-wrapper{
+	width: 100%;
+	position: relative;
+	display: inline-block;
+
+	&:after{
+		font-family: 'FontAwesome';
+		width: 40px;
+		height: 40px;
+		background-color: $green;
+		position: absolute;
+		top:0px;
+		right: 0px;
+		content: "\f0d7";
+		color: #fff;
+		text-align: center;
+		line-height: 40px;
+		pointer-events:none; 
+	}
+
+	select{
+		width: 100% !important;
+		float: none;
+		height: 40px;
+		border: 1px solid #ddd;
+	}
+}
+
+textarea.form-control{
+	@extend input[type="text"];
+	min-height: 100px;
+}
+
+.input-group-addon{
+	background-color: $green;
+	border: 1px solid $green;
+	color: #fff;
+	border-radius: 0px;
+
+	a{
+		color: #fff;
+		display: block;
+	}
+}
+
+/**
+ * Form Block Styles
+ */
+form.form-block{
+
+	.form-group{
+		// Self Closing Clearfix
+		&:after{
+			content: "";
+			display: table;
+			clear: both;
+		}
+	}
+
+	.form-group:nth-child(even){
+		background-color: #f8f8f8;
+	}
+
+	label{		
+		height: auto;
+		min-height: 40px;
+		padding-top: 10px;
+		padding-left: 10px;
+
+	}
+
+	input[type="text"],
+	input[type="password"],
+	input[type="email"],
+	input[type="search"],
+	input[type="tel"],
+	select{
+		width: 50%;
+	}
+
+	textarea{
+		width: 100% !important;
+	}
+
+	&.view-mode{
+		input[readonly="readonly"],
+		select[readonly="readonly"],
+		textarea[readonly="readonly"]{
+			width: 50%;
+			border-radius: 0px;
+			border: none;
+			background-color: transparent;
+			box-shadow: none;
+			font-family: $font-2;
+		}
+
+		textarea[readonly="readonly"]{
+			width: 100%;
+			overflow: visible !important;
+		}
+
+		.select-wrapper:after{ display: none; }
+	}
+	
+	
+
+}

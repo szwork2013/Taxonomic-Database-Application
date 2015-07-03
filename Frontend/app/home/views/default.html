@@ -1,0 +1,33 @@
+<section class="l-main">
+
+    <section class="page-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <h3 class="page-title">Dashboard</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="page-content">
+        <div class="container">
+            <div class="row">
+                <div ui-tab id="tabs">
+
+                    <ul class="list-inline">
+                        <li><a href="#summary">Summary</a></li>
+                        <li><a href="#exceptions">Resolve Exceptions</a></li>
+                        <li><a href="#management">User Management</a></li>
+                    </ul>
+
+
+                    <div include-layout="/app/home/views/summary.tab.tpl.html"></div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+</section>
