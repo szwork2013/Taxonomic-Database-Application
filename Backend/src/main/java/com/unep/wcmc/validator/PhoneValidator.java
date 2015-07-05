@@ -4,8 +4,12 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 /**
+ * Validates given phone number format, if <code>null</code>
+ * is given then <code>true</code> is returned indicating that
+ * has nothing to be validated
  * 
- * @author adriano
+ * @author Adriano Braga Alencar (adriano.alencar@integritas.com)
+ *                               (adrianobragaalencar@gmail.com)
  *
  */
 public final class PhoneValidator implements ConstraintValidator<Phone, String> {

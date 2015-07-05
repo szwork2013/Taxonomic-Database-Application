@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!-- Run this change set when the database is created -->
+    <changeSet id="database-0.0.1" author="AdrianoBragaAlencar" context="db">
+        <sqlFile path="db/schema/database/db-database-0.0.1.sql" />
+    </changeSet>
+    <changeSet id="create-0.0.1" author="AdrianoBragaAlencar" context="db">
+        <sqlFile path="db/schema/create/db-create-0.0.1.sql" />
+    </changeSet>
+    <changeSet id="create-0.0.2" author="AdrianoBragaAlencar" context="db">
+        <sqlFile path="db/schema/create/db-create-0.0.2.sql" />
+    </changeSet>
+    <changeSet id="create-0.0.3" author="AdrianoBragaAlencar" context="db">
+        <sqlFile path="db/schema/create/db-create-0.0.3.sql" />
+    </changeSet>
+    <changeSet id="create-0.0.4" author="AdrianoBragaAlencar" context="db">
+        <sqlFile path="db/schema/create/db-create-0.0.4.sql" />
+    </changeSet>
+    <changeSet id="create-0.0.5" author="AdrianoBragaAlencar" context="db">
+        <sqlFile path="db/schema/create/db-create-0.0.5.sql" />
+    </changeSet>
+    <changeSet id="create-0.0.6" author="AdrianoBragaAlencar" context="db">
+        <sqlFile path="db/schema/create/db-create-0.0.6.sql" />
+    </changeSet>
+    <changeSet id="create-0.0.7" author="AdrianoBragaAlencar" context="db">
+        <sqlFile path="db/schema/create/db-create-0.0.7.sql" />
+    </changeSet>
+    <changeSet id="create-0.0.8" author="AdrianoBragaAlencar" context="db">
+        <sqlFile path="db/schema/create/db-create-0.0.8.sql" />
+    </changeSet>
+    <changeSet id="create-0.0.9" author="AdrianoBragaAlencar" context="db">
+        <sqlFile path="db/schema/create/db-create-0.0.9.sql" />
+    </changeSet>
+    <changeSet id="create-0.0.10" author="AdrianoBragaAlencar" context="db">
+        <sqlFile path="db/schema/create/db-create-0.0.10.sql" />
+    </changeSet>
+    <changeSet id="create-0.0.11" author="AdrianoBragaAlencar" context="db">
+        <sqlFile path="db/schema/create/db-create-0.0.11.sql" />
+    </changeSet>
+    <changeSet id="create-0.0.12" author="AdrianoBragaAlencar" context="db">
+        <sqlFile path="db/schema/create/db-create-0.0.12.sql" />
+    </changeSet>
+    <changeSet id="create-0.0.13" author="AdrianoBragaAlencar" context="db">
+        <sqlFile path="db/schema/create/db-create-0.0.13.sql" />
+    </changeSet>
+    <changeSet id="create-0.0.14" author="AdrianoBragaAlencar" context="db">
+        <sqlFile path="db/schema/create/db-create-0.0.14.sql" />
+    </changeSet>
+    <changeSet id="create-0.0.15" author="AdrianoBragaAlencar" context="db">
+        <sqlFile path="db/schema/create/db-create-0.0.15.sql" />
+    </changeSet>
+    <changeSet id="create-0.0.16" author="AdrianoBragaAlencar" context="db">
+        <sqlFile path="db/schema/create/db-create-0.0.16.sql" />
+    </changeSet>
+    <changeSet id="create-0.0.17" author="AdrianoBragaAlencar" context="db">
+        <sqlFile path="db/schema/create/db-create-0.0.17.sql" />
+    </changeSet>
+    <changeSet id="create-0.0.18" author="AdrianoBragaAlencar" context="db">
+        <sqlFile path="db/schema/create/db-create-0.0.18.sql" />
+    </changeSet>
+    <changeSet id="create-0.0.19" author="AdrianoBragaAlencar" context="db">
+        <sqlFile path="db/schema/create/db-create-0.0.19.sql" />
+    </changeSet>
+    <changeSet id="create-0.0.20" author="AdrianoBragaAlencar" context="db">
+        <sqlFile path="db/schema/create/db-create-0.0.20.sql" />
+    </changeSet>
+    <changeSet id="create-0.0.21" author="AdrianoBragaAlencar" context="db">
+        <sqlFile path="db/schema/create/db-create-0.0.21.sql" />
+    </changeSet>
+    <changeSet id="create-0.0.22" author="AdrianoBragaAlencar" context="db">
+        <sqlFile path="db/schema/create/db-create-0.0.22.sql" />
+    </changeSet>
+    <changeSet id="create-0.0.23" author="AdrianoBragaAlencar" context="db">
+        <sqlFile path="db/schema/create/db-create-0.0.23.sql" />
+    </changeSet>
+    <changeSet id="create-0.0.24" author="AdrianoBragaAlencar" context="db">
+        <sqlFile path="db/schema/create/db-create-0.0.24.sql" />
+    </changeSet>
+    <changeSet id="create-0.0.25" author="AdrianoBragaAlencar" context="db">
+        <sqlFile path="db/schema/create/db-create-0.0.25.sql" />
+    </changeSet>
+    <changeSet id="create-0.0.26" author="AdrianoBragaAlencar" context="db">
+        <sqlFile path="db/schema/create/db-create-0.0.26.sql" />
+    </changeSet>
+    <changeSet id="create-0.0.27" author="AdrianoBragaAlencar" context="db">
+        <sqlFile path="db/schema/create/db-create-0.0.27.sql" />
+    </changeSet>
+    
+    <!-- Insert development data -->
+    <changeSet id="insert-0.0.1" author="AdrianoBragaAlencar" context="development">
+        <sqlFile path="db/schema/insert/development/db-insert-0.0.1.sql" />
+    </changeSet>
+    <changeSet id="insert-0.0.2" author="AdrianoBragaAlencar" context="development">
+        <sqlFile path="db/schema/insert/development/db-insert-0.0.2.sql" />
+    </changeSet>
+    <changeSet id="insert-0.0.3" author="AdrianoBragaAlencar" context="development">
+        <sqlFile path="db/schema/insert/development/db-insert-0.0.3.sql" />
+    </changeSet>
+    <changeSet id="insert-0.0.4" author="AdrianoBragaAlencar" context="development">
+        <sqlFile path="db/schema/insert/development/db-insert-0.0.4.sql" />
+    </changeSet>
+    <changeSet id="insert-0.0.5" author="AdrianoBragaAlencar" context="development">
+        <sqlFile path="db/schema/insert/development/db-insert-0.0.5.sql" />
+    </changeSet>
+    <changeSet id="insert-0.0.6" author="AdrianoBragaAlencar" context="development">
+        <sqlFile path="db/schema/insert/development/db-insert-0.0.6.sql" />
+    </changeSet>
+    <changeSet id="insert-0.0.7" author="AdrianoBragaAlencar" context="development">
+        <sqlFile path="db/schema/insert/development/db-insert-0.0.7.sql" />
+    </changeSet>
+    <changeSet id="insert-0.0.8" author="AdrianoBragaAlencar" context="development">
+        <sqlFile path="db/schema/insert/development/db-insert-0.0.8.sql" />
+    </changeSet>
+    <changeSet id="insert-0.0.9" author="AdrianoBragaAlencar" context="development">
+        <sqlFile path="db/schema/insert/development/db-insert-0.0.9.sql" />
+    </changeSet>
+    <changeSet id="insert-0.0.10" author="AdrianoBragaAlencar" context="development">
+        <sqlFile path="db/schema/insert/development/db-insert-0.0.10.sql" />
+    </changeSet>
+    <changeSet id="insert-0.0.11" author="AdrianoBragaAlencar" context="development">
+        <sqlFile path="db/schema/insert/development/db-insert-0.0.11.sql" />
+    </changeSet>
+    <changeSet id="insert-0.0.12" author="AdrianoBragaAlencar" context="development">
+        <sqlFile path="db/schema/insert/development/db-insert-0.0.12.sql" />
+    </changeSet>
+    <changeSet id="insert-0.0.13" author="AdrianoBragaAlencar" context="development">
+        <sqlFile path="db/schema/insert/development/db-insert-0.0.13.sql" />
+    </changeSet>
+    <changeSet id="insert-0.0.14" author="AdrianoBragaAlencar" context="development">
+        <sqlFile path="db/schema/insert/development/db-insert-0.0.14.sql" />
+    </changeSet>
+    <changeSet id="insert-0.0.15" author="AdrianoBragaAlencar" context="development">
+        <sqlFile path="db/schema/insert/development/db-insert-0.0.15.sql" />
+    </changeSet>
+    <changeSet id="insert-0.0.16" author="AdrianoBragaAlencar" context="development">
+        <sqlFile path="db/schema/insert/development/db-insert-0.0.16.sql" />
+    </changeSet>
+    <changeSet id="insert-0.0.17" author="AdrianoBragaAlencar" context="development">
+        <sqlFile path="db/schema/insert/development/db-insert-0.0.17.sql" />
+    </changeSet>
+    <changeSet id="insert-0.0.18" author="AdrianoBragaAlencar" context="development">
+        <sqlFile path="db/schema/insert/development/db-insert-0.0.18.sql" />
+    </changeSet>
+    <changeSet id="insert-0.0.19" author="AdrianoBragaAlencar" context="development">
+        <sqlFile path="db/schema/insert/development/db-insert-0.0.19.sql" />
+    </changeSet>
+    <changeSet id="insert-0.0.20" author="AdrianoBragaAlencar" context="development">
+        <sqlFile path="db/schema/insert/development/db-insert-0.0.20.sql" />
+    </changeSet>
+    <changeSet id="insert-0.0.21" author="AdrianoBragaAlencar" context="development">
+        <sqlFile path="db/schema/insert/development/db-insert-0.0.21.sql" />
+    </changeSet>
+    <changeSet id="insert-0.0.22" author="AdrianoBragaAlencar" context="development">
+        <sqlFile path="db/schema/insert/development/db-insert-0.0.22.sql" />
+    </changeSet>
+    <changeSet id="insert-0.0.23" author="AdrianoBragaAlencar" context="development">
+        <sqlFile path="db/schema/insert/development/db-insert-0.0.23.sql" />
+    </changeSet>
+    
+    <!-- Insert production data -->
+    <changeSet id="insert-production-0.0.1" author="AdrianoBragaAlencar" context="production">
+        <sqlFile path="db/schema/insert/production/insert-kingdom-0.0.1.sql" />
+    </changeSet>
+    <changeSet id="insert-production-0.0.2" author="AdrianoBragaAlencar" context="production">
+        <sqlFile path="db/schema/insert/production/insert-phylum-0.0.1.sql" />
+    </changeSet>
+    <changeSet id="insert-production-0.0.3" author="AdrianoBragaAlencar" context="production">
+        <sqlFile path="db/schema/insert/production/insert-hierarchy-class-0.0.1.sql" />
+    </changeSet>
+    <changeSet id="insert-production-0.0.4" author="AdrianoBragaAlencar" context="production">
+        <sqlFile path="db/schema/insert/production/insert-hierarchy-order-0.0.1.sql" />
+    </changeSet>
+    <changeSet id="insert-production-0.0.5" author="AdrianoBragaAlencar" context="production">
+        <sqlFile path="db/schema/insert/production/insert-family-0.0.1.sql" />
+    </changeSet>
+    <changeSet id="insert-production-0.0.6" author="AdrianoBragaAlencar" context="production">
+        <sqlFile path="db/schema/insert/production/insert-genus-0.0.1.sql" />
+    </changeSet>
+    <changeSet id="insert-production-0.0.7" author="AdrianoBragaAlencar" context="production">
+        <sqlFile path="db/schema/insert/production/insert-taxonomy-0.0.1.sql" />
+    </changeSet>
+    <changeSet id="insert-production-0.0.8" author="AdrianoBragaAlencar" context="production">
+        <sqlFile path="db/schema/insert/production/insert-species-0.0.1.sql" />
+    </changeSet>
+    <changeSet id="insert-production-0.0.9" author="AdrianoBragaAlencar" context="production">
+        <sqlFile path="db/schema/insert/production/insert-super-user-0.0.1.sql" />
+    </changeSet>
+    
+</databaseChangeLog>
