@@ -1,0 +1,8 @@
+BEGIN;
+
+-- Conversation data
+INSERT INTO conservation(id, benefited_from_action_plan, convention, convention_other_relevant_data, ex_situ_management, other_actions_protect_species, action_plans, change_reasons, in_national_endangered_fauna, national_evaluation_elegible, necessary_research_for_conservation, previous_national_assessment, research_in_progress, specific_actions_in_protected_areas, type_id) VALUES (1, 'no', 'convention', 'other convention', 'situation management', 'protected species', 'mitigation', 'change reasons', true, true, 'yes', 'yes', 'yes', 'yes', 1);
+INSERT INTO conservation(id, benefited_from_action_plan, convention, convention_other_relevant_data, ex_situ_management, other_actions_protect_species, action_plans, change_reasons, in_national_endangered_fauna, national_evaluation_elegible, necessary_research_for_conservation, previous_national_assessment, research_in_progress, specific_actions_in_protected_areas, type_id) VALUES (2, 'no', 'convention', 'other convention', 'situation management', 'protected species', 'mitigation', 'change reasons', true, true, 'yes', 'yes', 'yes', 'yes', 1);
+INSERT INTO conservation(id, benefited_from_action_plan, convention, convention_other_relevant_data, ex_situ_management, other_actions_protect_species, action_plans, change_reasons, in_national_endangered_fauna, national_evaluation_elegible, necessary_research_for_conservation, previous_national_assessment, research_in_progress, specific_actions_in_protected_areas, type_id) VALUES (3, 'no', 'convention', 'other convention', 'situation management', 'protected species', 'mitigation', 'change reasons', true, true, 'yes', 'yes', 'yes', 'yes', 1);
+
+END;
