@@ -43,7 +43,7 @@ rule "Vulnerable (VU) - A2"
         species.setExtinctionRiskCategory(ExtinctionRiskCategory.VUNERABLE);
 end
 
-rule "Vulnerable (VU) - B"
+rule "Vulnerable (VU) - B1"
     activation-group "ExtinctionRisk"
     salience 0
     when
@@ -53,8 +53,8 @@ rule "Vulnerable (VU) - B"
         DistributionArea(extendOccurrence <= 20000, extendOccurrence > 5000) or
         DistributionArea(occupancyArea <= 2000, occupancyArea > 500)
         // others
+        DistributionArea(trendExtendOccurence == TrendOccurence.DECLINING)
         (
-            DistributionArea(trendExtendOccurence == TrendOccurence.DECLINING) or
             DistributionArea(trendOccupancyArea == TrendOccurence.DECLINING) or
             Habitat(continuingDeclineInHabitatQuality == true) or
             PopulationDynamics(matureIndividualsNumberTrend == TrendOccurence.DECLINING) or
@@ -63,7 +63,141 @@ rule "Vulnerable (VU) - B"
             PopulationDynamics(populationSeverelyFragmented == true) or
             Threat(geographicallyDistinctAreasNumber <= 10)
         )
-    and
+    then
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.VUNERABLE);
+end
+
+rule "Vulnerable (VU) - B2"
+    activation-group "ExtinctionRisk"
+    salience 0
+    when
+        $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.VUNERABLE) from configuration
+        // criteria
+        // B1,B2 (EOD or AOD)
+        DistributionArea(extendOccurrence <= 20000, extendOccurrence > 5000) or
+        DistributionArea(occupancyArea <= 2000, occupancyArea > 500)
+        // others
+        DistributionArea(trendOccupancyArea == TrendOccurence.DECLINING)
+        (
+            DistributionArea(trendExtendOccurence == TrendOccurence.DECLINING) or
+            Habitat(continuingDeclineInHabitatQuality == true) or
+            PopulationDynamics(matureIndividualsNumberTrend == TrendOccurence.DECLINING) or
+            PopulationDynamics(extremeFlutuationInMatureIndividualsNumber == true) or
+            DensityData(subPopulationsNumberTrend == TrendOccurence.DECLINING) or
+            PopulationDynamics(populationSeverelyFragmented == true) or
+            Threat(geographicallyDistinctAreasNumber <= 10)
+        )
+    then
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.VUNERABLE);
+end
+
+rule "Vulnerable (VU) - B3"
+    activation-group "ExtinctionRisk"
+    salience 0
+    when
+        $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.VUNERABLE) from configuration
+        // criteria
+        // B1,B2 (EOD or AOD)
+        DistributionArea(extendOccurrence <= 20000, extendOccurrence > 5000) or
+        DistributionArea(occupancyArea <= 2000, occupancyArea > 500)
+        // others
+        Habitat(continuingDeclineInHabitatQuality == true)
+        (
+            DistributionArea(trendExtendOccurence == TrendOccurence.DECLINING) or
+            DistributionArea(trendOccupancyArea == TrendOccurence.DECLINING) or
+            PopulationDynamics(matureIndividualsNumberTrend == TrendOccurence.DECLINING) or
+            PopulationDynamics(extremeFlutuationInMatureIndividualsNumber == true) or
+            DensityData(subPopulationsNumberTrend == TrendOccurence.DECLINING) or
+            PopulationDynamics(populationSeverelyFragmented == true) or
+            Threat(geographicallyDistinctAreasNumber <= 10)
+        )
+    then
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.VUNERABLE);
+end
+
+rule "Vulnerable (VU) - B4"
+    activation-group "ExtinctionRisk"
+    salience 0
+    when
+        $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.VUNERABLE) from configuration
+        // criteria
+        // B1,B2 (EOD or AOD)
+        DistributionArea(extendOccurrence <= 20000, extendOccurrence > 5000) or
+        DistributionArea(occupancyArea <= 2000, occupancyArea > 500)
+        // others
+        PopulationDynamics(matureIndividualsNumberTrend == TrendOccurence.DECLINING)
+        (
+            DistributionArea(trendExtendOccurence == TrendOccurence.DECLINING) or
+            DistributionArea(trendOccupancyArea == TrendOccurence.DECLINING) or
+            Habitat(continuingDeclineInHabitatQuality == true) or
+            PopulationDynamics(extremeFlutuationInMatureIndividualsNumber == true) or
+            DensityData(subPopulationsNumberTrend == TrendOccurence.DECLINING) or
+            PopulationDynamics(populationSeverelyFragmented == true) or
+            Threat(geographicallyDistinctAreasNumber <= 10)
+        )
+    then
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.VUNERABLE);
+end
+
+rule "Vulnerable (VU) - B5"
+    activation-group "ExtinctionRisk"
+    salience 0
+    when
+        $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.VUNERABLE) from configuration
+        // criteria
+        // B1,B2 (EOD or AOD)
+        DistributionArea(extendOccurrence <= 20000, extendOccurrence > 5000) or
+        DistributionArea(occupancyArea <= 2000, occupancyArea > 500)
+        // others
+        PopulationDynamics(extremeFlutuationInMatureIndividualsNumber == true)
+        (
+            DistributionArea(trendExtendOccurence == TrendOccurence.DECLINING) or
+            DistributionArea(trendOccupancyArea == TrendOccurence.DECLINING) or
+            Habitat(continuingDeclineInHabitatQuality == true) or
+            PopulationDynamics(matureIndividualsNumberTrend == TrendOccurence.DECLINING) or
+            DensityData(subPopulationsNumberTrend == TrendOccurence.DECLINING) or
+            PopulationDynamics(populationSeverelyFragmented == true) or
+            Threat(geographicallyDistinctAreasNumber <= 10)
+        )
+    then
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.VUNERABLE);
+end
+
+rule "Vulnerable (VU) - B6"
+    activation-group "ExtinctionRisk"
+    salience 0
+    when
+        $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.VUNERABLE) from configuration
+        // criteria
+        // B1,B2 (EOD or AOD)
+        DistributionArea(extendOccurrence <= 20000, extendOccurrence > 5000) or
+        DistributionArea(occupancyArea <= 2000, occupancyArea > 500)
+        // others
+        DensityData(subPopulationsNumberTrend == TrendOccurence.DECLINING)
+        (
+            DistributionArea(trendExtendOccurence == TrendOccurence.DECLINING) or
+            DistributionArea(trendOccupancyArea == TrendOccurence.DECLINING) or
+            Habitat(continuingDeclineInHabitatQuality == true) or
+            PopulationDynamics(matureIndividualsNumberTrend == TrendOccurence.DECLINING) or
+            PopulationDynamics(extremeFlutuationInMatureIndividualsNumber == true) or
+            PopulationDynamics(populationSeverelyFragmented == true) or
+            Threat(geographicallyDistinctAreasNumber <= 10)
+        )
+    then
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.VUNERABLE);
+end
+
+rule "Vulnerable (VU) - B7"
+    activation-group "ExtinctionRisk"
+    salience 0
+    when
+        $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.VUNERABLE) from configuration
+        // criteria
+        // B1,B2 (EOD or AOD)
+        DistributionArea(extendOccurrence <= 20000, extendOccurrence > 5000) or
+        DistributionArea(occupancyArea <= 2000, occupancyArea > 500)
+        // others
+        PopulationDynamics(populationSeverelyFragmented == true)
         (
             DistributionArea(trendExtendOccurence == TrendOccurence.DECLINING) or
             DistributionArea(trendOccupancyArea == TrendOccurence.DECLINING) or
@@ -71,8 +205,31 @@ rule "Vulnerable (VU) - B"
             PopulationDynamics(matureIndividualsNumberTrend == TrendOccurence.DECLINING) or
             PopulationDynamics(extremeFlutuationInMatureIndividualsNumber == true) or
             DensityData(subPopulationsNumberTrend == TrendOccurence.DECLINING) or
-            PopulationDynamics(populationSeverelyFragmented == true) or
             Threat(geographicallyDistinctAreasNumber <= 10)
+        )
+    then
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.VUNERABLE);
+end
+
+rule "Vulnerable (VU) - B8"
+    activation-group "ExtinctionRisk"
+    salience 0
+    when
+        $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.VUNERABLE) from configuration
+        // criteria
+        // B1,B2 (EOD or AOD)
+        DistributionArea(extendOccurrence <= 20000, extendOccurrence > 5000) or
+        DistributionArea(occupancyArea <= 2000, occupancyArea > 500)
+        // others
+        Threat(geographicallyDistinctAreasNumber <= 10)
+        (
+            DistributionArea(trendExtendOccurence == TrendOccurence.DECLINING) or
+            DistributionArea(trendOccupancyArea == TrendOccurence.DECLINING) or
+            Habitat(continuingDeclineInHabitatQuality == true) or
+            PopulationDynamics(matureIndividualsNumberTrend == TrendOccurence.DECLINING) or
+            PopulationDynamics(extremeFlutuationInMatureIndividualsNumber == true) or
+            DensityData(subPopulationsNumberTrend == TrendOccurence.DECLINING) or
+            PopulationDynamics(populationSeverelyFragmented == true)
         )
     then
         species.setExtinctionRiskCategory(ExtinctionRiskCategory.VUNERABLE);

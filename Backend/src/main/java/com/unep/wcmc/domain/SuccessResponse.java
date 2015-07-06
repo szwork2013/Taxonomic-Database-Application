@@ -1,4 +1,4 @@
-package com.unep.wcmc.model;
+package com.unep.wcmc.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -9,12 +9,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  *                               (adrianobragaalencar@gmail.com)
  *
  */
-public final class SuccessMessage {
+public final class SuccessResponse {
 
     @JsonProperty
     private final String success;
 
-    public SuccessMessage() {
-        success = "Success";
+    public SuccessResponse() {
+        this("success");
     }    
+    
+    public SuccessResponse(String success) {
+    	this.success = success;
+    }
 }

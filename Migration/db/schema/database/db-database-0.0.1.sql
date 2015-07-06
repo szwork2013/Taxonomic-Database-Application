@@ -1,0 +1,3 @@
+--DROP DATABASE IF EXISTS taxonomic;
+
+--CREATE DATABASE taxonomic DEFAULT CHARSET=utf8;

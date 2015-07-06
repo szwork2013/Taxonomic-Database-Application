@@ -1,9 +1,6 @@
 package com.unep.wcmc.controller;
 
-import com.unep.wcmc.model.BaseEntity;
-import com.unep.wcmc.model.ErrorMessage;
-import com.unep.wcmc.model.SuccessMessage;
-import com.unep.wcmc.service.BaseService;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,7 +8,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.List;
+import com.unep.wcmc.domain.SuccessResponse;
+import com.unep.wcmc.model.BaseEntity;
+import com.unep.wcmc.model.ErrorMessage;
+import com.unep.wcmc.service.BaseService;
 
 /**
  * Abstract controller that encapsulates all boilerplate code needed to
@@ -25,12 +25,12 @@ import java.util.List;
  */
 public abstract class AbstractController<E extends BaseEntity, 
 										 S extends BaseService<E>> {
-    private static final SuccessMessage SUCCESS_MESSAGE = new SuccessMessage();
+    private static final SuccessResponse SUCCESS_RESPONSE = new SuccessResponse();
 	@Autowired
 	protected S service;
 
 	@RequestMapping(method= RequestMethod.GET)
-    public List index() {
+    public List<E> index() {
         return service.list();
     }
 
@@ -55,7 +55,7 @@ public abstract class AbstractController<E extends BaseEntity,
     @RequestMapping(method= RequestMethod.DELETE, value="{id}")
     public Object delete(@PathVariable String id) {
         if (service.delete(Long.valueOf(id))) {
-            return SUCCESS_MESSAGE;
+            return SUCCESS_RESPONSE;
         }
         final Long entityId = Long.valueOf(id);
         return new ErrorMessage(entityId, "no matches found");
