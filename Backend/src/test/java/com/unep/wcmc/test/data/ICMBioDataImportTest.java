@@ -50,7 +50,7 @@ public class ICMBioDataImportTest {
     private SpeciesRepository specieRepository;
 
     @Test
-    //@Ignore // Ignoring this test case to not be executed all the time
+    @Ignore // Ignoring this test case to not be executed all the time
     public void testImportTaxonomicICMBioSpeciesFromCSV() throws Exception {
         // CSV fields
         //Reino,Filo,Classe,Ordem,Familia,Genero,Epiteto Especifico,Subespecie,species,Nome cientifico,Nome Comum
