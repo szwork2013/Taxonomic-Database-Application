@@ -1,10 +1,7 @@
 package com.unep.wcmc.config;
 
-import java.util.Arrays;
-import java.util.Date;
-
-import javax.servlet.Filter;
-
+import com.unep.wcmc.model.*;
+import com.unep.wcmc.service.SpeciesService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -13,32 +10,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
-import com.unep.wcmc.model.Conservation;
-import com.unep.wcmc.model.Conventions;
-import com.unep.wcmc.model.Country;
-import com.unep.wcmc.model.DensityData;
-import com.unep.wcmc.model.DistributionArea;
-import com.unep.wcmc.model.ExtinctionRisk;
-import com.unep.wcmc.model.ExtinctionRiskCategory;
-import com.unep.wcmc.model.FeedingBehavior;
-import com.unep.wcmc.model.FishingThreat;
-import com.unep.wcmc.model.Habitat;
-import com.unep.wcmc.model.HabitatType;
-import com.unep.wcmc.model.Interactions;
-import com.unep.wcmc.model.Map;
-import com.unep.wcmc.model.NaturalHistory;
-import com.unep.wcmc.model.Occurrence;
-import com.unep.wcmc.model.PopulationDynamics;
-import com.unep.wcmc.model.PopulationTrend;
-import com.unep.wcmc.model.Reproduction;
-import com.unep.wcmc.model.Species;
-import com.unep.wcmc.model.State;
-import com.unep.wcmc.model.Taxonomy;
-import com.unep.wcmc.model.Threat;
-import com.unep.wcmc.model.ThreatCategory;
-import com.unep.wcmc.model.ThreatStatus;
-import com.unep.wcmc.model.TrendOccurence;
-import com.unep.wcmc.service.SpeciesService;
+import javax.servlet.Filter;
+import java.util.Arrays;
+import java.util.Date;
 
 /**
  * Initializer that creates mock specie for testing
@@ -179,7 +153,7 @@ public class SpeciesConfig {
                 habitat.setType(habitatType);
                 habitat.setVariationInHabitatUse("VariationInHabitatUse");
                 densityData.setSubPopulationsDeclineNumber(100L);
-                densityData.setSubPopulationsFluctuationsNumber(100L);
+                densityData.setExtremeFlutuationInSubpopulationsNumber(true);
                 densityData.setSubPopulationsNumber(100L);
                 densityData.setSubPopulationsNumberTrend(TrendOccurence.DECLINING);
                 populationTrend.setBrazilExtinctionProbability(100D);
@@ -233,10 +207,10 @@ public class SpeciesConfig {
                 threatStatus.setTime(1000L);
                 threatStatus.setTrend("Trend");
                 threat.setAffectedArea(100D);
-                threat.setDeclineLocationsNumber(100L);
+                threat.setDeclineInNumberLocations(true);
                 threat.setDescription("Description");
                 threat.setDescriptionImpact("DescriptionImpact");
-                threat.setExtremeFlutuationLocationNumber(100L);
+                threat.setExtremeFlutuationLocation(true);
                 threat.setFishingThreat(fishingThreat);
                 threat.setFutureThreatExistence(true);
                 threat.setGeographicallyDistinctAreasNumber(100L);

@@ -24,6 +24,9 @@ public class ExtinctionRisk implements Serializable {
     @Column(name = "in_national_endangered_fauna")
     private Boolean inNationalEndangeredFauna;
 
+    @Column(name = "presence_in_other_endangered_lists")
+    private Boolean presenceInOtherEndangeredLists;
+
     public Boolean getNationalEvaluationElegible() {
         return nationalEvaluationElegible;
     }
@@ -86,5 +89,13 @@ public class ExtinctionRisk implements Serializable {
 
     public void setInNationalEndangeredFauna(Boolean inNationalEndangeredFauna) {
         this.inNationalEndangeredFauna = inNationalEndangeredFauna;
+    }
+
+    public Boolean getPresenceInOtherEndangeredLists() {
+        return presenceInOtherEndangeredLists;
+    }
+
+    public void setPresenceInOtherEndangeredLists(Boolean presenceInOtherEndangeredLists) {
+        this.presenceInOtherEndangeredLists = presenceInOtherEndangeredLists;
     }
 }
