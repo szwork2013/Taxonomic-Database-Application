@@ -3,6 +3,7 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'war'
 apply plugin: 'spring-boot'
+apply plugin: 'sonar-runner'
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7

@@ -20,7 +20,7 @@ public class DensityData implements Serializable {
     private Long subPopulationsDeclineNumber;
 
     @Column(name = "subpopulations_fluctuations")
-    private Long subPopulationsFluctuationsNumber;
+    private Boolean extremeFlutuationInSubpopulationsNumber;
 
     public Long getSubPopulationsNumber() {
         return subPopulationsNumber;
@@ -46,11 +46,11 @@ public class DensityData implements Serializable {
         this.subPopulationsDeclineNumber = subPopulationsDeclineNumber;
     }
 
-    public Long getSubPopulationsFluctuationsNumber() {
-        return subPopulationsFluctuationsNumber;
+    public Boolean getExtremeFlutuationInSubpopulationsNumber() {
+        return extremeFlutuationInSubpopulationsNumber;
     }
 
-    public void setSubPopulationsFluctuationsNumber(Long subPopulationsFluctuationsNumber) {
-        this.subPopulationsFluctuationsNumber = subPopulationsFluctuationsNumber;
+    public void setExtremeFlutuationInSubpopulationsNumber(Boolean extremeFlutuationInSubpopulationsNumber) {
+        this.extremeFlutuationInSubpopulationsNumber = extremeFlutuationInSubpopulationsNumber;
     }
 }

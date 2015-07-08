@@ -22,10 +22,10 @@ public class Threat implements BaseEntity {
     private Long geographicallyDistinctAreasNumber;
 
     @Column(name = "decline_in_number_of_locations")
-    private Long declineLocationsNumber;
+    private Boolean declineInNumberLocations;
 
     @Column(name = "location_fluctuation")
-    private Long extremeFlutuationLocationNumber;
+    private Boolean extremeFlutuationLocation;
 
     @Column(name = "per_population_affected")
     private Double populationAffected;
@@ -111,20 +111,19 @@ public class Threat implements BaseEntity {
         this.geographicallyDistinctAreasNumber = geographicallyDistinctAreasNumber;
     }
 
-    public Long getDeclineLocationsNumber() {
-        return declineLocationsNumber;
+    public Boolean getDeclineInNumberLocations() {
+        return declineInNumberLocations;
     }
 
-    public void setDeclineLocationsNumber(Long declineLocationsNumber) {
-        this.declineLocationsNumber = declineLocationsNumber;
+    public void setDeclineInNumberLocations(Boolean declineInNumberLocations) {
+        this.declineInNumberLocations = declineInNumberLocations;
     }
 
-    public Long getExtremeFlutuationLocationNumber() {
-        return extremeFlutuationLocationNumber;
+    public Boolean getExtremeFlutuationLocation() {
+        return extremeFlutuationLocation;
     }
 
-    public void setExtremeFlutuationLocationNumber(Long extremeFlutuationLocationNumber) {
-        this.extremeFlutuationLocationNumber = extremeFlutuationLocationNumber;
+    public void setExtremeFlutuationLocation(Boolean extremeFlutuationLocation) {
+        this.extremeFlutuationLocation = extremeFlutuationLocation;
     }
-    
 }
