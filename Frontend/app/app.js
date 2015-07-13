@@ -16,6 +16,24 @@ define(['include'], function ( angularAMD ) {
 					templateUrl: 'app/home/views/default.html',
 					controllerUrl: 'home/controllers/homeController'
 				}))
+			.state('login', angularAMD.route(
+				{
+					url: '/login',
+					templateUrl: 'app/auth/views/login.html',
+					controllerUrl: 'auth/controllers/authController'
+				}))
+			.state('signup', angularAMD.route(
+				{
+					url: '/signup',
+					templateUrl: 'app/auth/views/signup.html',
+					controllerUrl: 'auth/controllers/authController'
+				}))
+			.state('reset', angularAMD.route(
+				{
+					url: '/reset',
+					templateUrl: 'app/auth/views/reset.password.html',
+					controllerUrl: 'auth/controllers/authController'
+				}))
 			.state('about', angularAMD.route(
 				{
 					url: '/about',
