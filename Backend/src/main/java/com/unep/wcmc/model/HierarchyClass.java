@@ -12,6 +12,10 @@ public class HierarchyClass implements BaseEntity {
     @Column(name = "class")
     private String name;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "integration_source")
+    private IntegrationSource integrationSource;
+
     public HierarchyClass() {
         super();
     }
@@ -36,4 +40,11 @@ public class HierarchyClass implements BaseEntity {
         this.name = name;
     }
 
+    public IntegrationSource getIntegrationSource() {
+        return integrationSource;
+    }
+
+    public void setIntegrationSource(IntegrationSource integrationSource) {
+        this.integrationSource = integrationSource;
+    }
 }

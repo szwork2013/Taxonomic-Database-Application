@@ -12,6 +12,10 @@ public class HierarchyOrder implements BaseEntity {
     @Column(name = "name")
     private String name;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "integration_source")
+    private IntegrationSource integrationSource;
+
     public HierarchyOrder() {
         super();
     }
@@ -36,4 +40,11 @@ public class HierarchyOrder implements BaseEntity {
         this.name = name;
     }
 
+    public IntegrationSource getIntegrationSource() {
+        return integrationSource;
+    }
+
+    public void setIntegrationSource(IntegrationSource integrationSource) {
+        this.integrationSource = integrationSource;
+    }
 }

@@ -10,6 +10,10 @@ public class Kingdom implements BaseEntity {
 
     private String name;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "integration_source")
+    private IntegrationSource integrationSource;
+
     public Kingdom() {
         super();
     }
@@ -34,5 +38,13 @@ public class Kingdom implements BaseEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public IntegrationSource getIntegrationSource() {
+        return integrationSource;
+    }
+
+    public void setIntegrationSource(IntegrationSource integrationSource) {
+        this.integrationSource = integrationSource;
     }
 }
