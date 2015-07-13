@@ -63,6 +63,10 @@ public class Species implements BaseEntity {
     @JoinColumn(name = "cover_map_id")
     private Map coverMap;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "integration_source")
+    private IntegrationSource integrationSource;
+
     // Getters and setters
     public Long getId() {
         return id;
@@ -152,4 +156,11 @@ public class Species implements BaseEntity {
         this.coverMap = coverMap;
     }
 
+    public IntegrationSource getIntegrationSource() {
+        return integrationSource;
+    }
+
+    public void setIntegrationSource(IntegrationSource integrationSource) {
+        this.integrationSource = integrationSource;
+    }
 }

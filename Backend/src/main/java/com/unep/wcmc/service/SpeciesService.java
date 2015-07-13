@@ -26,7 +26,6 @@ public final class SpeciesService extends AbstractService<Species, SpeciesReposi
     }
 
     public Page<Species> findByCommonNameStartingWith(String query, Pageable pageable) {
-
         return repo.findByCommonNameStartingWith(query, pageable);
     }
 }
