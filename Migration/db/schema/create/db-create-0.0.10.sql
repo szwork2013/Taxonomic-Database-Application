@@ -1,31 +1,20 @@
 BEGIN;
+	
+-- Table: country
 
--- Table: distribution_area
+DROP TABLE IF EXISTS country;
 
-DROP TABLE IF EXISTS distribution_area;
-
-CREATE TABLE distribution_area
+CREATE TABLE country
 (
   id bigserial NOT NULL,
-  endemic_from_brasil boolean,
-  extent_of_occurrence double precision,
-  fragmentation_level integer,
-  global_distribution character varying(255),
-  national_distribution character varying(255),
-  native_in_brazil boolean,
-  area_of_ocuppancy double precision,
-  occurrence_state character varying(255),
-  occurs_in_brasil boolean,
-  only_from_few_localities boolean,
-  the_region_is_well_sampled boolean,
-  trend_in_extent_of_occurrence integer,
-  area_of_occupancy_trend integer,
-  CONSTRAINT distribution_area_pkey PRIMARY KEY (id)
+  name character varying(255) NOT NULL,
+  CONSTRAINT country_pkey PRIMARY KEY (id),
+  CONSTRAINT uk_llidyp77h6xkeokpbmoy710d4 UNIQUE (name)
 )
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE distribution_area
+ALTER TABLE country
   OWNER TO postgres;
 
-END;
+END; 

@@ -89,6 +89,9 @@
     <changeSet id="create-0.0.27" author="AdrianoBragaAlencar" context="db">
         <sqlFile path="db/schema/create/db-create-0.0.27.sql" />
     </changeSet>
+    <changeSet id="create-0.0.28" author="AdrianoBragaAlencar" context="db">
+        <sqlFile path="db/schema/create/db-create-0.0.28.sql" />
+    </changeSet>
     
     <!-- Insert development data -->
     <changeSet id="insert-0.0.1" author="AdrianoBragaAlencar" context="development">
