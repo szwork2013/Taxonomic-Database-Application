@@ -115,7 +115,7 @@ public class SpeciesConfig {
                 occurrences.setMap(createMap());
                 distributionArea.setEndemicFromBrazil(true);
                 distributionArea.setExtendOccurrence(100D);
-                distributionArea.setFramentationLevel(100);
+                distributionArea.setFramentationLevel(DefinitionLevel.HIGH);
                 distributionArea.setGlobalDistribution("GlobalDistribution");
                 distributionArea.setNationalDistribution("NationalDistribution");
                 distributionArea.setNativeBrazil(true);

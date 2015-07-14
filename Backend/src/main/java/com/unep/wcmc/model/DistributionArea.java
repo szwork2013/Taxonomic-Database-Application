@@ -39,7 +39,8 @@ public class DistributionArea implements BaseEntity {
     private Double extendOccurrence;
 
     @Column(name = "fragmentation_level")
-    private Integer framentationLevel;
+    @Enumerated(value = EnumType.ORDINAL)
+    private DefinitionLevel framentationLevel;
 
     @Column(name = "trend_in_extent_of_occurrence")
     @Enumerated(value = EnumType.ORDINAL)
@@ -141,11 +142,11 @@ public class DistributionArea implements BaseEntity {
         this.extendOccurrence = extendOccurrence;
     }
 
-    public Integer getFramentationLevel() {
+    public DefinitionLevel getFramentationLevel() {
         return framentationLevel;
     }
 
-    public void setFramentationLevel(Integer framentationLevel) {
+    public void setFramentationLevel(DefinitionLevel framentationLevel) {
         this.framentationLevel = framentationLevel;
     }
 
