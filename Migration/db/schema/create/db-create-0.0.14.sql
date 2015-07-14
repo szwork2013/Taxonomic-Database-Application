@@ -1,19 +1,19 @@
 BEGIN;
 
--- Table: hierarchy_class
+-- Table: habitat_type
 
-DROP TABLE IF EXISTS hierarchy_class;
+DROP TABLE IF EXISTS habitat_type;
 
-CREATE TABLE hierarchy_class
+CREATE TABLE habitat_type
 (
   id bigserial NOT NULL,
-  class character varying(255),
-  CONSTRAINT hierarchy_class_pkey PRIMARY KEY (id)
+  name character varying(255),
+  CONSTRAINT habitat_type_pkey PRIMARY KEY (id)
 )
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE hierarchy_class
+ALTER TABLE habitat_type
   OWNER TO postgres;
 
 END;

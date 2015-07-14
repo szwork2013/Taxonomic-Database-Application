@@ -1,5 +1,7 @@
 package com.unep.wcmc.integration.speciesplus;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.boot.json.JacksonJsonParser;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpEntity;
@@ -15,6 +17,8 @@ import java.util.Map;
 @Service
 @Scope("prototype")
 public class SpeciesPlusService {
+
+    protected static final Log logger = LogFactory.getLog(SpeciesPlusService.class);
 
     private static final String AUTH_TOKEN = "YKk8zF6dPkd8AlP8Q3hy9Att";
     private static final String TAXON_CONCEPTS = "http://api.speciesplus.net/api/v1/taxon_concepts";
@@ -35,6 +39,11 @@ public class SpeciesPlusService {
     }
 
     public Map<String, Object> getTaxonConcepts(int page, int perPage) {
+        if (logger.isInfoEnabled()) {
+            logger.info("Reading from Species+ API for the current page {" +
+                    currentPage + "/" + getTotalPages() + "} and total of {" +
+                    itemsPerPage + "} records per page ");
+        }
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-Authentication-Token", AUTH_TOKEN);
         HttpEntity<String> entity = new HttpEntity<>(headers);
@@ -42,12 +51,12 @@ public class SpeciesPlusService {
         String url = TAXON_CONCEPTS + "?page=" + page + "&per_page=" + perPage;
         ResponseEntity<String> response =
                 restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+
         return new JacksonJsonParser().parseMap(response.getBody());
     }
 
     public boolean hasNextTaxon() {
-        int totalPages = (int) totalRecords / itemsPerPage;
-        if (currentPage <= totalPages) {
+        if (currentPage <= getTotalPages()) {
             return true;
         }
         return false;
@@ -59,5 +68,8 @@ public class SpeciesPlusService {
         return values;
     }
 
+    public int getTotalPages() {
+        return (int) totalRecords / itemsPerPage;
+    }
 
 }

@@ -1,31 +1,25 @@
 BEGIN;
 
--- Table: ocurrence
+-- Table: state
 
-DROP TABLE IF EXISTS ocurrence;
+DROP TABLE IF EXISTS state;
 
-CREATE TABLE ocurrence
+CREATE TABLE state
 (
-  distribution_area bigint NOT NULL,
-  latitude character varying(255),
-  longitude character varying(255),
-  map_id bigint,
-  projection character varying(255),
-  state_id bigint,
-  CONSTRAINT fk_ewu2tyfap3r2wblvah46dipyk FOREIGN KEY (distribution_area)
-      REFERENCES distribution_area (id) MATCH SIMPLE
+  id bigserial NOT NULL,
+  code character varying(255),
+  name character varying(255) NOT NULL,
+  country_id bigint,
+  CONSTRAINT state_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_lxoqjm8644epv72af3k3jpalx FOREIGN KEY (country_id)
+      REFERENCES country (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT fk_i4rbouagsbi4y9m3jpm9umn6m FOREIGN KEY (map_id)
-      REFERENCES map (id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT fk_s146robfrf1ia2yfj5vkwjs4v FOREIGN KEY (state_id)
-      REFERENCES state (id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION
+  CONSTRAINT uk_2g0hi7w44i4sjkffh61pusaav UNIQUE (name)
 )
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE ocurrence
-  OWNER TO postgres;	
+ALTER TABLE state
+  OWNER TO postgres;
 
-END; 
+END;

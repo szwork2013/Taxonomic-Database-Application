@@ -1,19 +1,19 @@
 BEGIN;
 
--- Table: phylum
+-- Table: integration_source
 
-DROP TABLE IF EXISTS phylum;
+DROP TABLE IF EXISTS integration_source;
 
-CREATE TABLE phylum
+CREATE TABLE integration_source
 (
   id bigserial NOT NULL,
-  phylum character varying(255),
-  CONSTRAINT phylum_pkey PRIMARY KEY (id)
+  source character varying(255),
+  CONSTRAINT integration_source_pkey PRIMARY KEY (id)
 )
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE phylum
+ALTER TABLE integration_source
   OWNER TO postgres;
 
 END;

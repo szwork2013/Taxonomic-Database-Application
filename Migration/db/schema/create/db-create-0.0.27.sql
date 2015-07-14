@@ -1,49 +1,32 @@
 BEGIN;
 
--- Table: species
+-- Table: users
 
-DROP TABLE IF EXISTS species;
+DROP TABLE IF EXISTS users;
 
-CREATE TABLE species
+CREATE TABLE users
 (
-  id bigserial NOT NULL,
-  common_name character varying(255),
-  extinction_risk_category integer,
-  scientific_name character varying(255),
-  conservation_id bigint,
-  cover_map_id bigint,
-  cover_photo_id bigint,
-  distribution_id bigint,
-  natural_history_id bigint,
-  taxonomy_id bigint,
-  threat_id bigint,
-  CONSTRAINT species_pkey PRIMARY KEY (id),
-  CONSTRAINT fk_3sl6o4jvho5h78gd2cwxwhdec FOREIGN KEY (cover_photo_id)
-      REFERENCES image (id) MATCH SIMPLE
+  id bigint NOT NULL,
+  address character varying(255),
+  email character varying(255) NOT NULL,
+  enabled boolean NOT NULL,
+  first_name character varying(255),
+  last_name character varying(255),
+  password character varying(100) NOT NULL,
+  phone_number character varying(255),
+  username character varying(30) NOT NULL,
+  user_role_id bigint NOT NULL,
+  CONSTRAINT users_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_blvmyr4rgpt5rvfms3obvsus7 FOREIGN KEY (user_role_id)
+      REFERENCES user_role (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT fk_fqbhk1wlljbq24i08g30rw4mh FOREIGN KEY (taxonomy_id)
-      REFERENCES taxonomy (id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT fk_j5q27cgdvhxbu4nkvjjmp2p5p FOREIGN KEY (conservation_id)
-      REFERENCES conservation (id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT fk_jnlfrmbw1ymymbn483etn82la FOREIGN KEY (distribution_id)
-      REFERENCES distribution_area (id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT fk_l3nma56sxsi0p8w2bk3nslqft FOREIGN KEY (cover_map_id)
-      REFERENCES map (id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT fk_mhnxxpnb97fpq8ornm3gfxyo3 FOREIGN KEY (natural_history_id)
-      REFERENCES natural_history (id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT fk_sf5aewp4mvxrrxhla9cn1b4iy FOREIGN KEY (threat_id)
-      REFERENCES threat (id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION
+  CONSTRAINT uk_6dotkott2kjsp8vw4d0m25fb7 UNIQUE (email),
+  CONSTRAINT uk_r43af9ap4edm43mmtq01oddj6 UNIQUE (username)
 )
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE species
+ALTER TABLE users
   OWNER TO postgres;
 
 END;

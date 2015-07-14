@@ -9,6 +9,7 @@ $font-2 : 'Libre Baskerville', serif;
 /** Colors */
 
 $green : #008937; // green
+$gray : gray; // gray color
 $white : #ffffff;
 $gray-fonts : #7b5758; // header Gray
 $body-fonts : #735d5e; // body Gray
@@ -25,6 +26,6 @@ $base-line-height 	: 20px;
 
 /** Theme Colors */
 
-$body-bg 		: $green;
-$accent-color 	: $green;
+$body-bg 		: $gray;
+$accent-color 	: $gray;
 $font-color 	: $body-fonts;

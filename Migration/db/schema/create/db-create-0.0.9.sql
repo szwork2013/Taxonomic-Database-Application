@@ -1,20 +1,23 @@
 BEGIN;
 	
--- Table: country
+-- Table: genus
 
-DROP TABLE IF EXISTS country;
+DROP TABLE IF EXISTS genus;
 
-CREATE TABLE country
+CREATE TABLE genus
 (
   id bigserial NOT NULL,
-  name character varying(255) NOT NULL,
-  CONSTRAINT country_pkey PRIMARY KEY (id),
-  CONSTRAINT uk_llidyp77h6xkeokpbmoy710d4 UNIQUE (name)
+  genus character varying(255),
+  integration_source bigint,
+  CONSTRAINT genus_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_ahd2b2chmandsihdh70yldjho FOREIGN KEY (integration_source)
+      REFERENCES integration_source (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
 )
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE country
+ALTER TABLE genus
   OWNER TO postgres;
 
 END; 

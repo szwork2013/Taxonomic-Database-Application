@@ -12,8 +12,8 @@ public class HierarchyClass implements BaseEntity {
     @Column(name = "class")
     private String name;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "integration_source")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "integration_source")
     private IntegrationSource integrationSource;
 
     public HierarchyClass() {
@@ -22,6 +22,11 @@ public class HierarchyClass implements BaseEntity {
 
     public HierarchyClass(String name) {
         this.name = name;
+    }
+
+    public HierarchyClass(String name, IntegrationSource integrationSource) {
+        this(name);
+        this.integrationSource = integrationSource;
     }
 
     public Long getId() {

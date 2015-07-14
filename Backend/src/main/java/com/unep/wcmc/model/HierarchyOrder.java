@@ -12,8 +12,8 @@ public class HierarchyOrder implements BaseEntity {
     @Column(name = "name")
     private String name;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "integration_source")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "integration_source")
     private IntegrationSource integrationSource;
 
     public HierarchyOrder() {
@@ -22,6 +22,11 @@ public class HierarchyOrder implements BaseEntity {
 
     public HierarchyOrder(String name) {
         this.name = name;
+    }
+
+    public HierarchyOrder(String name, IntegrationSource integrationSource) {
+        this(name);
+        this.integrationSource = integrationSource;
     }
 
     public Long getId() {

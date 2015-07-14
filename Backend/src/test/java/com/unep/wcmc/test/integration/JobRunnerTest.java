@@ -5,6 +5,7 @@ import com.unep.wcmc.integration.JobRunner;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.batch.core.BatchStatus;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -21,6 +22,6 @@ public class JobRunnerTest {
     public void testStartSpeciesPlus() throws Exception {
         JobExecution jobExecution = jobRunner.startJobSpeciesPlus();
         Assert.assertNotNull(jobExecution);
-        Assert.assertTrue(jobExecution.getJobId() > 0);
+        Assert.assertEquals(jobExecution.getStatus(), BatchStatus.COMPLETED);
     }
 }

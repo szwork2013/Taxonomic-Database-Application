@@ -1,25 +1,22 @@
 BEGIN;
 
--- Table: authority
+-- Table: user_role
 
-DROP TABLE IF EXISTS authority;
+DROP TABLE IF EXISTS user_role;
 
-CREATE TABLE authority
+CREATE TABLE user_role
 (
-  permission_id bigint NOT NULL,
-  user_role_id bigint NOT NULL,
-  CONSTRAINT authority_pkey PRIMARY KEY (user_role_id, permission_id),
-  CONSTRAINT fk_6d64vbjfk2mjdlps3phpgmayg FOREIGN KEY (permission_id)
-      REFERENCES permission (id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT fk_74wtcmhq253rh1q6d0u8ujiyb FOREIGN KEY (user_role_id)
-      REFERENCES user_role (id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION
+  id bigint NOT NULL,
+  name character varying(255) NOT NULL,
+  role character varying(255) NOT NULL,
+  CONSTRAINT user_role_pkey PRIMARY KEY (id),
+  CONSTRAINT uk_lnth8w122wgy7grrjlu8hjmuu UNIQUE (name),
+  CONSTRAINT uk_s21d8k5lywjjc7inw14brj6ro UNIQUE (role)
 )
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE authority
+ALTER TABLE user_role
   OWNER TO postgres;
 
 END;

@@ -1,8 +1,9 @@
-'use strict';
+define(['app'], function () {
 
+    'use strict';
 
-angular.module('core').controller('AuthController', ['$scope', '$rootScope', function ($scope, $rootScope) {
+    return ['$scope','$http','$rootScope', '$stateParams', function ($scope, $http, $rootScope, $stateParams ) {
 
-
-}
-]);
+        $scope.message = 'Login page';
+    }];
+});

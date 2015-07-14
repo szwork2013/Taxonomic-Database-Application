@@ -1,19 +1,23 @@
 BEGIN;
 
--- Table: conservation_action_type
+-- Table: kingdom
 
-DROP TABLE IF EXISTS conservation_action_type;
+DROP TABLE IF EXISTS kingdom;
 
-CREATE TABLE conservation_action_type
+CREATE TABLE kingdom
 (
   id bigserial NOT NULL,
-  description character varying(255),
-  CONSTRAINT conservation_action_type_pkey PRIMARY KEY (id)
+  name character varying(255),
+  integration_source bigint,
+  CONSTRAINT kingdom_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_dlus5butt07bcw8qxob75chxw FOREIGN KEY (integration_source)
+      REFERENCES integration_source (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
 )
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE conservation_action_type
+ALTER TABLE kingdom
   OWNER TO postgres;
 
-END; 
+END;

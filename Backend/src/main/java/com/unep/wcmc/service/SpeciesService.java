@@ -5,9 +5,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.unep.wcmc.model.IntegrationSource;
 import com.unep.wcmc.model.Species;
 import com.unep.wcmc.model.filter.SpeciesFilter;
 import com.unep.wcmc.model.filter.SpeciesSpecification;
+import com.unep.wcmc.repository.IntegrationSourceRepository;
 import com.unep.wcmc.repository.SpeciesRepository;
 
 @Service
@@ -15,6 +17,30 @@ public final class SpeciesService extends AbstractService<Species, SpeciesReposi
 
     @Autowired
     private ExtinctionRiskService extinctionRiskService;
+
+    @Autowired
+    private IntegrationSourceRepository integrationRepo;
+
+    public Species findByCommonName(String commonName) {
+        return repo.findByCommonName(commonName);
+    }
+
+    public Species findOrSave(Species species) {
+        if (species != null) {
+            Species existing = repo.findByScientificName(species.getScientificName());
+            if (existing == null) {
+                if (species.getIntegrationSource() != null) {
+                    IntegrationSource integration =
+                            integrationRepo.findBySource(species.getIntegrationSource().getSource());
+                    species.setIntegrationSource(integration);
+                }
+                species = repo.save(species);
+            } else {
+                species = existing;
+            }
+        }
+        return species;
+    }
 
     @Override
     public Species save(Species specie) {

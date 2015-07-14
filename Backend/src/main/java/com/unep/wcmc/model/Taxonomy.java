@@ -15,8 +15,8 @@ public class Taxonomy implements BaseEntity {
     @Column(name = "limitations_for_assessment")
     private Boolean limitationsForAssessment;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "integration_source")
+    @ManyToOne
+    @JoinColumn(name = "integration_source")
     private IntegrationSource integrationSource;
 
     public Long getId() {

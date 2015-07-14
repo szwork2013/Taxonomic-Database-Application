@@ -12,8 +12,8 @@ public class Genus implements BaseEntity {
     @Column(name = "genus")
     private String name;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "integration_source")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "integration_source")
     private IntegrationSource integrationSource;
 
     public Genus() {
@@ -22,6 +22,11 @@ public class Genus implements BaseEntity {
 
     public Genus(String name) {
         this.name = name;
+    }
+
+    public Genus(String name, IntegrationSource integrationSource) {
+        this(name);
+        this.integrationSource = integrationSource;
     }
 
     public Long getId() {

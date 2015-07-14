@@ -1,29 +1,31 @@
 BEGIN;
 
--- Table: extinction_risk_configuration
+-- Table: distribution_area
 
-DROP TABLE IF EXISTS extinction_risk_configuration;
+DROP TABLE IF EXISTS distribution_area;
 
-CREATE TABLE extinction_risk_configuration
+CREATE TABLE distribution_area
 (
   id bigserial NOT NULL,
-  category character varying(255),
-  b2a_number_of_locations integer,
-  c_number_of_mature_individuals bigint,
-  d_number_of_mature_individuals bigint,
-  c2a_number_of_mature_individuals_in_sub bigint,
-  b2_area_of_ocuppancy bigint,
-  b1_extent_of_occurrence bigint,
-  c2a_perc_mature_individuals_one_sub integer,
-  a1_perc_population_decline double precision,
-  a2_perc_population_decline double precision,
-  e_prob_extinction_in_the_wild double precision,
-  CONSTRAINT extinction_risk_configuration_pkey PRIMARY KEY (id)
+  endemic_from_brasil boolean,
+  extent_of_occurrence double precision,
+  fragmentation_level integer,
+  global_distribution character varying(255),
+  national_distribution character varying(255),
+  native_in_brazil boolean,
+  area_of_ocuppancy double precision,
+  occurrence_state character varying(255),
+  occurs_in_brasil boolean,
+  only_from_few_localities boolean,
+  the_region_is_well_sampled boolean,
+  trend_in_extent_of_occurrence integer,
+  area_of_occupancy_trend integer,
+  CONSTRAINT distribution_area_pkey PRIMARY KEY (id)
 )
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE extinction_risk_configuration
+ALTER TABLE distribution_area
   OWNER TO postgres;
 
-END; 
+END;
