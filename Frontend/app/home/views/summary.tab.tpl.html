@@ -1,122 +1,114 @@
-<div id="distribution" edit-form>
-    <section class="collapseible distribution-widget">
+<div id="summary">
+
+    <!-- Exceptions Summary -->
+    <section class="collapseible summary-widget">
         <header>
             <div class="clearfix">
                 <div class="pull-left">
                     <h4>Exceptions Summary</h4>
                 </div>
                 <div class="pull-right collapsible-options">
-            <span class="dropdown export-drop">
-            <a href="#" class="dropdown-toggle" type="button" id="dropdownMenu4" data-toggle="dropdown"
-               aria-haspopup="true" aria-expanded="true"><i class="fa fa-download"></i> Export</a>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenu4">
-                <li>
-                    <button class="btn btn-primary small"><i class="fa fa-download"></i>Export</button>
-                </li>
-            </ul>
-			    </span>
-                    <a href="#" class="collapse-toggle"><i class="fa fa-caret-up"></i></a>
+                    <span class="dropdown export-drop">
+                        <a href="#" class="dropdown-toggle" type="button" id="dropdownMenu4" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="true"><i class="fa fa-download"></i> Export</a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu4">
+                            <li>
+                                <button class="btn btn-primary small"><i class="fa fa-download"></i>Export</button>
+                            </li>
+                        </ul>
+                    </span>
+                    <a href="#" class="collapse-toggle"
+                       onclick="$('#exceptionsSummary').toggleClass('collapse collapse.in');"><i class="fa fa-caret-up"></i></a>
                 </div>
             </div>
         </header>
 
-        <section class="widget-body">
-
-            <div class="row">
-                <div class="col-md-4">
-                    <div>
-                        <p><b>Species+</b></p>
-                        <p>
-                            <img src="../resources/images/species_plus.png">
-                        </p>
+        <div class="collapse.in" id="exceptionsSummary">
+            <section class="widget-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div>
+                            <p><b>Species+</b></p>
+                            <p>
+                                <img src="../resources/images/species_plus.png">
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div>
+                            <p><b>Fauna</b></p>
+                            <p>
+                                <img src="../resources/images/fauna.png">
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div>
+                            <p><b>Flora</b></p>
+                            <p>
+                                <img src="../resources/images/flora.png">
+                            </p>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div>
-                        <p><b>Fauna</b></p>
-                        <p>
-                            <img src="../resources/images/fauna.png">
-                        </p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div>
-                        <p><b>Flora</b></p>
-                        <p>
-                            <img src="../resources/images/flora.png">
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-        </section>
+            </section>
+        </div>
     </section>
 
-    <section class="collapseible distribution-widget">
+    <!-- Data Update Processes -->
+    <div class="collapseible distribution-widget">
         <header>
             <div class="clearfix">
                 <div class="pull-left">
                     <h4>Data Update Processes</h4>
                 </div>
                 <div class="pull-right collapsible-options">
-            <span class="dropdown export-drop">
-            <a href="#" class="dropdown-toggle" type="button" id="dropdownMenu4" data-toggle="dropdown"
-               aria-haspopup="true" aria-expanded="true"><i class="fa fa-download"></i> Export</a>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenu4">
-                <li>
-                    <button class="btn btn-primary small"><i class="fa fa-download"></i>Export</button>
-                </li>
-            </ul>
-          </span>
-                    <a href="#" class="collapse-toggle"><i class="fa fa-caret-up"></i></a>
+                    <span class="dropdown export-drop">
+                        <a href="#" class="dropdown-toggle" type="button" id="dropdownMenu4" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="true"><i class="fa fa-download"></i> Export</a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu4">
+                            <li>
+                                <button class="btn btn-primary small"><i class="fa fa-download"></i>Export</button>
+                            </li>
+                        </ul>
+                    </span>
+                    <a href="#" class="collapse-toggle"
+                       onclick="$('#dataUpdateProcess').toggleClass('collapse collapse.in');"><i class="fa fa-caret-up"></i></a>
                 </div>
             </div>
         </header>
 
-        <section class="widget-body">
-            <!-- Table Database Update Process -->
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Process</th>
-                    <th>Last updated</th>
-                    <th>Total records</th>
-                    <th>Total updates</th>
-                    <th>Status</th>
-                    <th>&nbsp;</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>JBRJ IPT - Fauna</td>
-                    <td>24/02/2015 06:00</td>
-                    <td>38555</td>
-                    <td>3125</td>
-                    <td>Running</td>
-                    <td>Stop | Start</td>
-                </tr>
-                <tr>
-                    <td>JBRJ IPT - Flora</td>
-                    <td>24/02/2015 06:00</td>
-                    <td>38555</td>
-                    <td>3125</td>
-                    <td>Completed</td>
-                    <td>Stop | Start</td>
-                </tr>
-                <tr>
-                    <td>WCMC SP+</td>
-                    <td>24/02/2015 06:00</td>
-                    <td>38555</td>
-                    <td>3125</td>
-                    <td>Completed</td>
-                    <td>Stop | Start</td>
-                </tr>
-                </tbody>
-            </table>
+        <div class="collapse" id="dataUpdateProcess">
+            <section class="widget-body">
+                <!-- Table Database Update Process -->
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Process</th>
+                            <th>Last updated</th>
+                            <th>Total records</th>
+                            <th>Total updates</th>
+                            <th>Status</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>WCMC SP+</td>
+                            <td>24/02/2015 06:00</td>
+                            <td>38555</td>
+                            <td>3125</td>
+                            <td>Completed</td>
+                            <td>Stop | Start</td>
+                        </tr>
+                    </tbody>
+                </table>
 
-        </section>
+            </section>
+        </div>
     </section>
 
+    <!-- Public API Statistics -->
     <section class="collapseible distribution-widget">
         <header>
             <div class="clearfix">
@@ -124,62 +116,56 @@
                     <h4>Public API Statistics</h4>
                 </div>
                 <div class="pull-right collapsible-options">
-            <span class="dropdown export-drop">
-            <a href="#" class="dropdown-toggle" type="button" id="dropdownMenu4" data-toggle="dropdown"
-               aria-haspopup="true" aria-expanded="true"><i class="fa fa-download"></i> Export</a>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenu4">
-                <li>
-                    <button class="btn btn-primary small"><i class="fa fa-download"></i>Export</button>
-                </li>
-            </ul>
-          </span>
-                    <a href="#" class="collapse-toggle"><i class="fa fa-caret-up"></i></a>
+                    <span class="dropdown export-drop">
+                        <a href="#" class="dropdown-toggle" type="button" id="dropdownMenu4" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="true"><i class="fa fa-download"></i> Export</a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu4">
+                            <li>
+                                <button class="btn btn-primary small"><i class="fa fa-download"></i>Export</button>
+                            </li>
+                        </ul>
+                    </span>
+                    <a href="#" class="collapse-toggle"
+                       onclick="$('#publicAPI').toggleClass('collapse collapse.in');"><i class="fa fa-caret-up"></i></a>
                 </div>
             </div>
         </header>
 
-        <section class="widget-body">
-            <!-- Table Public API Statistics -->
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Process</th>
-                    <th>Last requested</th>
-                    <th>Requests</th>
-                    <th>Avail threads</th>
-                    <th>Status</th>
-                    <th>&nbsp;</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>Public API</td>
-                    <td>24/02/2015 06:00</td>
-                    <td>638697</td>
-                    <td>45</td>
-                    <td>Running</td>
-                    <td>Stop | Start</td>
-                </tr>
-                <tr>
-                    <td>Especies Web</td>
-                    <td>24/02/2015 06:00</td>
-                    <td>89555</td>
-                    <td>214</td>
-                    <td>Online</td>
-                    <td>Stop | Start</td>
-                </tr>
-                <tr>
-                    <td>Example 3</td>
-                    <td>24/02/2015 06:00</td>
-                    <td>257697</td>
-                    <td>179</td>
-                    <td>Online</td>
-                    <td>Stop | Start</td>
-                </tr>
-                </tbody>
-            </table>
-        </section>
+        <div class="collapse" id="publicAPI">
+            <section class="widget-body">
+                <!-- Table Public API Statistics -->
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Process</th>
+                            <th>Last requested</th>
+                            <th>Requests</th>
+                            <th>Avail threads</th>
+                            <th>Status</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Public API</td>
+                            <td>24/02/2015 06:00</td>
+                            <td>638697</td>
+                            <td>45</td>
+                            <td>Online</td>
+                            <td>Stop | Start</td>
+                        </tr>
+                        <tr>
+                            <td>Especies Web</td>
+                            <td>24/02/2015 06:00</td>
+                            <td>89555</td>
+                            <td>214</td>
+                            <td>Online</td>
+                            <td>Stop | Start</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
     </section>
-
 
 </div>
