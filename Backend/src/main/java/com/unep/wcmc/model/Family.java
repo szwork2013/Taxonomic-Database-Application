@@ -12,8 +12,8 @@ public class Family implements BaseEntity {
     @Column(name = "family")
     private String name;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "integration_source")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "integration_source")
     private IntegrationSource integrationSource;
 
     public Family() {
@@ -22,6 +22,11 @@ public class Family implements BaseEntity {
 
     public Family(String name) {
         this.name = name;
+    }
+
+    public Family(String name, IntegrationSource integrationSource) {
+        this(name);
+        this.integrationSource = integrationSource;
     }
 
     public Long getId() {

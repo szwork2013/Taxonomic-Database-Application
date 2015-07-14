@@ -10,8 +10,8 @@ public class Kingdom implements BaseEntity {
 
     private String name;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "integration_source")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "integration_source")
     private IntegrationSource integrationSource;
 
     public Kingdom() {
@@ -20,6 +20,11 @@ public class Kingdom implements BaseEntity {
 
     public Kingdom(String name) {
         this.name = name;
+    }
+
+    public Kingdom(String name, IntegrationSource integrationSource) {
+        this(name);
+        this.integrationSource = integrationSource;
     }
 
     @Override
