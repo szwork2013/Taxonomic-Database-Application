@@ -9,5 +9,9 @@ import com.unep.wcmc.model.Species;
 public interface SpeciesRepository extends JpaRepository<Species, Long> {
 
     Species findByCommonName(String commonName);
+
     Page<Species> findByCommonNameStartingWith(String commonName, Pageable pageable);
+
+    Species findByScientificName(String scientificName);
+
 }

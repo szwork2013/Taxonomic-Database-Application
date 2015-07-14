@@ -12,12 +12,21 @@ public class HierarchyOrder implements BaseEntity {
     @Column(name = "name")
     private String name;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "integration_source")
+    private IntegrationSource integrationSource;
+
     public HierarchyOrder() {
         super();
     }
 
     public HierarchyOrder(String name) {
         this.name = name;
+    }
+
+    public HierarchyOrder(String name, IntegrationSource integrationSource) {
+        this(name);
+        this.integrationSource = integrationSource;
     }
 
     public Long getId() {
@@ -36,4 +45,11 @@ public class HierarchyOrder implements BaseEntity {
         this.name = name;
     }
 
+    public IntegrationSource getIntegrationSource() {
+        return integrationSource;
+    }
+
+    public void setIntegrationSource(IntegrationSource integrationSource) {
+        this.integrationSource = integrationSource;
+    }
 }

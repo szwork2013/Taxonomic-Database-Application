@@ -10,12 +10,21 @@ public class Kingdom implements BaseEntity {
 
     private String name;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "integration_source")
+    private IntegrationSource integrationSource;
+
     public Kingdom() {
         super();
     }
 
     public Kingdom(String name) {
         this.name = name;
+    }
+
+    public Kingdom(String name, IntegrationSource integrationSource) {
+        this(name);
+        this.integrationSource = integrationSource;
     }
 
     @Override
@@ -34,5 +43,13 @@ public class Kingdom implements BaseEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public IntegrationSource getIntegrationSource() {
+        return integrationSource;
+    }
+
+    public void setIntegrationSource(IntegrationSource integrationSource) {
+        this.integrationSource = integrationSource;
     }
 }

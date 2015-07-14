@@ -15,6 +15,10 @@ public class Taxonomy implements BaseEntity {
     @Column(name = "limitations_for_assessment")
     private Boolean limitationsForAssessment;
 
+    @ManyToOne
+    @JoinColumn(name = "integration_source")
+    private IntegrationSource integrationSource;
+
     public Long getId() {
         return id;
     }
@@ -37,5 +41,13 @@ public class Taxonomy implements BaseEntity {
 
     public void setLimitationsForAssessment(Boolean limitationsForAssessment) {
         this.limitationsForAssessment = limitationsForAssessment;
+    }
+
+    public IntegrationSource getIntegrationSource() {
+        return integrationSource;
+    }
+
+    public void setIntegrationSource(IntegrationSource integrationSource) {
+        this.integrationSource = integrationSource;
     }
 }

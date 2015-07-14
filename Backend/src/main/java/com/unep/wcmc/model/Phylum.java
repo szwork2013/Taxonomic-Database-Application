@@ -12,12 +12,21 @@ public class Phylum implements BaseEntity {
     @Column(name = "phylum")
     private String name;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "integration_source")
+    private IntegrationSource integrationSource;
+
     public Phylum() {
         super();
     }
 
     public Phylum(String name) {
         this.name = name;
+    }
+
+    public Phylum(String name, IntegrationSource integrationSource) {
+        this(name);
+        this.integrationSource = integrationSource;
     }
 
     public Long getId() {
@@ -36,4 +45,11 @@ public class Phylum implements BaseEntity {
         this.name = name;
     }
 
+    public IntegrationSource getIntegrationSource() {
+        return integrationSource;
+    }
+
+    public void setIntegrationSource(IntegrationSource integrationSource) {
+        this.integrationSource = integrationSource;
+    }
 }

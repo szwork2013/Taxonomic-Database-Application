@@ -4,8 +4,12 @@ import com.unep.wcmc.Application;
 import com.unep.wcmc.model.*;
 import com.unep.wcmc.service.ExtinctionRiskService;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.kie.api.KieServices;
+import org.kie.api.runtime.KieContainer;
+import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -14,8 +18,22 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @SpringApplicationConfiguration(classes = Application.class)
 public class ExtinctionRiskServiceTest {
 
+    private KieServices kieServices;
+    private KieContainer kieContainer;
+    private KieSession kieSession;
+
     @Autowired
     private ExtinctionRiskService service;
+
+    @Before
+    public void initialize() {
+        if (kieSession != null) {
+            kieSession.dispose();
+        }
+        this.kieServices = KieServices.Factory.get();
+        this.kieContainer = kieServices.getKieClasspathContainer();
+        this.kieSession = kieContainer.newKieSession("RulesSession");
+    }
 
     @Test
     public void testEndangered_EN() {
@@ -64,6 +82,12 @@ public class ExtinctionRiskServiceTest {
         Assert.assertNotNull(specie);
         Assert.assertEquals(ExtinctionRiskCategory.ENDANGERED,
                 specie.getExtinctionRiskCategory());
+    }
+
+    @Test
+    public void testProcessExtinctionRisksForAllSpecies() {
+        service.processExtinctionRisksForAllSpecies(kieSession);
+        Assert.assertTrue(true);
     }
 
 }

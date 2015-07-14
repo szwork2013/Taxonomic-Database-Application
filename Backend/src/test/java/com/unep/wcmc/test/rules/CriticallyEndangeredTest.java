@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.unep.wcmc.Application;
 import com.unep.wcmc.model.*;
 import com.unep.wcmc.repository.ExtinctionRiskConfigurationRepository;
+import com.unep.wcmc.repository.SpeciesRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,6 +26,10 @@ public class CriticallyEndangeredTest {
 
     @Autowired
     private ExtinctionRiskConfigurationRepository repo;
+
+    @Autowired
+    private SpeciesRepository specieRepository;
+
 
     @Before
     public void initialize() {

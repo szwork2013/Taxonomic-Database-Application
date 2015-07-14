@@ -1,19 +1,10 @@
 package com.unep.wcmc.model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-
 import org.apache.solr.client.solrj.beans.Field;
 import org.springframework.data.solr.core.mapping.Indexed;
 import org.springframework.data.solr.core.mapping.SolrDocument;
+
+import javax.persistence.*;
 
 @Entity
 @SolrDocument(solrCoreName = "Species")
@@ -62,6 +53,10 @@ public class Species implements BaseEntity {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cover_map_id")
     private Map coverMap;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "integration_source")
+    private IntegrationSource integrationSource;
 
     // Getters and setters
     public Long getId() {
@@ -152,4 +147,11 @@ public class Species implements BaseEntity {
         this.coverMap = coverMap;
     }
 
+    public IntegrationSource getIntegrationSource() {
+        return integrationSource;
+    }
+
+    public void setIntegrationSource(IntegrationSource integrationSource) {
+        this.integrationSource = integrationSource;
+    }
 }
