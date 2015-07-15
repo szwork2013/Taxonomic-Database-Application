@@ -9,22 +9,9 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import com.unep.wcmc.model.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.StringUtils;
-
-import com.unep.wcmc.model.DistributionArea;
-import com.unep.wcmc.model.ExtinctionRiskCategory;
-import com.unep.wcmc.model.Family;
-import com.unep.wcmc.model.Genus;
-import com.unep.wcmc.model.Habitat;
-import com.unep.wcmc.model.Hierarchy;
-import com.unep.wcmc.model.HierarchyClass;
-import com.unep.wcmc.model.HierarchyOrder;
-import com.unep.wcmc.model.Kingdom;
-import com.unep.wcmc.model.NaturalHistory;
-import com.unep.wcmc.model.Phylum;
-import com.unep.wcmc.model.Species;
-import com.unep.wcmc.model.Taxonomy;
 
 /**
  * 
@@ -46,7 +33,11 @@ public final class SpeciesSpecification {
 
 				final List<Predicate> predicates = new ArrayList<Predicate>();
 				final Path<DistributionArea> distributionArea = root.<DistributionArea>get("distributionArea");
-								
+
+				// HINT: Only searching for Species from ICMBio
+				final Path<IntegrationSource> integration = root.get("integrationSource");
+				predicates.add(cb.equal(integration.<Long>get("id"), 1));
+
 				predicates.add(searchByName(root, query, cb));
 				
 				if (!StringUtils.isEmpty(filter.getEndemicFromBrazil())) {
