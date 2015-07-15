@@ -26,7 +26,7 @@ public class Species implements BaseEntity {
     @Enumerated(value = EnumType.ORDINAL)
     private ExtinctionRiskCategory extinctionRiskCategory;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "taxonomy_id")
     private Taxonomy taxonomy;
 

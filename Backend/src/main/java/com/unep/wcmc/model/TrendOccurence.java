@@ -2,6 +2,6 @@ package com.unep.wcmc.model;
 
 public enum TrendOccurence {
 
-    DECLINING, EXPANDING, STABLE, EXTREME_FLUTUATION
+    DECLINING, EXPANDING, STABLE, EXTREME_FLUTUATION, UNKNOWN
 
 }
