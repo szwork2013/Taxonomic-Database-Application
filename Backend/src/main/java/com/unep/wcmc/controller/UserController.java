@@ -40,7 +40,13 @@ public class UserController extends AbstractController<User, UserService> {
     @PreAuthorize("hasAuthority('PERM_CHANGE_USER_ROLE')")
     public SuccessResponse changeUserRoles(@PathVariable String id, @PathVariable String role) {
     	service.assignUserRoles(id, role);
-    	return new SuccessResponse("change user role");
+    	return new SuccessResponse("changed user role");
+    }
+
+    @RequestMapping(value = "/resetpassword", method= RequestMethod.POST)
+    @Secured("ROLE_ANONYMOUS")
+    public SuccessResponse resetPassword() {
+        return new SuccessResponse("password changed");
     }
     
     @RequestMapping(value = "/assignrole/{id}/grant/role/{role}", method= RequestMethod.POST)
