@@ -64,35 +64,35 @@ public final class SpeciesService extends AbstractService<Species, SpeciesReposi
             dto.setId(species.getId());
             dto.setCommonName(species.getCommonName());
             dto.setScientificName(species.getScientificName());
-            if (taxonomy != null) {
-                Hierarchy hierarchy = taxonomy.getHierarchy();
-            	if (hierarchy == null) {
-            		continue;
-            	} else if ((hierarchy.getKingdom() != null) && 
-            			   (hierarchy.getKingdom().getName().contains(query))) {
-            		dto.setKingdomName(hierarchy.getKingdom().getName());
-            	} else if ((hierarchy.getPhylum() != null) && 
-         			       (hierarchy.getPhylum().getName().contains(query))) {
-            		dto.setPhylumName(hierarchy.getPhylum().getName());
-            	} else if ((hierarchy.getHierarchyClass() != null) && 
-         			       (hierarchy.getHierarchyClass().getName().contains(query))) {
-            		dto.setHierarchyClassName(hierarchy.getHierarchyClass().getName());
-            	} else if ((hierarchy.getOrder() != null) && 
-         			       (hierarchy.getOrder().getName().contains(query))) {
-            		dto.setHierarchyOrderName(hierarchy.getOrder().getName());
-            	} else if ((hierarchy.getFamily() != null) && 
-         			       (hierarchy.getFamily().getName().contains(query))) {
-            		dto.setFamilyName(hierarchy.getFamily().getName());
-            	} else if ((hierarchy.getGenus() != null) && 
-         			       (hierarchy.getGenus().getName().contains(query))) {
-            		dto.setGenusName(hierarchy.getGenus().getName());
-            	} else if ((hierarchy.getSpecies() != null) && 
-      			           (hierarchy.getSpecies().contains(query))) {
-            		dto.setSpeciesName(hierarchy.getSpecies());
-            	} else if ((hierarchy.getSubSpecies() != null) && 
-       			           (hierarchy.getSubSpecies().contains(query))) {
-            		dto.setSpeciesName(hierarchy.getSubSpecies());
-            	}
+            if (!species.getScientificName().contains(query) && !species.getCommonName().contains(query)) {
+                if (taxonomy != null && taxonomy.getHierarchy() != null) {
+                    Hierarchy hierarchy = taxonomy.getHierarchy();
+                    if ((hierarchy.getKingdom() != null) &&
+                            (hierarchy.getKingdom().getName().contains(query))) {
+                        dto.setKingdomName(hierarchy.getKingdom().getName());
+                    } else if ((hierarchy.getPhylum() != null) &&
+                            (hierarchy.getPhylum().getName().contains(query))) {
+                        dto.setPhylumName(hierarchy.getPhylum().getName());
+                    } else if ((hierarchy.getHierarchyClass() != null) &&
+                            (hierarchy.getHierarchyClass().getName().contains(query))) {
+                        dto.setHierarchyClassName(hierarchy.getHierarchyClass().getName());
+                    } else if ((hierarchy.getOrder() != null) &&
+                            (hierarchy.getOrder().getName().contains(query))) {
+                        dto.setHierarchyOrderName(hierarchy.getOrder().getName());
+                    } else if ((hierarchy.getFamily() != null) &&
+                            (hierarchy.getFamily().getName().contains(query))) {
+                        dto.setFamilyName(hierarchy.getFamily().getName());
+                    } else if ((hierarchy.getGenus() != null) &&
+                            (hierarchy.getGenus().getName().contains(query))) {
+                        dto.setGenusName(hierarchy.getGenus().getName());
+                    } else if ((hierarchy.getSpecies() != null) &&
+                            (hierarchy.getSpecies().contains(query))) {
+                        dto.setSpeciesName(hierarchy.getSpecies());
+                    } else if ((hierarchy.getSubSpecies() != null) &&
+                            (hierarchy.getSubSpecies().contains(query))) {
+                        dto.setSpeciesName(hierarchy.getSubSpecies());
+                    }
+                }
             }
             result.add(dto);
         }

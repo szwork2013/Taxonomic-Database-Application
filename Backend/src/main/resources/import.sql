@@ -5212,4 +5212,7 @@ INSERT INTO habitat_type (id, name) VALUES (204, 'Marine - Coral Reefs');
 INSERT INTO habitat_type (id, name) VALUES (205, 'Marine - Gardens of algae, seaweed forests, Marine Meadows');
 INSERT INTO habitat_type (id, name) VALUES (206, 'Marine - Other');
 
+-- role data
+INSERT INTO user_role (id, name, role) VALUES (1, 'ROLE PUBLIC', 'ROLE_PUBLIC');
+
 COMMIT;
