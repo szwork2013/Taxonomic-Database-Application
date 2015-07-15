@@ -1,5 +1,7 @@
 package com.unep.wcmc.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.data.domain.Page;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.unep.wcmc.model.Species;
+import com.unep.wcmc.model.dto.SpeciesSearchDTO;
 import com.unep.wcmc.model.filter.SpeciesFilter;
 import com.unep.wcmc.service.SpeciesService;
 
@@ -22,6 +25,12 @@ public class SpeciesController extends AbstractController<Species, SpeciesServic
     public Page<Species> autoComplete(@Valid @RequestBody SpeciesFilter filter,
     								  @PageableDefault(page = 0, size = 30) Pageable pageable) {
         return service.findAll(filter, pageable);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/search", produces = "application/json")
+    public List<SpeciesSearchDTO> search(@Valid @RequestBody SpeciesFilter filter, 
+    									 @PageableDefault(page = 0, size = 30) Pageable pageable) {
+        return service.findToDropdown(filter, pageable);
     }
 }
 
