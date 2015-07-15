@@ -27,7 +27,8 @@ public class SpeciesPlusService {
     private int itemsPerPage = 500;
     private long totalRecords;
 
-    @PostConstruct
+    private boolean initialized = false;
+
     @SuppressWarnings("all")
     public void init() {
         Map<String, Object> values = getTaxonConcepts(1, 1);
@@ -56,6 +57,9 @@ public class SpeciesPlusService {
     }
 
     public boolean hasNextTaxon() {
+        if (!initialized) {
+            init();
+        }
         if (currentPage <= getTotalPages()) {
             return true;
         }
@@ -63,12 +67,18 @@ public class SpeciesPlusService {
     }
 
     public Map<String, Object> nextTaxonPage() {
+        if (!initialized) {
+            init();
+        }
         Map<String, Object> values = getTaxonConcepts(currentPage, itemsPerPage);
         currentPage++;
         return values;
     }
 
     public int getTotalPages() {
+        if (!initialized) {
+            init();
+        }
         return (int) totalRecords / itemsPerPage;
     }
 
