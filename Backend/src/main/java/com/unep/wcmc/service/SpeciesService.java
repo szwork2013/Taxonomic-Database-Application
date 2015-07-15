@@ -1,5 +1,6 @@
 package com.unep.wcmc.service;
 
+import com.unep.wcmc.model.dto.SpeciesSearchDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +12,10 @@ import com.unep.wcmc.model.filter.SpeciesFilter;
 import com.unep.wcmc.model.filter.SpeciesSpecification;
 import com.unep.wcmc.repository.IntegrationSourceRepository;
 import com.unep.wcmc.repository.SpeciesRepository;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 @Service
 public final class SpeciesService extends AbstractService<Species, SpeciesRepository> {
@@ -46,6 +51,24 @@ public final class SpeciesService extends AbstractService<Species, SpeciesReposi
     public Species save(Species specie) {
         extinctionRiskService.processExtinctionRiskCalculation(specie);
         return super.save(specie);
+    }
+
+    public List<SpeciesSearchDTO> findToDropdown(SpeciesFilter filter, Pageable pageable) {
+        List<SpeciesSearchDTO> result = new ArrayList<>();
+        Page<Species> speciesList = repo.findAll(SpeciesSpecification.filter(filter), pageable);
+        Iterator<Species> it = speciesList.iterator();
+        while (it.hasNext()) {
+            Species species = it.next();
+            SpeciesSearchDTO dto = new SpeciesSearchDTO();
+            dto.setId(species.getId());
+            if (species.getCommonName().contains(filter.getQuery())) {
+                dto.setCommonName(species.getCommonName());
+            } else if (species.getScientificName().contains(filter.getQuery())) {
+                dto.setScientificName(species.getScientificName());
+            }
+            result.add(dto);
+        }
+        return result;
     }
 
     public Page<Species> findAll(SpeciesFilter filter, Pageable pageable) {
