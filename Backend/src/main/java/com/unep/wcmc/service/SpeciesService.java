@@ -3,6 +3,7 @@ package com.unep.wcmc.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.unep.wcmc.model.filter.SpeciesSimpleSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -57,7 +58,7 @@ public final class SpeciesService extends AbstractService<Species, SpeciesReposi
     public List<SpeciesSearchDTO> findToDropdown(SpeciesFilter filter, Pageable pageable) {
     	String query = filter.getQuery();
     	List<SpeciesSearchDTO> result = new ArrayList<>();
-        Page<Species> speciesList = repo.findAll(SpeciesSpecification.filter(filter), pageable);
+        Page<Species> speciesList = repo.findAll(SpeciesSimpleSpecification.filter(filter), pageable);
         for (Species species : speciesList) {
         	Taxonomy taxonomy = species.getTaxonomy();
             SpeciesSearchDTO dto = new SpeciesSearchDTO();
