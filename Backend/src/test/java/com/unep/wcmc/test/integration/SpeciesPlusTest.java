@@ -1,7 +1,7 @@
 package com.unep.wcmc.test.integration;
 
 import com.unep.wcmc.Application;
-import com.unep.wcmc.integration.speciesplus.SpeciesPlusService;
+import com.unep.wcmc.service.SpeciesPlusService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -6,6 +6,7 @@ import org.springframework.batch.core.configuration.annotation.StepBuilderFactor
 import org.springframework.batch.core.launch.support.SimpleJobLauncher;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean;
+import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
@@ -21,6 +22,11 @@ public class BatchConfiguration {
 
     @Autowired
     private StepBuilderFactory stepBuilderFactory;
+
+    @Bean
+    public Step stepICMBio(Tasklet iCMBioTasklet) {
+        return stepBuilderFactory.get("stepICMBio").tasklet(iCMBioTasklet).build();
+    }
 
     @Bean
     @SuppressWarnings("all")

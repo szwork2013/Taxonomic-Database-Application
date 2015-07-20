@@ -1,4 +1,4 @@
-package com.unep.wcmc.integration.speciesplus;
+package com.unep.wcmc.service;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import javax.annotation.PostConstruct;
 import java.util.Map;
 
 @Service

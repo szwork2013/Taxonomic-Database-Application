@@ -22,6 +22,9 @@ public class JobRunner {
     private JobLauncher jobLauncher;
 
     @Autowired
+    private Step stepICMBio;
+
+    @Autowired
     private Step stepSpeciesPlus;
 
     public JobExecution startJobSpeciesPlus() throws Exception {
@@ -29,4 +32,11 @@ public class JobRunner {
                 .start(stepSpeciesPlus).build();
         return jobLauncher.run(job, new JobParameters());
     }
+
+    public JobExecution startJobICMBio() throws Exception {
+        Job job = jobBuilderFactory.get("stepICMBio").incrementer(new RunIdIncrementer())
+                .start(stepICMBio).build();
+        return jobLauncher.run(job, new JobParameters());
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.unep.wcmc.integration.speciesplus;
 
+import com.unep.wcmc.service.SpeciesPlusService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.batch.item.ItemReader;

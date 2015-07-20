@@ -1,25 +1,17 @@
 package com.unep.wcmc.model;
 
-import org.apache.solr.client.solrj.beans.Field;
-import org.springframework.data.solr.core.mapping.Indexed;
-import org.springframework.data.solr.core.mapping.SolrDocument;
-
 import javax.persistence.*;
 
 @Entity
-@SolrDocument(solrCoreName = "Species")
 public class Species implements BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Indexed("common_name")
-    @Field("common_name")
     @Column(name = "common_name")
     private String commonName;
 
-    @Indexed("scientific_name")
     @Column(name = "scientific_name")
     private String scientificName;
 
