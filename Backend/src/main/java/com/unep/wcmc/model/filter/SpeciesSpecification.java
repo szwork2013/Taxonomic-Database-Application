@@ -33,27 +33,51 @@ public final class SpeciesSpecification {
 
 				final List<Predicate> predicates = new ArrayList<Predicate>();
 				final Path<DistributionArea> distributionArea = root.<DistributionArea>get("distributionArea");
+				final Path<Conservation> conservationPath = root.<Conservation>get("conservation");
+				final Path<NaturalHistory> naturalHistory = root.<NaturalHistory>get("naturalHistory");
 
 				// HINT: Only searching for Species from ICMBio
-				final Path<IntegrationSource> integration = root.get("integrationSource");
-				predicates.add(cb.equal(integration.<Long>get("id"), 1));
+				//final Path<IntegrationSource> integration = root.get("integrationSource");
+			//	predicates.add(cb.equal(integration.<Long>get("id"), 1));
 
 				predicates.add(searchByName(root, query, cb));
 				
 				if (!StringUtils.isEmpty(filter.getEndemicFromBrazil())) {
+
 					predicates.add(cb.equal(distributionArea.get("endemicFromBrazil"), filter.getEndemicFromBrazil()));
 				}
 				if (!StringUtils.isEmpty(filter.getOccurrenceState())) {
+
 					predicates.add(cb.equal(distributionArea.get("ocurrenceState"), filter.getOccurrenceState()));
 				}
+				if (!StringUtils.isEmpty(filter.getOccurrenceBiomes())) {
+
+					predicates.add(cb.equal(distributionArea.get("ocurrenceBiomes"), filter.getOccurrenceBiomes()));
+				}
+				if (!StringUtils.isEmpty(filter.getOccurrenceProtectedAreas())) {
+
+					predicates.add(cb.equal(distributionArea.get("ocurrenceProtectedAreas"), filter.getOccurrenceProtectedAreas()));
+				}
 				if (!StringUtils.isEmpty(filter.getExtinctionRiskCategory())) {
+
 					final Predicate extinctionRiskCategory = cb.equal(root.<ExtinctionRiskCategory>get("extinctionRiskCategory"), filter.getExtinctionRiskCategoryEnum());
 					predicates.add(extinctionRiskCategory);
 				}
 				if (!StringUtils.isEmpty(filter.getHabitat())) {
-					final Path<NaturalHistory> naturalHistory = root.<NaturalHistory>get("naturalHistory");
-					predicates.add(cb.equal(naturalHistory.<Habitat>get("habitat").<String>get("description"), filter.getHabitat()));
+
+					final Path<Habitat> habitatPath = naturalHistory.<Habitat>get("habitat");
+					predicates.add(cb.equal(habitatPath.<HabitatType>get("type").<Long>get("id"), filter.getHabitat()));
 				}
+				if (!StringUtils.isEmpty(filter.getActionPlan())) {
+
+					predicates.add(cb.equal(conservationPath.<ConservationAction>get("conservationAction").<String>get("benefitedActionPlan"), filter.getActionPlan()));
+				}
+
+				if (!StringUtils.isEmpty(filter.getInNationalEndangeredFauna())) {
+
+					predicates.add(cb.equal(conservationPath.<ExtinctionRisk>get("extinctionRisk").<Boolean>get("inNationalEndangeredFauna"), filter.getInNationalEndangeredFauna()));
+				}
+
 				return cb.and(predicates.toArray(new Predicate[predicates.size()]));
 			}
 			
