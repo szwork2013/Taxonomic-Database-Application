@@ -4,7 +4,7 @@
   "description": "TaxonomicDB",
   "dependencies": {
     "bootstrap": "~3",
-    "angular": "~1.2",
+    "angular": "~1.4",
     "angular-resource": "~1.2",
     "angular-mocks": "~1.2",
     "angular-bootstrap": "~0.11.0",
@@ -26,7 +26,9 @@
     "Font-Awesome": "~4.3.0",
     "normalize-css": "~3.0.3",
     "jquery-magnificent": "~2.0.0",
-    "magnific-popup": "~1.0.0"
+    "magnific-popup": "~1.0.0",
+    "angular-input-modified": "~2.2.1",
+    "angular-toastr": "~1.4.1"
   },
   "devDependencies": {
     "holderjs": "~2.3.1",

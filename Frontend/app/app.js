@@ -2,25 +2,25 @@ define(['include'], function ( angularAMD ) {
 
 	'use strict';
 
-	var app = angular.module('TaxonomicDB', ['ui.router', 'ngResource']);
+	var app = angular.module('TaxonomicDB', ['ui.router', 'ngResource','ngSanitize','toastr']);
 
-	app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+	app.config(['$stateProvider','$provide', '$urlRouterProvider', function ($stateProvider, $provide, $urlRouterProvider) {
 
-		$urlRouterProvider.otherwise('/home');
+		$urlRouterProvider.otherwise('/login');
 
 		$stateProvider
 
-			.state('home', angularAMD.route(
-				{
-					url: '/home',
-					templateUrl: 'app/home/views/default.html',
-					controllerUrl: 'home/controllers/homeController'
-				}))
 			.state('login', angularAMD.route(
 				{
 					url: '/login',
 					templateUrl: 'app/auth/views/login.html',
 					controllerUrl: 'auth/controllers/authController'
+				}))
+			.state('home', angularAMD.route(
+				{
+					url: '/home',
+					templateUrl: 'app/home/views/default.html',
+					controllerUrl: 'home/controllers/homeController'
 				}))
 			.state('signup', angularAMD.route(
 				{
@@ -41,7 +41,50 @@ define(['include'], function ( angularAMD ) {
 					controllerUrl: 'home/controllers/homeController'
 				}));
 
+		$provide.factory('authInterceptor', function ($rootScope, $q, $window) {
+
+			return {
+				request: function (config) {
+					config.headers = config.headers || {};
+					if ($window.sessionStorage.tokenSecret) {
+						//config.headers['X-AUTH-TOKEN'] = $window.sessionStorage.tokenSecret;
+					}
+					return config;
+				},
+				response: function (response) {
+					if (response.status === 401) {
+						// handle the case where the user is not authenticated
+					}
+					return response || $q.when(response);
+				}
+			};
+		});
+
 	}]);
+
+	app.CONST = {
+		LOCALHOST:"http://localhost:8080/",
+		SERVER:"http://ec2-54-94-252-185.sa-east-1.compute.amazonaws.com:8080/"
+	};
+
+	app.run(function( $rootScope ) {
+
+		/**
+		 * Return the current host
+		 *
+		 * @returns {*}
+		 */
+		$rootScope.getHost = function() {
+
+			if (document.location.hostname == 'localhost') {
+
+				return app.CONST.LOCALHOST;
+			}
+			else {
+				return app.CONST.SERVER;
+			}
+		};
+	});
 
 	return angularAMD.bootstrap(app);
 });
