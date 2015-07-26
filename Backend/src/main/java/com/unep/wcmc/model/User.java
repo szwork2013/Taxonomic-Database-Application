@@ -33,33 +33,40 @@ import com.unep.wcmc.validator.Phone;
 @Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = { "username" }), @UniqueConstraint(columnNames = { "email" }), })
 public final class User implements UserDetails, BaseEntity {
 
-    private static final long serialVersionUID = -5244245469957843842L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+
     @Email
     @NotNull
     @Column(nullable = false)
     private String email;
+
     @NotNull
     @Column(nullable = false)
     @Size(min = 4, max = 30)
     private String username;
+
     @Column(nullable = false)
     @Size(min = 4, max = 100)
     private String password;
+
     @Column
     private String firstName;
+
     @Column
     private String lastName;
+
     @Column
     private String address;
+
     @Phone
     @Column
     private String phoneNumber;
+
     @Column(nullable = false)
     private boolean enabled;
+
     @OneToOne
     @JoinColumn(name = "user_role_id", nullable = false)
     private UserRole userRole;
@@ -124,8 +131,7 @@ public final class User implements UserDetails, BaseEntity {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-        
-    @JsonIgnore
+
     public UserRole getUserRole() {
         return userRole;
     }
@@ -134,21 +140,13 @@ public final class User implements UserDetails, BaseEntity {
     public void setUserRole(UserRole userRole) {
         this.userRole = userRole;
     }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.springframework.security.core.userdetails.UserDetails#getAuthorities()
-     */
+
     @Override
     @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return userRole.getAuthorities();
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.springframework.security.core.userdetails.UserDetails#getPassword()
-     */
     @Override
     @JsonIgnore
     public String getPassword() {
@@ -160,59 +158,34 @@ public final class User implements UserDetails, BaseEntity {
         this.password = password;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.springframework.security.core.userdetails.UserDetails#getUsername()
-     */
     @Override
     public String getUsername() {
         return username;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.springframework.security.core.userdetails.UserDetails#isAccountNonExpired()
-     */
     @Override
     @JsonIgnore
     public boolean isAccountNonExpired() {
         return true;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.springframework.security.core.userdetails.UserDetails#isAccountNonLocked()
-     */
     @Override
     @JsonIgnore
     public boolean isAccountNonLocked() {
         return true;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.springframework.security.core.userdetails.UserDetails#isCredentialsNonExpired()
-     */
     @Override
     @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.springframework.security.core.userdetails.UserDetails#isEnabled()
-     */
     @Override
-    @JsonIgnore
     public boolean isEnabled() {
         return enabled;
     }
-    
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
+
     @Override
     public int hashCode() {
         int result = 17;
@@ -220,11 +193,7 @@ public final class User implements UserDetails, BaseEntity {
         result = 41 * (email == null ? 1 : email.hashCode());
         return result;
     }
-    
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) return false;
@@ -236,11 +205,7 @@ public final class User implements UserDetails, BaseEntity {
         }
         return false;
     }
-    
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
+
     @Override
     public String toString() {
         return new StringBuilder().append("email=")

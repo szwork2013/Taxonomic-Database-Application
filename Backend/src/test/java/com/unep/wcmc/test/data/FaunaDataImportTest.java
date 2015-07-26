@@ -1,19 +1,23 @@
-package com.unep.wcmc.integration.icmbio;
+package com.unep.wcmc.test.data;
 
 import au.com.bytecode.opencsv.CSVReader;
+import com.unep.wcmc.Application;
 import com.unep.wcmc.model.*;
 import com.unep.wcmc.repository.*;
-import org.springframework.batch.core.StepContribution;
-import org.springframework.batch.core.scope.context.ChunkContext;
-import org.springframework.batch.core.step.tasklet.Tasklet;
-import org.springframework.batch.repeat.RepeatStatus;
+import org.junit.Assert;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.FileReader;
+import java.util.List;
 
-@Component
-public class ICMBioTasklet implements Tasklet {
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringApplicationConfiguration(classes = Application.class)
+public class FaunaDataImportTest {
 
     @Autowired
     private KingdomRepository kingdomRepository;
@@ -37,23 +41,34 @@ public class ICMBioTasklet implements Tasklet {
     private TaxonomyRepository taxonomyRepository;
 
     @Autowired
+    private StateRepository stateRepository;
+
+    @Autowired
+    private DistributionAreaRepository distributionAreaRepository;
+
+    @Autowired
     private SpeciesRepository specieRepository;
 
-    @Override
-    public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
+    @Test
+    @Ignore // Ignoring this test case to not be executed all the time
+    public void testImportTaxonomicICMBioSpeciesFromCSV() throws Exception {
         // CSV fields
         //Reino,Filo,Classe,Ordem,Familia,Genero,Epiteto Especifico,Subespecie,species,Nome cientifico,Nome Comum
 
         CSVReader reader = new CSVReader(new FileReader("src/test/resources/Taxonomic_ICMBio_brazilian_species.csv"));
         String[] line = reader.readNext();
         while (line != null) {
+
             Taxonomy taxonomy = createTaxonomy(line);
-            createSpecies(line, taxonomy);
+            Assert.assertNotNull(taxonomy);
+            Assert.assertNotNull(taxonomy.getId());
+
+            Species specie = createSpecies(line, taxonomy);
+            Assert.assertNotNull(specie);
+            Assert.assertNotNull(specie.getId());
 
             line = reader.readNext();
         }
-
-        return RepeatStatus.FINISHED;
     }
 
     private Taxonomy createTaxonomy(String[] line) {
@@ -137,6 +152,35 @@ public class ICMBioTasklet implements Tasklet {
             gender = genusRepository.save(gender);
         }
         return gender;
+    }
+
+    @Test
+    @Ignore // ignoring this test case to not be executed all the time
+    public void testImportOccurencesICMBioSpeciesFromCSV() throws Exception {
+        // CSV fields
+        //kingdom,phylum,class,order,family,genus,specificEpithet,infraspecificEpithet,species,scientificName,taxonRank,group,
+        //decimalLatitude,decimalLongitude,geodeticDatum,continent,country,stateProvince,municipality,locality,basisOfRecord,
+        // occurrenceRemarks,establishmentMeans,eventDate,habitat,locationRemarks,occurrenceStatus,georeferenceSources,compilador,references
+
+        CSVReader reader = new CSVReader(new FileReader("src/test/resources/Occurences_ICMBio_brazilian_species.csv"));
+        String[] line = reader.readNext();
+        while (line != null) {
+            List<Taxonomy> list = taxonomyRepository.findByHierarchySpeciesSoundex(line[8].trim());
+            if (list != null && !list.isEmpty()) {
+                createOccurence(line, list.get(0));
+            }
+            line = reader.readNext();
+        }
+    }
+
+    private Occurrence createOccurence(String[] line, Taxonomy taxonomy) {
+        DistributionArea distributionArea = new DistributionArea();
+        State state = stateRepository.findByCode(line[17].trim());
+        Map map = new Map(line[19].trim(), null, line[29].trim(), null, null, null, false);
+        Occurrence occurrence = new Occurrence(line[12].trim(), line[13].trim(), line[19].trim(), state, map);
+        distributionArea.getOccurrences().add(occurrence);
+        distributionAreaRepository.save(distributionArea);
+        return occurrence;
     }
 
 }

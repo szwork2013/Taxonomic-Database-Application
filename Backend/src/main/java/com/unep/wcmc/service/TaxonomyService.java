@@ -1,21 +1,14 @@
 package com.unep.wcmc.service;
 
 import com.unep.wcmc.model.Hierarchy;
-import com.unep.wcmc.model.IntegrationSource;
-import com.unep.wcmc.repository.IntegrationSourceRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.unep.wcmc.model.Taxonomy;
 import com.unep.wcmc.repository.TaxonomyRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class TaxonomyService extends AbstractService<Taxonomy, TaxonomyRepository> {
-
-    @Autowired
-    private IntegrationSourceRepository integrationRepo;
 
     public Taxonomy findOrSave(Taxonomy taxonomy) {
         if (taxonomy != null) {
@@ -23,11 +16,7 @@ public class TaxonomyService extends AbstractService<Taxonomy, TaxonomyRepositor
             if (taxonomyList != null && !taxonomyList.isEmpty()) {
                 taxonomy = taxonomyList.get(0);
             } else {
-                if (taxonomy.getIntegrationSource() != null) {
-                    IntegrationSource integration =
-                            integrationRepo.findBySource(taxonomy.getIntegrationSource().getSource());
-                    taxonomy.setIntegrationSource(integration);
-                }
+                taxonomy.setEnabled(true);
                 taxonomy = repo.save(taxonomy);
             }
         }

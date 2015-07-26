@@ -39,6 +39,7 @@ dependencies {
     compile("org.hibernate:hibernate-search-orm:5.2.0.Final")
     compile("org.hibernate:hibernate-entitymanager:4.3.10.Final")
     compile("org.springframework.batch:spring-batch-core:3.0.4.RELEASE")
+    compile("org.springframework.batch:spring-batch-integration:3.0.4.RELEASE")
     compile("org.kie:kie-ci:6.1.0.Final")
     compile("net.sf.ehcache:ehcache:2.9.0")
     compile("io.jsonwebtoken:jjwt:0.5")

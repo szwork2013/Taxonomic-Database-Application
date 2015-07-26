@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import com.unep.wcmc.Application;
 import com.unep.wcmc.model.*;
 import com.unep.wcmc.repository.ExtinctionRiskConfigurationRepository;
-import com.unep.wcmc.repository.SpecieRepository;
+import com.unep.wcmc.repository.SpeciesRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,7 +31,7 @@ public class ExtinctionRiskTest {
     private ExtinctionRiskConfigurationRepository repo;
 
     @Autowired
-    private SpecieRepository specieRepository;
+    private SpeciesRepository specieRepository;
 
     @Before
     public void initialize() {
@@ -54,7 +54,7 @@ public class ExtinctionRiskTest {
 
     @Test
     public void testVulnerable_VU() {
-        Specie specie = new Specie();
+        Species specie = new Species();
         specie.setScientificName("Hypsiboas curupi Garcia, Faivovichi & Haddad, 2007");
         kieSession.setGlobal("specie", specie);
         kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
@@ -86,7 +86,7 @@ public class ExtinctionRiskTest {
 
     @Test
     public void testEndangered_EN() {
-        Specie specie = new Specie();
+        Species specie = new Species();
         specie.setCommonName("macaco-prego-galego");
         specie.setScientificName("Sapajus flavius");
         kieSession.setGlobal("specie", specie);
@@ -126,7 +126,7 @@ public class ExtinctionRiskTest {
 
     @Test
     public void testExtinct_EX() {
-        Specie specie = new Specie();
+        Species specie = new Species();
         kieSession.setGlobal("specie", specie);
         kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
 
@@ -148,7 +148,7 @@ public class ExtinctionRiskTest {
 
     @Test
     public void testExtinctInTheWild_EW() {
-        Specie specie = new Specie();
+        Species specie = new Species();
         kieSession.setGlobal("specie", specie);
         kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
 
@@ -170,7 +170,7 @@ public class ExtinctionRiskTest {
 
     @Test
     public void testRegionallyExtinct_RE() {
-        Specie specie = new Specie();
+        Species specie = new Species();
         kieSession.setGlobal("specie", specie);
         kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
 
@@ -193,10 +193,10 @@ public class ExtinctionRiskTest {
     @Test
     public void testGenerateRandomExitinctRisksData() {
         Random random = new Random();
-        Iterator<Specie> species = specieRepository.findAll().iterator();
+        Iterator<Species> species = specieRepository.findAll().iterator();
         ExtinctionRiskCategory[] risks = ExtinctionRiskCategory.values();
         while (species.hasNext()) {
-            Specie current = species.next();
+            Species current = species.next();
             int x = random.nextInt((9 - 0) + 1);
             current.setExtinctionRiskCategory(risks[x]);
             specieRepository.save(current);

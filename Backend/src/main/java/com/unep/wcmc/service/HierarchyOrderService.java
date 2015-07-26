@@ -10,18 +10,14 @@ import org.springframework.stereotype.Service;
 @Service
 public final class HierarchyOrderService extends AbstractService<HierarchyOrder, HierarchyOrderRepository> {
 
-    @Autowired
-    private IntegrationSourceRepository integrationRepo;
+    public HierarchyOrder findByName(String name) {
+        return repo.findByName(name);
+    }
 
     public HierarchyOrder findOrSave(HierarchyOrder order) {
         if (order != null) {
             HierarchyOrder existing = repo.findByName(order.getName());
             if (existing == null) {
-                if (order.getIntegrationSource() != null) {
-                    IntegrationSource integration =
-                            integrationRepo.findBySource(order.getIntegrationSource().getSource());
-                    order.setIntegrationSource(integration);
-                }
                 order = repo.save(order);
             } else {
                 order = existing;

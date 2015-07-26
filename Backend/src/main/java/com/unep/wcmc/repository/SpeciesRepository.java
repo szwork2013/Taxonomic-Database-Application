@@ -1,11 +1,14 @@
 package com.unep.wcmc.repository;
 
+import com.unep.wcmc.model.Species;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
-import com.unep.wcmc.model.Species;
+import java.util.List;
 
 public interface SpeciesRepository extends JpaRepository<Species, Long>, JpaSpecificationExecutor<Species> {
 
@@ -14,5 +17,8 @@ public interface SpeciesRepository extends JpaRepository<Species, Long>, JpaSpec
     Page<Species> findByCommonNameStartingWith(String commonName, Pageable pageable);
 
     Species findByScientificName(String scientificName);
+
+    @Query(value = "select * from species where levenshtein(scientific_name, :scientificName) <= 3", nativeQuery = true)
+    List<Species> findByScientificNameSoundex(@Param("scientificName") String scientificName);
 
 }

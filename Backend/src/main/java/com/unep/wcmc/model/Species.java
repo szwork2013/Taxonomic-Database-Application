@@ -1,6 +1,7 @@
 package com.unep.wcmc.model;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class Species implements BaseEntity {
@@ -49,6 +50,13 @@ public class Species implements BaseEntity {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "integration_source")
     private IntegrationSource integrationSource;
+
+    @Column(name = "last_modified")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastModified;
+
+    @Column(nullable = false)
+    private boolean enabled;
 
     // Getters and setters
     public Long getId() {
@@ -145,5 +153,21 @@ public class Species implements BaseEntity {
 
     public void setIntegrationSource(IntegrationSource integrationSource) {
         this.integrationSource = integrationSource;
+    }
+
+    public Date getLastModified() {
+        return lastModified;
+    }
+
+    public void setLastModified(Date lastModified) {
+        this.lastModified = lastModified;
+    }
+
+    public boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

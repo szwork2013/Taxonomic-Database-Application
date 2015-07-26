@@ -6,7 +6,6 @@ import org.springframework.batch.core.configuration.annotation.StepBuilderFactor
 import org.springframework.batch.core.launch.support.SimpleJobLauncher;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean;
-import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
@@ -14,29 +13,55 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.task.SimpleAsyncTaskExecutor;
+
+import static com.unep.wcmc.model.IntegrationSource.Source.*;
 
 @Configuration
 @EnableBatchProcessing
 @EnableAutoConfiguration
+@SuppressWarnings("all")
 public class BatchConfiguration {
 
     @Autowired
     private StepBuilderFactory stepBuilderFactory;
 
+    @Autowired
+    private JobExecutionListener speciesJobListener;
+
     @Bean
-    public Step stepICMBio(Tasklet iCMBioTasklet) {
-        return stepBuilderFactory.get("stepICMBio").tasklet(iCMBioTasklet).build();
+    public Step stepFlora(ItemReader floraReader,
+                          ItemProcessor floraProcessor,
+                          ItemWriter floraWriter) {
+        return stepBuilderFactory.get(FLORA.name()).chunk(1)
+                .reader(floraReader)
+                .processor(floraProcessor)
+                .writer(floraWriter)
+                .listener(speciesJobListener)
+                .build();
     }
 
     @Bean
-    @SuppressWarnings("all")
+    public Step stepFauna(ItemReader faunaReader,
+                          ItemProcessor faunaProcessor,
+                          ItemWriter faunaWriter) {
+        return stepBuilderFactory.get(FAUNA.name()).chunk(1)
+                .reader(faunaReader)
+                .processor(faunaProcessor)
+                .writer(faunaWriter)
+                .listener(speciesJobListener)
+                .build();
+    }
+
+    @Bean
     public Step stepSpeciesPlus(ItemReader speciesPlusReader,
                                 ItemProcessor speciesPlusProcessor,
                                 ItemWriter speciesPlusWriter) {
-        return stepBuilderFactory.get("stepSpeciesPlus").chunk(1)
+        return stepBuilderFactory.get(SPECIES_PLUS.name()).chunk(1)
                 .reader(speciesPlusReader)
                 .processor(speciesPlusProcessor)
                 .writer(speciesPlusWriter)
+                .listener(speciesJobListener)
                 .build();
     }
 
@@ -50,6 +75,7 @@ public class BatchConfiguration {
     public SimpleJobLauncher jobLauncher() throws Exception {
         SimpleJobLauncher launcher = new SimpleJobLauncher();
         launcher.setJobRepository(jobRepository());
+        launcher.setTaskExecutor(new SimpleAsyncTaskExecutor());
         return launcher;
     }
 

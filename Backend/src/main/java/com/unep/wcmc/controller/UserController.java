@@ -2,6 +2,10 @@ package com.unep.wcmc.controller;
 
 import javax.validation.Valid;
 
+import com.unep.wcmc.model.ExceptionOccurrence;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -74,5 +78,17 @@ public class UserController extends AbstractController<User, UserService> {
     @PreAuthorize("hasAuthority('PERM_UPDATE_PERSONAL_INFO')")
     public User edit(@Valid @RequestBody User editedUser, @PathVariable String id) {
         return service.updatePersonalInfor(editedUser, id);
-    }    
+    }
+
+    @RequestMapping(method = {RequestMethod.POST, RequestMethod.GET}, value = "/search/{filter}", produces = "application/json")
+    public Page<User> search(@PathVariable("filter") String filter,
+                                            @PageableDefault(page = 0, size = 30) Pageable pageable) {
+        return service.findByFilter(filter, pageable);
+    }
+
+    @RequestMapping(method = {RequestMethod.POST, RequestMethod.GET}, value = "/search", produces = "application/json")
+    public Page<User> search(@PageableDefault(page = 0, size = 30) Pageable pageable) {
+        return service.findByFilter("", pageable);
+    }
+
 }

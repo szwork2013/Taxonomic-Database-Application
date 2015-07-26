@@ -1,6 +1,7 @@
 package com.unep.wcmc.model;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class Genus implements BaseEntity {
@@ -12,9 +13,9 @@ public class Genus implements BaseEntity {
     @Column(name = "genus")
     private String name;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "integration_source")
-    private IntegrationSource integrationSource;
+    @Column(name = "last_modified")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastModified;
 
     public Genus() {
         super();
@@ -22,11 +23,6 @@ public class Genus implements BaseEntity {
 
     public Genus(String name) {
         this.name = name;
-    }
-
-    public Genus(String name, IntegrationSource integrationSource) {
-        this(name);
-        this.integrationSource = integrationSource;
     }
 
     public Long getId() {
@@ -45,11 +41,11 @@ public class Genus implements BaseEntity {
         this.name = name;
     }
 
-    public IntegrationSource getIntegrationSource() {
-        return integrationSource;
+    public Date getLastModified() {
+        return lastModified;
     }
 
-    public void setIntegrationSource(IntegrationSource integrationSource) {
-        this.integrationSource = integrationSource;
+    public void setLastModified(Date lastModified) {
+        this.lastModified = lastModified;
     }
 }

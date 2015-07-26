@@ -1,18 +1,17 @@
 package com.unep.wcmc.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import com.unep.wcmc.model.*;
 import com.unep.wcmc.model.filter.SpeciesSimpleSpecification;
+import com.unep.wcmc.repository.ExceptionOccurrenceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.unep.wcmc.model.Hierarchy;
-import com.unep.wcmc.model.IntegrationSource;
-import com.unep.wcmc.model.Species;
-import com.unep.wcmc.model.Taxonomy;
 import com.unep.wcmc.model.dto.SpeciesSearchDTO;
 import com.unep.wcmc.model.filter.SpeciesFilter;
 import com.unep.wcmc.model.filter.SpeciesSpecification;
@@ -28,25 +27,40 @@ public final class SpeciesService extends AbstractService<Species, SpeciesReposi
     @Autowired
     private IntegrationSourceRepository integrationRepo;
 
+    @Autowired
+    private ExceptionOccurrenceRepository exceptionRepo;
+
     public Species findByCommonName(String commonName) {
         return repo.findByCommonName(commonName);
     }
 
-    public Species findOrSave(Species species) {
-        if (species != null) {
-            Species existing = repo.findByScientificName(species.getScientificName());
-            if (existing == null) {
-                if (species.getIntegrationSource() != null) {
-                    IntegrationSource integration =
-                            integrationRepo.findBySource(species.getIntegrationSource().getSource());
-                    species.setIntegrationSource(integration);
-                }
-                species = repo.save(species);
-            } else {
-                species = existing;
-            }
-        }
-        return species;
+    public Species findByScientificName(String scientificName) {
+        return repo.findByScientificName(scientificName);
+    }
+
+    public ExceptionOccurrence raiseSpeciesException(Species active, Species suggested,
+                                                     IntegrationSource.Source source) {
+        return raiseSpeciesException(active, suggested, ExceptionOccurrence.Severity.MINOR, source);
+    }
+
+
+    public ExceptionOccurrence raiseSpeciesException(Species active, Species suggested,
+                                                     ExceptionOccurrence.Severity severity,
+                                                     IntegrationSource.Source source) {
+        ExceptionOccurrence exception = new ExceptionOccurrence();
+        exception.setActive(active);
+        exception.setSuggested(suggested);
+        exception.setCreatedAt(new Date());
+        exception.setStatus(ExceptionOccurrence.Status.UNRESOLVED);
+        exception.setSeverity(severity);
+        exception.setTitle(suggested.getScientificName());
+        exception.setUpdatedAt(new Date());
+        exception.setIntegrationSource(integrationRepo.findBySource(source));
+        return exceptionRepo.save(exception);
+    }
+
+    public List<Species> findByScientificNameSimilaries(String scientificName) {
+        return repo.findByScientificNameSoundex(scientificName);
     }
 
     @Override
