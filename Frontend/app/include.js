@@ -5,7 +5,8 @@ define(
         'angular-resource','angular-sanitize','angular-toastr-tpl',
         'core/directives/core.include.template.directive',
         'core/directives/core.jquery.tab.directive',
-        'core/directives/core.image.popup.directive'
+        'core/directives/core.image.popup.directive',
+        'core/filters/core.pagination.filter'
     ],
     function (angularAMD) {
         'use strict';

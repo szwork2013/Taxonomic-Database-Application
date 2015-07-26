@@ -41,33 +41,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr ng-repeat="u in user">
                         <td>Action</td>
-                        <td>Tim Dole</td>
-                        <td>Tim@johndole.com</td>
-                        <td>Super Admin</td>
-                        <td>Inactive</td>
-                    </tr>
-                    <tr>
-                        <td>Action</td>
-                        <td>Tom Dole</td>
-                        <td>Tom@johndole.com</td>
-                        <td>Admin</td>
-                        <td>Active</td>
-                    </tr>
-                    <tr>
-                        <td>Action</td>
-                        <td>Bob Dole</td>
-                        <td>Bob@johndole.com</td>
-                        <td>Admin</td>
-                        <td>Active</td>
-                    </tr>
-                    <tr>
-                        <td>Action</td>
-                        <td>John Dole</td>
-                        <td>John@johndole.com</td>
-                        <td>Super Admin</td>
-                        <td>Inactive</td>
+                        <td>{{u.firstName}}</td>
+                        <td>{{u.email}}</td>
+                        <td>{{u.userRole.name}}</td>
+                        <td>{{u.enabled}}</td>
                     </tr>
                 </tbody>
             </table>

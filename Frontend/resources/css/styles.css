@@ -455,6 +455,30 @@ form.form-block.view-mode .select-wrapper:after {
     line-height: 28px;
     margin-top: -5px;
     font-size: 14px; }
+.btn-primary {
+  background-color: #7b5758;
+  border: 1px solid gray; }
+.btn-primary.hollow {
+  background-color: transparent;
+  color: gray !important; }
+.btn-primary.inset {
+  color: #fff !important;
+  border: 1px solid #fff; }
+.btn-primary.inset:hover {
+  background-color: #fff;
+  color: gray !important; }
+.btn-primary.inset:active {
+  background-color: #dfe0e1;
+  color: gray !important;
+  border: 1px solid #fff !important; }
+.btn-primary:hover {
+  background-color: ##7b5758;
+  border: 1px solid ##7b5758;
+  color: #fff !important; }
+.btn-primary:active {
+  background-color: #7b5758;
+  border: 1px solid #7b5758;
+  color: #fff !important; }
 
 .collapseible header {
   margin-top: 40px;
