@@ -8,6 +8,7 @@ import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 
 import static com.unep.wcmc.integration.JobRuntime.JobVariable.EXCEPTIONS_COUNT;
@@ -145,6 +146,7 @@ public class SpeciesPlusWriter implements ItemWriter<Species> {
         List<Taxonomy> taxonomyList = taxonomyService.findByHierarchy(taxonomy);
         if (taxonomyList == null || taxonomyList.isEmpty()) {
             taxonomy.setEnabled(false);
+            taxonomy.setLastModified(new Date());
             taxonomyService.save(taxonomy);
         } else {
             taxonomy = taxonomyList.get(0);
