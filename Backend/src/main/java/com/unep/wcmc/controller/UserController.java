@@ -82,12 +82,12 @@ public class UserController extends AbstractController<User, UserService> {
 
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.GET}, value = "/search/{filter}", produces = "application/json")
     public Page<User> search(@PathVariable("filter") String filter,
-                                            @PageableDefault(page = 0, size = 30) Pageable pageable) {
+                                            @PageableDefault(page = 0, size = 20) Pageable pageable) {
         return service.findByFilter(filter, pageable);
     }
 
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.GET}, value = "/search", produces = "application/json")
-    public Page<User> search(@PageableDefault(page = 0, size = 30) Pageable pageable) {
+    public Page<User> search(@PageableDefault(page = 0, size = 20) Pageable pageable) {
         return service.findByFilter("", pageable);
     }
 

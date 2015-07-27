@@ -29,7 +29,7 @@ public class JobRunner {
     @Autowired
     private JobLauncher jobLauncher;
 
-    //@Autowired
+    @Autowired
     private Step stepFlora;
 
     @Autowired
@@ -67,6 +67,7 @@ public class JobRunner {
                 execution.stop();
             }
         }
+        executionRuntime.remove(name);
     }
 
     public static JobRuntime getJobRuntime(String name) {

@@ -119,7 +119,7 @@ public final class UserService extends AbstractService<User, UserRepository> imp
 
     @Override
     public User save(User entity) {
-        if (entity != null) {
+            if (entity != null) {
             UserRole role = entity.getUserRole();
             if (role != null) {
                 role = userRoleRepo.findByRole(role.getRole());

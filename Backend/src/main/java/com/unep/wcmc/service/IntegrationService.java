@@ -4,6 +4,7 @@ import com.unep.wcmc.integration.JobRunner;
 import com.unep.wcmc.model.IntegrationHistory;
 import com.unep.wcmc.model.IntegrationSource.Source;
 import com.unep.wcmc.repository.IntegrationHistoryRepository;
+import org.springframework.batch.core.BatchStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,10 @@ public class IntegrationService {
 
     public void stop(Source source) throws Exception {
         jobRunner.stop(source.name());
+        IntegrationHistory history = findLatestHistory(source);
+        history.setStatus(BatchStatus.STOPPED.name());
+        history.setCompleted(true);
+        historyRepository.save(history);
     }
 
     public IntegrationHistory findLatestHistory(Source source) {

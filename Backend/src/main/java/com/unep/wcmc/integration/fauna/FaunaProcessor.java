@@ -47,6 +47,7 @@ public class FaunaProcessor implements ItemProcessor<String[], Species> {
         specie.setCommonName(commonName);
         specie.setScientificName(scientificName);
         specie.setTaxonomy(taxonomy);
+        specie.setType(Species.SpeciesType.FAUNA);
         return specie;
     }
 

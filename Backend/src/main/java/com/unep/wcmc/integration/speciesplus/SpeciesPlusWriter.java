@@ -153,6 +153,9 @@ public class SpeciesPlusWriter implements ItemWriter<Species> {
     }
 
     private Species writeSpecies(Species species) {
+        // NOTE: only processing Fauna species at this time
+        species.setType(Species.SpeciesType.FAUNA);
+
         JobRuntime runtime = jobRunner.getJobRuntime(IntegrationSource.Source.SPECIES_PLUS.name());
         // validating if taxonomy is broken then an exception should be raised
         if (raiseException) {
@@ -179,6 +182,7 @@ public class SpeciesPlusWriter implements ItemWriter<Species> {
             List<Species> similaries = speciesService.findByScientificNameSimilaries(species.getScientificName());
             if (similaries != null && !similaries.isEmpty()) {
                 EXCEPTIONS_COUNT.increment(runtime);
+                species.setType(similaries.get(0).getType());
                 species.setEnabled(false);
                 species = speciesService.save(species);
                 speciesService.raiseSpeciesException(similaries.get(0), species,

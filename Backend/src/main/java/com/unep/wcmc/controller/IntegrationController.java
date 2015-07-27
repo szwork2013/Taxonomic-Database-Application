@@ -1,5 +1,6 @@
 package com.unep.wcmc.controller;
 
+import com.unep.wcmc.domain.SuccessResponse;
 import com.unep.wcmc.model.IntegrationHistory;
 import com.unep.wcmc.model.IntegrationSource;
 import com.unep.wcmc.service.IntegrationService;
@@ -22,7 +23,7 @@ public class IntegrationController {
     public Object start(@PathVariable String source) {
         try {
             service.start(IntegrationSource.Source.valueOf(source));
-            return "ok";
+            return new SuccessResponse("ok");
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
@@ -32,10 +33,11 @@ public class IntegrationController {
     public Object stop(@PathVariable String source) {
         try {
             service.stop(IntegrationSource.Source.valueOf(source));
-            return "ok";
+            return new SuccessResponse("ok");
         } catch (Exception ex) {
             throw new RuntimeException(ex);
-        }    }
+        }
+    }
 
     @RequestMapping(path = "/history/{source}", method = RequestMethod.GET)
     public IntegrationHistory getLatestHistory(@PathVariable String source) {

@@ -6,6 +6,8 @@ import java.util.Date;
 @Entity
 public class Species implements BaseEntity {
 
+    public enum SpeciesType { FAUNA, FLORA }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -54,6 +56,9 @@ public class Species implements BaseEntity {
     @Column(name = "last_modified")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModified;
+
+    @Enumerated(EnumType.ORDINAL)
+    private SpeciesType type;
 
     @Column(nullable = false)
     private boolean enabled;
@@ -161,6 +166,14 @@ public class Species implements BaseEntity {
 
     public void setLastModified(Date lastModified) {
         this.lastModified = lastModified;
+    }
+
+    public SpeciesType getType() {
+        return type;
+    }
+
+    public void setType(SpeciesType type) {
+        this.type = type;
     }
 
     public boolean getEnabled() {
