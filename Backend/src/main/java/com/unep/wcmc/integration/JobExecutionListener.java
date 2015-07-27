@@ -7,7 +7,9 @@ import com.unep.wcmc.repository.IntegrationSourceRepository;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.batch.core.ExitStatus;
+import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.StepExecution;
+import org.springframework.batch.core.annotation.AfterChunk;
 import org.springframework.batch.core.annotation.AfterStep;
 import org.springframework.batch.core.annotation.BeforeStep;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +70,19 @@ public class JobExecutionListener {
         history.setUpdatedAt(stepExecution.getLastUpdated());
 
         historyRepository.save(history);
+    }
+
+    @AfterChunk
+    public void afterChunk() {
+        for (JobRuntime runtime : JobRunner.getJobRuntimes()) {
+            JobExecution execution = runtime.getExecution();
+            if (execution != null) {
+                if (execution.getStepExecutions() != null && !execution.getStepExecutions().isEmpty()) {
+                    StepExecution stepExecution = execution.getStepExecutions().iterator().next();
+                    processHistory(stepExecution, false);
+                }
+            }
+        }
     }
 
 }

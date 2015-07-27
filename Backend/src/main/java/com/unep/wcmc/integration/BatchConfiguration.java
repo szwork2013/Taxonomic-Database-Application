@@ -33,7 +33,7 @@ public class BatchConfiguration {
     public Step stepFlora(ItemReader floraReader,
                           ItemProcessor floraProcessor,
                           ItemWriter floraWriter) {
-        return stepBuilderFactory.get(FLORA.name()).chunk(1)
+        return stepBuilderFactory.get(FLORA.name()).chunk(100)
                 .reader(floraReader)
                 .processor(floraProcessor)
                 .writer(floraWriter)
@@ -45,7 +45,7 @@ public class BatchConfiguration {
     public Step stepFauna(ItemReader faunaReader,
                           ItemProcessor faunaProcessor,
                           ItemWriter faunaWriter) {
-        return stepBuilderFactory.get(FAUNA.name()).chunk(1)
+        return stepBuilderFactory.get(FAUNA.name()).chunk(100)
                 .reader(faunaReader)
                 .processor(faunaProcessor)
                 .writer(faunaWriter)
@@ -57,7 +57,7 @@ public class BatchConfiguration {
     public Step stepSpeciesPlus(ItemReader speciesPlusReader,
                                 ItemProcessor speciesPlusProcessor,
                                 ItemWriter speciesPlusWriter) {
-        return stepBuilderFactory.get(SPECIES_PLUS.name()).chunk(1)
+        return stepBuilderFactory.get(SPECIES_PLUS.name()).chunk(10)
                 .reader(speciesPlusReader)
                 .processor(speciesPlusProcessor)
                 .writer(speciesPlusWriter)

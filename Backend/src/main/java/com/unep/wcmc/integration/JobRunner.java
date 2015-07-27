@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -76,5 +77,9 @@ public class JobRunner {
 
     public static JobRuntime finishJobRuntime(String name) {
         return executionRuntime.remove(name);
+    }
+
+    public static Collection<JobRuntime> getJobRuntimes() {
+        return executionRuntime.values();
     }
 }
