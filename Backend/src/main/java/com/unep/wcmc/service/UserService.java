@@ -33,7 +33,7 @@ public final class UserService extends AbstractService<User, UserRepository> imp
     public User registerNewUser(User user) {
         validateUser(user, repo.findByEmail(user.getEmail()));
         validateUser(user, repo.findByUsername(user.getUsername()));
-        user.setUserRole(userRoleRepo.findByRole("ROLE_PUBLIC"));
+        user.setUserRole(userRoleRepo.findByRole(UserRole.RoleType.PUBLIC_USER.name()));
         return repo.save(user);
     }
     
@@ -114,8 +114,18 @@ public final class UserService extends AbstractService<User, UserRepository> imp
     }
 
     public Page<User> findByFilter(String name, Pageable pageable) {
-        return repo.findByNameContaining(name, pageable);
+        return repo.findByFirstNameContaining(name, pageable);
     }
 
-
+    @Override
+    public User save(User entity) {
+        if (entity != null) {
+            UserRole role = entity.getUserRole();
+            if (role != null) {
+                role = userRoleRepo.findByRole(role.getRole());
+                entity.setUserRole(role);
+            }
+        }
+        return super.save(entity);
+    }
 }

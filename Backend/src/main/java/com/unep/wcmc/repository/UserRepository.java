@@ -11,5 +11,5 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     User findByUsername(String username);
 
-    Page<User> findByNameContaining(String name, Pageable pageable);
+    Page<User> findByFirstNameContaining(String firstName, Pageable pageable);
 }

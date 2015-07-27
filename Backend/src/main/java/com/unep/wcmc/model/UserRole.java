@@ -28,19 +28,23 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name = "user_role", uniqueConstraints = { @UniqueConstraint(columnNames = { "role" }), @UniqueConstraint(columnNames = { "name" }) })
 public final class UserRole implements BaseEntity {
     
-    private static final long serialVersionUID = 6489176128185083200L;
+    public enum RoleType { ADMIN, SUPERADMIN, EXPERT, PUBLIC_USER, ANONYMOUS }
     
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+
     @Column(nullable = false)
     private String role;
+
     @Column(nullable = false)
     private String name;
+
     @OneToMany(mappedBy = "userRoleId", fetch = FetchType.EAGER)
     private Set<Authority> authorities;
     
     public UserRole() {
+        super();
     }
 
     public String getRole() {
@@ -56,37 +60,21 @@ public final class UserRole implements BaseEntity {
         return authorities;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see com.unep.wcmc.model.BaseEntity#getId()
-     */
 	@Override
 	public Long getId() {
 		return id;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see com.unep.wcmc.model.BaseEntity#setId(java.lang.Long)
-	 */
 	@Override
 	public void setId(Long id) {
 		this.id = id;
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
 	@Override
 	public int hashCode() {
 		return 41 * ((role == null) ? 1 : role.hashCode());
 	}
     
-	/*
-	 * (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == null) return false;
@@ -97,11 +85,7 @@ public final class UserRole implements BaseEntity {
 		}
 		return false;
 	}
-	
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
+
     @Override
     public String toString() {
         return role;

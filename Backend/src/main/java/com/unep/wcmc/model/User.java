@@ -148,12 +148,10 @@ public final class User implements UserDetails, BaseEntity {
     }
 
     @Override
-    @JsonIgnore
     public String getPassword() {
         return password;
     }
-    
-    @JsonProperty
+
     public void setPassword(String password) {
         this.password = password;
     }

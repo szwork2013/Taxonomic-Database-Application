@@ -75,7 +75,7 @@ public class UserController extends AbstractController<User, UserService> {
     }
     
     @RequestMapping(method= RequestMethod.PUT, value="{id}")
-    @PreAuthorize("hasAuthority('PERM_UPDATE_PERSONAL_INFO')")
+    //@PreAuthorize("hasAuthority('PERM_UPDATE_PERSONAL_INFO')")
     public User edit(@Valid @RequestBody User editedUser, @PathVariable String id) {
         return service.updatePersonalInfor(editedUser, id);
     }
