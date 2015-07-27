@@ -51,7 +51,7 @@
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li><a ng-click="editUser(u.id)">Edit</a></li>
-                                    <li><a href="#/home">Delete</a></li>
+                                    <li><a ng-click="getUserFactory().delete(u.id)">Delete</a></li>
                                 </ul>
                             </div>
                         </td>

@@ -81,6 +81,17 @@ define(['app'], function (app) {
                     })
                     .error(function (message) {
                         $log.error(message);
+                        $rootScope.$broadcast("UserInsertedFailed");
+                    });
+            },
+            delete: function (id) {
+                $http.delete( $rootScope.getHost() + "users/" + id, this)
+                    .success(function (data) {
+                        $log.info('user deleted completed: ');
+                        $rootScope.$broadcast("UserDeleted");
+                    })
+                    .error(function (message) {
+                        $log.error(message);
                     });
             }
 

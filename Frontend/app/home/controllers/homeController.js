@@ -85,6 +85,22 @@ define(['app', 'bootstrap', 'highcharts-ng',
             $scope.exceptionOccurrence = undefined;
 
             /**
+             * Get the User factory controller
+             * @returns {undefined|*}
+             */
+            $scope.getUserFactory = function() {
+                return $scope.user;
+            };
+
+            /**
+             * Get the Integration factory controller
+             * @returns {undefined|*}
+             */
+            $scope.getIntegrationFactory = function() {
+                return $scope.integration;
+            };
+
+            /**
              * Listener when the view
              */
             $scope.$on('$viewContentLoaded', function() {
@@ -108,7 +124,6 @@ define(['app', 'bootstrap', 'highcharts-ng',
                         $log.error(message);
                 });
             });
-
 
             /**
              * Search Method for Exceptions Occurrence
@@ -141,31 +156,17 @@ define(['app', 'bootstrap', 'highcharts-ng',
                 $state.go('user', { id : id });
             };
 
-            /**
-             *  Start data update process
-             */
-            $scope.startIntegration = function(name) {
-                $scope.integration.start(name);
-            };
-
-            /**
-             *  Stop data update process
-             */
-            $scope.stopIntegration = function(name) {
-                $scope.integration.stop(name);
-            };
+            $scope.$on('UserDeleted', function() {
+                $scope.user.list();
+            });
 
             $scope.$on('IntegrationStarted', function() {
                 console.log('IntegrationStarted');
-
-                $scope.integration = new Integration();
                 $scope.integration.list();
             });
 
             $scope.$on('IntegrationStopped', function() {
                 console.log('IntegrationStopped');
-
-                $scope.integration = new Integration();
                 $scope.integration.list();
             });
         }];

@@ -98,11 +98,11 @@
                             <td width="200">
                                 <ul class="nav nav-pills">
                                     <li ng-class="{disabled: !u.completed}">
-                                        <a href="#/home" ng-click="startIntegration(u.integrationSource.source)">
+                                        <a href="#/home" ng-click="getIntegrationFactory().start(u.integrationSource.source)">
                                         <i class="glyphicon glyphicon-play"></i>&nbsp;&nbsp;Start</a>
                                     </li>
                                     <li ng-class="{disabled: u.completed}">
-                                        <a href="#/home" ng-click="stopIntegration(u.integrationSource.source)">
+                                        <a href="#/home" ng-click="getIntegrationFactory().stop(u.integrationSource.source)">
                                             <i class="glyphicon glyphicon-stop"></i>&nbsp;&nbsp;Stop</a>
                                     </li>
                                 </ul>

@@ -35,5 +35,21 @@ define(['app', 'bootstrap', 'core/factory/userFactory'], function () {
                 }
             };
 
+            $scope.$on('UserUpdated', function() {
+                $timeout(function(){}, 2000);
+                $scope.user.load($stateParams.id);
+            });
+
+            $scope.$on('UserInserted', function() {
+                $timeout(function(){}, 2000);
+                $state.go('home');
+            });
+
+            $scope.$on('UserInsertedFailed', function() {
+                $timeout(function(){}, 2000);
+                $state.go('home');
+            });
+
+
         }];
 });
