@@ -28,7 +28,8 @@
     "jquery-magnificent": "~2.0.0",
     "magnific-popup": "~1.0.0",
     "angular-input-modified": "~2.2.1",
-    "angular-toastr": "~1.4.1"
+    "angular-toastr": "~1.4.1",
+    "highcharts-ng": "~0.0.8"
   },
   "devDependencies": {
     "holderjs": "~2.3.1",

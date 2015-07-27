@@ -18,7 +18,8 @@ require.config({
         'ngload': '../resources/vendor/ng-load/ng-load',
         'angular-resource': '../resources/vendor/angular-resource/angular-resource.min',
         'bootstrap' : '../resources/vendor/bootstrap/dist/js/bootstrap.min',
-        'underscore': '../resources/vendor/underscore/underscore'
+        'underscore': '../resources/vendor/underscore/underscore',
+        'highcharts-ng': '../resources/vendor/highcharts-ng/dist/highcharts-ng'
     },
 
     // Add angular modules that does not support AMD out of the box, put it in a shim
@@ -37,7 +38,8 @@ require.config({
         'angular-sanitize':{ exports: 'angular-sanitize', deps: ['angular']},
         'angular-toastr':{ exports: 'angular-toastr', deps: ['angular']},
         'angular-toastr-tpl':{ exports: 'angular-toastr-tpl', deps: ['angular-toastr']},
-        'bootstrap': { exports: 'bootstrap', deps: ['jquery'] }
+        'bootstrap': { exports: 'bootstrap', deps: ['jquery']},
+        'highcharts-ng':{ exports: 'highcharts-ng', deps: ['jquery', 'angular']}
     },
 
     // kick start application

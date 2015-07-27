@@ -31,14 +31,41 @@ define(['app'], function (app) {
             },
 
             list: function () {
-
                 var self = this;
-
                 $http.get( $rootScope.getHost() + "integration/history")
                     .success(function (data) {
-
                         self.setData( data );
-                        $rootScope.$broadcast("HistoryLoaded");
+                        $rootScope.$broadcast("IntegrationHistoryLoaded");
+                    })
+                    .error(function (message) {
+                        $log.error(message);
+                    });
+            },
+
+            /**
+             * Data integration process start action
+             * @param name
+             */
+            start: function (name) {
+                $http.get( $rootScope.getHost() + "integration/start/" + name)
+                    .success(function (data) {
+                        $log.log(data);
+                        $rootScope.$broadcast("IntegrationStarted");
+                    })
+                    .error(function (message) {
+                        $log.error(message);
+                    });
+            },
+
+            /**
+             * Data integration process stop action
+             * @param name
+             */
+            stop: function (name) {
+                $http.get( $rootScope.getHost() + "integration/stop/" + name)
+                    .success(function (data) {
+                        $log.log(data);
+                        $rootScope.$broadcast("IntegrationStopped");
                     })
                     .error(function (message) {
                         $log.error(message);

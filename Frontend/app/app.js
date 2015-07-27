@@ -2,9 +2,11 @@ define(['include'], function ( angularAMD ) {
 
 	'use strict';
 
-	var app = angular.module('TaxonomicDB', ['ui.router', 'ngResource','ngSanitize','toastr']);
+	var app = angular.module('TaxonomicDB', ['ui.router', 'ngResource','ngSanitize', 'toastr', 'highcharts-ng']);
 
-	app.config(['$stateProvider','$provide', '$urlRouterProvider', function ($stateProvider, $provide, $urlRouterProvider) {
+	app.config(['$stateProvider','$provide', '$urlRouterProvider',
+
+		function ($stateProvider, $provide, $urlRouterProvider) {
 
 		$urlRouterProvider.otherwise('/login');
 
@@ -79,7 +81,7 @@ define(['include'], function ( angularAMD ) {
 		SERVER:"http://ec2-54-94-252-185.sa-east-1.compute.amazonaws.com:8080/"
 	};
 
-	app.run(function( $rootScope ) {
+	app.run(function( $rootScope, $timeout ) {
 
 		/**
 		 * Return the current host
@@ -96,6 +98,7 @@ define(['include'], function ( angularAMD ) {
 				return app.CONST.SERVER;
 			}
 		};
+
 	});
 
 	return angularAMD.bootstrap(app);
