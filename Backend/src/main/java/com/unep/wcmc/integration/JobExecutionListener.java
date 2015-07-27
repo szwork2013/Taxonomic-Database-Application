@@ -15,6 +15,7 @@ import org.springframework.batch.core.annotation.BeforeStep;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 
 import static com.unep.wcmc.integration.JobRuntime.JobVariable.*;
@@ -67,6 +68,7 @@ public class JobExecutionListener {
 
         history.setIntegrationSource(source);
         history.setStatus(stepExecution.getStatus().name());
+        history.setStartedAt(stepExecution.getStartTime());
         history.setUpdatedAt(stepExecution.getLastUpdated());
 
         historyRepository.save(history);

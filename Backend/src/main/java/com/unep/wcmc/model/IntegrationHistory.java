@@ -15,6 +15,9 @@ public class IntegrationHistory implements BaseEntity {
     private IntegrationSource integrationSource;
 
     @Temporal(TemporalType.TIMESTAMP)
+    private Date startedAt;
+
+    @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 
     private String status;
@@ -49,6 +52,14 @@ public class IntegrationHistory implements BaseEntity {
 
     public void setIntegrationSource(IntegrationSource integrationSource) {
         this.integrationSource = integrationSource;
+    }
+
+    public Date getStartedAt() {
+        return startedAt;
+    }
+
+    public void setStartedAt(Date startedAt) {
+        this.startedAt = startedAt;
     }
 
     public Date getUpdatedAt() {
