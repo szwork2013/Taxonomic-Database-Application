@@ -5,14 +5,15 @@ define(['app', 'bootstrap',
 
     'use strict';
 
-    return ['$scope','User', 'Integration', 'ExceptionOccurrence', '$stateParams', '$rootScope','$timeout',
+    return ['$scope','User', 'Integration', 'ExceptionOccurrence', '$stateParams', '$rootScope','$timeout', '$state',
 
-        function ($scope, User, Integration, ExceptionOccurrence, $stateParams, $rootScope, $timeout) {
+        function ($scope, User, Integration, ExceptionOccurrence, $stateParams, $rootScope, $timeout, $state) {
 
             var page  = {totalElements : 0, number: 0, size: 100, totalPages: 0};
 
             $scope.page = page;
-            $scope.query = $stateParams.query || "";
+            $scope.queryException = $stateParams.queryException || "";
+            $scope.queryUser = $stateParams.queryUser || "";
 
             $scope.user = undefined;
             $scope.integration = undefined;
@@ -25,7 +26,7 @@ define(['app', 'bootstrap',
                 console.log('view Content Loaded...');
 
                 $scope.user = new User();
-                $scope.user.list();
+                $scope.user.list($scope.page.number, $scope.page.size);
 
                 $scope.integration = new Integration();
                 $scope.integration.list();
@@ -36,17 +37,35 @@ define(['app', 'bootstrap',
             });
 
             /**
-             * Search Method
+             * Search Method for Exceptions Occurrence
              *
              */
-            $scope.search = function(  ){
-                if ($scope.query == "") {
+            $scope.searchException = function(  ){
+                if ($scope.queryException == "") {
                     $scope.exceptionOccurrence.list($scope.page.number, $scope.page.size);
                 } else {
-                    $scope.exceptionOccurrence.search($scope.query, $scope.page.number, $scope.page.size);
+                    $scope.exceptionOccurrence.search($scope.queryException, $scope.page.number, $scope.page.size);
                 }
             };
 
+            /**
+             * Search Method for Exceptions Occurrence
+             *
+             */
+            $scope.searchUser = function(  ){
+                if ($scope.queryUser == "") {
+                    $scope.user.list($scope.page.number, $scope.page.size);
+                } else {
+                    $scope.user.search($scope.queryUser, $scope.page.number, $scope.page.size);
+                }
+            };
+
+            /**
+             *  Edit User action
+             */
+            $scope.editUser = function(id) {
+                $state.go('user', { id : id });
+            };
 
         }];
 });

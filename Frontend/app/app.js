@@ -22,6 +22,18 @@ define(['include'], function ( angularAMD ) {
 					templateUrl: 'app/home/views/default.html',
 					controllerUrl: 'home/controllers/homeController'
 				}))
+			.state('user', angularAMD.route(
+				{
+					url: '/user/:id',
+					templateUrl: 'app/home/views/user.form.html',
+					controllerUrl: 'home/controllers/userController'
+				}))
+			.state('newuser', angularAMD.route(
+				{
+					url: '/user',
+					templateUrl: 'app/home/views/user.form.html',
+					controllerUrl: 'home/controllers/userController'
+				}))
 			.state('signup', angularAMD.route(
 				{
 					url: '/signup',

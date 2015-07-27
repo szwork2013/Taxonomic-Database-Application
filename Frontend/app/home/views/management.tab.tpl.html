@@ -7,10 +7,11 @@
                 <div class="pull-left management-header">
                     <div class="row">
                         <div class="col-lg-6">
-                            <input type="text" size="100" placeholder="Search for user" class="form-control"/>
+                            <input type="text" size="100" placeholder="Search for user" class="form-control" ng-model="queryUser" autofocus autocomplete="off"/>
                         </div>
                         <div class="col-lg-6">
-                            <a href="#" class="btn btn-primary edit-form">Add User</a>
+                            <button type="submit" class="btn btn-primary" ng-click="searchUser()"><i class="fa fa-search"></i></button>
+                            <button type="button" class="btn btn-primary" data-ui-sref="newuser"><i class="glyphicon glyphicon-plus-sign"></i>Add User</button>
                         </div>
                     </div>
                 </div>
@@ -41,8 +42,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="u in user">
-                        <td>Action</td>
+                    <tr ng-repeat="u in user.content">
+                        <td>
+                            <!-- Single button -->
+                            <div class="btn-group">
+                                <button type="button" class="btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Action <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a ng-click="editUser(u.id)">Edit</a></li>
+                                    <li><a href="#/home">Delete</a></li>
+                                </ul>
+                            </div>
+                        </td>
                         <td>{{u.firstName}}</td>
                         <td>{{u.email}}</td>
                         <td>{{u.userRole.name}}</td>
