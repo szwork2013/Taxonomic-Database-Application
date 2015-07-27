@@ -49,10 +49,6 @@ public class Species implements BaseEntity {
     @JoinColumn(name = "cover_map_id")
     private Map coverMap;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "integration_source")
-    private IntegrationSource integrationSource;
-
     @Column(name = "last_modified")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModified;
@@ -150,14 +146,6 @@ public class Species implements BaseEntity {
 
     public void setCoverMap(Map coverMap) {
         this.coverMap = coverMap;
-    }
-
-    public IntegrationSource getIntegrationSource() {
-        return integrationSource;
-    }
-
-    public void setIntegrationSource(IntegrationSource integrationSource) {
-        this.integrationSource = integrationSource;
     }
 
     public Date getLastModified() {

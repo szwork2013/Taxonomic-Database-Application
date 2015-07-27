@@ -1,6 +1,7 @@
 package com.unep.wcmc.model;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class Kingdom implements BaseEntity {
@@ -9,6 +10,10 @@ public class Kingdom implements BaseEntity {
     private Long id;
 
     private String name;
+
+    @Column(name = "last_modified")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastModified;
 
     public Kingdom() {
         super();
@@ -36,4 +41,11 @@ public class Kingdom implements BaseEntity {
         this.name = name;
     }
 
+    public Date getLastModified() {
+        return lastModified;
+    }
+
+    public void setLastModified(Date lastModified) {
+        this.lastModified = lastModified;
+    }
 }
