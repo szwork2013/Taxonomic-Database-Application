@@ -92,6 +92,7 @@ public class FaunaWriter implements ItemWriter<Species> {
 //                return species;
 //            } else {
                 INSERTS_COUNT.increment(runtime);
+                UPDATES_COUNT.increment(runtime);
                 species.setEnabled(true);
 //            }
         }
