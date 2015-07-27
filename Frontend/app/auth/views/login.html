@@ -13,17 +13,17 @@
             <div class="row">
                 <div class="col-md-4"></div>
                 <div class="col-md-4">
-                    <form class="form-signin">
-                        <label for="inputEmail" class="sr-only">Email address</label>
-                        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                    <form class="form-signin" ng-submit="loginFormSubmit()">
+                        <label for="inputUsername" class="sr-only">Username</label>
+                        <input type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus data-ng-model="user.username">
                         <label for="inputPassword" class="sr-only">Password</label>
-                        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required data-ng-model="user.password">
                         <div class="checkbox">
                             <label>
                                 <input type="checkbox" value="remember-me"> Remember me
                             </label>
                         </div>
-                        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                        <button class="btn btn-lg btn-primary btn-block" type="button" data-ui-sref="home">Sign in</button>
                     </form><br/>
                     <p align="center"><a data-ui-sref="signup">Create An Account</a></p>
                     <p align="center"><a data-ui-sref="reset">Forgot Your Password?</a></p>
@@ -31,6 +31,6 @@
                 <div class="col-md-4"></div>
             </div>
         </div>
-     </section>
+    </section>
 
 </section>

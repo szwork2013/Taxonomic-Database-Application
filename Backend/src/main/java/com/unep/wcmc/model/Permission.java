@@ -32,28 +32,16 @@ public final class Permission implements BaseEntity {
         return name;
     }
     
-    /*
-     * (non-Javadoc)
-     * @see com.unep.wcmc.model.BaseEntity#getId()
-     */
 	@Override
 	public Long getId() {
 		return id;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see com.unep.wcmc.model.BaseEntity#setId(java.lang.Long)
-	 */
 	@Override
 	public void setId(Long id) {
 		this.id = id;
 	}
     
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
     @Override
     public String toString() {
         return name;

@@ -1,12 +1,5 @@
 package com.unep.wcmc.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AccountStatusUserDetailsChecker;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
-
 import com.unep.wcmc.exception.UserAlreadyExistException;
 import com.unep.wcmc.exception.UserNotFoundException;
 import com.unep.wcmc.exception.UserRoleNotFoundException;
@@ -14,6 +7,14 @@ import com.unep.wcmc.model.User;
 import com.unep.wcmc.model.UserRole;
 import com.unep.wcmc.repository.UserRepository;
 import com.unep.wcmc.repository.UserRoleRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.AccountStatusUserDetailsChecker;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 /**
  * User service api
@@ -32,7 +33,7 @@ public final class UserService extends AbstractService<User, UserRepository> imp
     public User registerNewUser(User user) {
         validateUser(user, repo.findByEmail(user.getEmail()));
         validateUser(user, repo.findByUsername(user.getUsername()));
-        user.setUserRole(userRoleRepo.findByRole("ROLE_PUBLIC"));
+        user.setUserRole(userRoleRepo.findByRole(UserRole.RoleType.PUBLIC_USER.name()));
         return repo.save(user);
     }
     
@@ -110,5 +111,21 @@ public final class UserService extends AbstractService<User, UserRepository> imp
             other.getUsername().equals(user.getUsername())) {
             throw new UserAlreadyExistException("User already exists");
         }
+    }
+
+    public Page<User> findByFilter(String name, Pageable pageable) {
+        return repo.findByFirstNameContaining(name, pageable);
+    }
+
+    @Override
+    public User save(User entity) {
+            if (entity != null) {
+            UserRole role = entity.getUserRole();
+            if (role != null) {
+                role = userRoleRepo.findByRole(role.getRole());
+                entity.setUserRole(role);
+            }
+        }
+        return super.save(entity);
     }
 }

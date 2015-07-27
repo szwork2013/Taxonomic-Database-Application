@@ -17,7 +17,7 @@ import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
-public class ICMBioDataImportTest {
+public class FaunaDataImportTest {
 
     @Autowired
     private KingdomRepository kingdomRepository;

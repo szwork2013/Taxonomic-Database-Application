@@ -2,6 +2,7 @@ package com.unep.wcmc.service;
 
 import com.google.common.collect.Lists;
 import com.unep.wcmc.model.BaseEntity;
+import com.unep.wcmc.model.Species;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 

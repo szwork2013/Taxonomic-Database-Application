@@ -1,12 +1,8 @@
 package com.unep.wcmc.model;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.ManyToOne;
-
 import org.springframework.security.core.GrantedAuthority;
+
+import javax.persistence.*;
 
 /**
  * Authority granted to an authentication object
@@ -39,19 +35,11 @@ public final class Authority implements GrantedAuthority {
         this.permissionId = permission;
     }
     
-    /*
-     * (non-Javadoc)
-     * @see org.springframework.security.core.GrantedAuthority#getAuthority()
-     */
     @Override
     public String getAuthority() {
         return permissionId.getPermission();
     }
 
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
     @Override
     public int hashCode() {
         int result = 17;
@@ -60,10 +48,6 @@ public final class Authority implements GrantedAuthority {
         return result;
     }
     
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
     @Override
     public boolean equals(Object other) {
         if (other == this) return true;
@@ -77,11 +61,7 @@ public final class Authority implements GrantedAuthority {
         }
         return false;
     }
-    
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
+
     @Override
     public String toString() {
         return permissionId == null ? null : permissionId.toString();

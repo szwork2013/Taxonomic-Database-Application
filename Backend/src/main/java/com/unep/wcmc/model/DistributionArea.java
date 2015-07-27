@@ -35,6 +35,12 @@ public class DistributionArea implements BaseEntity {
     @Column(name = "occurrence_state")
     private String ocurrenceState;
 
+    @Column(name = "occurrence_biomes")
+    private String ocurrenceBiomes;
+
+    @Column(name = "occurrence_protected_areas")
+    private String ocurrenceProtectedAreas;
+
     @Column(name = "extent_of_occurrence")
     private Double extendOccurrence;
 
@@ -180,5 +186,21 @@ public class DistributionArea implements BaseEntity {
 
     public void setOccurrences(List<Occurrence> occurrences) {
         this.occurrences = occurrences;
+    }
+
+    public String getOcurrenceBiomes() {
+        return ocurrenceBiomes;
+    }
+
+    public void setOcurrenceBiomes(String ocurrenceBiomes) {
+        this.ocurrenceBiomes = ocurrenceBiomes;
+    }
+
+    public String getOcurrenceProtectedAreas() {
+        return ocurrenceProtectedAreas;
+    }
+
+    public void setOcurrenceProtectedAreas(String ocurrenceProtectedAreas) {
+        this.ocurrenceProtectedAreas = ocurrenceProtectedAreas;
     }
 }

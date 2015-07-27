@@ -1,25 +1,20 @@
 package com.unep.wcmc.model;
 
-import org.apache.solr.client.solrj.beans.Field;
-import org.springframework.data.solr.core.mapping.Indexed;
-import org.springframework.data.solr.core.mapping.SolrDocument;
-
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
-@SolrDocument(solrCoreName = "Species")
 public class Species implements BaseEntity {
+
+    public enum SpeciesType { FAUNA, FLORA }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Indexed("common_name")
-    @Field("common_name")
     @Column(name = "common_name")
     private String commonName;
 
-    @Indexed("scientific_name")
     @Column(name = "scientific_name")
     private String scientificName;
 
@@ -54,9 +49,15 @@ public class Species implements BaseEntity {
     @JoinColumn(name = "cover_map_id")
     private Map coverMap;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "integration_source")
-    private IntegrationSource integrationSource;
+    @Column(name = "last_modified")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastModified;
+
+    @Enumerated(EnumType.ORDINAL)
+    private SpeciesType type;
+
+    @Column(nullable = false)
+    private boolean enabled;
 
     // Getters and setters
     public Long getId() {
@@ -147,11 +148,27 @@ public class Species implements BaseEntity {
         this.coverMap = coverMap;
     }
 
-    public IntegrationSource getIntegrationSource() {
-        return integrationSource;
+    public Date getLastModified() {
+        return lastModified;
     }
 
-    public void setIntegrationSource(IntegrationSource integrationSource) {
-        this.integrationSource = integrationSource;
+    public void setLastModified(Date lastModified) {
+        this.lastModified = lastModified;
+    }
+
+    public SpeciesType getType() {
+        return type;
+    }
+
+    public void setType(SpeciesType type) {
+        this.type = type;
+    }
+
+    public boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

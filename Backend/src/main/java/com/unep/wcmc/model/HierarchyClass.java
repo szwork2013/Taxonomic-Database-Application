@@ -1,6 +1,7 @@
 package com.unep.wcmc.model;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class HierarchyClass implements BaseEntity {
@@ -12,9 +13,9 @@ public class HierarchyClass implements BaseEntity {
     @Column(name = "class")
     private String name;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "integration_source")
-    private IntegrationSource integrationSource;
+    @Column(name = "last_modified")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastModified;
 
     public HierarchyClass() {
         super();
@@ -22,11 +23,6 @@ public class HierarchyClass implements BaseEntity {
 
     public HierarchyClass(String name) {
         this.name = name;
-    }
-
-    public HierarchyClass(String name, IntegrationSource integrationSource) {
-        this(name);
-        this.integrationSource = integrationSource;
     }
 
     public Long getId() {
@@ -45,11 +41,11 @@ public class HierarchyClass implements BaseEntity {
         this.name = name;
     }
 
-    public IntegrationSource getIntegrationSource() {
-        return integrationSource;
+    public Date getLastModified() {
+        return lastModified;
     }
 
-    public void setIntegrationSource(IntegrationSource integrationSource) {
-        this.integrationSource = integrationSource;
+    public void setLastModified(Date lastModified) {
+        this.lastModified = lastModified;
     }
 }

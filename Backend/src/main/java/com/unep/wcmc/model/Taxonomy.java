@@ -1,6 +1,7 @@
 package com.unep.wcmc.model;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class Taxonomy implements BaseEntity {
@@ -15,9 +16,12 @@ public class Taxonomy implements BaseEntity {
     @Column(name = "limitations_for_assessment")
     private Boolean limitationsForAssessment;
 
-    @ManyToOne
-    @JoinColumn(name = "integration_source")
-    private IntegrationSource integrationSource;
+    @Column(name = "last_modified")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastModified;
+
+    @Column(nullable = false)
+    private boolean enabled;
 
     public Long getId() {
         return id;
@@ -43,11 +47,19 @@ public class Taxonomy implements BaseEntity {
         this.limitationsForAssessment = limitationsForAssessment;
     }
 
-    public IntegrationSource getIntegrationSource() {
-        return integrationSource;
+    public Date getLastModified() {
+        return lastModified;
     }
 
-    public void setIntegrationSource(IntegrationSource integrationSource) {
-        this.integrationSource = integrationSource;
+    public void setLastModified(Date lastModified) {
+        this.lastModified = lastModified;
+    }
+
+    public boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

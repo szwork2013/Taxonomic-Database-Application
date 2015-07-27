@@ -7,16 +7,17 @@
                 <div class="pull-left management-header">
                     <div class="row">
                         <div class="col-lg-6">
-                            <input type="text" size="100" placeholder="Search for user" class="form-control"/>
+                            <input type="text" size="100" placeholder="Search for user" class="form-control" ng-model="queryUser" autofocus autocomplete="off"/>
                         </div>
                         <div class="col-lg-6">
-                            <a href="#" class="btn btn-primary edit-form">Add User</a>
+                            <button type="submit" class="btn btn-primary" ng-click="searchUser()"><i class="fa fa-search"></i></button>
+                            <button type="button" class="btn btn-primary" data-ui-sref="newuser"><i class="glyphicon glyphicon-plus-sign"></i>Add User</button>
                         </div>
                     </div>
                 </div>
                 <div class="pull-right collapsible-options">
                     <span class="dropdown export-drop">
-                        <a href="#" class="dropdown-toggle" type="button" id="dropdownMenu4" data-toggle="dropdown"
+                        <a href="#/home" class="dropdown-toggle" type="button" id="dropdownMenu4" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="true"><i class="fa fa-download"></i> Export</a>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu4">
                             <li>
@@ -41,33 +42,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Action</td>
-                        <td>Tim Dole</td>
-                        <td>Tim@johndole.com</td>
-                        <td>Super Admin</td>
-                        <td>Inactive</td>
-                    </tr>
-                    <tr>
-                        <td>Action</td>
-                        <td>Tom Dole</td>
-                        <td>Tom@johndole.com</td>
-                        <td>Admin</td>
-                        <td>Active</td>
-                    </tr>
-                    <tr>
-                        <td>Action</td>
-                        <td>Bob Dole</td>
-                        <td>Bob@johndole.com</td>
-                        <td>Admin</td>
-                        <td>Active</td>
-                    </tr>
-                    <tr>
-                        <td>Action</td>
-                        <td>John Dole</td>
-                        <td>John@johndole.com</td>
-                        <td>Super Admin</td>
-                        <td>Inactive</td>
+                    <tr ng-repeat="u in user.content">
+                        <td>
+                            <!-- Single button -->
+                            <div class="btn-group">
+                                <button type="button" class="btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Action <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a ng-click="editUser(u.id)">Edit</a></li>
+                                    <li><a ng-click="getUserFactory().delete(u.id)">Delete</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td>{{u.firstName}}</td>
+                        <td>{{u.email}}</td>
+                        <td>{{u.userRole.name}}</td>
+                        <td>{{u.enabled}}</td>
                     </tr>
                 </tbody>
             </table>

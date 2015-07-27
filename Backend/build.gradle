@@ -35,23 +35,21 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-jetty")
     compile("org.springframework.boot:spring-boot-starter-actuator")
     compile("org.springframework.boot:spring-boot-starter-security")
-    compile("org.springframework.boot:spring-boot-starter-data-solr")
     compile("com.fasterxml.jackson.core:jackson-databind")
     compile("org.hibernate:hibernate-search-orm:5.2.0.Final")
     compile("org.hibernate:hibernate-entitymanager:4.3.10.Final")
     compile("org.springframework.batch:spring-batch-core:3.0.4.RELEASE")
-//    compile('org.springframework.integration:spring-integration-core:4.1.6.RELEASE')
-//    compile('org.springframework.integration:spring-integration-java-dsl:1.0.2.RELEASE')
+    compile("org.springframework.batch:spring-batch-integration:3.0.4.RELEASE")
     compile("org.kie:kie-ci:6.1.0.Final")
-    compile ("net.sf.ehcache:ehcache:2.9.0")
+    compile("net.sf.ehcache:ehcache:2.9.0")
     compile("io.jsonwebtoken:jjwt:0.5")
     compile("javax.mail:mail:1.4.1")
+    compile("net.sf.opencsv:opencsv:2.3")
     // Runtime dependencies
     runtime("org.postgresql:postgresql:9.4-1201-jdbc41")
     // Testing dependencies
     testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile("junit:junit")
-    testCompile("net.sf.opencsv:opencsv:2.3")
 }
 
 
