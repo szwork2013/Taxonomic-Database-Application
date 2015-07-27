@@ -78,8 +78,8 @@ define(['include'], function ( angularAMD ) {
 
 	app.CONST = {
 		LOCALHOST:"http://localhost:8080/", //LOCAL
-		//SERVER:"http://ec2-54-94-252-185.sa-east-1.compute.amazonaws.com:8080/" // QA
-		SERVER:"http://ec2-54-232-250-216.sa-east-1.compute.amazonaws.com:8080/" // DEV
+		SERVER:"http://ec2-54-94-252-185.sa-east-1.compute.amazonaws.com:8080/" // QA
+		//SERVER:"http://ec2-54-232-250-216.sa-east-1.compute.amazonaws.com:8080/" // DEV
 	};
 
 	app.run(function( $rootScope, $timeout ) {
