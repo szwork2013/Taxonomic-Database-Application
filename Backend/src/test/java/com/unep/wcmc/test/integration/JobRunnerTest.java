@@ -35,6 +35,10 @@ public class JobRunnerTest {
     public void testStartFaunaJob() throws Exception {
         JobRuntime jobRuntime = jobRunner.start(FAUNA.name());
         Assert.assertNotNull(jobRuntime);
+        Assert.assertNotNull(jobRuntime.getExecution());
+        while (jobRuntime.getExecution().isRunning()) {
+            Thread.sleep(10000);
+        }
         Assert.assertEquals(jobRuntime.getExecution().getStatus(), BatchStatus.COMPLETED);
     }
 
@@ -42,6 +46,10 @@ public class JobRunnerTest {
     public void testStartFloraJob() throws Exception {
         JobRuntime jobRuntime = jobRunner.start(FLORA.name());
         Assert.assertNotNull(jobRuntime);
+        Assert.assertNotNull(jobRuntime.getExecution());
+        while (jobRuntime.getExecution().isRunning()) {
+            Thread.sleep(10000);
+        }
         Assert.assertEquals(jobRuntime.getExecution().getStatus(), BatchStatus.COMPLETED);
     }
 }
