@@ -1,17 +1,13 @@
-package com.unep.wcmc.model.filter;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Path;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+package com.unep.wcmc.repository.filter;
 
 import com.unep.wcmc.model.*;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.util.StringUtils;
+
+import javax.persistence.criteria.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.springframework.util.StringUtils.isEmpty;
 
 /**
  * 
@@ -23,11 +19,7 @@ public final class SpeciesSpecification {
 
 	public static Specification<Species> filter(final SpeciesFilter filter) {
 		return new Specification<Species>() {
-			
-			/*
-			 * (non-Javadoc)
-			 * @see org.springframework.data.jpa.domain.Specification#toPredicate(javax.persistence.criteria.Root, javax.persistence.criteria.CriteriaQuery, javax.persistence.criteria.CriteriaBuilder)
-			 */
+
 			@Override
 			public Predicate toPredicate(Root<Species> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 
@@ -35,49 +27,53 @@ public final class SpeciesSpecification {
 				final Path<DistributionArea> distributionArea = root.<DistributionArea>get("distributionArea");
 				final Path<Conservation> conservationPath = root.<Conservation>get("conservation");
 				final Path<NaturalHistory> naturalHistory = root.<NaturalHistory>get("naturalHistory");
+				final Path<Threat> threat = root.<Threat>get("threat");
 
-				// HINT: Only searching for Species from ICMBio
-				//final Path<IntegrationSource> integration = root.get("integrationSource");
-			//	predicates.add(cb.equal(integration.<Long>get("id"), 1));
-
+				predicates.add(cb.equal(root.<Boolean>get("enabled"), true));
 				predicates.add(searchByName(root, query, cb));
 				
-				if (!StringUtils.isEmpty(filter.getEndemicFromBrazil())) {
-
+				if (!isEmpty(filter.getEndemicFromBrazil())) {
 					predicates.add(cb.equal(distributionArea.get("endemicFromBrazil"), filter.getEndemicFromBrazil()));
 				}
-				if (!StringUtils.isEmpty(filter.getOccurrenceState())) {
-
+				if (!isEmpty(filter.getOccurrenceState())) {
 					predicates.add(cb.equal(distributionArea.get("ocurrenceState"), filter.getOccurrenceState()));
 				}
-				if (!StringUtils.isEmpty(filter.getOccurrenceBiomes())) {
-
+				if (!isEmpty(filter.getOccurrenceBiomes())) {
 					predicates.add(cb.equal(distributionArea.get("ocurrenceBiomes"), filter.getOccurrenceBiomes()));
 				}
-				if (!StringUtils.isEmpty(filter.getOccurrenceProtectedAreas())) {
-
-					predicates.add(cb.equal(distributionArea.get("ocurrenceProtectedAreas"), filter.getOccurrenceProtectedAreas()));
+				if (!isEmpty(filter.getOccurrenceProtectedAreas())) {
+					predicates.add(cb.equal(distributionArea.get("ocurrenceProtectedAreas"),
+							filter.getOccurrenceProtectedAreas()));
 				}
-				if (!StringUtils.isEmpty(filter.getExtinctionRiskCategory())) {
-
-					final Predicate extinctionRiskCategory = cb.equal(root.<ExtinctionRiskCategory>get("extinctionRiskCategory"), filter.getExtinctionRiskCategoryEnum());
+				if (!isEmpty(filter.getExtinctionRiskCategory())) {
+					final Predicate extinctionRiskCategory = cb.equal(root.<ExtinctionRiskCategory>get("extinctionRiskCategory"),
+							filter.getExtinctionRiskCategoryEnum());
 					predicates.add(extinctionRiskCategory);
 				}
-				if (!StringUtils.isEmpty(filter.getHabitat())) {
-
+				if (!isEmpty(filter.getHabitat())) {
 					final Path<Habitat> habitatPath = naturalHistory.<Habitat>get("habitat");
 					predicates.add(cb.equal(habitatPath.<HabitatType>get("type").<Long>get("id"), filter.getHabitat()));
 				}
-				if (!StringUtils.isEmpty(filter.getActionPlan())) {
-
-					predicates.add(cb.equal(conservationPath.<ConservationAction>get("conservationAction").<String>get("benefitedActionPlan"), filter.getActionPlan()));
+				if (!isEmpty(filter.getActionPlan())) {
+					predicates.add(cb.equal(conservationPath.<ConservationAction>get("conservationAction").<String>get("benefitedActionPlan"),
+							filter.getActionPlan()));
 				}
-
-				if (!StringUtils.isEmpty(filter.getInNationalEndangeredFauna())) {
-
-					predicates.add(cb.equal(conservationPath.<ExtinctionRisk>get("extinctionRisk").<Boolean>get("inNationalEndangeredFauna"), filter.getInNationalEndangeredFauna()));
+				if (!isEmpty(filter.getInNationalEndangeredFauna())) {
+					predicates.add(cb.equal(conservationPath.<ExtinctionRisk>get("extinctionRisk").<Boolean>get("inNationalEndangeredFauna"),
+							filter.getInNationalEndangeredFauna()));
 				}
-
+				if (!isEmpty(filter.getUfState())) {
+					predicates.add(cb.equal(threat.<ThreatStatus>get("threatStatus").<String>get("ufState"),
+							filter.getUfState()));
+				}
+				if (!isEmpty(filter.getMunicipality())) {
+					predicates.add(cb.equal(threat.<ThreatStatus>get("threatStatus").<String>get("municipality"),
+							filter.getMunicipality()));
+				}
+				if (!isEmpty(filter.getNationalEndangeredFauna())) {
+					predicates.add(cb.equal(conservationPath.<ExtinctionRisk>get("extinctionRisk").<String>get("nationalEndangeredFauna"),
+							filter.getNationalEndangeredFauna()));
+				}
 				return cb.and(predicates.toArray(new Predicate[predicates.size()]));
 			}
 			
