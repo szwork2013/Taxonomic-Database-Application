@@ -27,7 +27,6 @@ public class ExtinctionRisk implements Serializable {
     @Column(name = "national_endangered_fauna")
     private Boolean nationalEndangeredFauna;
 
-
     @Column(name = "presence_in_other_endangered_lists")
     private Boolean presenceInOtherEndangeredLists;
 
