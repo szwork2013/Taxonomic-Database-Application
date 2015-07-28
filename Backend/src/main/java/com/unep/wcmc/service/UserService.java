@@ -1,12 +1,5 @@
 package com.unep.wcmc.service;
 
-import com.unep.wcmc.exception.UserAlreadyExistException;
-import com.unep.wcmc.exception.UserNotFoundException;
-import com.unep.wcmc.exception.UserRoleNotFoundException;
-import com.unep.wcmc.model.User;
-import com.unep.wcmc.model.UserRole;
-import com.unep.wcmc.repository.UserRepository;
-import com.unep.wcmc.repository.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +8,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import com.unep.wcmc.exception.UserAlreadyExistException;
+import com.unep.wcmc.exception.UserNotFoundException;
+import com.unep.wcmc.exception.UserRoleNotFoundException;
+import com.unep.wcmc.model.User;
+import com.unep.wcmc.model.UserRole;
+import com.unep.wcmc.repository.UserRepository;
+import com.unep.wcmc.repository.UserRoleRepository;
 
 /**
  * User service api
@@ -33,7 +34,8 @@ public final class UserService extends AbstractService<User, UserRepository> imp
     public User registerNewUser(User user) {
         validateUser(user, repo.findByEmail(user.getEmail()));
         validateUser(user, repo.findByUsername(user.getUsername()));
-        user.setUserRole(userRoleRepo.findByRole(UserRole.RoleType.PUBLIC_USER.name()));
+        final String role = user.getRole();
+        user.setUserRole(getUserRole(role));
         return repo.save(user);
     }
     
@@ -127,5 +129,16 @@ public final class UserService extends AbstractService<User, UserRepository> imp
             }
         }
         return super.save(entity);
+    }
+    
+    private UserRole getUserRole(String role) {
+    	UserRole userRole;    	
+    	final UserRole.RoleType publicUser = UserRole.RoleType.PUBLIC_USER;
+    	try {
+    		userRole = userRoleRepo.findByRole(role == null ? role : publicUser.name());
+    	} catch (Exception e) {
+    		userRole = userRoleRepo.findByRole(publicUser.name());
+    	}
+    	return userRole;
     }
 }
