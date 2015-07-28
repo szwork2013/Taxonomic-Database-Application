@@ -2,9 +2,9 @@ define(['app','auth/factory/authenticationFactory'], function () {
 
     'use strict';
 
-    return ['$scope','AuthenticationService','$http','$rootScope', '$stateParams','$timeout','toastr',
+    return ['$scope','AuthenticationService','$http','$rootScope', '$stateParams','$timeout','toastr','$state',
 
-        function ($scope, AuthenticationService, $http, $rootScope, $stateParams, $timeout, toastr ) {
+        function ($scope, AuthenticationService, $http, $rootScope, $stateParams, $timeout, toastr , $state) {
 
             $scope.user = {};
 
@@ -47,10 +47,11 @@ define(['app','auth/factory/authenticationFactory'], function () {
 
                 AuthenticationService.authentication( $scope.user , function(response, status) {
 
-                    $('#loading').fadeToggle('400');
+                    loadingScreen();
 
                     if(status == 200) {
                         clearModel();
+                        $state.go('home');
                         toastr.success('Login successfully', 'Success!');
                     }
                     else {

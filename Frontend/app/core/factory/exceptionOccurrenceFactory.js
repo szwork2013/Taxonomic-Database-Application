@@ -49,7 +49,7 @@ define(['app'], function (app) {
                     .success(function (data) {
 
                         self.setData( data );
-                        $rootScope.$broadcast("ExceptionOccurrenceLoaded");
+                        $rootScope.$broadcast("ExceptionOccurrenceSearchLoaded");
                     })
                     .error(function (message) {
                         $log.error(message);

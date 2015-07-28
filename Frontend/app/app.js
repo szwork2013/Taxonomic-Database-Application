@@ -93,12 +93,16 @@ define(['include'], function ( angularAMD ) {
 
 			if (document.location.hostname == 'localhost') {
 
-				return app.CONST.LOCALHOST;
+				return app.CONST.SERVER;
 			}
 			else {
 				return app.CONST.SERVER;
 			}
 		};
+
+		$rootScope.$on( "$routeChangeStart", function(event, next, current) {
+			console.log(event);
+		});
 
 	});
 

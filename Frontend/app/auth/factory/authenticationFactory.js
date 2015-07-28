@@ -1,3 +1,9 @@
+/**
+ * AuthenticationService Factory Model
+ * @author Jose Carlos
+ * @email jozecarlos.it@gmail.com
+ *
+ */
 define(['app'], function (app) {
 
     'use strict';
@@ -9,16 +15,16 @@ define(['app'], function (app) {
         service.authentication = function ( model, callback) {
 
             $http.post( $rootScope.getHost() + "login", model )
-              .success(function (data, status, headers, config) {
+                .success(function (data, status, headers, config) {
 
-                  //$http.defaults.headers.common['X-AUTH-TOKEN'] = data.token;
-                  $window.sessionStorage.tokenSecret = data.token;
+                    //$http.defaults.headers.common['X-AUTH-TOKEN'] = data.token;
+                    $window.sessionStorage.tokenSecret = data.token;
 
-                  callback(data, status, headers, config);
-              })
-              .error(function(data, status, headers, config){
-                  callback(data, status, headers, config);
-              }
+                    callback(data, status, headers, config);
+                })
+                .error(function(data, status, headers, config){
+                    callback(data, status, headers, config);
+                }
             );
         };
 
