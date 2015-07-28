@@ -42,7 +42,7 @@ public final class SpeciesService extends AbstractService<Species, SpeciesReposi
     }
 
     public Species findBySpeciesName(String species) {
-        return repo.findByTaxonomySpecies(species);
+        return repo.findByTaxonomyHierarchySpecies(species);
     }
 
     public List<Species> findBySpeciesNameSimilaries(String species) {
