@@ -137,16 +137,16 @@ h5 {
 
 /** DEFAULT LINK STYES */
 a:hover {
-  color: ##7b5758;
+  color: #7b5758;
   text-decoration: none;
   outline: none !important; }
 a:hover {
-  color: ##7b5758;
+  color: #7b5758;
   text-decoration: underline; }
 a:focus, a:visited {
   color: #7b5758; }
 a[target="blank"] {
-  color: ##7b5758; }
+  color: #7b5758; }
 
 /** SEPARATOR STYLES */
 /** PARA STYLES */
@@ -443,8 +443,8 @@ form.form-block.view-mode .select-wrapper:after {
         color: gray !important;
         border: 1px solid #fff !important; }
     .btn.btn-primary:hover {
-      background-color: ##7b5758;
-      border: 1px solid ##7b5758;
+      background-color: #7b5758;
+      border: 1px solid #7b5758;
       color: #fff !important; }
     .btn.btn-primary:active {
       background-color: #7b5758;
@@ -472,8 +472,8 @@ form.form-block.view-mode .select-wrapper:after {
   color: gray !important;
   border: 1px solid #fff !important; }
 .btn-primary:hover {
-  background-color: ##7b5758;
-  border: 1px solid ##7b5758;
+  background-color: #7b5758;
+  border: 1px solid #7b5758;
   color: #fff !important; }
 .btn-primary:active {
   background-color: #7b5758;
@@ -740,7 +740,7 @@ form.form-block.view-mode .select-wrapper:after {
     text-decoration: none;
     position: relative; }
     #tabs > ul li a:hover {
-      color: ##7b5758; }
+      color: #7b5758; }
   #tabs > ul li.ui-state-active a {
     color: gray; }
     #tabs > ul li.ui-state-active a:after {
@@ -757,3 +757,50 @@ form.form-block.view-mode .select-wrapper:after {
       line-height: 21px;
       color: #dfe0e1;
       text-align: left !important; }
+
+.loading {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding-top: 80px;
+  color: #fdd8da !important;
+}
+.loading img{
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 50px;
+  height: 50px;
+}
+
+.search-page-list{
+  list-style-type: none;
+}
+.search-page-list li{
+  display: inline;
+}
+
+.search-page-list .page-link-text{
+  font-size: 1em;
+  color:#008937;
+  padding: 5px;
+  text-decoration: underline;
+}
+
+.search-page-list li > a:visited  {
+  font-size: 1em;
+  color:#008937;
+  padding: 5px;
+  text-decoration: underline;
+}
+
+.search-page-list .page-link-text .page-not-active {
+  color:#CCC;
+}

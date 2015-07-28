@@ -91,7 +91,7 @@
                     <tbody>
                         <tr ng-repeat="u in integration">
                             <td>{{u.integrationSource.name}}</td>
-                            <td>{{u.updatedAt}}</td>
+                            <td>{{u.updatedAt | date:'yyyy-MM-dd'}}</td>
                             <td>{{u.recordsProcessed}}</td>
                             <td>{{u.recordsUpdated}}</td>
                             <td>{{u.status}}</td>

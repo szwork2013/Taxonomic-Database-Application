@@ -43,7 +43,7 @@
                     <tr class="active">
                         <td>{{e.id}}</td>
                         <td>{{e.title}}</td>
-                        <td>{{e.updatedAt}}</td>
+                        <td>{{e.updatedAt | date:'yyyy-MM-dd'}}</td>
                         <td>{{e.status}}</td>
                         <td>
                             <span class="glyphicon glyphicon-search" aria-hidden="true"></span>&nbsp;&nbsp;
@@ -82,25 +82,22 @@
             </table>
             <div align="center">
                 <ul align="center" class="search-page-list" ng-show="page.totalElements > 0" >
-                    <li ng-class="{disabled: page.number === 0}">
-                        <a ng-show="page.number !== 0" ng-click="load(page.size,sort)">&laquo;</a>
-                        <span ng-show="page.number === 0">&laquo;</span>
+                    <li class="page-link-text" ng-class="{disabled: page.number === 0}">
+                        <a ng-show="page.number !== 0" ng-click="exceptionOccurrencePage(0,page.size)"> < First</a>
+                        <span class="page-not-active" ng-show="page.number === 0"> < First</span>
                     </li>
-                    <li ng-class="{disabled: page.number === 0}">
-                        <a ng-show="page.number !== 0" ng-click="load(page.number - 1,page.size)">Prev</a>
-                        <span ng-show="page.number === 0">Prev</span>
+                    <li class="page-link-text" ng-class="{disabled: page.number === 0}">
+                        <a ng-show="page.number !== 0" ng-click="exceptionOccurrencePage(page.number - 1,page.size)"> << Previous</a>
+                        <span class="page-not-active" ng-show="page.number === 0"> << Previous</span>
                     </li>
-                    <li ng-repeat="n in [] | pages: page.number:page.totalPages:page.size" ng-class="{active: n === page.number}">
-                        <a ng-show="page.number !== n" ng-click="load(n,page.size)">{{n + 1}}</a>
-                        <span ng-show="page.number === n">{{n + 1}}</span>
+                    <li >Page <span class="page-badge">{{page.number + 1}}</span> of {{page.totalPages}}</li>
+                    <li class="page-link-text" ng-class="{disabled: page.number === page.totalPages - 1}">
+                        <a ng-show="page.number !== page.totalPages - 1" ng-click="exceptionOccurrencePage(page.number + 1,page.size)">Next >></a>
+                        <span class="page-not-active" ng-show="page.number === page.totalPages - 1">Next >></span>
                     </li>
-                    <li ng-class="{disabled: page.number === page.totalPages - 1}">
-                        <a ng-show="page.number !== page.totalPages - 1" ng-click="load(page.number + 1,page.size)">Next</a>
-                        <span ng-show="page.number === page.totalPages - 1">Next</span>
-                    </li>
-                    <li ng-class="{disabled: page.number === page.totalPages - 1}">
-                        <a ng-show="page.number !== page.totalPages - 1" ng-click="load(page.totalPages - 1,page.size)">&raquo;</a>
-                        <span ng-show="page.number === page.totalPages - 1">&raquo;</span>
+                    <li class="page-link-text" ng-class="{disabled: page.number === page.totalPages - 1}">
+                        <a ng-show="page.number !== page.totalPages - 1" ng-click="exceptionOccurrencePage(page.totalPages - 1,page.size)">Last ></a>
+                        <span class="page-not-active" ng-show="page.number === page.totalPages - 1">Last></span>
                     </li>
                 </ul>
             </div>
