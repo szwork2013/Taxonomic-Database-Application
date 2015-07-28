@@ -37,6 +37,18 @@ public final class SpeciesService extends AbstractService<Species, SpeciesReposi
         return repo.findByScientificName(scientificName);
     }
 
+    public List<Species> findByScientificNameSimilaries(String scientificName) {
+        return repo.findByScientificNameSoundex(scientificName);
+    }
+
+    public Species findBySpeciesName(String species) {
+        return repo.findByTaxonomySpecies(species);
+    }
+
+    public List<Species> findBySpeciesNameSimilaries(String species) {
+        return repo.findByTaxonomySpeciesSoundex(species);
+    }
+
     public ExceptionOccurrence raiseSpeciesException(Species active, Species suggested,
                                                      IntegrationSource.Source source) {
         return raiseSpeciesException(active, suggested, ExceptionOccurrence.Severity.MINOR, source);
@@ -56,10 +68,6 @@ public final class SpeciesService extends AbstractService<Species, SpeciesReposi
         exception.setUpdatedAt(new Date());
         exception.setIntegrationSource(integrationRepo.findBySource(source));
         return exceptionRepo.save(exception);
-    }
-
-    public List<Species> findByScientificNameSimilaries(String scientificName) {
-        return repo.findByScientificNameSoundex(scientificName);
     }
 
     @Override

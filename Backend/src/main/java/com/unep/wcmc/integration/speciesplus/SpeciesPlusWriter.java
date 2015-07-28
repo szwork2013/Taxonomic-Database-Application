@@ -170,7 +170,10 @@ public class SpeciesPlusWriter implements ItemWriter<Species> {
             return species;
         }
         // verifying if the species already exists and updates if true
-        Species existing = speciesService.findByScientificName(species.getScientificName());
+        //Species existing = speciesService.findByScientificName(species.getScientificName());
+
+        // NOTE: temporary using the species name as JOIN condition (requested by Thomas WCMC)
+        Species existing = speciesService.findBySpeciesName(species.getScientificName());
         if (existing != null) {
             UPDATES_COUNT.increment(runtime);
             existing.setCommonName(species.getCommonName());
@@ -181,7 +184,10 @@ public class SpeciesPlusWriter implements ItemWriter<Species> {
 
         } else {
             // validating if there are similar species in the database
-            List<Species> similaries = speciesService.findByScientificNameSimilaries(species.getScientificName());
+            //List<Species> similaries = speciesService.findByScientificNameSimilaries(species.getScientificName());
+
+            // NOTE: temporary using the species name as JOIN condition (requested by Thomas WCMC)
+            List<Species> similaries = speciesService.findBySpeciesNameSimilaries(species.getScientificName());
             if (similaries != null && !similaries.isEmpty()) {
                 EXCEPTIONS_COUNT.increment(runtime);
                 species.setType(similaries.get(0).getType());
