@@ -1,4 +1,4 @@
-package com.unep.wcmc.model.filter;
+package com.unep.wcmc.repository.filter;
 
 import javax.validation.constraints.NotNull;
 
@@ -97,5 +97,29 @@ public final class SpeciesFilter {
 
 	public void setHabitat(Long habitat_id) {
 		paramFilters.habitat_id = habitat_id;
-	}	
+	}
+
+	public String getUfState() {
+		return paramFilters.ufState;
+	}
+
+	public void setUfState(String ufState) {
+		paramFilters.ufState = ufState;
+	}
+
+	public String getMunicipality() {
+		return paramFilters.municipality;
+	}
+
+	public void setMunicipality(String municipality) {
+		paramFilters.municipality = municipality;
+	}
+
+	public String getNationalEndangeredFauna() {
+		return paramFilters.nationalEndangeredFauna;
+	}
+
+	public void setNationalEndangeredFauna(String nationalEndangeredFauna) {
+		paramFilters.nationalEndangeredFauna = nationalEndangeredFauna;
+	}
 }
