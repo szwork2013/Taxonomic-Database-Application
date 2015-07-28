@@ -135,7 +135,7 @@ public final class UserService extends AbstractService<User, UserRepository> imp
     	UserRole userRole;    	
     	final UserRole.RoleType publicUser = UserRole.RoleType.PUBLIC_USER;
     	try {
-    		userRole = userRoleRepo.findByRole(role == null ? role : publicUser.name());
+    		userRole = userRoleRepo.findByRole(role == null ? publicUser.name() : role);
     	} catch (Exception e) {
     		userRole = userRoleRepo.findByRole(publicUser.name());
     	}
