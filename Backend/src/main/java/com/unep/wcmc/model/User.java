@@ -70,6 +70,7 @@ public final class User implements UserDetails, BaseEntity {
     @OneToOne
     @JoinColumn(name = "user_role_id", nullable = false)
     private UserRole userRole;
+    private String role;
 
     public User() {
     }
@@ -178,6 +179,14 @@ public final class User implements UserDetails, BaseEntity {
     public boolean isCredentialsNonExpired() {
         return true;
     }
+    
+    public String getRole() {
+		return role == null ? null : role.toUpperCase();
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
 
     @Override
     public boolean isEnabled() {
