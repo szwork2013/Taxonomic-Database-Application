@@ -8,7 +8,8 @@ define(
         'core/directives/core.load.screen.directive',
         'core/directives/core.jquery.tab.directive',
         'core/directives/core.image.popup.directive',
-        'core/filters/core.pagination.filter'
+        'core/filters/core.pagination.filter',
+        'auth/directives/auth.username.directive'
     ],
     function (angularAMD) {
         'use strict';
