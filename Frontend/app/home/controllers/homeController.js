@@ -56,6 +56,14 @@ define(['app', 'bootstrap', 'highcharts-ng',
                 plotFaunaChart();
             });
 
+            $scope.startIntegration = function(name){
+                $scope.integration.start(name);
+            };
+
+            $scope.stopIntegration = function(name){
+                $scope.integration.stop(name);
+            };
+
             $scope.$on('UserDeleted', function() {
                 $scope.user.list($scope.pageUser.number, $scope.pageUser.size);
             });
@@ -63,14 +71,12 @@ define(['app', 'bootstrap', 'highcharts-ng',
             $scope.$on('IntegrationStarted', function() {
                 console.log('IntegrationStarted');
 
-                $('#loading').fadeToggle('400');
                 $scope.integration.list();
             });
 
             $scope.$on('IntegrationStopped', function() {
                 console.log('IntegrationStopped');
 
-                $('#loading').fadeToggle('400');
                 $scope.integration.list();
             });
 
