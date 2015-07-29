@@ -114,6 +114,12 @@ public class SpeciesPlusWriter implements ItemWriter<Species> {
         return hierarchy;
     }
 
+    /**
+     * NOTE: Processing Genus once that does not exists on Species data
+     * @param genus
+     * @param species
+     * @return
+     */
     private Genus writeGenus(Genus genus, Species species) {
         // process the genus data
         Genus result = null;
@@ -121,7 +127,7 @@ public class SpeciesPlusWriter implements ItemWriter<Species> {
             genus = genusService.findByName(genus.getName());
             if (genus == null) {
                 genus = genusService.save(genus);
-                raiseException = true;
+                //raiseException = true;
             }
         } else {
             if (species.getScientificName() != null) {
@@ -131,7 +137,7 @@ public class SpeciesPlusWriter implements ItemWriter<Species> {
                     for (Genus g : genusList) {
                         if (species.getScientificName().contains(g.getName())) {
                             genus = genusService.save(g);
-                            raiseException = true;
+                            //raiseException = true;
                             break;
                         }
                     }
@@ -173,8 +179,9 @@ public class SpeciesPlusWriter implements ItemWriter<Species> {
         //Species existing = speciesService.findByScientificName(species.getScientificName());
 
         // NOTE: temporary using the species name as JOIN condition (requested by Thomas WCMC)
-        Species existing = speciesService.findBySpeciesName(species.getScientificName());
-        if (existing != null) {
+        List<Species> existingList = speciesService.findBySpeciesName(species.getScientificName());
+        if (existingList != null && !existingList.isEmpty()) {
+            Species existing = existingList.get(0);
             UPDATES_COUNT.increment(runtime);
             existing.setCommonName(species.getCommonName());
             existing.setScientificName(species.getScientificName());

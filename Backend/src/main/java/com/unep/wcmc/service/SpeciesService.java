@@ -33,7 +33,7 @@ public final class SpeciesService extends AbstractService<Species, SpeciesReposi
         return repo.findByCommonName(commonName);
     }
 
-    public Species findByScientificName(String scientificName) {
+    public List<Species> findByScientificName(String scientificName) {
         return repo.findByScientificName(scientificName);
     }
 
@@ -41,7 +41,7 @@ public final class SpeciesService extends AbstractService<Species, SpeciesReposi
         return repo.findByScientificNameSoundex(scientificName);
     }
 
-    public Species findBySpeciesName(String species) {
+    public List<Species> findBySpeciesName(String species) {
         return repo.findByTaxonomyHierarchySpecies(species);
     }
 

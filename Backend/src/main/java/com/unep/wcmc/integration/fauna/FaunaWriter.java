@@ -74,8 +74,9 @@ public class FaunaWriter implements ItemWriter<Species> {
     private Species writeSpecies(Species species) {
         JobRuntime runtime = jobRunner.getJobRuntime(IntegrationSource.Source.FAUNA.name());
 
-        Species existing = speciesService.findByScientificName(species.getScientificName());
-        if (existing != null) {
+        List<Species> existingList = speciesService.findByScientificName(species.getScientificName());
+        if (existingList != null && !existingList.isEmpty()) {
+            Species existing = existingList.get(0);
             UPDATES_COUNT.increment(runtime);
             existing.setCommonName(species.getCommonName());
             existing.setScientificName(species.getScientificName());
