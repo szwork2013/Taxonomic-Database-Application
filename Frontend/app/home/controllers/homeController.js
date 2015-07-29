@@ -1,22 +1,25 @@
 define(['app', 'bootstrap', 'highcharts-ng',
     'core/factory/userFactory',
     'core/factory/integrationFactory',
+    'core/factory/faunaFactory',
     'core/factory/exceptionOccurrenceFactory'], function () {
 
     'use strict';
 
-    return ['$scope','User', 'Integration', 'ExceptionOccurrence', '$stateParams', '$rootScope','$timeout', '$state', '$http',
+    return ['$scope','User', 'Integration','Fauna', 'ExceptionOccurrence', '$stateParams', '$rootScope','$timeout', '$state', '$http','toastr',
 
-        function ($scope, User, Integration, ExceptionOccurrence, $stateParams, $rootScope, $timeout, $state, $http) {
+        function ($scope, User, Integration, Fauna, ExceptionOccurrence, $stateParams, $rootScope, $timeout, $state, $http, toastr) {
 
 
             $scope.page = {totalElements : 0, number: 0, size: 20, totalPages: 0};
+            $scope.pageUser = {totalElements : 0, number: 0, size: 20, totalPages: 0};
             $scope.queryException = $stateParams.queryException || "";
             $scope.queryUser = $stateParams.queryUser || "";
 
             $scope.user = undefined;
             $scope.integration = undefined;
             $scope.exceptionOccurrence = undefined;
+            $scope.faunaSumamry = undefined;
 
             /**
              * Listener when the view
@@ -24,57 +27,19 @@ define(['app', 'bootstrap', 'highcharts-ng',
             $scope.$on('$viewContentLoaded', function() {
                 console.log('view Content Loaded...');
 
+                $scope.faunaSumamry = new Fauna();
                 $scope.integration = new Integration();
-                $scope.integration.list();
 
-            });
-
-            $scope.editUser = function(id) {
-                $state.go('user', { id : id });
-            };
-
-            $scope.$on('UserDeleted', function() {
-                $scope.user.list();
-            });
-
-            $scope.$on('IntegrationStarted', function() {
-                console.log('IntegrationStarted');
                 $scope.integration.list();
             });
 
-            $scope.$on('IntegrationStopped', function() {
-                console.log('IntegrationStopped');
-                $scope.integration.list();
-            });
+            /**
+            * Defines the Species Plus chart data
+            */
+            $scope.$on('IntegrationHistoryLoaded', function() {
+                console.log('IntegrationHistoryLoaded');
 
-            $scope.$on('UsersListed', function(){
-                console.log('UsersListed');
-
-                $scope.exceptionOccurrence = new ExceptionOccurrence();
-                $scope.exceptionOccurrence.list($scope.page.number, $scope.page.size);
-            });
-
-            $scope.$on('ExceptionOccurrenceLoaded', function(  ){
-                console.log('ExceptionOccurrenceLoaded');
-
-                $('#loading').fadeToggle('400');
-
-                $scope.page.number = $scope.exceptionOccurrence.number;
-                $scope.page.size = $scope.exceptionOccurrence.size;
-                $scope.page.totalPages = $scope.exceptionOccurrence.totalPages;
-                $scope.page.totalElements = $scope.exceptionOccurrence.totalElements;
-
-            });
-
-            $scope.$on('ExceptionOccurrenceSearchLoaded', function(){
-                console.log('ExceptionOccurrenceSearchLoaded');
-
-                $('#loading').fadeToggle('400');
-
-                $scope.page.number = $scope.exceptionOccurrence.number;
-                $scope.page.size = $scope.exceptionOccurrence.size;
-                $scope.page.totalPages = $scope.exceptionOccurrence.totalPages;
-                $scope.page.totalElements = $scope.exceptionOccurrence.totalElements;
+                $scope.faunaSumamry.list();
             });
 
             /**
@@ -83,45 +48,52 @@ define(['app', 'bootstrap', 'highcharts-ng',
             $scope.$on('FaunaSummaryLoaded', function() {
                 console.log('FaunaSummaryLoaded');
 
+                $timeout(function() {
+                    $('#loading').fadeToggle('400');
+                }, 2000);
+
+                plotSpeciesPlus();
                 plotFaunaChart();
             });
 
-            /**
-             * Defines the Species Plus chart data
-             */
-            $scope.$on('IntegrationHistoryLoaded', function() {
-                console.log('IntegrationHistoryLoaded');
-
-                $scope.user = new User();
-                $scope.user.list($scope.page.number, $scope.page.size);
-
-                plotSpeciesPlus();
-
-                $http.get( $rootScope.getHost() + "exception/summary/FAUNA")
-                    .success(function (data) {
-                        $scope.faunaSumamry = data;
-                        $rootScope.$broadcast("FaunaSummaryLoaded");
-                    })
-                    .error(function (message) {
-                        $log.error(message);
-                    });
+            $scope.$on('UserDeleted', function() {
+                $scope.user.list($scope.pageUser.number, $scope.pageUser.size);
             });
 
-            /**
-             * Get the User factory controller
-             * @returns {undefined|*}
-             */
-            $scope.getUserFactory = function() {
-                return $scope.user;
-            };
+            $scope.$on('IntegrationStarted', function() {
+                console.log('IntegrationStarted');
 
-            /**
-             * Get the Integration factory controller
-             * @returns {undefined|*}
-             */
-            $scope.getIntegrationFactory = function() {
-                return $scope.integration;
-            };
+                $('#loading').fadeToggle('400');
+                $scope.integration.list();
+            });
+
+            $scope.$on('IntegrationStopped', function() {
+                console.log('IntegrationStopped');
+
+                $('#loading').fadeToggle('400');
+                $scope.integration.list();
+            });
+
+            $scope.$on('UsersListed', function(){
+                console.log('UsersListed');
+
+                $('#loading').fadeToggle('400');
+                setUserPage();
+            });
+
+            $scope.$on('ExceptionOccurrenceLoaded', function(  ){
+                console.log('ExceptionOccurrenceLoaded');
+
+                $('#loading').fadeToggle('400');
+                setExceptionOccurrencePage();
+            });
+
+            $scope.$on('ExceptionOccurrenceSearchLoaded', function(){
+                console.log('ExceptionOccurrenceSearchLoaded');
+
+                $('#loading').fadeToggle('400');
+                setExceptionOccurrencePage();
+            });
 
             /**
              * Search Method for Exceptions Occurrence
@@ -143,15 +115,49 @@ define(['app', 'bootstrap', 'highcharts-ng',
              */
             $scope.searchUser = function(  ){
                 if ($scope.queryUser == "") {
-                    $scope.user.list($scope.page.number, $scope.page.size);
+                    $scope.user.list($scope.pageUser.number, $scope.pageUser.size);
                 } else {
-                    $scope.user.search($scope.queryUser, $scope.page.number, $scope.page.size);
+                    $scope.user.search($scope.queryUser, $scope.pageUser.number, $scope.pageUser.size);
                 }
             };
 
             $scope.exceptionOccurrencePage = function(page, size){
+
                 $('#loading').fadeToggle('400');
                 $scope.exceptionOccurrence.list(page, size);
+            };
+
+            $scope.userLoadPage = function(page, size){
+
+                $('#loading').fadeToggle('400');
+                $scope.user.list(page, size);
+            };
+
+            /**
+             * Register Form method submission
+             */
+            $scope.registerFormSubmit = function () {
+
+                $scope.user.insert( $scope.user , function(response, status) {
+
+                    console.log($scope.user);
+
+                    if(status == 200) {
+
+                        $('#myModal').modal('hide');
+
+                        toastr.success('User Created successfully', 'Success!');
+
+                        $('#loading').fadeToggle('400');
+
+                        $scope.user.list($scope.pageUser.number, $scope.pageUser.size);
+
+                        clearModel();
+                    }
+                    else {
+                        toastr.error(response.message, 'Error!');
+                    }
+                });
             };
 
             function plotSpeciesPlus(){
@@ -213,6 +219,63 @@ define(['app', 'bootstrap', 'highcharts-ng',
                     loading: false
                 };
             }
+
+            function setExceptionOccurrencePage(  ){
+
+                $scope.page.number = $scope.exceptionOccurrence.number;
+                $scope.page.size = $scope.exceptionOccurrence.size;
+                $scope.page.totalPages = $scope.exceptionOccurrence.totalPages;
+                $scope.page.totalElements = $scope.exceptionOccurrence.totalElements;
+            }
+
+            function setUserPage(  ){
+
+                $scope.pageUser.number = $scope.user.number;
+                $scope.pageUser.size = $scope.user.size;
+                $scope.pageUser.totalPages = $scope.user.totalPages;
+                $scope.pageUser.totalElements = $scope.user.totalElements;
+            }
+
+            /**
+             * Reset User Model
+             */
+            function clearModel(){
+
+                $scope.user.username = null;
+                $scope.user.password = null;
+                $scope.user.firstName = null;
+                $scope.user.address = null;
+                $scope.user.phoneNumber = null;
+                $scope.user.role = null;
+                $scope.user.enabled = null;
+                $scope.user.email = null;
+            }
+
+            $('#tabs').click('tabsselect', function (event, ui) {
+
+                var selectedTab = $("#tabs").tabs('option','active');
+
+                switch (selectedTab){
+                    case 1 :{
+                        if($scope.exceptionOccurrence == undefined){
+
+                            $('#loading').fadeToggle('400');
+                            $scope.exceptionOccurrence = new ExceptionOccurrence();
+                            $scope.exceptionOccurrence.list($scope.page.number, $scope.page.size);
+                        }
+                        break;
+                    }
+                    case 2 :{
+                        if($scope.user == undefined){
+
+                            $('#loading').fadeToggle('400');
+                            $scope.user = new User();
+                            $scope.user.list($scope.pageUser.number, $scope.pageUser.size);
+                        }
+                        break;
+                    }
+                }
+            });
 
         }];
 });

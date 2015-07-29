@@ -1,4 +1,4 @@
-package com.unep.wcmc.model.filter;
+package com.unep.wcmc.repository.filter;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -34,6 +34,15 @@ final class ParamFilter {
 
 	@JsonProperty("in_national_endangered_fauna")
 	public Boolean inNationalEndangeredFauna;
+
+	@JsonProperty("national_endangered_fauna")
+	public String nationalEndangeredFauna;
+
+	@JsonProperty("uf_state")
+	public String ufState;
+
+	@JsonProperty("municipality")
+	public String municipality;
 
 	public ParamFilter() {}
 }

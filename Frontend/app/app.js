@@ -4,9 +4,9 @@ define(['include'], function ( angularAMD ) {
 
 	var app = angular.module('TaxonomicDB', ['ui.router', 'ngResource','ngSanitize', 'toastr', 'highcharts-ng']);
 
-	app.config(['$stateProvider','$provide', '$urlRouterProvider',
+	app.config(['$stateProvider','$provide', '$urlRouterProvider','$httpProvider',
 
-		function ($stateProvider, $provide, $urlRouterProvider) {
+		function ($stateProvider, $provide, $urlRouterProvider, $httpProvider) {
 
 		$urlRouterProvider.otherwise('/login');
 
@@ -18,11 +18,18 @@ define(['include'], function ( angularAMD ) {
 					templateUrl: 'app/auth/views/login.html',
 					controllerUrl: 'auth/controllers/authController'
 				}))
+			.state('logout', angularAMD.route(
+				{
+					url: '/logout',
+					templateUrl: 'app/auth/views/login.html',
+					controllerUrl: 'auth/controllers/authController'
+				}))
 			.state('home', angularAMD.route(
 				{
 					url: '/home',
 					templateUrl: 'app/home/views/default.html',
 					controllerUrl: 'home/controllers/homeController'
+
 				}))
 			.state('user', angularAMD.route(
 				{
@@ -40,7 +47,7 @@ define(['include'], function ( angularAMD ) {
 				{
 					url: '/signup',
 					templateUrl: 'app/auth/views/signup.html',
-					controllerUrl: 'auth/controllers/authController'
+					controllerUrl: 'home/controllers/homeController'
 				}))
 			.state('reset', angularAMD.route(
 				{
@@ -61,18 +68,21 @@ define(['include'], function ( angularAMD ) {
 				request: function (config) {
 					config.headers = config.headers || {};
 					if ($window.sessionStorage.tokenSecret) {
-						//config.headers['X-AUTH-TOKEN'] = $window.sessionStorage.tokenSecret;
+						config.headers['X-Auth-Token'] = $window.sessionStorage.tokenSecret;
+						//$httpProvider.defaults.headers.common['X-AUTH-TOKEN']= $window.sessionStorage.tokenSecret;
 					}
 					return config;
 				},
 				response: function (response) {
 					if (response.status === 401) {
-						// handle the case where the user is not authenticated
+						//$state.go('login');
 					}
 					return response || $q.when(response);
 				}
 			};
 		});
+
+			//$httpProvider.interceptors.push('authInterceptor');
 
 	}]);
 
@@ -82,7 +92,7 @@ define(['include'], function ( angularAMD ) {
 		//SERVER:"http://ec2-54-232-250-216.sa-east-1.compute.amazonaws.com:8080/" // DEV
 	};
 
-	app.run(function( $rootScope, $timeout ) {
+	app.run(function( $rootScope, $timeout, $http, $window, $state, $location ) {
 
 		/**
 		 * Return the current host
@@ -93,15 +103,33 @@ define(['include'], function ( angularAMD ) {
 
 			if (document.location.hostname == 'localhost') {
 
-				return app.CONST.SERVER;
+				return app.CONST.LOCALHOST;
 			}
 			else {
 				return app.CONST.SERVER;
 			}
 		};
 
-		$rootScope.$on( "$routeChangeStart", function(event, next, current) {
-			console.log(event);
+		$rootScope.$on( "$stateChangeStart", function(event, toState, toParams, fromState, fromParams) {
+
+			/*var path = $location.path();
+
+			console.log(path);
+
+			if (path === '/login' || path === '/logout') {
+				return;
+			}
+
+			event.preventDefault();
+
+			if (path === '/logout') {
+				$state.go('login');
+			}
+			if($window.sessionStorage.user  == 'null'){
+
+				console.log('go');
+				$state.go('login');
+			}*/
 		});
 
 	});

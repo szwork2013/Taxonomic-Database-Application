@@ -73,16 +73,16 @@ define(['app'], function (app) {
                         $log.error(message);
                     });
             },
-            insert: function () {
-                $http.post( $rootScope.getHost() + "users", this)
-                    .success(function (data) {
-                        $log.info('user post completed: ');
-                        $rootScope.$broadcast("UserInserted");
+            insert: function ( model, callback ) {
+
+                $http.post( $rootScope.getHost() + "users/signup", model )
+                    .success(function (data, status, headers, config) {
+                        callback(data, status, headers, config);
                     })
-                    .error(function (message) {
-                        $log.error(message);
-                        $rootScope.$broadcast("UserInsertedFailed");
-                    });
+                    .error(function(data, status, headers, config){
+                        callback(data, status, headers, config);
+                    }
+                );
             },
             delete: function (id) {
                 $http.delete( $rootScope.getHost() + "users/" + id, this)

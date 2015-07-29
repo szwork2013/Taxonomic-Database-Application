@@ -804,3 +804,14 @@ form.form-block.view-mode .select-wrapper:after {
 .search-page-list .page-link-text .page-not-active {
   color:#CCC;
 }
+.modal-body .form-horizontal .col-sm-2,
+.modal-body .form-horizontal .col-sm-10 {
+  width: 100%
+}
+
+.modal-body .form-horizontal .control-label {
+  text-align: left;
+}
+.modal-body .form-horizontal .col-sm-offset-2 {
+  margin-left: 15px;
+}

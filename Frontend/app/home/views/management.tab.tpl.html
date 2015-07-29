@@ -11,7 +11,7 @@
                         </div>
                         <div class="col-lg-6">
                             <button type="submit" class="btn btn-primary" ng-click="searchUser()"><i class="fa fa-search"></i></button>
-                            <button type="button" class="btn btn-primary" data-ui-sref="newuser"><i class="glyphicon glyphicon-plus-sign"></i>Add User</button>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-plus-sign"></i>Add User</button>
                         </div>
                     </div>
                 </div>
@@ -62,6 +62,32 @@
                     </tr>
                 </tbody>
             </table>
+
+            <div align="center">
+                <ul align="center" class="search-page-list" ng-show="pageUser.totalElements > 0" >
+                    <li class="page-link-text" ng-class="{disabled: pageUser.number === 0}">
+                        <a ng-show="pageUser.number !== 0" ng-click="userLoadPage(0,pageUser.size)"> < First</a>
+                        <span class="page-not-active" ng-show="pageUser.number === 0"> < First</span>
+                    </li>
+                    <li class="page-link-text" ng-class="{disabled: pageUser.number === 0}">
+                        <a ng-show="pageUser.number !== 0" ng-click="userLoadPage(pageUser.number - 1,pageUser.size)"> << Previous</a>
+                        <span class="page-not-active" ng-show="pageUser.number === 0"> << Previous</span>
+                    </li>
+                    <li >Page <span class="page-badge">{{pageUser.number + 1}}</span> of {{pageUser.totalPages}}</li>
+                    <li class="page-link-text" ng-class="{disabled: pageUser.number === pageUser.totalPages - 1}">
+                        <a ng-show="page.number !== pageUser.totalPages - 1" ng-click="userLoadPage(pageUser.number + 1,pageUser.size)">Next >></a>
+                        <span class="page-not-active" ng-show="pageUser.number === pageUser.totalPages - 1">Next >></span>
+                    </li>
+                    <li class="page-link-text" ng-class="{disabled: pageUser.number === pageUser.totalPages - 1}">
+                        <a ng-show="pageUser.number !== pageUser.totalPages - 1" ng-click="userLoadPage(pageUser.totalPages - 1,pageUser.size)">Last ></a>
+                        <span class="page-not-active" ng-show="pageUser.number === pageUser.totalPages - 1">Last></span>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <div include-layout="/app/auth/views/signup.tpl.html"></div>
+            </div>
 
         </section>
     </section>

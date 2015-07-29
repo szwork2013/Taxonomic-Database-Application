@@ -18,6 +18,7 @@ define(['app'], function (app) {
                 .success(function (data, status, headers, config) {
 
                     //$http.defaults.headers.common['X-AUTH-TOKEN'] = data.token;
+                    $window.sessionStorage.user = data.user.username;
                     $window.sessionStorage.tokenSecret = data.token;
 
                     callback(data, status, headers, config);
@@ -44,6 +45,46 @@ define(['app'], function (app) {
 
             $http.post( $rootScope.getHost() + "users/resetpassword", model )
                 .success(function (data, status, headers, config) {
+                    callback(data, status, headers, config);
+                })
+                .error(function(data, status, headers, config){
+                    callback(data, status, headers, config);
+                }
+            );
+        };
+
+        service.logout = function( callback ){
+
+            $window.sessionStorage.user = null;
+            $window.sessionStorage.tokenSecret = null;
+
+            $rootScope.username = null;
+            $rootScope.logged = false;
+
+            callback({}, 200);
+
+           /*$http.get( $rootScope.getHost() + "logout" )
+                .success(function (data, status, headers, config) {
+
+                    console.log(data);
+                    $window.sessionStorage.user = null;
+                    $window.sessionStorage.tokenSecret = null;
+
+                    $rootScope.username = null;
+                    $rootScope.logged = false;
+
+                    callback(data, status, headers, config);
+                })
+                .error(function(data, status, headers, config){
+                    callback(data, status, headers, config);
+                }
+            );*/
+        };
+
+        service.isAuthenticated = function(){
+            $http.get( $rootScope.getHost() + "users/isauthenticated" )
+                .success(function (data, status, headers, config) {
+
                     callback(data, status, headers, config);
                 })
                 .error(function(data, status, headers, config){

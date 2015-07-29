@@ -2,12 +2,19 @@ define(['app','auth/factory/authenticationFactory'], function () {
 
     'use strict';
 
-    return ['$scope','AuthenticationService','$http','$rootScope', '$stateParams','$timeout','toastr','$state',
+    return ['$scope','AuthenticationService','$http','$rootScope', '$stateParams','$timeout','toastr','$state','$window',
 
-        function ($scope, AuthenticationService, $http, $rootScope, $stateParams, $timeout, toastr , $state) {
+        function ($scope, AuthenticationService, $http, $rootScope, $stateParams, $timeout, toastr , $state, $window) {
 
             $scope.user = {};
 
+            /**
+             * Listener when the state is changed
+             */
+            $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
+                console.log('state Change Success');
+            });
+            
             /**
              * Listener when the view
              */
@@ -16,27 +23,6 @@ define(['app','auth/factory/authenticationFactory'], function () {
 
                 $('#loading').fadeToggle('400');
             });
-
-            /**
-             * Register Form method submission
-             */
-            $scope.registerFormSubmit = function () {
-
-                loadingScreen();
-
-                AuthenticationService.registration( $scope.user , function(response, status) {
-
-                    $('#loading').fadeToggle('400');
-
-                    if(status == 200) {
-                        clearModel();
-                        toastr.success('User created successfully', 'Success!');
-                    }
-                    else {
-                        toastr.error(response.message, 'Error!');
-                    }
-                });
-            };
 
             /**
              * Method for user authenticate
@@ -51,6 +37,10 @@ define(['app','auth/factory/authenticationFactory'], function () {
 
                     if(status == 200) {
                         clearModel();
+
+                        $rootScope.username = $window.sessionStorage.user;
+                        $rootScope.logged = true;
+
                         $state.go('home');
                         toastr.success('Login successfully', 'Success!');
                     }
@@ -59,6 +49,7 @@ define(['app','auth/factory/authenticationFactory'], function () {
                     }
                 });
             };
+
             /**
              * Reset Password form
              */
@@ -77,6 +68,27 @@ define(['app','auth/factory/authenticationFactory'], function () {
                     }
                 });
             };
+
+            /**
+             * Reset Password form
+             */
+            $rootScope.logout = function(){
+
+                loadingScreen();
+                AuthenticationService.logout( function(response, status) {
+
+                    $('#loading').fadeToggle('400');
+
+                    if(status == 200) {
+                        $state.go('login');
+                    }
+                    else {
+                        toastr.error('', 'Error!');
+                    }
+                });
+            };
+
+
             /**
              * Show Loading screen
              */
