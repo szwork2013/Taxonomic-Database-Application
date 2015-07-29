@@ -2,7 +2,7 @@ package com.unep.wcmc.repository;
 
 import com.unep.wcmc.model.ExceptionOccurrence;
 import com.unep.wcmc.model.Species;
-import com.unep.wcmc.model.filter.SpeciesFilter;
+import com.unep.wcmc.repository.filter.SpeciesFilter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;

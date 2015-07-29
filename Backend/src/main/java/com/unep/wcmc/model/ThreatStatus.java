@@ -13,6 +13,9 @@ public class ThreatStatus implements Serializable {
     @JoinColumn(name = "threat_category_id")
     private ThreatCategory category;
 
+    @Column(name = "uf_state")
+    private String ufState;
+
     @Column(name = "municipality")
     private String municipality;
 
@@ -27,6 +30,14 @@ public class ThreatStatus implements Serializable {
 
     @Column(name = "trend")
     private String trend;
+
+    public String getUfState() {
+        return ufState;
+    }
+
+    public void setUfState(String ufState) {
+        this.ufState = ufState;
+    }
 
     public String getMunicipality() {
         return municipality;

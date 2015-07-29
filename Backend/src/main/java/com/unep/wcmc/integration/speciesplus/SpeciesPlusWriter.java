@@ -114,6 +114,12 @@ public class SpeciesPlusWriter implements ItemWriter<Species> {
         return hierarchy;
     }
 
+    /**
+     * NOTE: Processing Genus once that does not exists on Species data
+     * @param genus
+     * @param species
+     * @return
+     */
     private Genus writeGenus(Genus genus, Species species) {
         // process the genus data
         Genus result = null;
@@ -121,7 +127,7 @@ public class SpeciesPlusWriter implements ItemWriter<Species> {
             genus = genusService.findByName(genus.getName());
             if (genus == null) {
                 genus = genusService.save(genus);
-                raiseException = true;
+                //raiseException = true;
             }
         } else {
             if (species.getScientificName() != null) {
@@ -131,7 +137,7 @@ public class SpeciesPlusWriter implements ItemWriter<Species> {
                     for (Genus g : genusList) {
                         if (species.getScientificName().contains(g.getName())) {
                             genus = genusService.save(g);
-                            raiseException = true;
+                            //raiseException = true;
                             break;
                         }
                     }
@@ -170,8 +176,12 @@ public class SpeciesPlusWriter implements ItemWriter<Species> {
             return species;
         }
         // verifying if the species already exists and updates if true
-        Species existing = speciesService.findByScientificName(species.getScientificName());
-        if (existing != null) {
+        //Species existing = speciesService.findByScientificName(species.getScientificName());
+
+        // NOTE: temporary using the species name as JOIN condition (requested by Thomas WCMC)
+        List<Species> existingList = speciesService.findBySpeciesName(species.getScientificName());
+        if (existingList != null && !existingList.isEmpty()) {
+            Species existing = existingList.get(0);
             UPDATES_COUNT.increment(runtime);
             existing.setCommonName(species.getCommonName());
             existing.setScientificName(species.getScientificName());
@@ -181,7 +191,10 @@ public class SpeciesPlusWriter implements ItemWriter<Species> {
 
         } else {
             // validating if there are similar species in the database
-            List<Species> similaries = speciesService.findByScientificNameSimilaries(species.getScientificName());
+            //List<Species> similaries = speciesService.findByScientificNameSimilaries(species.getScientificName());
+
+            // NOTE: temporary using the species name as JOIN condition (requested by Thomas WCMC)
+            List<Species> similaries = speciesService.findBySpeciesNameSimilaries(species.getScientificName());
             if (similaries != null && !similaries.isEmpty()) {
                 EXCEPTIONS_COUNT.increment(runtime);
                 species.setType(similaries.get(0).getType());
@@ -191,6 +204,7 @@ public class SpeciesPlusWriter implements ItemWriter<Species> {
                         ExceptionOccurrence.Severity.MAJOR, IntegrationSource.Source.SPECIES_PLUS);
                 return species;
             } else {
+                EXCEPTIONS_COUNT.increment(runtime);
                 species.setEnabled(false);
                 species = speciesService.save(species);
                 speciesService.raiseSpeciesException(species, species,

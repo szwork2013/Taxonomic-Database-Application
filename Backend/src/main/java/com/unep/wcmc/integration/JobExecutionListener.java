@@ -67,7 +67,7 @@ public class JobExecutionListener {
         history.setTotalExceptions(jobRuntime.getVariable(EXCEPTIONS_COUNT.name(), 0));
 
         history.setIntegrationSource(source);
-        history.setStatus(stepExecution.getStatus().name());
+        history.setStatus(stepExecution.getJobExecution().getStatus().name());
         history.setStartedAt(stepExecution.getStartTime());
         history.setUpdatedAt(stepExecution.getLastUpdated());
 
