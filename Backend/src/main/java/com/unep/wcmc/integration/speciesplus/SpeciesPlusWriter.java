@@ -204,6 +204,7 @@ public class SpeciesPlusWriter implements ItemWriter<Species> {
                         ExceptionOccurrence.Severity.MAJOR, IntegrationSource.Source.SPECIES_PLUS);
                 return species;
             } else {
+                EXCEPTIONS_COUNT.increment(runtime);
                 species.setEnabled(false);
                 species = speciesService.save(species);
                 speciesService.raiseSpeciesException(species, species,
