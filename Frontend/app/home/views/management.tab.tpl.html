@@ -11,7 +11,7 @@
                         </div>
                         <div class="col-lg-6">
                             <button type="submit" class="btn btn-primary" ng-click="searchUser()"><i class="fa fa-search"></i></button>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-plus-sign"></i>Add User</button>
+                            <button type="button" class="btn btn-primary" ng-click="createUser()" ><i class="glyphicon glyphicon-plus-sign"></i>Add User</button>
                         </div>
                     </div>
                 </div>
@@ -50,8 +50,8 @@
                                     Action <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a ng-click="editUser(u.id)">Edit</a></li>
-                                    <li><a ng-click="getUserFactory().delete(u.id)">Delete</a></li>
+                                    <li><a ng-click="showUser(u.id)">Edit</a></li>
+                                    <li><a ng-click="deleteUser(u.id)" ng-confirm-click="Are you sure?">Delete</a></li>
                                 </ul>
                             </div>
                         </td>

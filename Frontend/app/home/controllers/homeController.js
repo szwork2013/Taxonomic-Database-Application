@@ -64,10 +64,6 @@ define(['app', 'bootstrap', 'highcharts-ng',
                 $scope.integration.stop(name);
             };
 
-            $scope.$on('UserDeleted', function() {
-                $scope.user.list($scope.pageUser.number, $scope.pageUser.size);
-            });
-
             $scope.$on('IntegrationStarted', function() {
                 console.log('IntegrationStarted');
 
@@ -139,10 +135,94 @@ define(['app', 'bootstrap', 'highcharts-ng',
                 $scope.user.list(page, size);
             };
 
+            $scope.createUser = function(){
+                clearModel();
+                $('#myModal').modal('show');
+            };
+
+            $scope.showUser = function( id ){
+
+                //clearModel();
+
+                var obj = _.find( $scope.user.content, function( user ){
+                    return user.id == id;
+                });
+
+                console.log(obj);
+
+                $scope.user.id = obj.id;
+                $scope.user.username = obj.username;
+                $scope.user.password = obj.password;
+                $scope.user.firstName = obj.firstName;
+                $scope.user.address = obj.address;
+                $scope.user.phoneNumber = obj.phoneNumber;
+                $scope.user.role = obj.role;
+                $scope.user.enabled = obj.enabled;
+                $scope.user.email = obj.email;
+
+                $('#myModal').modal('show');
+
+            };
+
             /**
              * Register Form method submission
              */
-            $scope.registerFormSubmit = function () {
+            $scope.saveOrUpdate = function ( ) {
+
+                if($scope.user.id == null){
+                    saveUser();
+                }
+                else{
+                    updateUser( );
+                }
+            };
+
+            $scope.deleteUser = function( id ){
+
+                $scope.user.delete( id, function( data, status){
+
+                    if(status == 200) {
+
+                        toastr.success('User deleted', 'Success!');
+
+                        $('#loading').fadeToggle('400');
+
+                        $scope.user.list($scope.pageUser.number, $scope.pageUser.size);
+
+                    }
+                    else {
+                        toastr.error(response.message, 'Error!');
+                    }
+                });
+            };
+
+            function updateUser(  ){
+
+                console.log($scope.user);
+
+                $scope.user.update( $scope.user , function(response, status) {
+
+                    if(status == 200) {
+
+                        $('#myModal').modal('hide');
+
+                        toastr.success('User Created successfully', 'Success!');
+
+                        $('#loading').fadeToggle('400');
+
+                        $scope.user.list($scope.pageUser.number, $scope.pageUser.size);
+
+                        clearModel();
+                    }
+                    else {
+                        toastr.error(response.message, 'Error!');
+                    }
+                });
+            }
+
+            function saveUser(){
+
+                console.log($scope.user);
 
                 $scope.user.insert( $scope.user , function(response, status) {
 
@@ -164,7 +244,7 @@ define(['app', 'bootstrap', 'highcharts-ng',
                         toastr.error(response.message, 'Error!');
                     }
                 });
-            };
+            }
 
             function plotSpeciesPlus(){
 
@@ -247,6 +327,7 @@ define(['app', 'bootstrap', 'highcharts-ng',
              */
             function clearModel(){
 
+                $scope.user.id = null;
                 $scope.user.username = null;
                 $scope.user.password = null;
                 $scope.user.firstName = null;

@@ -63,15 +63,15 @@ define(['app'], function (app) {
                         $log.error(message);
                     });
             },
-            update: function (id) {
-                $http.put( $rootScope.getHost() + "users/" + id, this)
-                    .success(function (data) {
-                        $log.info('user put completed: ');
-                        $rootScope.$broadcast("UserUpdated");
+            update: function (model, callback) {
+                $http.put( $rootScope.getHost() + "users/" + model.id, model)
+                    .success(function (data, status, headers, config) {
+                        callback(data, status, headers, config);
                     })
-                    .error(function (message) {
-                        $log.error(message);
-                    });
+                    .error(function(data, status, headers, config){
+                        callback(data, status, headers, config);
+                    }
+                );
             },
             insert: function ( model, callback ) {
 
@@ -84,15 +84,15 @@ define(['app'], function (app) {
                     }
                 );
             },
-            delete: function (id) {
+            delete: function (id, callback) {
                 $http.delete( $rootScope.getHost() + "users/" + id, this)
-                    .success(function (data) {
-                        $log.info('user deleted completed: ');
-                        $rootScope.$broadcast("UserDeleted");
+                    .success(function (data, status, headers, config) {
+                        callback(data, status, headers, config);
                     })
-                    .error(function (message) {
-                        $log.error(message);
-                    });
+                    .error(function(data, status, headers, config){
+                        callback(data, status, headers, config);
+                    }
+                );
             }
 
         };
