@@ -74,7 +74,6 @@ public class SpeciesConfig {
                 extinctionRisk.setInNationalEndangeredFauna(true);
                 extinctionRisk.setNationalEvaluationElegible(true);
                 extinctionRisk.setNecessaryResearchForConservation("NecessaryResearchForConservation");
-                extinctionRisk.setPreviousNationalAssessment("PreviousNationalAssessment");
                 extinctionRisk.setResearchInProgress("ResearchInProgress");
                 extinctionRisk.setSpecificActionsInProtectedAreas("SpecificActionsInProtectedAreas");
                 conventions.setBenefitedFromActionPlan("BenefitedFromActionPlan");
@@ -143,22 +142,18 @@ public class SpeciesConfig {
                 habitatType.setId(1L);
                 feedingBehavior.setEatingHabits("EatingHabits");
                 feedingBehavior.setEatingHabitsOtherComments("EatingHabitsOtherComments");
-                feedingBehavior.setExpertSpecialist("ExpertSpecialist");
                 feedingBehavior.setFeedingAgregations("FeedingAgregations");
-                feedingBehavior.setTrophicLevel("TrophicLevel");
                 habitat.setContinuingDeclineInHabitatQuality(true);
                 habitat.setDescription("Description");
                 habitat.setRestrictedToPrimaryHabitats(true);
                 habitat.setTolerantToHabitatModification("true");
                 habitat.setType(habitatType);
                 habitat.setVariationInHabitatUse("VariationInHabitatUse");
-                densityData.setSubPopulationsDeclineNumber(100L);
                 densityData.setExtremeFlutuationInSubpopulationsNumber(true);
                 densityData.setSubPopulationsNumber(100L);
                 densityData.setSubPopulationsNumberTrend(TrendOccurence.DECLINING);
                 populationTrend.setBrazilExtinctionProbability(100D);
                 populationTrend.setDeclineReversibleAndCeased(true);
-                populationTrend.setPercPopulationDecline(100D);
                 populationTrend.setPopDeclineJustification("PopDeclineJustification");
                 populationTrend.setPopulationDeclinedBasedOn("PopulationDeclinedBasedOn");
                 populationDynamics.setCaptiveBreedingProgram(true);
@@ -171,7 +166,6 @@ public class SpeciesConfig {
                 populationDynamics.setMatureIndividualsSubpopulationMaxNumber(100L);
                 populationDynamics.setPopulationSeverelyFragmented(true);
                 populationDynamics.setPopulationTrend(populationTrend);
-                reproduction.setMaximumSize(100);
                 naturalHistory.setFeedingBehavior(feedingBehavior);
                 naturalHistory.setHabitat(habitat);
                 naturalHistory.setInteractions(interactions);

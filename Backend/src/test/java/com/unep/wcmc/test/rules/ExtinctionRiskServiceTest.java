@@ -57,8 +57,6 @@ public class ExtinctionRiskServiceTest {
         specie.setDistributionArea(distributionArea);
 
         PopulationTrend trend = new PopulationTrend();
-        // % population decline in 10 years or 3 generations and period
-        trend.setPercPopulationDecline(50d);
         // In case of past reduction, is the cause reversible and has ceased?
         trend.setDeclineReversibleAndCeased(false);
 

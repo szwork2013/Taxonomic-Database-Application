@@ -25,7 +25,6 @@ rule "Endangered (EN) - A1"
     when
         $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.ENDANGERED) from configuration
         // criteria
-        PopulationTrend(percPopulationDecline >= $config.percPopulationDecline, percPopulationDecline < 90) // A1
         PopulationTrend(declineReversibleAndCeased == null)
     then
         species.setExtinctionRiskCategory(ExtinctionRiskCategory.ENDANGERED);
@@ -37,7 +36,6 @@ rule "Endangered (EN) - A2"
     when
         $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.ENDANGERED) from configuration
         // criteria
-        PopulationTrend(percPopulationDecline >= $config.percePopulationDecline2, percPopulationDecline < 80) // A2, A3, A4
         PopulationTrend(declineReversibleAndCeased == false)
     then
         species.setExtinctionRiskCategory(ExtinctionRiskCategory.ENDANGERED);

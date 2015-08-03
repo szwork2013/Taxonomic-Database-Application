@@ -16,12 +16,12 @@ public class DensityData implements Serializable {
     @Enumerated(value = EnumType.ORDINAL)
     private TrendOccurence subPopulationsNumberTrend;
 
-    @Column(name = "subpopulations_decline")
-    private Long subPopulationsDeclineNumber;
-
     @Column(name = "subpopulations_fluctuations")
     private Boolean extremeFlutuationInSubpopulationsNumber;
 
+    @Column(name = "mature_individuals_fluctuations")
+    private Boolean extremeFluctuationInMatureIndividualsNumber;
+    
     public Long getSubPopulationsNumber() {
         return subPopulationsNumber;
     }
@@ -38,14 +38,6 @@ public class DensityData implements Serializable {
         this.subPopulationsNumberTrend = subPopulationsNumberTrend;
     }
 
-    public Long getSubPopulationsDeclineNumber() {
-        return subPopulationsDeclineNumber;
-    }
-
-    public void setSubPopulationsDeclineNumber(Long subPopulationsDeclineNumber) {
-        this.subPopulationsDeclineNumber = subPopulationsDeclineNumber;
-    }
-
     public Boolean getExtremeFlutuationInSubpopulationsNumber() {
         return extremeFlutuationInSubpopulationsNumber;
     }
@@ -53,4 +45,13 @@ public class DensityData implements Serializable {
     public void setExtremeFlutuationInSubpopulationsNumber(Boolean extremeFlutuationInSubpopulationsNumber) {
         this.extremeFlutuationInSubpopulationsNumber = extremeFlutuationInSubpopulationsNumber;
     }
+
+	public Boolean getExtremeFluctuationInMatureIndividualsNumber() {
+		return extremeFluctuationInMatureIndividualsNumber;
+	}
+
+	public void setExtremeFluctuationInMatureIndividualsNumber(
+			Boolean extremeFluctuationInMatureIndividualsNumber) {
+		this.extremeFluctuationInMatureIndividualsNumber = extremeFluctuationInMatureIndividualsNumber;
+	}
 }

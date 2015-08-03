@@ -1,15 +1,14 @@
 package com.unep.wcmc.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import java.io.Serializable;
 
 @Embeddable
 public class ExtinctionRisk implements Serializable {
 
     private Boolean nationalEvaluationElegible;
-
-    private String previousNationalAssessment;
 
     private String changeReasons;
 
@@ -24,9 +23,6 @@ public class ExtinctionRisk implements Serializable {
     @Column(name = "in_national_endangered_fauna")
     private Boolean inNationalEndangeredFauna;
 
-    @Column(name = "national_endangered_fauna")
-    private Boolean nationalEndangeredFauna;
-
     @Column(name = "presence_in_other_endangered_lists")
     private Boolean presenceInOtherEndangeredLists;
 
@@ -36,14 +32,6 @@ public class ExtinctionRisk implements Serializable {
 
     public void setNationalEvaluationElegible(Boolean nationalEvaluationElegible) {
         this.nationalEvaluationElegible = nationalEvaluationElegible;
-    }
-
-    public String getPreviousNationalAssessment() {
-        return previousNationalAssessment;
-    }
-
-    public void setPreviousNationalAssessment(String previousNationalAssessment) {
-        this.previousNationalAssessment = previousNationalAssessment;
     }
 
     public String getChangeReasons() {
@@ -100,13 +88,5 @@ public class ExtinctionRisk implements Serializable {
 
     public void setPresenceInOtherEndangeredLists(Boolean presenceInOtherEndangeredLists) {
         this.presenceInOtherEndangeredLists = presenceInOtherEndangeredLists;
-    }
-
-    public Boolean getNationalEndangeredFauna() {
-        return nationalEndangeredFauna;
-    }
-
-    public void setNationalEndangeredFauna(Boolean nationalEndangeredFauna) {
-        this.nationalEndangeredFauna = nationalEndangeredFauna;
     }
 }

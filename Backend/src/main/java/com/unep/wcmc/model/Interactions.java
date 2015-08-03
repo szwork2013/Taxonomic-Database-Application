@@ -6,5 +6,4 @@ import java.io.Serializable;
 @Embeddable
 public class Interactions implements Serializable {
 
-
 }

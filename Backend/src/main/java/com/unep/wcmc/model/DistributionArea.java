@@ -62,6 +62,15 @@ public class DistributionArea implements BaseEntity {
     @ElementCollection
     @CollectionTable(name="ocurrence")
     private List<Occurrence> occurrences;
+    
+    @Column(name = "extreme_fluctuations_extent_of_occurrence")
+    private Boolean extremeFluctuationsInExtentOfOccurrence;
+
+    @Column(name = "extreme_fluctuations_area_of_occupancy")
+    private Boolean extremeFluctuationsInAreaOfOccupancy;
+    
+    @Column(name = "justification_of_trends_in_EOO_and_AOO")
+    private String justificationTrendsEOOAndAOO;
 
     public DistributionArea() {
         super();
@@ -203,4 +212,31 @@ public class DistributionArea implements BaseEntity {
     public void setOcurrenceProtectedAreas(String ocurrenceProtectedAreas) {
         this.ocurrenceProtectedAreas = ocurrenceProtectedAreas;
     }
+
+	public Boolean getExtremeFluctuationsInExtentOfOccurrence() {
+		return extremeFluctuationsInExtentOfOccurrence;
+	}
+
+	public void setExtremeFluctuationsInExtentOfOccurrence(
+			Boolean extremeFluctuationsInExtentOfOccurrence) {
+		this.extremeFluctuationsInExtentOfOccurrence = extremeFluctuationsInExtentOfOccurrence;
+	}
+
+	public Boolean getExtremeFluctuationsInAreaOfOccupancy() {
+		return extremeFluctuationsInAreaOfOccupancy;
+	}
+
+	public void setExtremeFluctuationsInAreaOfOccupancy(
+			Boolean extremeFluctuationsInAreaOfOccupancy) {
+		this.extremeFluctuationsInAreaOfOccupancy = extremeFluctuationsInAreaOfOccupancy;
+	}
+
+	public String getJustificationTrendsEOOAndAOO() {
+		return justificationTrendsEOOAndAOO;
+	}
+
+	public void setJustificationTrendsEOOAndAOO(
+			String justificationTrendsEOOAndAOO) {
+		this.justificationTrendsEOOAndAOO = justificationTrendsEOOAndAOO;
+	}
 }

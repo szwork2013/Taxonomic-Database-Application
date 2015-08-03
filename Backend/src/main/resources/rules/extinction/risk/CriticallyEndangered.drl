@@ -25,7 +25,6 @@ rule "Critically Endangered (CR) - A1"
     when
         $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.CRITICALLY_ENDANGERED) from configuration
         // criteria
-        PopulationTrend(percPopulationDecline >= $config.percPopulationDecline) // A1
         PopulationTrend(declineReversibleAndCeased == null)
     then
         species.setExtinctionRiskCategory(ExtinctionRiskCategory.CRITICALLY_ENDANGERED);
@@ -37,7 +36,6 @@ rule "Critically Endangered (CR) - A2"
     when
         $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.CRITICALLY_ENDANGERED) from configuration
         // criteria
-        PopulationTrend(percPopulationDecline >= $config.percePopulationDecline2) // A2, A3, A4
         PopulationTrend(declineReversibleAndCeased == false)
     then
         species.setExtinctionRiskCategory(ExtinctionRiskCategory.CRITICALLY_ENDANGERED);

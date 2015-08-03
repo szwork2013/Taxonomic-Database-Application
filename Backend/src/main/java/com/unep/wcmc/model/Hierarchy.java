@@ -38,6 +38,9 @@ public class Hierarchy implements Serializable {
 
     @Column(name = "subspecies")
     private String subSpecies;
+    
+    @Column(name = "species_epiteth")
+    private String speciesEpiteth;
 
     public Hierarchy() {
         super();
@@ -123,4 +126,12 @@ public class Hierarchy implements Serializable {
     public void setGenus(Genus genus) {
         this.genus = genus;
     }
+
+	public String getSpeciesEpiteth() {
+		return speciesEpiteth;
+	}
+
+	public void setSpeciesEpiteth(String speciesEpiteth) {
+		this.speciesEpiteth = speciesEpiteth;
+	}
 }

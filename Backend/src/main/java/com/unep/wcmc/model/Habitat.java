@@ -25,6 +25,9 @@ public class Habitat implements Serializable {
     @Column(name = "cont_decline_habitat_quality")
     private Boolean continuingDeclineInHabitatQuality;
 
+    @Column(name = "specialist_in_habitat_or_microhabitat")
+    private Boolean specialistInHabitOrMicrohabitat;
+    
     public HabitatType getType() {
         return type;
     }
@@ -72,4 +75,12 @@ public class Habitat implements Serializable {
     public void setContinuingDeclineInHabitatQuality(Boolean continuingDeclineInHabitatQuality) {
         this.continuingDeclineInHabitatQuality = continuingDeclineInHabitatQuality;
     }
+
+	public Boolean getSpecialistInHabitOrMicrohabitat() {
+		return specialistInHabitOrMicrohabitat;
+	}
+
+	public void setSpecialistInHabitOrMicrohabitat(Boolean specialistInHabitOrMicrohabitat) {
+		this.specialistInHabitOrMicrohabitat = specialistInHabitOrMicrohabitat;
+	}
 }

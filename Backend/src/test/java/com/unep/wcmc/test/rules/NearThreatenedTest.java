@@ -43,7 +43,6 @@ public class NearThreatenedTest {
         kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
 
         PopulationTrend trend = new PopulationTrend();
-        trend.setPercPopulationDecline(45d);
         kieSession.insert(trend);
         kieSession.fireAllRules();
 
@@ -59,7 +58,6 @@ public class NearThreatenedTest {
         kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
 
         PopulationTrend trend = new PopulationTrend();
-        trend.setPercPopulationDecline(35d);
         trend.setDeclineReversibleAndCeased(false);
         kieSession.insert(trend);
         kieSession.fireAllRules();

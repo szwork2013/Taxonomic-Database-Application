@@ -102,7 +102,6 @@ public class ExtinctionRiskTest {
         kieSession.insert(distributionArea);
 
         PopulationTrend trend = new PopulationTrend();
-        trend.setPercPopulationDecline(50d);
         trend.setDeclineReversibleAndCeased(false);
         kieSession.insert(trend);
 

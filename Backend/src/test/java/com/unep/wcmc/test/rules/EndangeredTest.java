@@ -43,8 +43,6 @@ public class EndangeredTest {
         kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
 
         PopulationTrend trend = new PopulationTrend();
-        // % population decline in 10 years or 3 generations and period
-        trend.setPercPopulationDecline(70d);
         // In case of past reduction, is the cause reversible and has ceased?
         kieSession.insert(trend);
         kieSession.fireAllRules();
@@ -61,8 +59,6 @@ public class EndangeredTest {
         kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
 
         PopulationTrend trend = new PopulationTrend();
-        // % population decline in 10 years or 3 generations and period
-        trend.setPercPopulationDecline(60d);
         trend.setDeclineReversibleAndCeased(false);
         // In case of past reduction, is the cause reversible and has ceased?
         kieSession.insert(trend);

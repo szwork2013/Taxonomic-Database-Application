@@ -2,13 +2,11 @@ package com.unep.wcmc.model;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+
 import java.io.Serializable;
 
 @Embeddable
 public class PopulationTrend implements Serializable {
-
-    @Column(name = "perc_population_decline")
-    private Double percPopulationDecline;
 
     @Column(name = "decline_reversible_and_ceased")
     private Boolean declineReversibleAndCeased;
@@ -22,14 +20,9 @@ public class PopulationTrend implements Serializable {
     @Column(name = "extinction_probability_in_brazil")
     private Double brazilExtinctionProbability;
 
-    public Double getPercPopulationDecline() {
-        return percPopulationDecline;
-    }
-
-    public void setPercPopulationDecline(Double percPopulationDecline) {
-        this.percPopulationDecline = percPopulationDecline;
-    }
-
+    @Column(name = "other_observations_on_population_dynamics")
+    private String otherObservationsOnPopulationDynamics;
+    
     public Boolean getDeclineReversibleAndCeased() {
         return declineReversibleAndCeased;
     }
@@ -61,4 +54,13 @@ public class PopulationTrend implements Serializable {
     public void setBrazilExtinctionProbability(Double brazilExtinctionProbability) {
         this.brazilExtinctionProbability = brazilExtinctionProbability;
     }
+
+	public String getOtherObservationsOnPopulationDynamics() {
+		return otherObservationsOnPopulationDynamics;
+	}
+
+	public void setOtherObservationsOnPopulationDynamics(
+			String otherObservationsOnPopulationDynamics) {
+		this.otherObservationsOnPopulationDynamics = otherObservationsOnPopulationDynamics;
+	}
 }

@@ -1,6 +1,7 @@
 package com.unep.wcmc.model;
 
 import javax.persistence.*;
+
 import java.io.Serializable;
 
 @Embeddable
@@ -11,6 +12,22 @@ public class PopulationDynamics implements Serializable {
 
     @Embedded
     private DensityData densityData;
+    
+	@OneToOne
+	@JoinColumn(name = "past_reduction_with_ceased_and_reversible")
+	private PopulationReduction popReductionWithCausesCeased;
+
+	@OneToOne
+	@JoinColumn(name = "past_reduction_without_ceased_and_not_reversible")
+	private PopulationReduction popReductionWithCausesNotCeased;
+	
+	@OneToOne
+	@JoinColumn(name = "projection_of_future_reduction")
+	private PopulationReduction projectionOfFutureReduction;
+
+	@OneToOne
+	@JoinColumn(name = "reduction_include_past_and_future")
+	private PopulationReduction reductionIncludeBothPastAndFuture;
 
     @Column(name = "number_of_mature_individuals")
     private Long matureIndividualsNumber;
@@ -116,4 +133,40 @@ public class PopulationDynamics implements Serializable {
     public void setCaptiveBreedingProgram(Boolean captiveBreedingProgram) {
         this.captiveBreedingProgram = captiveBreedingProgram;
     }
+
+	public PopulationReduction getPopReductionWithCausesCeased() {
+		return popReductionWithCausesCeased;
+	}
+
+	public void setPopReductionWithCausesCeased(
+			PopulationReduction popReductionWithCausesCeased) {
+		this.popReductionWithCausesCeased = popReductionWithCausesCeased;
+	}
+
+	public PopulationReduction getPopReductionWithCausesNotCeased() {
+		return popReductionWithCausesNotCeased;
+	}
+
+	public void setPopReductionWithCausesNotCeased(
+			PopulationReduction popReductionWithCausesNotCeased) {
+		this.popReductionWithCausesNotCeased = popReductionWithCausesNotCeased;
+	}
+
+	public PopulationReduction getProjectionOfFutureReduction() {
+		return projectionOfFutureReduction;
+	}
+
+	public void setProjectionOfFutureReduction(
+			PopulationReduction projectionOfFutureReduction) {
+		this.projectionOfFutureReduction = projectionOfFutureReduction;
+	}
+
+	public PopulationReduction getReductionIncludeBothPastAndFuture() {
+		return reductionIncludeBothPastAndFuture;
+	}
+
+	public void setReductionIncludeBothPastAndFuture(
+			PopulationReduction reductionIncludeBothPastAndFuture) {
+		this.reductionIncludeBothPastAndFuture = reductionIncludeBothPastAndFuture;
+	}
 }
