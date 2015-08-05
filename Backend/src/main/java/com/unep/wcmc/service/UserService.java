@@ -34,9 +34,7 @@ public final class UserService extends AbstractService<User, UserRepository> imp
     public User registerNewUser(User user) {
         validateUser(user, repo.findByEmail(user.getEmail()));
         validateUser(user, repo.findByUsername(user.getUsername()));
-        final String role = user.getRole();
-        user.setUserRole(getUserRole(role));
-        return repo.save(user);
+        return save(user);
     }
     
     public User updatePersonalInfor(User editedUser, String id) {
@@ -48,8 +46,6 @@ public final class UserService extends AbstractService<User, UserRepository> imp
         validateUser(editedUser, repo.findByEmail(editedUser.getEmail()));
         validateUser(editedUser, repo.findByUsername(editedUser.getUsername()));
         editedUser.setPassword(user.getPassword());
-        editedUser.setEnabled(user.isEnabled());
-        editedUser.setUserRole(user.getUserRole());
         return save(editedUser);
     }
     
