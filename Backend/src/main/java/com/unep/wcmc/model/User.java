@@ -59,6 +59,15 @@ public final class User implements UserDetails, BaseEntity {
 
     @Column
     private String address;
+    
+    @Column
+    private String neighbourhood;
+    
+    @Column
+    private String municipality;
+    
+    @Column
+    private String postalCode;
 
     @Phone
     @Column
@@ -125,7 +134,31 @@ public final class User implements UserDetails, BaseEntity {
         this.address = address;
     }
 
-    public String getPhoneNumber() {
+    public String getNeighbourhood() {
+		return neighbourhood;
+	}
+
+	public void setNeighbourhood(String neighbourhood) {
+		this.neighbourhood = neighbourhood;
+	}
+
+	public String getMunicipality() {
+		return municipality;
+	}
+
+	public void setMunicipality(String municipality) {
+		this.municipality = municipality;
+	}
+
+	public String getPostalCode() {
+		return postalCode;
+	}
+
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
+	}
+
+	public String getPhoneNumber() {
         return phoneNumber;
     }
 
