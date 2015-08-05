@@ -8,6 +8,7 @@ define(
         'core/directives/core.load.screen.directive',
         'core/directives/core.jquery.tab.directive',
         'core/directives/core.image.popup.directive',
+        'core/directives/core.dialog.confirm.directive',
         'core/filters/core.pagination.filter',
         'auth/directives/auth.username.directive'
     ],
