@@ -58,7 +58,10 @@
                         <td>{{u.firstName}}</td>
                         <td>{{u.email}}</td>
                         <td>{{u.userRole.name}}</td>
-                        <td>{{u.enabled}}</td>
+                        <td>
+                            <span ng-show="{{u.enabled}}"><i class="glyphicon glyphicon-ok"></i>&nbsp;Active</span>
+                            <span ng-show="{{!u.enabled}}"><i class="glyphicon glyphicon-remove"></i>&nbsp;Inactive</span>
+                        </td>
                     </tr>
                 </tbody>
             </table>
