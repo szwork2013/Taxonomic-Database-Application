@@ -18,8 +18,13 @@ public class Species implements BaseEntity {
     @Column(name = "scientific_name")
     private String scientificName;
 
+    @Column(name = "extinction_risk_category")
     @Enumerated(value = EnumType.ORDINAL)
     private ExtinctionRiskCategory extinctionRiskCategory;
+
+    @Column(name = "extinction_risk_criteria")
+    @Enumerated(value = EnumType.STRING)
+    private ExtinctionRiskCriteria extinctionRiskCriteria;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "taxonomy_id")
@@ -90,6 +95,14 @@ public class Species implements BaseEntity {
 
     public void setExtinctionRiskCategory(ExtinctionRiskCategory extinctionRiskCategory) {
         this.extinctionRiskCategory = extinctionRiskCategory;
+    }
+
+    public ExtinctionRiskCriteria getExtinctionRiskCriteria() {
+        return extinctionRiskCriteria;
+    }
+
+    public void setExtinctionRiskCriteria(ExtinctionRiskCriteria extinctionRiskCriteria) {
+        this.extinctionRiskCriteria = extinctionRiskCriteria;
     }
 
     public Taxonomy getTaxonomy() {

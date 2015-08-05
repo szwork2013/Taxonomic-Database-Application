@@ -4,6 +4,7 @@ import com.unep.wcmc.Application;
 import com.unep.wcmc.integration.JobRunner;
 import com.unep.wcmc.integration.JobRuntime;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.batch.core.BatchStatus;
@@ -21,6 +22,7 @@ public class JobRunnerTest {
     private JobRunner jobRunner;
 
     @Test
+    @Ignore // Ignoring this test case to not be executed all the time
     public void testStartSpeciesPlus() throws Exception {
         JobRuntime jobRuntime = jobRunner.start(SPECIES_PLUS.name());
         Assert.assertNotNull(jobRuntime);
@@ -32,6 +34,7 @@ public class JobRunnerTest {
     }
 
     @Test
+    @Ignore // Ignoring this test case to not be executed all the time
     public void testStartFaunaJob() throws Exception {
         JobRuntime jobRuntime = jobRunner.start(FAUNA.name());
         Assert.assertNotNull(jobRuntime);
@@ -43,6 +46,7 @@ public class JobRunnerTest {
     }
 
     @Test
+    @Ignore // Ignoring this test case to not be executed all the time
     public void testStartFloraJob() throws Exception {
         JobRuntime jobRuntime = jobRunner.start(FLORA.name());
         Assert.assertNotNull(jobRuntime);

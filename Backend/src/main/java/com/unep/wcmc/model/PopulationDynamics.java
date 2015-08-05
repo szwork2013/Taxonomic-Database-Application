@@ -1,8 +1,8 @@
 package com.unep.wcmc.model;
 
 import javax.persistence.*;
-
 import java.io.Serializable;
+import java.util.List;
 
 @Embeddable
 public class PopulationDynamics implements Serializable {
@@ -12,22 +12,30 @@ public class PopulationDynamics implements Serializable {
 
     @Embedded
     private DensityData densityData;
+
+    @Column(name = "past_reduction_with_ceased_reversible")
+    private Boolean reductionWithCausesCeased;
     
-	@OneToOne
-	@JoinColumn(name = "past_reduction_with_ceased_and_reversible")
-	private PopulationReduction popReductionWithCausesCeased;
+	@OneToMany
+	private List<PopulationReduction> reductionWithCausesCeasedPeriods;
 
-	@OneToOne
-	@JoinColumn(name = "past_reduction_without_ceased_and_not_reversible")
-	private PopulationReduction popReductionWithCausesNotCeased;
-	
-	@OneToOne
-	@JoinColumn(name = "projection_of_future_reduction")
-	private PopulationReduction projectionOfFutureReduction;
+    @Column(name = "past_reduction_without_ceased_not_reversible")
+    private Boolean reductionWithoutCausesNotCeased;
 
-	@OneToOne
-	@JoinColumn(name = "reduction_include_past_and_future")
-	private PopulationReduction reductionIncludeBothPastAndFuture;
+	@OneToMany
+	private List<PopulationReduction> reductionWithCausesNotCeasedPeriods;
+
+    @Column(name = "projection_of_future_reduction")
+    private Boolean projectionFutureReduction;
+
+	@OneToMany
+	private List<PopulationReduction> projectionFutureReductionPeriods;
+
+    @Column(name = "reduction_include_past_and_future")
+    private Boolean reductionIncludePastFuture;
+
+	@OneToMany
+	private List<PopulationReduction> reductionIncludePastFuturePeriods;
 
     @Column(name = "number_of_mature_individuals")
     private Long matureIndividualsNumber;
@@ -134,39 +142,93 @@ public class PopulationDynamics implements Serializable {
         this.captiveBreedingProgram = captiveBreedingProgram;
     }
 
-	public PopulationReduction getPopReductionWithCausesCeased() {
-		return popReductionWithCausesCeased;
-	}
+    public List<PopulationReduction> getReductionWithCausesCeasedPeriods() {
+        return reductionWithCausesCeasedPeriods;
+    }
 
-	public void setPopReductionWithCausesCeased(
-			PopulationReduction popReductionWithCausesCeased) {
-		this.popReductionWithCausesCeased = popReductionWithCausesCeased;
-	}
+    public void setReductionWithCausesCeasedPeriods(List<PopulationReduction> reductionWithCausesCeasedPeriods) {
+        this.reductionWithCausesCeasedPeriods = reductionWithCausesCeasedPeriods;
+    }
 
-	public PopulationReduction getPopReductionWithCausesNotCeased() {
-		return popReductionWithCausesNotCeased;
-	}
+    public Double getReductionWithCausesCeasedTotalPercent() {
+        return 0d;
+    }
 
-	public void setPopReductionWithCausesNotCeased(
-			PopulationReduction popReductionWithCausesNotCeased) {
-		this.popReductionWithCausesNotCeased = popReductionWithCausesNotCeased;
-	}
+    public Boolean getReductionWithCausesCeased() {
+        return reductionWithCausesCeased;
+    }
 
-	public PopulationReduction getProjectionOfFutureReduction() {
-		return projectionOfFutureReduction;
-	}
+    public void setReductionWithCausesCeased(Boolean reductionWithCausesCeased) {
+        this.reductionWithCausesCeased = reductionWithCausesCeased;
+    }
 
-	public void setProjectionOfFutureReduction(
-			PopulationReduction projectionOfFutureReduction) {
-		this.projectionOfFutureReduction = projectionOfFutureReduction;
-	}
+    public List<PopulationReduction> getReductionWithCausesNotCeasedPeriods() {
+        return reductionWithCausesNotCeasedPeriods;
+    }
 
-	public PopulationReduction getReductionIncludeBothPastAndFuture() {
-		return reductionIncludeBothPastAndFuture;
-	}
+    public void setReductionWithCausesNotCeasedPeriods(List<PopulationReduction> reductionWithCausesNotCeasedPeriods) {
+        this.reductionWithCausesNotCeasedPeriods = reductionWithCausesNotCeasedPeriods;
+    }
 
-	public void setReductionIncludeBothPastAndFuture(
-			PopulationReduction reductionIncludeBothPastAndFuture) {
-		this.reductionIncludeBothPastAndFuture = reductionIncludeBothPastAndFuture;
-	}
+    public Double getReductionWithCausesNotCeasedTotalPercent() {
+        return 0d;
+    }
+
+    public Boolean getReductionWithoutCausesNotCeased() {
+        return reductionWithoutCausesNotCeased;
+    }
+
+    public void setReductionWithoutCausesNotCeased(Boolean reductionWithoutCausesNotCeased) {
+        this.reductionWithoutCausesNotCeased = reductionWithoutCausesNotCeased;
+    }
+
+    public List<PopulationReduction> getProjectionFutureReductionPeriods() {
+        return projectionFutureReductionPeriods;
+    }
+
+    public void setProjectionFutureReductionPeriods(List<PopulationReduction> projectionFutureReductionPeriods) {
+        this.projectionFutureReductionPeriods = projectionFutureReductionPeriods;
+    }
+
+    public Double getProjectionFutureReductionTotalPercent() {
+        return 0d;
+    }
+
+    public Integer getProjectionFutureReductionTotalYears() {
+        return 0;
+    }
+
+    public Boolean getProjectionFutureReduction() {
+        return projectionFutureReduction;
+    }
+
+    public void setProjectionFutureReduction(Boolean projectionFutureReduction) {
+        this.projectionFutureReduction = projectionFutureReduction;
+    }
+
+    public List<PopulationReduction> getReductionIncludePastFuturePeriods() {
+        return reductionIncludePastFuturePeriods;
+    }
+
+    public void setReductionIncludePastFuturePeriods(List<PopulationReduction> reductionIncludePastFuturePeriods) {
+        this.reductionIncludePastFuturePeriods = reductionIncludePastFuturePeriods;
+    }
+
+    public Double getReductionIncludePastFutureTotalPercent() {
+        return 0d;
+    }
+
+    public Integer getReductionIncludePastFutureTotalYears() {
+        return 0;
+    }
+
+    public Boolean getReductionIncludePastFuture() {
+        return reductionIncludePastFuture;
+    }
+
+    public void setReductionIncludePastFuture(Boolean reductionIncludePastFuture) {
+        this.reductionIncludePastFuture = reductionIncludePastFuture;
+    }
+
+
 }

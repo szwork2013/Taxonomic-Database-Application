@@ -5,4 +5,8 @@
         <ksession name="RulesSession"/>
     </kbase>
 
+    <kbase name="DecisionTable" packages="rules.extinction.risk.table">
+        <ksession name="DecisionTableKS" type="stateless"//>
+    </kbase>
+
 </kmodule>

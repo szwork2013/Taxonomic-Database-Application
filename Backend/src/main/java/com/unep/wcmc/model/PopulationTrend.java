@@ -2,6 +2,8 @@ package com.unep.wcmc.model;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 import java.io.Serializable;
 
@@ -12,7 +14,8 @@ public class PopulationTrend implements Serializable {
     private Boolean declineReversibleAndCeased;
 
     @Column(name = "population_decline_based_on")
-    private String populationDeclinedBasedOn;
+    @Enumerated(EnumType.ORDINAL)
+    private PopulationDeclinedBasedOn populationDeclinedBasedOn;
 
     @Column(name = "justification_of_pop_decline")
     private String popDeclineJustification;
@@ -31,11 +34,11 @@ public class PopulationTrend implements Serializable {
         this.declineReversibleAndCeased = declineReversibleAndCeased;
     }
 
-    public String getPopulationDeclinedBasedOn() {
+    public PopulationDeclinedBasedOn getPopulationDeclinedBasedOn() {
         return populationDeclinedBasedOn;
     }
 
-    public void setPopulationDeclinedBasedOn(String populationDeclinedBasedOn) {
+    public void setPopulationDeclinedBasedOn(PopulationDeclinedBasedOn populationDeclinedBasedOn) {
         this.populationDeclinedBasedOn = populationDeclinedBasedOn;
     }
 

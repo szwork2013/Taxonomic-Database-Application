@@ -155,7 +155,7 @@ public class SpeciesConfig {
                 populationTrend.setBrazilExtinctionProbability(100D);
                 populationTrend.setDeclineReversibleAndCeased(true);
                 populationTrend.setPopDeclineJustification("PopDeclineJustification");
-                populationTrend.setPopulationDeclinedBasedOn("PopulationDeclinedBasedOn");
+                //populationTrend.setPopulationDeclinedBasedOn("PopulationDeclinedBasedOn");
                 populationDynamics.setCaptiveBreedingProgram(true);
                 populationDynamics.setDeclinePeriodPercent(100D);
                 populationDynamics.setDensityData(densityData);
