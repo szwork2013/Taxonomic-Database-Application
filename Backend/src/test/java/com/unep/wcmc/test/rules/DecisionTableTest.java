@@ -39,7 +39,8 @@ public class DecisionTableTest {
         this.kieContainer = kieServices.getKieClasspathContainer();
 
         SpreadsheetCompiler compiler = new SpreadsheetCompiler();
-        String drl = compiler.compile(new FileInputStream("src/main/resources/rules.xls"), InputType.XLS);
+        String drl = compiler.compile(
+                new FileInputStream("src/main/resources/rules/extinction/risk/extinction-rules.xls"), InputType.XLS);
 
         this.kieSession = kieContainer.newKieSession("DecisionTableKS");
     }
