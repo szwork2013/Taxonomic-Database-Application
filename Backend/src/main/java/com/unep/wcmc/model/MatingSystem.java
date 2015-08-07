@@ -10,26 +10,26 @@ import javax.persistence.Enumerated;
 @Embeddable
 public final class MatingSystem implements Serializable {
 	
-	@Column(name = "system")
+	@Column(name = "mating_system_id")
 	@Enumerated(value = EnumType.ORDINAL)
-    private MatingSystemType system;
+    private MatingSystemType type;
 
-    @Column(name = "mating_description")
-    private String matingDescription;
+    @Column(name = "mating_system_other")
+    private String other;
 
-	public MatingSystemType getSystem() {
-		return system;
+	public MatingSystemType getType() {
+		return type;
 	}
 
-	public void setSystem(MatingSystemType system) {
-		this.system = system;
+	public void setType(MatingSystemType type) {
+		this.type = type;
 	}
 
-	public String getMatingDescription() {
-		return matingDescription;
+	public String getOther() {
+		return other;
 	}
 
-	public void setMatingDescription(String matingDescription) {
-		this.matingDescription = matingDescription;
+	public void setOther(String other) {
+		this.other = other;
 	}
 }

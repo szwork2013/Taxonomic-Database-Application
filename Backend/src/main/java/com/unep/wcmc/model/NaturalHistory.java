@@ -1,6 +1,7 @@
 package com.unep.wcmc.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class NaturalHistory implements BaseEntity {
@@ -9,20 +10,25 @@ public class NaturalHistory implements BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Embedded
-    private FeedingBehavior feedingBehavior;
-
-    @Embedded
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "habitat_id")
     private Habitat habitat;
 
-    @Embedded
-    private PopulationDynamics populationDynamics;
-
-    @Embedded
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "reproduction_id")
     private Reproduction reproduction;
 
-    @Embedded
-    private Interactions interactions;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "feeding_behavior_id")
+    private FeedingBehavior feedingBehavior;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "natural_history_id")
+    private List<Interactions> interactions;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "population_dynamics_id")
+    private PopulationDynamics populationDynamics;
 
     public Long getId() {
         return id;
@@ -64,11 +70,11 @@ public class NaturalHistory implements BaseEntity {
         this.reproduction = reproduction;
     }
 
-    public Interactions getInteractions() {
+    public List<Interactions> getInteractions() {
         return interactions;
     }
 
-    public void setInteractions(Interactions interactions) {
+    public void setInteractions(List<Interactions> interactions) {
         this.interactions = interactions;
     }
 }

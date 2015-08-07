@@ -1,41 +1,56 @@
 package com.unep.wcmc.model;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 
-import java.io.Serializable;
+@Entity
+public class FeedingBehavior implements BaseEntity {
 
-@Embeddable
-public class FeedingBehavior implements Serializable {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Embedded
+    private EatingHabits eatingHabits;
 
     @Column(name = "eating_habits")
-    private String eatingHabits;
-
-    @Column(name = "feeding_agregations")
-    private String feedingAgregations;
-
-    @Column(name = "eating_habits_other_comments")
-    private String eatingHabitsOtherComments;
+    private String otherEatingHabits;
 
     @Column(name = "expert")
     @Enumerated(value = EnumType.ORDINAL)
     private ExpertType expertType;
-    
-    public String getEatingHabits() {
+
+    @Column(name = "expertDescription")
+    private String expertDescription;
+
+    @Column(name = "feeding_agregations")
+    private Boolean feedingAgregations;
+
+    @Column(name = "feeding_agregations_desc")
+    private String feedingAgregationsDesc;
+
+    @Column(name = "eating_habits_other_comments")
+    private String eatingHabitsOtherComments;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public EatingHabits getEatingHabits() {
         return eatingHabits;
     }
 
-    public void setEatingHabits(String eatingHabits) {
+    public void setEatingHabits(EatingHabits eatingHabits) {
         this.eatingHabits = eatingHabits;
     }
 
-    public String getFeedingAgregations() {
+    public Boolean getFeedingAgregations() {
         return feedingAgregations;
     }
 
-    public void setFeedingAgregations(String feedingAgregations) {
+    public void setFeedingAgregations(Boolean feedingAgregations) {
         this.feedingAgregations = feedingAgregations;
     }
 
@@ -54,4 +69,28 @@ public class FeedingBehavior implements Serializable {
 	public void setExpertType(ExpertType expertType) {
 		this.expertType = expertType;
 	}
+
+    public String getOtherEatingHabits() {
+        return otherEatingHabits;
+    }
+
+    public void setOtherEatingHabits(String otherEatingHabits) {
+        this.otherEatingHabits = otherEatingHabits;
+    }
+
+    public String getExpertDescription() {
+        return expertDescription;
+    }
+
+    public void setExpertDescription(String expertDescription) {
+        this.expertDescription = expertDescription;
+    }
+
+    public String getFeedingAgregationsDesc() {
+        return feedingAgregationsDesc;
+    }
+
+    public void setFeedingAgregationsDesc(String feedingAgregationsDesc) {
+        this.feedingAgregationsDesc = feedingAgregationsDesc;
+    }
 }

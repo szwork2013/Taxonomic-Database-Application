@@ -10,12 +10,12 @@ import javax.persistence.Enumerated;
 @Embeddable
 public final class ReproductionMode implements Serializable {
 	
-	@Column(name = "type")
+	@Column(name = "reproduction_mode_id")
 	@Enumerated(value = EnumType.ORDINAL)
     private ReproductionModeType type;
 
-    @Column(name = "mode_description")
-    private String modeDescription;
+    @Column(name = "reproduction_mode_other")
+    private String other;
 
 	public ReproductionModeType getType() {
 		return type;
@@ -25,11 +25,11 @@ public final class ReproductionMode implements Serializable {
 		this.type = type;
 	}
 
-	public String getModeDescription() {
-		return modeDescription;
+	public String getOther() {
+		return other;
 	}
 
-	public void setModeDescription(String modeDescription) {
-		this.modeDescription = modeDescription;
+	public void setOther(String other) {
+		this.other = other;
 	}
 }

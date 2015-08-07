@@ -36,5 +36,45 @@ public final class ReproductionStatistic implements BaseEntity {
 	@Override
 	public void setId(Long id) {
 		this.id = id;
-	}	
+	}
+
+	public String getMale() {
+		return male;
+	}
+
+	public void setMale(String male) {
+		this.male = male;
+	}
+
+	public String getFemale() {
+		return female;
+	}
+
+	public void setFemale(String female) {
+		this.female = female;
+	}
+
+	public String getBoth() {
+		return both;
+	}
+
+	public void setBoth(String both) {
+		this.both = both;
+	}
+
+	public String getUnit() {
+		return unit;
+	}
+
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+
+	public String getReference() {
+		return reference;
+	}
+
+	public void setReference(String reference) {
+		this.reference = reference;
+	}
 }

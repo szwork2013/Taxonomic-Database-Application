@@ -1,39 +1,37 @@
 package com.unep.wcmc.model;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.Embedded;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 import java.io.Serializable;
 import java.util.List;
 
-@Embeddable
-public class Reproduction implements Serializable {
+@Entity
+public class Reproduction implements BaseEntity {
 
-	@OneToOne
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "maximun_size_id")
     private ReproductionStatistic maximumSize;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "size_at_first_maturity_id")
     private ReproductionStatistic sizeAtFirstMaturity;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "size_at_birth_id")
     private ReproductionStatistic sizeAtBirth;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "age_at_first_maturity_id")
     private ReproductionStatistic ageAtFirstMaturity;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "reproductive_senescence_id")
     private ReproductionStatistic reproductiveSenescence;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "longevity_id")
     private ReproductionStatistic longevity;
 	
@@ -42,6 +40,12 @@ public class Reproduction implements Serializable {
     
     @Column(name = "reversal")
     private Boolean reversal;
+
+	@Embedded
+	private ReproductionMode reproductionMode;
+
+	@Embedded
+	private MatingSystem matingSystem;
     
     @Column(name = "parental_care")
     private Boolean parentalCare;
@@ -51,27 +55,29 @@ public class Reproduction implements Serializable {
     
     @Column(name = "average_size_of_litter")
     private Double averageSizeOfLitter;
-    
-    @Column(name = "generation_length")
+
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "reproductive_aggregation_id")
+	private List<ReproductiveAggregation> aggregations;
+
+	@Column(name = "generation_length")
     private String generationLength;
 
     @Column(name = "method_of_estimate_generation_length")
-    private String methodOfEstimateGenerationLenght;
+    private String methodOfEstimateGenerationLength;
 
     @Column(name = "other_observations_on_reproduction")
     private String otherObsOnReproduction;
 
-    @OneToMany
-    @JoinColumn(name = "reproductive_aggregation_id")
-    private List<ReproductiveAggregation> aggregations;
-    
-    @Embedded
-    private ReproductionMode reproductionMode;
-    
-    @Embedded
-    private MatingSystem matingSystem;
-    
-    public ReproductionStatistic getMaximumSize() {
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public ReproductionStatistic getMaximumSize() {
         return maximumSize;
     }
 
@@ -168,13 +174,13 @@ public class Reproduction implements Serializable {
 		this.generationLength = generationLength;
 	}
 
-	public String getMethodOfEstimateGenerationLenght() {
-		return methodOfEstimateGenerationLenght;
+	public String getMethodOfEstimateGenerationLength() {
+		return methodOfEstimateGenerationLength;
 	}
 
-	public void setMethodOfEstimateGenerationLenght(
-			String methodOfEstimateGenerationLenght) {
-		this.methodOfEstimateGenerationLenght = methodOfEstimateGenerationLenght;
+	public void setMethodOfEstimateGenerationLength(
+			String methodOfEstimateGenerationLength) {
+		this.methodOfEstimateGenerationLength = methodOfEstimateGenerationLength;
 	}
 
 	public String getOtherObsOnReproduction() {
@@ -208,4 +214,5 @@ public class Reproduction implements Serializable {
 	public void setMatingSystem(MatingSystem matingSystem) {
 		this.matingSystem = matingSystem;
 	}
+
 }

@@ -3,45 +3,69 @@ package com.unep.wcmc.model;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Embeddable
-public class Habitat implements Serializable {
+@Entity
+public class Habitat implements BaseEntity {
 
-    @ManyToOne
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "habitat_type_id")
     private HabitatType type;
-
-    @Column(name = "habitat")
-    private String description;
 
     @Column(name = "restricted_to_primary_habitats")
     private Boolean restrictedToPrimaryHabitats;
 
-    @Column(name = "tolerant_to_habitat_mod")
-    private String tolerantToHabitatModification;
+    @Column(name = "specialist_in_habitat_or_microhabitat")
+    private Boolean specialistInHabitOrMicrohabitat;
+
+    @Column(name = "specialist_in_habitat_or_microhabitat_desc")
+    private String specialistInHabitOrMicrohabitatDesc;
 
     @Column(name = "variation_in_habitat_use")
-    private String variationInHabitatUse;
+    private Boolean variationInHabitatUse;
+
+    @Column(name = "variation_in_habitat_use_desc")
+    private String variationInHabitatUseDesc;
+
+    @Column(name = "seasonal_variation_in_habitat_use")
+    private Boolean seasonalVariationInHabitatUse;
+
+    @Column(name = "seasonal_variation_in_habitat_use_desc")
+    private String seasonalVariationInHabitatUseDesc;
+
+    @Column(name = "difference_in_habitat_use")
+    private Boolean differenceInHabitatUse;
+
+    @Column(name = "difference_in_habitat_use_desc")
+    private String differenceInHabitatUseDesc;
 
     @Column(name = "cont_decline_habitat_quality")
     private Boolean continuingDeclineInHabitatQuality;
 
-    @Column(name = "specialist_in_habitat_or_microhabitat")
-    private Boolean specialistInHabitOrMicrohabitat;
-    
+    @Column(name = "tolerant_to_habitat_mod")
+    private String tolerantToHabitatModification;
+
+    @Column(name = "justitication")
+    private String justification;
+
+    @Column(name = "other_observations")
+    private String otherObservations;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public HabitatType getType() {
         return type;
     }
 
     public void setType(HabitatType type) {
         this.type = type;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public Boolean getRestrictedToPrimaryHabitats() {
@@ -60,11 +84,11 @@ public class Habitat implements Serializable {
         this.tolerantToHabitatModification = tolerantToHabitatModification;
     }
 
-    public String getVariationInHabitatUse() {
+    public Boolean getVariationInHabitatUse() {
         return variationInHabitatUse;
     }
 
-    public void setVariationInHabitatUse(String variationInHabitatUse) {
+    public void setVariationInHabitatUse(Boolean variationInHabitatUse) {
         this.variationInHabitatUse = variationInHabitatUse;
     }
 
@@ -83,4 +107,68 @@ public class Habitat implements Serializable {
 	public void setSpecialistInHabitOrMicrohabitat(Boolean specialistInHabitOrMicrohabitat) {
 		this.specialistInHabitOrMicrohabitat = specialistInHabitOrMicrohabitat;
 	}
+
+    public String getSpecialistInHabitOrMicrohabitatDesc() {
+        return specialistInHabitOrMicrohabitatDesc;
+    }
+
+    public void setSpecialistInHabitOrMicrohabitatDesc(String specialistInHabitOrMicrohabitatDesc) {
+        this.specialistInHabitOrMicrohabitatDesc = specialistInHabitOrMicrohabitatDesc;
+    }
+
+    public String getVariationInHabitatUseDesc() {
+        return variationInHabitatUseDesc;
+    }
+
+    public void setVariationInHabitatUseDesc(String variationInHabitatUseDesc) {
+        this.variationInHabitatUseDesc = variationInHabitatUseDesc;
+    }
+
+    public Boolean getSeasonalVariationInHabitatUse() {
+        return seasonalVariationInHabitatUse;
+    }
+
+    public void setSeasonalVariationInHabitatUse(Boolean seasonalVariationInHabitatUse) {
+        this.seasonalVariationInHabitatUse = seasonalVariationInHabitatUse;
+    }
+
+    public String getSeasonalVariationInHabitatUseDesc() {
+        return seasonalVariationInHabitatUseDesc;
+    }
+
+    public void setSeasonalVariationInHabitatUseDesc(String seasonalVariationInHabitatUseDesc) {
+        this.seasonalVariationInHabitatUseDesc = seasonalVariationInHabitatUseDesc;
+    }
+
+    public Boolean getDifferenceInHabitatUse() {
+        return differenceInHabitatUse;
+    }
+
+    public void setDifferenceInHabitatUse(Boolean differenceInHabitatUse) {
+        this.differenceInHabitatUse = differenceInHabitatUse;
+    }
+
+    public String getDifferenceInHabitatUseDesc() {
+        return differenceInHabitatUseDesc;
+    }
+
+    public void setDifferenceInHabitatUseDesc(String differenceInHabitatUseDesc) {
+        this.differenceInHabitatUseDesc = differenceInHabitatUseDesc;
+    }
+
+    public String getJustification() {
+        return justification;
+    }
+
+    public void setJustification(String justification) {
+        this.justification = justification;
+    }
+
+    public String getOtherObservations() {
+        return otherObservations;
+    }
+
+    public void setOtherObservations(String otherObservations) {
+        this.otherObservations = otherObservations;
+    }
 }

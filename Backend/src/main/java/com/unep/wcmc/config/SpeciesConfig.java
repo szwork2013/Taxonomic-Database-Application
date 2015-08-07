@@ -140,7 +140,7 @@ public class SpeciesConfig {
                 final DensityData densityData = new DensityData();
                 final PopulationTrend populationTrend = new PopulationTrend();
                 habitatType.setId(1L);
-                feedingBehavior.setEatingHabits("EatingHabits");
+                feedingBehavior.setEatingHabitsType("EatingHabits");
                 feedingBehavior.setEatingHabitsOtherComments("EatingHabitsOtherComments");
                 feedingBehavior.setFeedingAgregations("FeedingAgregations");
                 habitat.setContinuingDeclineInHabitatQuality(true);

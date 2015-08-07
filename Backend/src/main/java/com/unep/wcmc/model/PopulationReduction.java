@@ -1,38 +1,35 @@
 package com.unep.wcmc.model;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.Embeddable;
+import java.io.Serializable;
 
-@Entity
-public class PopulationReduction implements BaseEntity {
+@Embeddable
+public class PopulationReduction implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(name = "period")
-    private String period;
+	@Column(name = "reduction")
+    private Boolean reduction;
+
+    @Column(name = "years")
+    private Integer years;
+
     @Column(name = "percentage")
     private Integer percentage;
-	
-	@Override
-	public Long getId() {
-		return id;
+
+	public Boolean getReduction() {
+		return reduction;
 	}
 
-	@Override
-	public void setId(Long id) {
-		this.id = id;
+	public void setReduction(Boolean reduction) {
+		this.reduction = reduction;
 	}
 
-	public String getPeriod() {
-		return period;
+	public Integer getYears() {
+		return years;
 	}
 
-	public void setPeriod(String period) {
-		this.period = period;
+	public void setYears(Integer years) {
+		this.years = years;
 	}
 
 	public Integer getPercentage() {

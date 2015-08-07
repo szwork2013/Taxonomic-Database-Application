@@ -4,8 +4,11 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
-@Embeddable
+@Entity
 public class PopulationDynamics implements Serializable {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Embedded
     private PopulationTrend populationTrend;
@@ -13,29 +16,49 @@ public class PopulationDynamics implements Serializable {
     @Embedded
     private DensityData densityData;
 
-    @Column(name = "past_reduction_with_ceased_reversible")
-    private Boolean reductionWithCausesCeased;
-    
-	@OneToMany
-	private List<PopulationReduction> reductionWithCausesCeasedPeriods;
+	@Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "reduction",
+                    column = @Column(name = "reduction_with_causes_ceased")),
+            @AttributeOverride(name = "years",
+                    column = @Column(name = "reduction_with_causes_ceased_years")),
+            @AttributeOverride(name = "percentage",
+                    column = @Column(name = "reduction_with_causes_ceased_percent"))
+    })
+	private PopulationReduction reductionWithCausesCeased;
 
-    @Column(name = "past_reduction_without_ceased_not_reversible")
-    private Boolean reductionWithoutCausesNotCeased;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "reduction",
+                    column = @Column(name = "reduction_with_causes_not_ceased")),
+            @AttributeOverride(name = "years",
+                    column = @Column(name = "reduction_with_causes_not_ceased_years")),
+            @AttributeOverride(name = "percentage",
+                    column = @Column(name = "reduction_with_causes_not_ceased_percent"))
+    })
+	private PopulationReduction reductionWithCausesNotCeased;
 
-	@OneToMany
-	private List<PopulationReduction> reductionWithCausesNotCeasedPeriods;
+	@Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "reduction",
+                    column = @Column(name = "projection_future_reduction")),
+            @AttributeOverride(name = "years",
+                    column = @Column(name = "projection_future_reduction_years")),
+            @AttributeOverride(name = "percentage",
+                    column = @Column(name = "projection_future_reduction_percent"))
+    })
+	private PopulationReduction projectionFutureReduction;
 
-    @Column(name = "projection_of_future_reduction")
-    private Boolean projectionFutureReduction;
-
-	@OneToMany
-	private List<PopulationReduction> projectionFutureReductionPeriods;
-
-    @Column(name = "reduction_include_past_and_future")
-    private Boolean reductionIncludePastFuture;
-
-	@OneToMany
-	private List<PopulationReduction> reductionIncludePastFuturePeriods;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "reduction",
+                    column = @Column(name = "reduction_include_past_future")),
+            @AttributeOverride(name = "years",
+                    column = @Column(name = "reduction_include_past_future_years")),
+            @AttributeOverride(name = "percentage",
+                    column = @Column(name = "reduction_include_past_future_percent"))
+    })
+	private PopulationReduction reductionIncludePastFuture;
 
     @Column(name = "number_of_mature_individuals")
     private Long matureIndividualsNumber;
@@ -61,6 +84,14 @@ public class PopulationDynamics implements Serializable {
 
     @Column(name = "captive_breeding_program")
     private Boolean captiveBreedingProgram;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public PopulationTrend getPopulationTrend() {
         return populationTrend;
@@ -142,93 +173,35 @@ public class PopulationDynamics implements Serializable {
         this.captiveBreedingProgram = captiveBreedingProgram;
     }
 
-    public List<PopulationReduction> getReductionWithCausesCeasedPeriods() {
-        return reductionWithCausesCeasedPeriods;
-    }
-
-    public void setReductionWithCausesCeasedPeriods(List<PopulationReduction> reductionWithCausesCeasedPeriods) {
-        this.reductionWithCausesCeasedPeriods = reductionWithCausesCeasedPeriods;
-    }
-
-    public Double getReductionWithCausesCeasedTotalPercent() {
-        return 0d;
-    }
-
-    public Boolean getReductionWithCausesCeased() {
+    public PopulationReduction getReductionWithCausesCeased() {
         return reductionWithCausesCeased;
     }
 
-    public void setReductionWithCausesCeased(Boolean reductionWithCausesCeased) {
+    public void setReductionWithCausesCeased(PopulationReduction reductionWithCausesCeased) {
         this.reductionWithCausesCeased = reductionWithCausesCeased;
     }
 
-    public List<PopulationReduction> getReductionWithCausesNotCeasedPeriods() {
-        return reductionWithCausesNotCeasedPeriods;
+    public PopulationReduction getReductionWithCausesNotCeased() {
+        return reductionWithCausesNotCeased;
     }
 
-    public void setReductionWithCausesNotCeasedPeriods(List<PopulationReduction> reductionWithCausesNotCeasedPeriods) {
-        this.reductionWithCausesNotCeasedPeriods = reductionWithCausesNotCeasedPeriods;
+    public void setReductionWithCausesNotCeased(PopulationReduction reductionWithCausesNotCeased) {
+        this.reductionWithCausesNotCeased = reductionWithCausesNotCeased;
     }
 
-    public Double getReductionWithCausesNotCeasedTotalPercent() {
-        return 0d;
-    }
-
-    public Boolean getReductionWithoutCausesNotCeased() {
-        return reductionWithoutCausesNotCeased;
-    }
-
-    public void setReductionWithoutCausesNotCeased(Boolean reductionWithoutCausesNotCeased) {
-        this.reductionWithoutCausesNotCeased = reductionWithoutCausesNotCeased;
-    }
-
-    public List<PopulationReduction> getProjectionFutureReductionPeriods() {
-        return projectionFutureReductionPeriods;
-    }
-
-    public void setProjectionFutureReductionPeriods(List<PopulationReduction> projectionFutureReductionPeriods) {
-        this.projectionFutureReductionPeriods = projectionFutureReductionPeriods;
-    }
-
-    public Double getProjectionFutureReductionTotalPercent() {
-        return 0d;
-    }
-
-    public Integer getProjectionFutureReductionTotalYears() {
-        return 0;
-    }
-
-    public Boolean getProjectionFutureReduction() {
+    public PopulationReduction getProjectionFutureReduction() {
         return projectionFutureReduction;
     }
 
-    public void setProjectionFutureReduction(Boolean projectionFutureReduction) {
+    public void setProjectionFutureReduction(PopulationReduction projectionFutureReduction) {
         this.projectionFutureReduction = projectionFutureReduction;
     }
 
-    public List<PopulationReduction> getReductionIncludePastFuturePeriods() {
-        return reductionIncludePastFuturePeriods;
-    }
-
-    public void setReductionIncludePastFuturePeriods(List<PopulationReduction> reductionIncludePastFuturePeriods) {
-        this.reductionIncludePastFuturePeriods = reductionIncludePastFuturePeriods;
-    }
-
-    public Double getReductionIncludePastFutureTotalPercent() {
-        return 0d;
-    }
-
-    public Integer getReductionIncludePastFutureTotalYears() {
-        return 0;
-    }
-
-    public Boolean getReductionIncludePastFuture() {
+    public PopulationReduction getReductionIncludePastFuture() {
         return reductionIncludePastFuture;
     }
 
-    public void setReductionIncludePastFuture(Boolean reductionIncludePastFuture) {
+    public void setReductionIncludePastFuture(PopulationReduction reductionIncludePastFuture) {
         this.reductionIncludePastFuture = reductionIncludePastFuture;
     }
-
-
 }
