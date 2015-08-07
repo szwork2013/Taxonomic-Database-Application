@@ -29,7 +29,6 @@ public class ExtentOccurrence implements Serializable {
     @Enumerated(value = EnumType.ORDINAL)
     private DefinitionLevel framentationLevel;
 
-
     public Double getEoo() {
         return eoo;
     }

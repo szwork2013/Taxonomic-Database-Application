@@ -30,7 +30,10 @@ import com.unep.wcmc.validator.Phone;
  *
  */
 @Entity
-@Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = { "username" }), @UniqueConstraint(columnNames = { "email" }), })
+@Table(name = "users",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = { "username" }),
+                @UniqueConstraint(columnNames = { "email" }), })
 public final class User implements UserDetails, BaseEntity {
 
     @Id

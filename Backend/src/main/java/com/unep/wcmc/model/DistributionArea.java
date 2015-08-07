@@ -36,7 +36,7 @@ public class DistributionArea implements BaseEntity {
     @JoinTable(name = "occurrence_states")
     private List<State> occurrenceStates;
 
-    @OneToOne
+    @ManyToMany
     @JoinTable(name = "occurrence_biomes")
     private List<Biome> occurrenceBiomes;
 
@@ -57,14 +57,12 @@ public class DistributionArea implements BaseEntity {
     @Embedded
     private AreaOccupancy areaOccupancy;
 
-
-    @ElementCollection
-    @CollectionTable(name="ocurrence")
-    private List<Occurrence> occurrences;
-    
-
-\    @Column(name = "justification_of_trends")
+    @Column(name = "justification_of_trends")
     private String justificationTrends;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "distribution_area_id")
+    private List<Occurrence> occurrences;
 
     public DistributionArea() {
         super();

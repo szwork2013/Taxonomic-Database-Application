@@ -61,7 +61,7 @@ public class SpeciesPlusProcessor implements ItemProcessor<Map<String, Object>, 
                         Genus genus = String.valueOf(higherTaxa.get("genus")).equalsIgnoreCase("null") ? null :
                                 new Genus(String.valueOf(higherTaxa.get("genus")));
                         Hierarchy hierarchy = new Hierarchy(kingdom, phylum, hierarchyClass, hierarchyOrder,
-                                family, genus, null, null);
+                                family, genus, null);
                         // create the taxonomy data
                         Taxonomy taxonomy = new Taxonomy();
                         taxonomy.setHierarchy(hierarchy);

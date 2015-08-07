@@ -33,7 +33,7 @@ public class FaunaProcessor implements ItemProcessor<String[], Species> {
         String species = line[8].trim();
 
         Hierarchy hierarchy = new Hierarchy(kingdom, phylum, hierarchyClass, order, family,
-                genus, species, subespecies);
+                genus, subespecies);
         Taxonomy taxonomy = new Taxonomy();
         taxonomy.setHierarchy(hierarchy);
         return taxonomy;

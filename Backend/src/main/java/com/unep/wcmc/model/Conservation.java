@@ -21,15 +21,26 @@ public class Conservation implements BaseEntity {
     @Embedded
     private ConservationAction conservationAction;
 
-    @OneToMany(mappedBy = "conservationId", fetch = FetchType.EAGER)
-    private List<Research> ongoingResearchs;    
-    
-    @OneToMany(mappedBy = "conservationId", fetch = FetchType.EAGER)
-    private List<Research> researchs;    
-    
-    @OneToMany(mappedBy = "conservationId", fetch = FetchType.EAGER)
-    private List<Colaborator> colaborators;
-    
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "conservation_id")
+    private List<SpecificActionUC> specificActionUCs;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "conservation_id")
+    private List<NationalActionPlan> nationalActionPlans;
+
+    @ElementCollection
+    @CollectionTable(name = "ongoing_research")
+    private List<Research> ongoingResearches;
+
+    @ElementCollection
+    @CollectionTable(name = "conservation_researcher")
+    private List<Researcher> researchers;
+
+    @ElementCollection
+    @CollectionTable(name = "conservation_colaborator")
+    private List<Researcher> colaborators;
+
     @Column(name = "necessary_research_for_conservation_of_species")
     private String necessaryResearchForConservation;
 
@@ -57,36 +68,59 @@ public class Conservation implements BaseEntity {
         this.conventions = conventions;
     }
 
-	public List<Colaborator> getColaborators() {
-		return colaborators;
-	}
+    public ConservationAction getConservationAction() {
+        return conservationAction;
+    }
 
-	public void setColaborators(List<Colaborator> colaborators) {
-		this.colaborators = colaborators;
-	}
+    public void setConservationAction(ConservationAction conservationAction) {
+        this.conservationAction = conservationAction;
+    }
 
-	public String getNecessaryResearchForConservation() {
-		return necessaryResearchForConservation;
-	}
+    public List<SpecificActionUC> getSpecificActionUCs() {
+        return specificActionUCs;
+    }
 
-	public void setNecessaryResearchForConservation(
-			String necessaryResearchForConservation) {
-		this.necessaryResearchForConservation = necessaryResearchForConservation;
-	}
+    public void setSpecificActionUCs(List<SpecificActionUC> specificActionUCs) {
+        this.specificActionUCs = specificActionUCs;
+    }
 
-	public List<Research> getOngoingResearchs() {
-		return ongoingResearchs;
-	}
+    public List<NationalActionPlan> getNationalActionPlans() {
+        return nationalActionPlans;
+    }
 
-	public void setOngoingResearchs(List<Research> ongoingResearchs) {
-		this.ongoingResearchs = ongoingResearchs;
-	}
+    public void setNationalActionPlans(List<NationalActionPlan> nationalActionPlans) {
+        this.nationalActionPlans = nationalActionPlans;
+    }
 
-	public List<Research> getResearchs() {
-		return researchs;
-	}
+    public List<Research> getOngoingResearches() {
+        return ongoingResearches;
+    }
 
-	public void setResearchs(List<Research> researchs) {
-		this.researchs = researchs;
-	}
+    public void setOngoingResearches(List<Research> ongoingResearches) {
+        this.ongoingResearches = ongoingResearches;
+    }
+
+    public List<Researcher> getResearchers() {
+        return researchers;
+    }
+
+    public void setResearchers(List<Researcher> researchers) {
+        this.researchers = researchers;
+    }
+
+    public List<Researcher> getColaborators() {
+        return colaborators;
+    }
+
+    public void setColaborators(List<Researcher> colaborators) {
+        this.colaborators = colaborators;
+    }
+
+    public String getNecessaryResearchForConservation() {
+        return necessaryResearchForConservation;
+    }
+
+    public void setNecessaryResearchForConservation(String necessaryResearchForConservation) {
+        this.necessaryResearchForConservation = necessaryResearchForConservation;
+    }
 }

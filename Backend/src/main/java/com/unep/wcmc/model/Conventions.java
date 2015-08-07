@@ -1,59 +1,43 @@
 package com.unep.wcmc.model;
 
-import javax.persistence.Embeddable;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Embeddable
 public class Conventions implements Serializable {
 
-    private String convention;
+    @Column(name = "presence_in_national_endangered_fauna")
+    private Boolean presenceNationalEndangeredFauna;
 
-    private String conventionOtherRelevantData;
+    @Column(name = "presence_in_national_endangered_fauna_desc")
+    private String presenceNationalEndangeredFaunaDesc;
 
-    private String benefitedFromActionPlan;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "conservation_id")
+    private List<ConventionItem> conventionItems;
 
-    private String otherActionsProtectSpecies;
-
-    private String exSituManagement;
-
-    public String getConvention() {
-        return convention;
+    public Boolean getPresenceNationalEndangeredFauna() {
+        return presenceNationalEndangeredFauna;
     }
 
-    public void setConvention(String convention) {
-        this.convention = convention;
+    public void setPresenceNationalEndangeredFauna(Boolean presenceNationalEndangeredFauna) {
+        this.presenceNationalEndangeredFauna = presenceNationalEndangeredFauna;
     }
 
-    public String getConventionOtherRelevantData() {
-        return conventionOtherRelevantData;
+    public String getPresenceNationalEndangeredFaunaDesc() {
+        return presenceNationalEndangeredFaunaDesc;
     }
 
-    public void setConventionOtherRelevantData(String conventionOtherRelevantData) {
-        this.conventionOtherRelevantData = conventionOtherRelevantData;
+    public void setPresenceNationalEndangeredFaunaDesc(String presenceNationalEndangeredFaunaDesc) {
+        this.presenceNationalEndangeredFaunaDesc = presenceNationalEndangeredFaunaDesc;
     }
 
-    public String getBenefitedFromActionPlan() {
-        return benefitedFromActionPlan;
+    public List<ConventionItem> getConventionItems() {
+        return conventionItems;
     }
 
-    public void setBenefitedFromActionPlan(String benefitedFromActionPlan) {
-        this.benefitedFromActionPlan = benefitedFromActionPlan;
+    public void setConventionItems(List<ConventionItem> conventionItems) {
+        this.conventionItems = conventionItems;
     }
-
-    public String getOtherActionsProtectSpecies() {
-        return otherActionsProtectSpecies;
-    }
-
-    public void setOtherActionsProtectSpecies(String otherActionsProtectSpecies) {
-        this.otherActionsProtectSpecies = otherActionsProtectSpecies;
-    }
-
-    public String getExSituManagement() {
-        return exSituManagement;
-    }
-
-    public void setExSituManagement(String exSituManagement) {
-        this.exSituManagement = exSituManagement;
-    }
-
 }

@@ -39,15 +39,15 @@ public class SpeciesConfig {
              */
             @Override
             public void afterPropertiesSet() {
-                try {
-                    final Species specie = specieService.findByCommonName("Sagui-de-tufos-brancos");
-                    if (specie == null) {
-                        createSpecies();    
-                    }
-                } catch (Exception e) {
-                    System.err.println(e);
-                    // not a big deal, catches duplicated user insertion
-                }
+//                try {
+//                    final Species specie = specieService.findByCommonName("Sagui-de-tufos-brancos");
+//                    if (specie == null) {
+//                        createSpecies();
+//                    }
+//                } catch (Exception e) {
+//                    System.err.println(e);
+//                    // not a big deal, catches duplicated user insertion
+//                }
             }
             
             private void createSpecies() {
@@ -69,18 +69,18 @@ public class SpeciesConfig {
                 final Conservation conservation = new Conservation();
                 final ExtinctionRisk extinctionRisk = new ExtinctionRisk(); 
                 final Conventions conventions = new Conventions();
-                extinctionRisk.setActionPlans("ActionPlans");
+                //extinctionRisk.setActionPlans("ActionPlans");
                 extinctionRisk.setChangeReasons("ChangeReasons");
-                extinctionRisk.setInNationalEndangeredFauna(true);
+                //extinctionRisk.setInNationalEndangeredFauna(true);
                 extinctionRisk.setNationalEvaluationElegible(true);
-                extinctionRisk.setNecessaryResearchForConservation("NecessaryResearchForConservation");
-                extinctionRisk.setResearchInProgress("ResearchInProgress");
-                extinctionRisk.setSpecificActionsInProtectedAreas("SpecificActionsInProtectedAreas");
-                conventions.setBenefitedFromActionPlan("BenefitedFromActionPlan");
-                conventions.setConvention("Convention");
-                conventions.setConventionOtherRelevantData("ConventionOtherRelevantData");
-                conventions.setExSituManagement("ExSituManagement");
-                conventions.setOtherActionsProtectSpecies("OtherActionsProtectSpecies");
+                //extinctionRisk.setNecessaryResearchForConservation("NecessaryResearchForConservation");
+                //extinctionRisk.setResearchInProgress("ResearchInProgress");
+                //extinctionRisk.setSpecificActionsInProtectedAreas("SpecificActionsInProtectedAreas");
+                //conventions.setBenefitedFromActionPlan("BenefitedFromActionPlan");
+                //conventions.setConvention("Convention");
+                //conventions.setConventionOtherRelevantData("ConventionOtherRelevantData");
+                //conventions.setExSituManagement("ExSituManagement");
+                //conventions.setOtherActionsProtectSpecies("OtherActionsProtectSpecies");
                 conservation.setExtinctionRisk(extinctionRisk);
                 conservation.setConventions(conventions);
                 return conservation;
@@ -111,21 +111,21 @@ public class SpeciesConfig {
                 occurrences.setLongitude("-38.526670400000000000");
                 occurrences.setProjection("Projection");
                 //occurrences.setState(state);
-                occurrences.setMap(createMap());
+                //occurrences.setMap(createMap());
                 distributionArea.setEndemicFromBrazil(true);
-                distributionArea.setExtendOccurrence(100D);
-                distributionArea.setFramentationLevel(DefinitionLevel.HIGH);
+                //distributionArea.setExtendOccurrence(100D);
+                //distributionArea.setFramentationLevel(DefinitionLevel.HIGH);
                 distributionArea.setGlobalDistribution("GlobalDistribution");
                 distributionArea.setNationalDistribution("NationalDistribution");
                 distributionArea.setNativeBrazil(true);
-                distributionArea.setOccupancyArea(100D);
+                //distributionArea.setOccupancyArea(100D);
                 distributionArea.setOccurrences(Arrays.asList(occurrences));
-                distributionArea.setOcurrenceState("OcurrenceState");
+                //distributionArea.setOcurrenceState("OcurrenceState");
                 distributionArea.setOcurrsBrazil(true);
                 distributionArea.setOnlyFromFewLocalities(true);
                 distributionArea.setRegionIsWellSampled(true);
-                distributionArea.setTrendExtendOccurence(TrendOccurence.DECLINING);
-                distributionArea.setTrendOccupancyArea(TrendOccurence.EXPANDING);
+                //distributionArea.setTrendExtendOccurence(TrendOccurence.DECLINING);
+                //distributionArea.setTrendOccupancyArea(TrendOccurence.EXPANDING);
                 return distributionArea;
             }
             
@@ -140,15 +140,15 @@ public class SpeciesConfig {
                 final DensityData densityData = new DensityData();
                 final PopulationTrend populationTrend = new PopulationTrend();
                 habitatType.setId(1L);
-                feedingBehavior.setEatingHabitsType("EatingHabits");
+                //feedingBehavior.setEatingHabitsType("EatingHabits");
                 feedingBehavior.setEatingHabitsOtherComments("EatingHabitsOtherComments");
-                feedingBehavior.setFeedingAgregations("FeedingAgregations");
+                //feedingBehavior.setFeedingAgregations("FeedingAgregations");
                 habitat.setContinuingDeclineInHabitatQuality(true);
-                habitat.setDescription("Description");
+                //habitat.setDescription("Description");
                 habitat.setRestrictedToPrimaryHabitats(true);
                 habitat.setTolerantToHabitatModification("true");
                 habitat.setType(habitatType);
-                habitat.setVariationInHabitatUse("VariationInHabitatUse");
+                //habitat.setVariationInHabitatUse("VariationInHabitatUse");
                 densityData.setExtremeFlutuationInSubpopulationsNumber(true);
                 densityData.setSubPopulationsNumber(100L);
                 densityData.setSubPopulationsNumberTrend(TrendOccurence.DECLINING);
@@ -168,7 +168,7 @@ public class SpeciesConfig {
                 populationDynamics.setPopulationTrend(populationTrend);
                 naturalHistory.setFeedingBehavior(feedingBehavior);
                 naturalHistory.setHabitat(habitat);
-                naturalHistory.setInteractions(interactions);
+                //naturalHistory.setInteractions(interactions);
                 naturalHistory.setPopulationDynamics(populationDynamics);
                 naturalHistory.setReproduction(reproduction);
                 return naturalHistory;

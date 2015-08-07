@@ -1,59 +1,38 @@
 package com.unep.wcmc.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.Embeddable;
+import java.io.Serializable;
 
-@Entity
-public final class Research implements BaseEntity {
+@Embeddable
+public class Research implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Id
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Conservation conservationId;
-    @Column
-    private String researcher;
-    @Column
+    private String project;
+
+    private String responsibleResearcher;
+
     private String institution;
-    
-	@Override
-	public Long getId() {
-		return id;
-	}
 
-	@Override
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public String getProject() {
+        return project;
+    }
 
-	public Conservation getConservationId() {
-		return conservationId;
-	}
+    public void setProject(String project) {
+        this.project = project;
+    }
 
-	public void setConservationId(Conservation conservationId) {
-		this.conservationId = conservationId;
-	}
+    public String getResponsibleResearcher() {
+        return responsibleResearcher;
+    }
 
-	public String getResearcher() {
-		return researcher;
-	}
+    public void setResponsibleResearcher(String responsibleResearcher) {
+        this.responsibleResearcher = responsibleResearcher;
+    }
 
-	public void setResearcher(String researcher) {
-		this.researcher = researcher;
-	}
+    public String getInstitution() {
+        return institution;
+    }
 
-	public String getInstitution() {
-		return institution;
-	}
-
-	public void setInstitution(String institution) {
-		this.institution = institution;
-	}
+    public void setInstitution(String institution) {
+        this.institution = institution;
+    }
 }
-
