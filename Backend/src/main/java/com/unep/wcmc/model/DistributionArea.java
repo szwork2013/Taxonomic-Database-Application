@@ -32,45 +32,39 @@ public class DistributionArea implements BaseEntity {
     @Column(name = "global_distribution")
     private String globalDistribution;
 
-    @Column(name = "occurrence_state")
-    private String ocurrenceState;
+    @ManyToMany
+    @JoinTable(name = "occurrence_states")
+    private List<State> occurrenceStates;
 
-    @Column(name = "occurrence_biomes")
-    private String ocurrenceBiomes;
+    @OneToOne
+    @JoinTable(name = "occurrence_biomes")
+    private List<Biome> occurrenceBiomes;
 
-    @Column(name = "occurrence_protected_areas")
-    private String ocurrenceProtectedAreas;
+    @ManyToMany
+    @JoinTable(name = "occurrence_protected_areas")
+    private List<ProtectedArea> occurrenceProtectedAreas;
 
-    @Column(name = "extent_of_occurrence")
-    private Double extendOccurrence;
+    @ManyToMany
+    @JoinTable(name = "occurrence_river_basins")
+    private List<RiverBasin> occurrenceRiverBasins;
 
-    @Column(name = "fragmentation_level")
-    @Enumerated(value = EnumType.ORDINAL)
-    private DefinitionLevel framentationLevel;
+    @Column(name = "other_relevant_areas")
+    private String otherRelevantAreas;
 
-    @Column(name = "trend_in_extent_of_occurrence")
-    @Enumerated(value = EnumType.ORDINAL)
-    private TrendOccurence trendExtendOccurence;
+    @Embedded
+    private ExtentOccurrence extentOccurrence;
 
-    @Column(name = "area_of_ocuppancy")
-    private Double occupancyArea;
+    @Embedded
+    private AreaOccupancy areaOccupancy;
 
-    @Column(name = "area_of_occupancy_trend")
-    @Enumerated(value = EnumType.ORDINAL)
-    private TrendOccurence trendOccupancyArea;
 
     @ElementCollection
     @CollectionTable(name="ocurrence")
     private List<Occurrence> occurrences;
     
-    @Column(name = "extreme_fluctuations_extent_of_occurrence")
-    private Boolean extremeFluctuationsInExtentOfOccurrence;
 
-    @Column(name = "extreme_fluctuations_area_of_occupancy")
-    private Boolean extremeFluctuationsInAreaOfOccupancy;
-    
-    @Column(name = "justification_of_trends_in_EOO_and_AOO")
-    private String justificationTrendsEOOAndAOO;
+\    @Column(name = "justification_of_trends")
+    private String justificationTrends;
 
     public DistributionArea() {
         super();
@@ -141,52 +135,60 @@ public class DistributionArea implements BaseEntity {
         this.globalDistribution = globalDistribution;
     }
 
-    public String getOcurrenceState() {
-        return ocurrenceState;
+    public List<State> getOccurrenceStates() {
+        return occurrenceStates;
     }
 
-    public void setOcurrenceState(String ocurrenceState) {
-        this.ocurrenceState = ocurrenceState;
+    public void setOccurrenceStates(List<State> occurrenceStates) {
+        this.occurrenceStates = occurrenceStates;
     }
 
-    public Double getExtendOccurrence() {
-        return extendOccurrence;
+    public List<Biome> getOccurrenceBiomes() {
+        return occurrenceBiomes;
     }
 
-    public void setExtendOccurrence(Double extendOccurrence) {
-        this.extendOccurrence = extendOccurrence;
+    public void setOccurrenceBiomes(List<Biome> occurrenceBiomes) {
+        this.occurrenceBiomes = occurrenceBiomes;
     }
 
-    public DefinitionLevel getFramentationLevel() {
-        return framentationLevel;
+    public List<ProtectedArea> getOccurrenceProtectedAreas() {
+        return occurrenceProtectedAreas;
     }
 
-    public void setFramentationLevel(DefinitionLevel framentationLevel) {
-        this.framentationLevel = framentationLevel;
+    public void setOccurrenceProtectedAreas(List<ProtectedArea> occurrenceProtectedAreas) {
+        this.occurrenceProtectedAreas = occurrenceProtectedAreas;
     }
 
-    public TrendOccurence getTrendExtendOccurence() {
-        return trendExtendOccurence;
+    public List<RiverBasin> getOccurrenceRiverBasins() {
+        return occurrenceRiverBasins;
     }
 
-    public void setTrendExtendOccurence(TrendOccurence trendExtendOccurence) {
-        this.trendExtendOccurence = trendExtendOccurence;
+    public void setOccurrenceRiverBasins(List<RiverBasin> occurrenceRiverBasins) {
+        this.occurrenceRiverBasins = occurrenceRiverBasins;
     }
 
-    public Double getOccupancyArea() {
-        return occupancyArea;
+    public String getOtherRelevantAreas() {
+        return otherRelevantAreas;
     }
 
-    public void setOccupancyArea(Double occupancyArea) {
-        this.occupancyArea = occupancyArea;
+    public void setOtherRelevantAreas(String otherRelevantAreas) {
+        this.otherRelevantAreas = otherRelevantAreas;
     }
 
-    public TrendOccurence getTrendOccupancyArea() {
-        return trendOccupancyArea;
+    public ExtentOccurrence getExtentOccurrence() {
+        return extentOccurrence;
     }
 
-    public void setTrendOccupancyArea(TrendOccurence trendOccupancyArea) {
-        this.trendOccupancyArea = trendOccupancyArea;
+    public void setExtentOccurrence(ExtentOccurrence extentOccurrence) {
+        this.extentOccurrence = extentOccurrence;
+    }
+
+    public AreaOccupancy getAreaOccupancy() {
+        return areaOccupancy;
+    }
+
+    public void setAreaOccupancy(AreaOccupancy areaOccupancy) {
+        this.areaOccupancy = areaOccupancy;
     }
 
     public List<Occurrence> getOccurrences() {
@@ -197,46 +199,11 @@ public class DistributionArea implements BaseEntity {
         this.occurrences = occurrences;
     }
 
-    public String getOcurrenceBiomes() {
-        return ocurrenceBiomes;
+    public String getJustificationTrends() {
+        return justificationTrends;
     }
 
-    public void setOcurrenceBiomes(String ocurrenceBiomes) {
-        this.ocurrenceBiomes = ocurrenceBiomes;
+    public void setJustificationTrends(String justificationTrends) {
+        this.justificationTrends = justificationTrends;
     }
-
-    public String getOcurrenceProtectedAreas() {
-        return ocurrenceProtectedAreas;
-    }
-
-    public void setOcurrenceProtectedAreas(String ocurrenceProtectedAreas) {
-        this.ocurrenceProtectedAreas = ocurrenceProtectedAreas;
-    }
-
-	public Boolean getExtremeFluctuationsInExtentOfOccurrence() {
-		return extremeFluctuationsInExtentOfOccurrence;
-	}
-
-	public void setExtremeFluctuationsInExtentOfOccurrence(
-			Boolean extremeFluctuationsInExtentOfOccurrence) {
-		this.extremeFluctuationsInExtentOfOccurrence = extremeFluctuationsInExtentOfOccurrence;
-	}
-
-	public Boolean getExtremeFluctuationsInAreaOfOccupancy() {
-		return extremeFluctuationsInAreaOfOccupancy;
-	}
-
-	public void setExtremeFluctuationsInAreaOfOccupancy(
-			Boolean extremeFluctuationsInAreaOfOccupancy) {
-		this.extremeFluctuationsInAreaOfOccupancy = extremeFluctuationsInAreaOfOccupancy;
-	}
-
-	public String getJustificationTrendsEOOAndAOO() {
-		return justificationTrendsEOOAndAOO;
-	}
-
-	public void setJustificationTrendsEOOAndAOO(
-			String justificationTrendsEOOAndAOO) {
-		this.justificationTrendsEOOAndAOO = justificationTrendsEOOAndAOO;
-	}
 }
