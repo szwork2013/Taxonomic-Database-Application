@@ -37,7 +37,7 @@ import com.unep.wcmc.validator.Phone;
 public final class User implements UserDetails, BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Email

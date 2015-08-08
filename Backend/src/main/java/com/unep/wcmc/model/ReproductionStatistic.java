@@ -7,7 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public final class ReproductionStatistic implements BaseEntity {
+public class ReproductionStatistic implements BaseEntity {
 	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +19,7 @@ public final class ReproductionStatistic implements BaseEntity {
 	@Column(name = "female")
 	private String female;
 	
-	@Column(name = "both")
+	@Column(name = "both_gender")
 	private String both;
 	
 	@Column(name = "unit")

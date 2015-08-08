@@ -33,19 +33,27 @@ public class DistributionArea implements BaseEntity {
     private String globalDistribution;
 
     @ManyToMany
-    @JoinTable(name = "occurrence_states")
+    @JoinTable(name = "occurrence_states",
+        joinColumns = @JoinColumn(name = "distribution_area_id"),
+        inverseJoinColumns = @JoinColumn(name = "state_id"))
     private List<State> occurrenceStates;
 
     @ManyToMany
-    @JoinTable(name = "occurrence_biomes")
+    @JoinTable(name = "occurrence_biomes",
+        joinColumns = @JoinColumn(name = "distribution_area_id"),
+        inverseJoinColumns = @JoinColumn(name = "biome_id"))
     private List<Biome> occurrenceBiomes;
 
     @ManyToMany
-    @JoinTable(name = "occurrence_protected_areas")
+    @JoinTable(name = "occurrence_protected_areas",
+        joinColumns = @JoinColumn(name = "distribution_area_id"),
+        inverseJoinColumns = @JoinColumn(name = "protected_area_id"))
     private List<ProtectedArea> occurrenceProtectedAreas;
 
     @ManyToMany
-    @JoinTable(name = "occurrence_river_basins")
+    @JoinTable(name = "occurrence_river_basins",
+        joinColumns = @JoinColumn(name = "distribution_area_id"),
+        inverseJoinColumns = @JoinColumn(name = "river_basin_id"))
     private List<RiverBasin> occurrenceRiverBasins;
 
     @Column(name = "other_relevant_areas")

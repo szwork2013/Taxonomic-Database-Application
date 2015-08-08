@@ -68,4 +68,12 @@ public class ExtentOccurrence implements Serializable {
     public void setFutureProjection(String futureProjection) {
         this.futureProjection = futureProjection;
     }
+
+    public DefinitionLevel getFramentationLevel() {
+        return framentationLevel;
+    }
+
+    public void setFramentationLevel(DefinitionLevel framentationLevel) {
+        this.framentationLevel = framentationLevel;
+    }
 }

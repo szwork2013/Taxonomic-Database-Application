@@ -8,10 +8,10 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
 @Embeddable
-public final class MatingSystem implements Serializable {
-	
-	@Column(name = "mating_system_id")
+public class MatingSystem implements Serializable {
+
 	@Enumerated(value = EnumType.ORDINAL)
+	@Column(name = "mating_system")
     private MatingSystemType type;
 
     @Column(name = "mating_system_other")

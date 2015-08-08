@@ -13,8 +13,8 @@ public class Conventions implements Serializable {
     @Column(name = "presence_in_national_endangered_fauna_desc")
     private String presenceNationalEndangeredFaunaDesc;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "conservation_id")
+    @ElementCollection
+    @CollectionTable(name = "convention_item", joinColumns = @JoinColumn(name = "conservation_id"))
     private List<ConventionItem> conventionItems;
 
     public Boolean getPresenceNationalEndangeredFauna() {

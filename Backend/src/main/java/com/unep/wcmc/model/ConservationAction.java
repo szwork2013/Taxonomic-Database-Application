@@ -10,22 +10,22 @@ public class ConservationAction implements Serializable {
     @Column(name = "benefited_from_action_plan")
     private Boolean benefitedActionPlan;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "conservation_action_id")
+    @ElementCollection
+    @CollectionTable(name = "conservation_benefited_action_plan", joinColumns = @JoinColumn(name = "conservation_id"))
     private List<ConventionItem> benefitedActionPlanList;
 
-    @Column(name = "recommented_conservation_actions")
+    @Column(name = "recommended_conservation_actions")
     private Boolean recommendedConservationActions;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "recommended_conservation_id")
+    @ElementCollection
+    @CollectionTable(name = "conservation_action_recommended", joinColumns = @JoinColumn(name = "conservation_id"))
     private List<ConservationActionItem> recommendedConservationActionsList;
 
     @Column(name = "other_ongoing_actions")
     private Boolean otherOngoingActions;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ongoing_conservation_id")
+    @ElementCollection
+    @CollectionTable(name = "conservation_action_ongoing", joinColumns = @JoinColumn(name = "conservation_id"))
     private List<ConservationActionItem> otherOngoingActionsList;
 
     @Column(name = "ex_situ_management")

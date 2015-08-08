@@ -25,6 +25,7 @@ public class Occurrence implements BaseEntity {
 
     private String municipality;
 
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
     private String reference;

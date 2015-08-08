@@ -11,8 +11,7 @@ public class Conservation implements BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "extinction_risk_id")
+    @Embedded
     private ExtinctionRisk extinctionRisk;
 
     @Embedded
@@ -30,7 +29,7 @@ public class Conservation implements BaseEntity {
     private List<NationalActionPlan> nationalActionPlans;
 
     @ElementCollection
-    @CollectionTable(name = "ongoing_research")
+    @CollectionTable(name = "conservation_ongoing_research")
     private List<Research> ongoingResearches;
 
     @ElementCollection

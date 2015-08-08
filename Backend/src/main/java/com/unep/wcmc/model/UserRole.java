@@ -31,7 +31,7 @@ public class UserRole implements BaseEntity {
     public enum RoleType { ADMIN, SUPERADMIN, EXPERT, PUBLIC_USER, ANONYMOUS }
     
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)

@@ -57,7 +57,7 @@ public class Reproduction implements BaseEntity {
     private Double averageSizeOfLitter;
 
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "reproductive_aggregation_id")
+	@JoinColumn(name = "reproduction_id")
 	private List<ReproductiveAggregation> aggregations;
 
 	@Column(name = "generation_length")

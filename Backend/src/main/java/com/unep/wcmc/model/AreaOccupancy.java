@@ -25,6 +25,10 @@ public class AreaOccupancy implements Serializable {
     @Column(name = "future_projection_aoo")
     private String futureProjection;
 
+    @Column(name = "fragmentation_level_aoo")
+    @Enumerated(value = EnumType.ORDINAL)
+    private DefinitionLevel framentationLevel;
+
     public Double getAoo() {
         return aoo;
     }
@@ -63,5 +67,13 @@ public class AreaOccupancy implements Serializable {
 
     public void setFutureProjection(String futureProjection) {
         this.futureProjection = futureProjection;
+    }
+
+    public DefinitionLevel getFramentationLevel() {
+        return framentationLevel;
+    }
+
+    public void setFramentationLevel(DefinitionLevel framentationLevel) {
+        this.framentationLevel = framentationLevel;
     }
 }

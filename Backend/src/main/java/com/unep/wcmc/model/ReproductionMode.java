@@ -8,10 +8,10 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
 @Embeddable
-public final class ReproductionMode implements Serializable {
-	
-	@Column(name = "reproduction_mode_id")
+public class ReproductionMode implements Serializable {
+
 	@Enumerated(value = EnumType.ORDINAL)
+	@Column(name = "reproduction_mode")
     private ReproductionModeType type;
 
     @Column(name = "reproduction_mode_other")

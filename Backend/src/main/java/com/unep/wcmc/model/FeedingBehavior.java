@@ -11,9 +11,6 @@ public class FeedingBehavior implements BaseEntity {
     @Embedded
     private EatingHabits eatingHabits;
 
-    @Column(name = "eating_habits")
-    private String otherEatingHabits;
-
     @Column(name = "expert")
     @Enumerated(value = EnumType.ORDINAL)
     private ExpertType expertType;
@@ -69,14 +66,6 @@ public class FeedingBehavior implements BaseEntity {
 	public void setExpertType(ExpertType expertType) {
 		this.expertType = expertType;
 	}
-
-    public String getOtherEatingHabits() {
-        return otherEatingHabits;
-    }
-
-    public void setOtherEatingHabits(String otherEatingHabits) {
-        this.otherEatingHabits = otherEatingHabits;
-    }
 
     public String getExpertDescription() {
         return expertDescription;

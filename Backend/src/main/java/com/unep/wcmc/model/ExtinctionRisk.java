@@ -1,13 +1,11 @@
 package com.unep.wcmc.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
-@Entity
-public class ExtinctionRisk implements BaseEntity {
-
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Embeddable
+public class ExtinctionRisk implements Serializable {
 
     @Column(name = "national_evaluation_elegible")
     private Boolean nationalEvaluationElegible;
@@ -16,24 +14,16 @@ public class ExtinctionRisk implements BaseEntity {
     private String changeReasons;
 
     @ElementCollection
-    @CollectionTable(name = "national_assessments", joinColumns = @JoinColumn(name = "extinction_risk_id"))
+    @CollectionTable(name = "conservation_assessment_national", joinColumns = @JoinColumn(name = "conservation_id"))
     private List<ExtinctionRiskAssessment> nationalAssessments;
 
     @ElementCollection
-    @CollectionTable(name = "global_conservation_assessments", joinColumns = @JoinColumn(name = "extinction_risk_id"))
+    @CollectionTable(name = "conservation_assessment_global", joinColumns = @JoinColumn(name = "conservation_id"))
     private List<ExtinctionRiskAssessment> globalConservationAssessments;
 
     @ElementCollection
-    @CollectionTable(name = "other_lists_assessments", joinColumns = @JoinColumn(name = "extinction_risk_id"))
+    @CollectionTable(name = "conservation_assessment_other", joinColumns = @JoinColumn(name = "conservation_id"))
     private List<ExtinctionRiskAssessment> otherListsAssessments;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Boolean getNationalEvaluationElegible() {
         return nationalEvaluationElegible;
