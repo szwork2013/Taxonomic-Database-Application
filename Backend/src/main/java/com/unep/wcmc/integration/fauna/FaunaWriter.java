@@ -78,7 +78,7 @@ public class FaunaWriter implements ItemWriter<Species> {
         if (existingList != null && !existingList.isEmpty()) {
             Species existing = existingList.get(0);
             UPDATES_COUNT.increment(runtime);
-            existing.setCommonName(species.getCommonName());
+            existing.setName(species.getName());
             existing.setScientificName(species.getScientificName());
             existing.setTaxonomy(species.getTaxonomy());
             existing.setEnabled(true);

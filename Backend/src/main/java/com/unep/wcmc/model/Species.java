@@ -14,8 +14,8 @@ public class Species implements BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "common_name")
-    private String commonName;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "scientific_name")
     private String scientificName;
@@ -77,12 +77,12 @@ public class Species implements BaseEntity {
         this.id = id;
     }
 
-    public String getCommonName() {
-        return commonName;
+    public String getName() {
+        return name;
     }
 
-    public void setCommonName(String commonName) {
-        this.commonName = commonName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getScientificName() {

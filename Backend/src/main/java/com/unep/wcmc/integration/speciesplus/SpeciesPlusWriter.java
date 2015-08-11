@@ -110,7 +110,7 @@ public class SpeciesPlusWriter implements ItemWriter<Species> {
         // process the genus data
         Genus genus = writeGenus(hierarchy.getGenus(), species);
         // initialize the hierarchy values
-        hierarchy.init(kingdom, phylum, hierarchyClass, hierarchyOrder, family, genus, null);
+        hierarchy.init(kingdom, phylum, hierarchyClass, hierarchyOrder, family, genus, null, null);
         return hierarchy;
     }
 
@@ -183,7 +183,7 @@ public class SpeciesPlusWriter implements ItemWriter<Species> {
         if (existingList != null && !existingList.isEmpty()) {
             Species existing = existingList.get(0);
             UPDATES_COUNT.increment(runtime);
-            existing.setCommonName(species.getCommonName());
+            existing.setName(species.getName());
             existing.setScientificName(species.getScientificName());
             existing.setTaxonomy(species.getTaxonomy());
             existing.setEnabled(true);

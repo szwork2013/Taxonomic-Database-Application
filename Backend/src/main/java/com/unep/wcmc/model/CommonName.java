@@ -15,6 +15,14 @@ public class CommonName implements BaseEntity {
 
     private String region;
 
+    public CommonName() {
+        super();
+    }
+
+    public CommonName(String commonName) {
+        this.commonName = commonName;
+    }
+
     public Long getId() {
         return id;
     }
