@@ -42,7 +42,7 @@ public class SpeciesConfig {
                 try {
                     final Species specie = specieService.findByCommonName("Sagui-de-tufos-brancos");
                     if (specie == null) {
-                        createSpecies();    
+                        createSpecies();
                     }
                 } catch (Exception e) {
                     System.err.println(e);
@@ -51,7 +51,7 @@ public class SpeciesConfig {
             }
             
             private void createSpecies() {
-                final Species specie = new Species();
+                /*final Species specie = new Species();
                 specie.setCommonName("Sagui-de-tufos-brancos");
                 specie.setScientificName("Callithrix jacchus");
                 specie.setConservation(createConservation());
@@ -62,7 +62,7 @@ public class SpeciesConfig {
                 specie.setTaxonomy(createTaxonomy());
                 specie.setThreat(createThreat());
                 specie.setCoverPhoto(null);
-                specieService.save(specie);
+                specieService.save(specie);*/
             }
             
             private Conservation createConservation() {

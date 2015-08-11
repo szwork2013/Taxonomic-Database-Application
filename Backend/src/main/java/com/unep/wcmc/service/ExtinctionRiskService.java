@@ -91,7 +91,7 @@ public class ExtinctionRiskService {
                         session.insert(species.getConservation().getExtinctionRisk());
                     }
                     // set the Threat facts
-                    session.insert(species.getThreat());
+                   // session.insert(species.getThreat());
                 }
                 // firing all the rules
                 session.fireAllRules();
