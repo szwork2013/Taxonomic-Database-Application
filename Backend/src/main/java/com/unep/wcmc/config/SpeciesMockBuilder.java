@@ -28,7 +28,7 @@ public class SpeciesMockBuilder {
             specie.setExtinctionRiskCategory(ExtinctionRiskCategory.CRITICALLY_ENDANGERED);
             specie.setNaturalHistory(createNaturalHistory());
             specie.setTaxonomy(createTaxonomy());
-            specie.setThreat(createThreat());
+            //specie.setThreat(createThreat());
             specie.setCoverPhoto(null);
             specie = specieService.save(specie);
         }

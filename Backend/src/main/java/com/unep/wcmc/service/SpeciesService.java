@@ -31,7 +31,7 @@ public final class SpeciesService extends AbstractService<Species, SpeciesReposi
     private ExceptionOccurrenceRepository exceptionRepo;
 
     public Species findByCommonName(String commonName) {
-        return repo.findByCommonName(commonName);
+        return repo.findByName(commonName);
     }
 
     public List<Species> findByScientificName(String scientificName) {

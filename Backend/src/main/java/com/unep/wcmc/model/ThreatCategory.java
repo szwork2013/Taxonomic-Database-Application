@@ -16,6 +16,7 @@ public class ThreatCategory implements BaseEntity {
     private Boolean custom;
 
     @OneToOne(fetch = FetchType.EAGER, optional = true)
+    @JoinColumn(name = "parent_id")
     private ThreatCategory threatCategoryParent;
 
     public Long getId() {

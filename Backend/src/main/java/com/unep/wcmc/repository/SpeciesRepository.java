@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface SpeciesRepository extends JpaRepository<Species, Long>, JpaSpecificationExecutor<Species> {
 
-    Species findByCommonName(String commonName);
+    Species findByName(String name);
 
     List<Species> findByScientificName(String scientificName);
 
