@@ -65,6 +65,8 @@ public final class UserService extends AbstractService<User, UserRepository> imp
         	repo.save(user);        	
         }
     }
+
+
     
     public void assignUserRoles(String id, String role) {    	
         final User user = get(Long.valueOf(id));

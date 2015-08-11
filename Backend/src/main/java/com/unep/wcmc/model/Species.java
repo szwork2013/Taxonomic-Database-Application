@@ -2,6 +2,8 @@ package com.unep.wcmc.model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Species implements BaseEntity {
@@ -37,9 +39,12 @@ public class Species implements BaseEntity {
     @JoinColumn(name = "conservation_id")
     private Conservation conservation;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "threat_id")
-    private Threat threat;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "specie_threat", joinColumns = {
+            @JoinColumn(name = "specie_id", nullable = false, updatable = false) },
+            inverseJoinColumns = { @JoinColumn(name = "threat_id",
+                    nullable = false, updatable = false) })
+    private Set<Threat> threats;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cover_photo_id")
@@ -124,14 +129,6 @@ public class Species implements BaseEntity {
         this.conservation = conservation;
     }
 
-    public Threat getThreat() {
-        return threat;
-    }
-
-    public void setThreat(Threat threat) {
-        this.threat = threat;
-    }
-
     public Image getCoverPhoto() {
         return coverPhoto;
     }
@@ -170,5 +167,21 @@ public class Species implements BaseEntity {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public Set getThreats() {
+        return threats == null ? new HashSet<Threat>() : threats;
+    }
+
+    public void setThreats(Set threats) {
+        this.threats = threats;
+    }
+
+    public void addThreat(Threat threat){
+        getThreats().add(threat);
+    }
+
+    public void removeThreat(Threat threat){
+        getThreats().remove(threat);
     }
 }
