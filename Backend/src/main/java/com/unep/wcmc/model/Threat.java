@@ -12,6 +12,9 @@ public class Threat implements BaseEntity {
     @Column(name = "threat_description")
     private String description;
 
+    @Column(name = "threat_category")
+    private ThreatCategory category;
+
     @Embedded
     private ThreatStatus threatStatus;
 
@@ -38,6 +41,20 @@ public class Threat implements BaseEntity {
 
     @Embedded
     private FishingThreat fishingThreat;
+
+    public Threat(){
+    }
+
+    public Threat(ThreatCategory threatCategory){
+
+        setDescription(threatCategory.getDescription());
+        setCategory(threatCategory);
+    }
+
+    public Threat(String description){
+
+        setDescription(description);
+    }
 
     public Long getId() {
         return id;
@@ -125,5 +142,13 @@ public class Threat implements BaseEntity {
 
     public void setExtremeFlutuationLocation(Boolean extremeFlutuationLocation) {
         this.extremeFlutuationLocation = extremeFlutuationLocation;
+    }
+
+    public ThreatCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(ThreatCategory category) {
+        this.category = category;
     }
 }
