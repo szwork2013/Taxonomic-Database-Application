@@ -2,19 +2,20 @@ package com.unep.wcmc.model;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
 import java.io.Serializable;
 
 @Embeddable
 public class PopulationTrend implements Serializable {
 
-    @Column(name = "perc_population_decline")
-    private Double percPopulationDecline;
-
     @Column(name = "decline_reversible_and_ceased")
     private Boolean declineReversibleAndCeased;
 
     @Column(name = "population_decline_based_on")
-    private String populationDeclinedBasedOn;
+    @Enumerated(EnumType.ORDINAL)
+    private PopulationDeclinedBasedOn populationDeclinedBasedOn;
 
     @Column(name = "justification_of_pop_decline")
     private String popDeclineJustification;
@@ -22,14 +23,9 @@ public class PopulationTrend implements Serializable {
     @Column(name = "extinction_probability_in_brazil")
     private Double brazilExtinctionProbability;
 
-    public Double getPercPopulationDecline() {
-        return percPopulationDecline;
-    }
-
-    public void setPercPopulationDecline(Double percPopulationDecline) {
-        this.percPopulationDecline = percPopulationDecline;
-    }
-
+    @Column(name = "other_observations_on_population_dynamics")
+    private String otherObservationsOnPopulationDynamics;
+    
     public Boolean getDeclineReversibleAndCeased() {
         return declineReversibleAndCeased;
     }
@@ -38,11 +34,11 @@ public class PopulationTrend implements Serializable {
         this.declineReversibleAndCeased = declineReversibleAndCeased;
     }
 
-    public String getPopulationDeclinedBasedOn() {
+    public PopulationDeclinedBasedOn getPopulationDeclinedBasedOn() {
         return populationDeclinedBasedOn;
     }
 
-    public void setPopulationDeclinedBasedOn(String populationDeclinedBasedOn) {
+    public void setPopulationDeclinedBasedOn(PopulationDeclinedBasedOn populationDeclinedBasedOn) {
         this.populationDeclinedBasedOn = populationDeclinedBasedOn;
     }
 
@@ -61,4 +57,13 @@ public class PopulationTrend implements Serializable {
     public void setBrazilExtinctionProbability(Double brazilExtinctionProbability) {
         this.brazilExtinctionProbability = brazilExtinctionProbability;
     }
+
+	public String getOtherObservationsOnPopulationDynamics() {
+		return otherObservationsOnPopulationDynamics;
+	}
+
+	public void setOtherObservationsOnPopulationDynamics(
+			String otherObservationsOnPopulationDynamics) {
+		this.otherObservationsOnPopulationDynamics = otherObservationsOnPopulationDynamics;
+	}
 }

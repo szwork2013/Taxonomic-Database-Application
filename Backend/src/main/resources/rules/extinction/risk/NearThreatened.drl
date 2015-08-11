@@ -26,7 +26,6 @@ rule "Near Threatened (NT) - A1"
     when
         $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.NEAR_THREATENED) from configuration
         // criteria
-        PopulationTrend(percPopulationDecline >= 40, percPopulationDecline < 50) // A1
         PopulationTrend(declineReversibleAndCeased == null)
     then
         species.setExtinctionRiskCategory(ExtinctionRiskCategory.NEAR_THREATENED);
@@ -38,7 +37,6 @@ rule "Near Threatened (NT) - A2"
     when
         $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.NEAR_THREATENED) from configuration
         // criteria
-        PopulationTrend(percPopulationDecline >= 20, percPopulationDecline < 40) // A2, A3, A4
         PopulationTrend(declineReversibleAndCeased == false)
     then
         species.setExtinctionRiskCategory(ExtinctionRiskCategory.NEAR_THREATENED);

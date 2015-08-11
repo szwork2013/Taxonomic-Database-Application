@@ -13,7 +13,7 @@ import javax.persistence.*;
  */
 @Entity
 @IdClass(Authority.class)
-public final class Authority implements GrantedAuthority {
+public class Authority implements GrantedAuthority {
 
     private static final long serialVersionUID = -3291119889078747200L;
 

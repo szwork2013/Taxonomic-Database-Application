@@ -156,7 +156,7 @@ define(['app', 'bootstrap', 'highcharts-ng',
                 $scope.user.firstName = obj.firstName;
                 $scope.user.address = obj.address;
                 $scope.user.phoneNumber = obj.phoneNumber;
-                $scope.user.role = obj.role;
+                $scope.user.userRole = obj.userRole;
                 $scope.user.enabled = obj.enabled;
                 $scope.user.email = obj.email;
 

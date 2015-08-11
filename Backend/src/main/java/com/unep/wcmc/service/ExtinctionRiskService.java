@@ -1,9 +1,7 @@
 package com.unep.wcmc.service;
 
-import com.google.common.collect.Lists;
 import com.unep.wcmc.model.ExtinctionRiskCategory;
 import com.unep.wcmc.model.Species;
-import com.unep.wcmc.repository.ExtinctionRiskConfigurationRepository;
 import com.unep.wcmc.repository.SpeciesRepository;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
@@ -20,9 +18,6 @@ public class ExtinctionRiskService {
 
     @Autowired
     private KieContainer kieContainer;
-
-    @Autowired
-    private ExtinctionRiskConfigurationRepository configurationRepo;
 
     @Autowired
     private SpeciesRepository specieRepository;
@@ -70,7 +65,7 @@ public class ExtinctionRiskService {
                 species.setExtinctionRiskCategory(ExtinctionRiskCategory.LEAST_CONCERN);
                 // global variables
                 session.setGlobal("species", species);
-                session.setGlobal("configuration", Lists.newArrayList(configurationRepo.findAll()));
+                //session.setGlobal("configuration", Lists.newArrayList(configurationRepo.findAll()));
                 // set the business rules facts
                 if (species != null) {
                     // set the Taxonomy facts

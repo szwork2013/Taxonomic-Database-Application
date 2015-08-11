@@ -110,7 +110,7 @@ public class SpeciesPlusWriter implements ItemWriter<Species> {
         // process the genus data
         Genus genus = writeGenus(hierarchy.getGenus(), species);
         // initialize the hierarchy values
-        hierarchy.init(kingdom, phylum, hierarchyClass, hierarchyOrder, family, genus, species.getScientificName(), null);
+        hierarchy.init(kingdom, phylum, hierarchyClass, hierarchyOrder, family, genus, null);
         return hierarchy;
     }
 

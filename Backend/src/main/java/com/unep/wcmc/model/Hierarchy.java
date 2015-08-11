@@ -33,31 +33,33 @@ public class Hierarchy implements Serializable {
     @JoinColumn(name = "genus_id")
     private Genus genus;
 
-    @Column(name = "species")
-    private String species;
-
     @Column(name = "subspecies")
-    private String subSpecies;
+    private String subspecies;
+    
+    @Column(name = "species_epiteth")
+    private String speciesEpiteth;
+
+    @Column(name = "author_year")
+    private String authorYear;
 
     public Hierarchy() {
         super();
     }
 
     public Hierarchy(Kingdom kingdom, Phylum phylum, HierarchyClass hierarchyClass, HierarchyOrder order,
-                     Family family, Genus genus, String species, String subSpecies) {
-        this.init(kingdom, phylum, hierarchyClass, order, family, genus, species, subSpecies);
+                     Family family, Genus genus, String subspecies) {
+        this.init(kingdom, phylum, hierarchyClass, order, family, genus, subspecies);
     }
 
     public void init(Kingdom kingdom, Phylum phylum, HierarchyClass hierarchyClass, HierarchyOrder order,
-                     Family family, Genus genus, String species, String subSpecies) {
+                     Family family, Genus genus, String subspecies) {
         this.kingdom = kingdom;
         this.phylum = phylum;
         this.hierarchyClass = hierarchyClass;
         this.order = order;
         this.family = family;
         this.genus = genus;
-        this.species = species;
-        this.subSpecies = subSpecies;
+        this.subspecies = subspecies;
     }
 
     public Kingdom getKingdom() {
@@ -100,20 +102,12 @@ public class Hierarchy implements Serializable {
         this.family = family;
     }
 
-    public String getSpecies() {
-        return species;
+    public String getSubspecies() {
+        return subspecies;
     }
 
-    public void setSpecies(String species) {
-        this.species = species;
-    }
-
-    public String getSubSpecies() {
-        return subSpecies;
-    }
-
-    public void setSubSpecies(String subSpecies) {
-        this.subSpecies = subSpecies;
+    public void setSubspecies(String subspecies) {
+        this.subspecies = subspecies;
     }
 
     public Genus getGenus() {
@@ -122,5 +116,21 @@ public class Hierarchy implements Serializable {
 
     public void setGenus(Genus genus) {
         this.genus = genus;
+    }
+
+	public String getSpeciesEpiteth() {
+		return speciesEpiteth;
+	}
+
+	public void setSpeciesEpiteth(String speciesEpiteth) {
+		this.speciesEpiteth = speciesEpiteth;
+	}
+
+    public String getAuthorYear() {
+        return authorYear;
+    }
+
+    public void setAuthorYear(String authorYear) {
+        this.authorYear = authorYear;
     }
 }

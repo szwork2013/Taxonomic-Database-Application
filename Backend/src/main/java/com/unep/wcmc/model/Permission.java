@@ -15,12 +15,12 @@ import javax.persistence.Id;
  *
  */
 @Entity
-public final class Permission implements BaseEntity {
+public class Permission implements BaseEntity {
     
     private static final long serialVersionUID = -3942955339677014610L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
     private String name;

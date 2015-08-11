@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -42,11 +43,13 @@ public final class SpeciesService extends AbstractService<Species, SpeciesReposi
     }
 
     public List<Species> findBySpeciesName(String species) {
-        return repo.findByTaxonomyHierarchySpecies(species);
+        return new ArrayList<>();
+        //return repo.findByTaxonomyHierarchySpecies(species);
     }
 
     public List<Species> findBySpeciesNameSimilaries(String species) {
-        return repo.findByTaxonomySpeciesSoundex(species);
+        return new ArrayList<>();
+        //return repo.findByTaxonomySpeciesSoundex(species);
     }
 
     public ExceptionOccurrence raiseSpeciesException(Species active, Species suggested,

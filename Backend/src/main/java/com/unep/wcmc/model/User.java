@@ -30,11 +30,14 @@ import com.unep.wcmc.validator.Phone;
  *
  */
 @Entity
-@Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = { "username" }), @UniqueConstraint(columnNames = { "email" }), })
+@Table(name = "users",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = { "username" }),
+                @UniqueConstraint(columnNames = { "email" }), })
 public final class User implements UserDetails, BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Email
@@ -59,6 +62,15 @@ public final class User implements UserDetails, BaseEntity {
 
     @Column
     private String address;
+    
+    @Column
+    private String neighbourhood;
+    
+    @Column
+    private String municipality;
+    
+    @Column
+    private String postalCode;
 
     @Phone
     @Column
@@ -70,7 +82,6 @@ public final class User implements UserDetails, BaseEntity {
     @OneToOne
     @JoinColumn(name = "user_role_id", nullable = false)
     private UserRole userRole;
-    private String role;
 
     public User() {
     }
@@ -125,7 +136,31 @@ public final class User implements UserDetails, BaseEntity {
         this.address = address;
     }
 
-    public String getPhoneNumber() {
+    public String getNeighbourhood() {
+		return neighbourhood;
+	}
+
+	public void setNeighbourhood(String neighbourhood) {
+		this.neighbourhood = neighbourhood;
+	}
+
+	public String getMunicipality() {
+		return municipality;
+	}
+
+	public void setMunicipality(String municipality) {
+		this.municipality = municipality;
+	}
+
+	public String getPostalCode() {
+		return postalCode;
+	}
+
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
+	}
+
+	public String getPhoneNumber() {
         return phoneNumber;
     }
 
@@ -180,14 +215,6 @@ public final class User implements UserDetails, BaseEntity {
         return true;
     }
     
-    public String getRole() {
-		return role == null ? null : role.toUpperCase();
-	}
-
-	public void setRole(String role) {
-		this.role = role;
-	}
-
     @Override
     public boolean isEnabled() {
         return enabled;

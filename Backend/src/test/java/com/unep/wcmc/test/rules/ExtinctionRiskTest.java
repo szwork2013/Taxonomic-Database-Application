@@ -1,9 +1,7 @@
 package com.unep.wcmc.test.rules;
 
-import com.google.common.collect.Lists;
 import com.unep.wcmc.Application;
 import com.unep.wcmc.model.*;
-import com.unep.wcmc.repository.ExtinctionRiskConfigurationRepository;
 import com.unep.wcmc.repository.SpeciesRepository;
 import org.junit.Assert;
 import org.junit.Before;
@@ -26,9 +24,6 @@ public class ExtinctionRiskTest {
     private KieServices kieServices;
     private KieContainer kieContainer;
     private KieSession kieSession;
-
-    @Autowired
-    private ExtinctionRiskConfigurationRepository repo;
 
     @Autowired
     private SpeciesRepository specieRepository;
@@ -57,10 +52,10 @@ public class ExtinctionRiskTest {
         Species specie = new Species();
         specie.setScientificName("Hypsiboas curupi Garcia, Faivovichi & Haddad, 2007");
         kieSession.setGlobal("specie", specie);
-        kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
+        //kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
 
         DistributionArea distributionArea = new DistributionArea();
-        distributionArea.setExtendOccurrence(8102.80d);
+        //distributionArea.setExtendOccurrence(8102.80d);
         distributionArea.setOcurrsBrazil(true);
         distributionArea.setNativeBrazil(true);
         distributionArea.setEndemicFromBrazil(true);
@@ -90,19 +85,18 @@ public class ExtinctionRiskTest {
         specie.setCommonName("macaco-prego-galego");
         specie.setScientificName("Sapajus flavius");
         kieSession.setGlobal("specie", specie);
-        kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
+        //kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
 
         DistributionArea distributionArea = new DistributionArea();
-        distributionArea.setExtendOccurrence(23000d);
+        //distributionArea.setExtendOccurrence(23000d);
         distributionArea.setOcurrsBrazil(true);
         distributionArea.setNativeBrazil(true);
         distributionArea.setEndemicFromBrazil(true);
-        distributionArea.setOccupancyArea(150d);
-        distributionArea.setTrendOccupancyArea(TrendOccurence.DECLINING);
+        //distributionArea.setOccupancyArea(150d);
+        //distributionArea.setTrendOccupancyArea(TrendOccurence.DECLINING);
         kieSession.insert(distributionArea);
 
         PopulationTrend trend = new PopulationTrend();
-        trend.setPercPopulationDecline(50d);
         trend.setDeclineReversibleAndCeased(false);
         kieSession.insert(trend);
 
@@ -128,7 +122,7 @@ public class ExtinctionRiskTest {
     public void testExtinct_EX() {
         Species specie = new Species();
         kieSession.setGlobal("specie", specie);
-        kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
+        //kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
 
         ExtinctionRisk extinctionRisk = new ExtinctionRisk();
         extinctionRisk.setNationalEvaluationElegible(true);
@@ -150,7 +144,7 @@ public class ExtinctionRiskTest {
     public void testExtinctInTheWild_EW() {
         Species specie = new Species();
         kieSession.setGlobal("specie", specie);
-        kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
+        //kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
 
         ExtinctionRisk extinctionRisk = new ExtinctionRisk();
         extinctionRisk.setNationalEvaluationElegible(true);
@@ -172,7 +166,7 @@ public class ExtinctionRiskTest {
     public void testRegionallyExtinct_RE() {
         Species specie = new Species();
         kieSession.setGlobal("specie", specie);
-        kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
+        //kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
 
         ExtinctionRisk extinctionRisk = new ExtinctionRisk();
         extinctionRisk.setNationalEvaluationElegible(false);

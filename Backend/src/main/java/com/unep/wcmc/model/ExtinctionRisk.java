@@ -1,34 +1,29 @@
 package com.unep.wcmc.model;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Embeddable
 public class ExtinctionRisk implements Serializable {
 
+    @Column(name = "national_evaluation_elegible")
     private Boolean nationalEvaluationElegible;
 
-    private String previousNationalAssessment;
-
+    @Column(name = "change_reasons")
     private String changeReasons;
 
-    private String specificActionsInProtectedAreas;
+    @ElementCollection
+    @CollectionTable(name = "conservation_assessment_national", joinColumns = @JoinColumn(name = "conservation_id"))
+    private List<ExtinctionRiskAssessment> nationalAssessments;
 
-    private String actionPlans;
+    @ElementCollection
+    @CollectionTable(name = "conservation_assessment_global", joinColumns = @JoinColumn(name = "conservation_id"))
+    private List<ExtinctionRiskAssessment> globalConservationAssessments;
 
-    private String researchInProgress;
-
-    private String necessaryResearchForConservation;
-
-    @Column(name = "in_national_endangered_fauna")
-    private Boolean inNationalEndangeredFauna;
-
-    @Column(name = "national_endangered_fauna")
-    private Boolean nationalEndangeredFauna;
-
-    @Column(name = "presence_in_other_endangered_lists")
-    private Boolean presenceInOtherEndangeredLists;
+    @ElementCollection
+    @CollectionTable(name = "conservation_assessment_other", joinColumns = @JoinColumn(name = "conservation_id"))
+    private List<ExtinctionRiskAssessment> otherListsAssessments;
 
     public Boolean getNationalEvaluationElegible() {
         return nationalEvaluationElegible;
@@ -36,14 +31,6 @@ public class ExtinctionRisk implements Serializable {
 
     public void setNationalEvaluationElegible(Boolean nationalEvaluationElegible) {
         this.nationalEvaluationElegible = nationalEvaluationElegible;
-    }
-
-    public String getPreviousNationalAssessment() {
-        return previousNationalAssessment;
-    }
-
-    public void setPreviousNationalAssessment(String previousNationalAssessment) {
-        this.previousNationalAssessment = previousNationalAssessment;
     }
 
     public String getChangeReasons() {
@@ -54,59 +41,27 @@ public class ExtinctionRisk implements Serializable {
         this.changeReasons = changeReasons;
     }
 
-    public String getSpecificActionsInProtectedAreas() {
-        return specificActionsInProtectedAreas;
+    public List<ExtinctionRiskAssessment> getNationalAssessments() {
+        return nationalAssessments;
     }
 
-    public void setSpecificActionsInProtectedAreas(String specificActionsInProtectedAreas) {
-        this.specificActionsInProtectedAreas = specificActionsInProtectedAreas;
+    public void setNationalAssessments(List<ExtinctionRiskAssessment> nationalAssessments) {
+        this.nationalAssessments = nationalAssessments;
     }
 
-    public String getActionPlans() {
-        return actionPlans;
+    public List<ExtinctionRiskAssessment> getGlobalConservationAssessments() {
+        return globalConservationAssessments;
     }
 
-    public void setActionPlans(String actionPlans) {
-        this.actionPlans = actionPlans;
+    public void setGlobalConservationAssessments(List<ExtinctionRiskAssessment> globalConservationAssessments) {
+        this.globalConservationAssessments = globalConservationAssessments;
     }
 
-    public String getResearchInProgress() {
-        return researchInProgress;
+    public List<ExtinctionRiskAssessment> getOtherListsAssessments() {
+        return otherListsAssessments;
     }
 
-    public void setResearchInProgress(String researchInProgress) {
-        this.researchInProgress = researchInProgress;
-    }
-
-    public String getNecessaryResearchForConservation() {
-        return necessaryResearchForConservation;
-    }
-
-    public void setNecessaryResearchForConservation(String necessaryResearchForConservation) {
-        this.necessaryResearchForConservation = necessaryResearchForConservation;
-    }
-
-    public Boolean getInNationalEndangeredFauna() {
-        return inNationalEndangeredFauna;
-    }
-
-    public void setInNationalEndangeredFauna(Boolean inNationalEndangeredFauna) {
-        this.inNationalEndangeredFauna = inNationalEndangeredFauna;
-    }
-
-    public Boolean getPresenceInOtherEndangeredLists() {
-        return presenceInOtherEndangeredLists;
-    }
-
-    public void setPresenceInOtherEndangeredLists(Boolean presenceInOtherEndangeredLists) {
-        this.presenceInOtherEndangeredLists = presenceInOtherEndangeredLists;
-    }
-
-    public Boolean getNationalEndangeredFauna() {
-        return nationalEndangeredFauna;
-    }
-
-    public void setNationalEndangeredFauna(Boolean nationalEndangeredFauna) {
-        this.nationalEndangeredFauna = nationalEndangeredFauna;
+    public void setOtherListsAssessments(List<ExtinctionRiskAssessment> otherListsAssessments) {
+        this.otherListsAssessments = otherListsAssessments;
     }
 }

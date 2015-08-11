@@ -7,11 +7,13 @@ import com.unep.wcmc.model.ExtinctionRiskCategory;
 import com.unep.wcmc.model.ExtinctionRiskConfiguration;
 import com.unep.wcmc.model.Habitat;
 import com.unep.wcmc.model.NaturalHistory;
+import com.unep.wcmc.model.PopulationDeclinedBasedOn;
 import com.unep.wcmc.model.PopulationDynamics;
 import com.unep.wcmc.model.PopulationTrend;
 import com.unep.wcmc.model.Species;
 import com.unep.wcmc.model.TrendOccurence;
-import com.unep.wcmc.model.Threat;
+import com.unep.wcmc.model.Threat
+import com.unep.wcmc.model.ExtinctionRiskCriteria
 
 global Species species;
 global java.util.List configuration;
@@ -19,13 +21,26 @@ global java.util.List configuration;
 /**
  * Critically Endangered (CR) rules
  */
+rule "Critically Endangered (CR) - A1a"
+    activation-group "ExtinctionRisk"
+    salience 0
+    when
+        $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.CRITICALLY_ENDANGERED) from configuration
+        // criteria
+        PopulationDynamics(reductionWithCausesCeased == true, reductionWithCausesCeasedTotalPercent >= 90.0)
+        PopulationTrend(populationDeclinedBasedOn == PopulationDeclinedBasedOn.DECLINE_AOC_EOC_HABITAT_QUALITY)
+    then
+        species.setExtinctionRiskCategory(ExtinctionRiskCategory.CRITICALLY_ENDANGERED);
+        species.setExtinctionRiskCriteria(ExtinctionRiskCriteria.A1a);
+end
+
+
 rule "Critically Endangered (CR) - A1"
     activation-group "ExtinctionRisk"
     salience 0
     when
         $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.CRITICALLY_ENDANGERED) from configuration
         // criteria
-        PopulationTrend(percPopulationDecline >= $config.percPopulationDecline) // A1
         PopulationTrend(declineReversibleAndCeased == null)
     then
         species.setExtinctionRiskCategory(ExtinctionRiskCategory.CRITICALLY_ENDANGERED);
@@ -37,7 +52,6 @@ rule "Critically Endangered (CR) - A2"
     when
         $config : ExtinctionRiskConfiguration(category == ExtinctionRiskCategory.CRITICALLY_ENDANGERED) from configuration
         // criteria
-        PopulationTrend(percPopulationDecline >= $config.percePopulationDecline2) // A2, A3, A4
         PopulationTrend(declineReversibleAndCeased == false)
     then
         species.setExtinctionRiskCategory(ExtinctionRiskCategory.CRITICALLY_ENDANGERED);

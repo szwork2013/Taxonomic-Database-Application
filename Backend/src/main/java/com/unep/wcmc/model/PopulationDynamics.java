@@ -2,15 +2,63 @@ package com.unep.wcmc.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
-@Embeddable
+@Entity
 public class PopulationDynamics implements Serializable {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Embedded
     private PopulationTrend populationTrend;
 
     @Embedded
     private DensityData densityData;
+
+	@Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "reduction",
+                    column = @Column(name = "reduction_with_causes_ceased")),
+            @AttributeOverride(name = "years",
+                    column = @Column(name = "reduction_with_causes_ceased_years")),
+            @AttributeOverride(name = "percentage",
+                    column = @Column(name = "reduction_with_causes_ceased_percent"))
+    })
+	private PopulationReduction reductionWithCausesCeased;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "reduction",
+                    column = @Column(name = "reduction_with_causes_not_ceased")),
+            @AttributeOverride(name = "years",
+                    column = @Column(name = "reduction_with_causes_not_ceased_years")),
+            @AttributeOverride(name = "percentage",
+                    column = @Column(name = "reduction_with_causes_not_ceased_percent"))
+    })
+	private PopulationReduction reductionWithCausesNotCeased;
+
+	@Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "reduction",
+                    column = @Column(name = "projection_future_reduction")),
+            @AttributeOverride(name = "years",
+                    column = @Column(name = "projection_future_reduction_years")),
+            @AttributeOverride(name = "percentage",
+                    column = @Column(name = "projection_future_reduction_percent"))
+    })
+	private PopulationReduction projectionFutureReduction;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "reduction",
+                    column = @Column(name = "reduction_include_past_future")),
+            @AttributeOverride(name = "years",
+                    column = @Column(name = "reduction_include_past_future_years")),
+            @AttributeOverride(name = "percentage",
+                    column = @Column(name = "reduction_include_past_future_percent"))
+    })
+	private PopulationReduction reductionIncludePastFuture;
 
     @Column(name = "number_of_mature_individuals")
     private Long matureIndividualsNumber;
@@ -36,6 +84,14 @@ public class PopulationDynamics implements Serializable {
 
     @Column(name = "captive_breeding_program")
     private Boolean captiveBreedingProgram;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public PopulationTrend getPopulationTrend() {
         return populationTrend;
@@ -115,5 +171,37 @@ public class PopulationDynamics implements Serializable {
 
     public void setCaptiveBreedingProgram(Boolean captiveBreedingProgram) {
         this.captiveBreedingProgram = captiveBreedingProgram;
+    }
+
+    public PopulationReduction getReductionWithCausesCeased() {
+        return reductionWithCausesCeased;
+    }
+
+    public void setReductionWithCausesCeased(PopulationReduction reductionWithCausesCeased) {
+        this.reductionWithCausesCeased = reductionWithCausesCeased;
+    }
+
+    public PopulationReduction getReductionWithCausesNotCeased() {
+        return reductionWithCausesNotCeased;
+    }
+
+    public void setReductionWithCausesNotCeased(PopulationReduction reductionWithCausesNotCeased) {
+        this.reductionWithCausesNotCeased = reductionWithCausesNotCeased;
+    }
+
+    public PopulationReduction getProjectionFutureReduction() {
+        return projectionFutureReduction;
+    }
+
+    public void setProjectionFutureReduction(PopulationReduction projectionFutureReduction) {
+        this.projectionFutureReduction = projectionFutureReduction;
+    }
+
+    public PopulationReduction getReductionIncludePastFuture() {
+        return reductionIncludePastFuture;
+    }
+
+    public void setReductionIncludePastFuture(PopulationReduction reductionIncludePastFuture) {
+        this.reductionIncludePastFuture = reductionIncludePastFuture;
     }
 }

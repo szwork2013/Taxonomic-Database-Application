@@ -1,56 +1,53 @@
 package com.unep.wcmc.model;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import java.io.Serializable;
+import javax.persistence.*;
 
-@Embeddable
-public class FeedingBehavior implements Serializable {
+@Entity
+public class FeedingBehavior implements BaseEntity {
 
-    @Column(name = "trophic_level")
-    private String trophicLevel;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Column(name = "eating_habits")
-    private String eatingHabits;
+    @Embedded
+    private EatingHabits eatingHabits;
 
-    @Column(name = "expert_specialist")
-    private String expertSpecialist;
+    @Column(name = "expert")
+    @Enumerated(value = EnumType.ORDINAL)
+    private ExpertType expertType;
+
+    @Column(name = "expertDescription")
+    private String expertDescription;
 
     @Column(name = "feeding_agregations")
-    private String feedingAgregations;
+    private Boolean feedingAgregations;
+
+    @Column(name = "feeding_agregations_desc")
+    private String feedingAgregationsDesc;
 
     @Column(name = "eating_habits_other_comments")
     private String eatingHabitsOtherComments;
 
-    public String getTrophicLevel() {
-        return trophicLevel;
+    public Long getId() {
+        return id;
     }
 
-    public void setTrophicLevel(String trophicLevel) {
-        this.trophicLevel = trophicLevel;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getEatingHabits() {
+    public EatingHabits getEatingHabits() {
         return eatingHabits;
     }
 
-    public void setEatingHabits(String eatingHabits) {
+    public void setEatingHabits(EatingHabits eatingHabits) {
         this.eatingHabits = eatingHabits;
     }
 
-    public String getExpertSpecialist() {
-        return expertSpecialist;
-    }
-
-    public void setExpertSpecialist(String expertSpecialist) {
-        this.expertSpecialist = expertSpecialist;
-    }
-
-    public String getFeedingAgregations() {
+    public Boolean getFeedingAgregations() {
         return feedingAgregations;
     }
 
-    public void setFeedingAgregations(String feedingAgregations) {
+    public void setFeedingAgregations(Boolean feedingAgregations) {
         this.feedingAgregations = feedingAgregations;
     }
 
@@ -60,5 +57,29 @@ public class FeedingBehavior implements Serializable {
 
     public void setEatingHabitsOtherComments(String eatingHabitsOtherComments) {
         this.eatingHabitsOtherComments = eatingHabitsOtherComments;
+    }
+
+	public ExpertType getExpertType() {
+		return expertType;
+	}
+
+	public void setExpertType(ExpertType expertType) {
+		this.expertType = expertType;
+	}
+
+    public String getExpertDescription() {
+        return expertDescription;
+    }
+
+    public void setExpertDescription(String expertDescription) {
+        this.expertDescription = expertDescription;
+    }
+
+    public String getFeedingAgregationsDesc() {
+        return feedingAgregationsDesc;
+    }
+
+    public void setFeedingAgregationsDesc(String feedingAgregationsDesc) {
+        this.feedingAgregationsDesc = feedingAgregationsDesc;
     }
 }

@@ -1,39 +1,54 @@
 package com.unep.wcmc.model;
 
-import java.io.Serializable;
-
 import javax.persistence.*;
+import java.util.Date;
 
-@Embeddable
-public class Occurrence implements Serializable {
+@Entity
+public class Occurrence implements BaseEntity {
 
-    @Column
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String latitude;
 
-    @Column
     private String longitude;
 
-    @Column
     private String projection;
+
+    @ManyToOne
+    @JoinColumn(name = "country_id")
+    private Country country;
 
     @ManyToOne
     @JoinColumn(name = "state_id")
     private State state;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "map_id")
-    private Map map;
+    private String municipality;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
+
+    private String reference;
+
+    private String compiler;
 
     public Occurrence() {
         super();
     }
 
-    public Occurrence(String latitude, String longitude, String projection, State state, Map map) {
+    public Occurrence(String latitude, String longitude, String projection, State state) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.projection = projection;
         this.state = state;
-        this.map = map;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getLatitude() {
@@ -68,12 +83,43 @@ public class Occurrence implements Serializable {
         this.state = state;
     }
 
-    public Map getMap() {
-        return map;
+    public Country getCountry() {
+        return country;
     }
 
-    public void setMap(Map map) {
-        this.map = map;
+    public void setCountry(Country country) {
+        this.country = country;
     }
 
+    public String getMunicipality() {
+        return municipality;
+    }
+
+    public void setMunicipality(String municipality) {
+        this.municipality = municipality;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getReference() {
+        return reference;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
+    }
+
+    public String getCompiler() {
+        return compiler;
+    }
+
+    public void setCompiler(String compiler) {
+        this.compiler = compiler;
+    }
 }
