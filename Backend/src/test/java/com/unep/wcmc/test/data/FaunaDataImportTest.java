@@ -95,7 +95,7 @@ public class FaunaDataImportTest {
         String commonName = line[10].trim();
 
         Species specie = new Species();
-        specie.setCommonName(commonName);
+        //specie.setCommonName(commonName);
         specie.setScientificName(scientificName);
         specie.setTaxonomy(taxonomy);
         return specieRepository.save(specie);

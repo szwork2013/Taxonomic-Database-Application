@@ -48,11 +48,16 @@ public class Hierarchy implements Serializable {
 
     public Hierarchy(Kingdom kingdom, Phylum phylum, HierarchyClass hierarchyClass, HierarchyOrder order,
                      Family family, Genus genus, String subspecies) {
-        this.init(kingdom, phylum, hierarchyClass, order, family, genus, subspecies);
+        this.init(kingdom, phylum, hierarchyClass, order, family, genus, subspecies, null);
+    }
+
+    public Hierarchy(Kingdom kingdom, Phylum phylum, HierarchyClass hierarchyClass, HierarchyOrder order,
+                     Family family, Genus genus, String subspecies, String speciesEpiteth) {
+        this.init(kingdom, phylum, hierarchyClass, order, family, genus, subspecies, speciesEpiteth);
     }
 
     public void init(Kingdom kingdom, Phylum phylum, HierarchyClass hierarchyClass, HierarchyOrder order,
-                     Family family, Genus genus, String subspecies) {
+                     Family family, Genus genus, String subspecies, String speciesEpiteth) {
         this.kingdom = kingdom;
         this.phylum = phylum;
         this.hierarchyClass = hierarchyClass;
@@ -60,6 +65,7 @@ public class Hierarchy implements Serializable {
         this.family = family;
         this.genus = genus;
         this.subspecies = subspecies;
+        this.speciesEpiteth = speciesEpiteth;
     }
 
     public Kingdom getKingdom() {

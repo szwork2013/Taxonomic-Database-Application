@@ -71,7 +71,7 @@ public class SpeciesPlusProcessor implements ItemProcessor<Map<String, Object>, 
                         species.setScientificName(String.valueOf(taxon.get("full_name")));
                         List<Map<String, Object>> commonNames = (List<Map<String, Object>>) taxon.get("common_names");
                         if (commonNames != null && !commonNames.isEmpty()) {
-                            species.setCommonName(String.valueOf(commonNames.get(0).get("name")));
+                            species.setName(String.valueOf(commonNames.get(0).get("name")));
                         }
                         return species;
                     }

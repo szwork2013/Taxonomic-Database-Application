@@ -38,6 +38,12 @@ public class UserController extends AbstractController<User, UserService> {
     @PreAuthorize("hasAuthority('PERM_CHANGE_LANGUAGE')")
     public void changeLanguage() {
     }
+
+   /* @Secured("ROLE_ANONYMOUS")
+    @RequestMapping(value = "/isauthenticated", method= RequestMethod.GET)
+    public SuccessResponse isAuthenticated() {
+        return new SuccessResponse(service.isAuthenticated().toString());
+    }*/
     
     @RequestMapping(value = "/changerole/{id}/role/{role}", method= RequestMethod.POST)
     @PreAuthorize("hasAuthority('PERM_CHANGE_USER_ROLE')")

@@ -6,8 +6,8 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Component
 @SuppressWarnings("all")
@@ -29,22 +29,31 @@ public class FaunaProcessor implements ItemProcessor<String[], Species> {
         Family family = new Family(line[4].trim());
         Genus genus = new Genus(line[5].trim());
 
+        String speciesEpiteth = line[6].trim();
         String subespecies = line[7].trim();
-        String species = line[8].trim();
 
         Hierarchy hierarchy = new Hierarchy(kingdom, phylum, hierarchyClass, order, family,
-                genus, subespecies);
+                genus, subespecies, speciesEpiteth);
         Taxonomy taxonomy = new Taxonomy();
         taxonomy.setHierarchy(hierarchy);
+
+        // setting the Species common names
+        List<CommonName> commonNameList = new ArrayList<>();
+        String[] commonNames = line[10].trim().split(",");
+        for (String name : commonNames) {
+            commonNameList.add(new CommonName(name));
+        }
+        taxonomy.setCommonNames(commonNameList);
+
         return taxonomy;
     }
 
     private Species createSpecies(String[] line, Taxonomy taxonomy) {
+        String species = line[8].trim();
         String scientificName = line[9].trim();
-        String commonName = line[10].trim();
 
         Species specie = new Species();
-        specie.setCommonName(commonName);
+        specie.setName(species);
         specie.setScientificName(scientificName);
         specie.setTaxonomy(taxonomy);
         specie.setType(Species.SpeciesType.FAUNA);

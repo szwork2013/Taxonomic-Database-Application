@@ -12,6 +12,13 @@ public class ThreatCategory implements BaseEntity {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "custom")
+    private Boolean custom;
+
+    @OneToOne(fetch = FetchType.EAGER, optional = true)
+    @JoinColumn(name = "parent_id")
+    private ThreatCategory threatCategoryParent;
+
     public Long getId() {
         return id;
     }
@@ -26,5 +33,21 @@ public class ThreatCategory implements BaseEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public ThreatCategory getParent() {
+        return threatCategoryParent;
+    }
+
+    public void setParent(ThreatCategory parent) {
+        this.threatCategoryParent = parent;
+    }
+
+    public Boolean isCustom() {
+        return custom;
+    }
+
+    public void setCustom(Boolean custom) {
+        this.custom = custom;
     }
 }
