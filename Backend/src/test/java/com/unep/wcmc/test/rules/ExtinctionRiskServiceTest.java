@@ -38,12 +38,12 @@ public class ExtinctionRiskServiceTest {
     @Test
     public void testEndangered_EN() {
         Species specie = new Species();
-        specie.setCommonName("macaco-prego-galego");
+        //specie.setCommonName("macaco-prego-galego");
         specie.setScientificName("Sapajus flavius");
 
         DistributionArea distributionArea = new DistributionArea();
         // Extent of Occurrence (km2) - EOO
-        distributionArea.setExtendOccurrence(23000d);
+        //distributionArea.setExtendOccurrence(23000d);
         // Occurs in Brasil
         distributionArea.setOcurrsBrazil(true);
         // Native in Brasil
@@ -51,9 +51,9 @@ public class ExtinctionRiskServiceTest {
         // Endemic form Brasil
         distributionArea.setEndemicFromBrazil(true);
         // Area of occupancy (km2) - AOO
-        distributionArea.setOccupancyArea(150d);
+        //distributionArea.setOccupancyArea(150d);
         // Trend in area of occupancy
-        distributionArea.setTrendOccupancyArea(TrendOccurence.DECLINING);
+        //distributionArea.setTrendOccupancyArea(TrendOccurence.DECLINING);
         specie.setDistributionArea(distributionArea);
 
         PopulationTrend trend = new PopulationTrend();
@@ -73,7 +73,7 @@ public class ExtinctionRiskServiceTest {
         specie.setNaturalHistory(naturalHistory);
 
         Threat threat = new Threat();
-        specie.setThreat(threat);
+        //specie.setThreat(threat);
 
         service.processExtinctionRiskCalculation(specie);
 
