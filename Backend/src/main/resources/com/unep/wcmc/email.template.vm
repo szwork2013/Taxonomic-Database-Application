@@ -1,0 +1,19 @@
+<html>
+    <body>
+        <h3>Hi ${username}!</h3>
+        <div>
+            Click the link below to reset you account password:
+        </div>
+        <div>
+       	    <a href="${url}">reset password</a>
+        </div>
+        Cheers,
+        <div>
+			Ficha de Especies
+		</div>
+    </body>
+</html>
+
+	
+
+	
