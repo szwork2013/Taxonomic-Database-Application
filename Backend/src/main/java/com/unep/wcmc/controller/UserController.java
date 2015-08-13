@@ -1,5 +1,6 @@
 package com.unep.wcmc.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.data.domain.Page;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.unep.wcmc.domain.SuccessResponse;
@@ -52,11 +54,12 @@ public class UserController extends AbstractController<User, UserService> {
     	return new SuccessResponse("changed user role");
     }
 
-    @RequestMapping(value = "/resetpassword", method= RequestMethod.POST)
     @Secured("ROLE_ANONYMOUS")
-    public SuccessResponse resetPassword() {
-        return new SuccessResponse("password changed");
-    }
+    @RequestMapping(value = "/resetpassword", method= RequestMethod.POST)
+    public SuccessResponse resetPassword(@RequestParam(value = "token") String token, @RequestParam(value = "password") String password) {
+    	service.resetPassword(token, password);
+        return new SuccessResponse();
+    }        
     
     @RequestMapping(value = "/assignrole/{id}/grant/role/{role}", method= RequestMethod.POST)
     @PreAuthorize("hasAuthority('PERM_ASSIGN_ROLE')")
@@ -96,4 +99,12 @@ public class UserController extends AbstractController<User, UserService> {
         return service.findByFilter("", pageable);
     }
 
+    @Secured("ROLE_ANONYMOUS")
+    @RequestMapping(value = "/forgetpassword", method= RequestMethod.POST)
+    public SuccessResponse forgetPassword(@RequestParam(value = "email") String email,
+    									  @RequestParam(value = "callback") String urlCallback,
+    									  HttpServletRequest request) {
+    	service.forgetPassword(email, urlCallback, request);
+        return new SuccessResponse();
+    }            
 }

@@ -47,6 +47,7 @@ dependencies {
     compile("io.jsonwebtoken:jjwt:0.5")
     compile("org.springframework:spring-context-support")
     compile("javax.mail:mail:1.4.1")
+    compile("org.apache.velocity:velocity:1.6.2")
     compile("net.sf.opencsv:opencsv:2.3")
     // Runtime dependencies
     runtime("org.postgresql:postgresql:9.4-1201-jdbc41")

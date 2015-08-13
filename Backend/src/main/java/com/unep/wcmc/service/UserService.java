@@ -1,19 +1,36 @@
 package com.unep.wcmc.service;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.security.authentication.AccountStatusUserDetailsChecker;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.velocity.VelocityEngineUtils;
 
 import com.unep.wcmc.exception.UserAlreadyExistException;
 import com.unep.wcmc.exception.UserNotFoundException;
 import com.unep.wcmc.exception.UserRoleNotFoundException;
+import com.unep.wcmc.model.ForgetPasswordToken;
 import com.unep.wcmc.model.User;
 import com.unep.wcmc.model.UserRole;
+import com.unep.wcmc.repository.ForgetPasswordTokenRepository;
 import com.unep.wcmc.repository.UserRepository;
 import com.unep.wcmc.repository.UserRoleRepository;
 
@@ -29,6 +46,14 @@ public final class UserService extends AbstractService<User, UserRepository> imp
 
     @Autowired
     private UserRoleRepository userRoleRepo;
+	@Autowired
+	private ForgetPasswordTokenRepository passwordTokenRepository;
+	@Autowired
+    private JavaMailSender emailSender;
+    @Autowired
+    private Environment environment;
+    @Autowired
+    private VelocityEngine velocityEngine;
     private final AccountStatusUserDetailsChecker detailsChecker = new AccountStatusUserDetailsChecker();
     
     public User registerNewUser(User user) {
@@ -116,6 +141,41 @@ public final class UserService extends AbstractService<User, UserRepository> imp
     public Page<User> findByFilter(String name, Pageable pageable) {
         return repo.findByFirstNameContaining(name, pageable);
     }
+    
+    public void forgetPassword(final String email, final String urlCallback, final HttpServletRequest request) {
+        final User user = repo.findByEmail(email);
+        if (user == null) {
+            throw new IllegalArgumentException("email not found");
+        }
+        final MimeMessagePreparator preparator = new MimeMessagePreparator() {
+            public void prepare(MimeMessage mimeMessage) throws Exception {
+            	final Map<String, Object> model = new HashMap<String, Object>();
+            	final MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
+                message.setTo(email);
+                message.setFrom(environment.getProperty("support.email"));
+                model.put("username", user.getUsername());
+                model.put("url", getUrl(request, user, urlCallback));
+                String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "com/unep/wcmc/email.template.vm", "UTF-8", model);
+                message.setText(text, true);
+            }
+        };
+        emailSender.send(preparator);
+    } 
+    
+    public void resetPassword(String token, String password) {
+    	final ForgetPasswordToken passwordToken = passwordTokenRepository.findByToken(token);
+    	if (passwordToken == null) {
+    		throw new IllegalArgumentException("Invalid token");
+    	}
+    	final Calendar calendar = Calendar.getInstance();
+    	final Date expiryDate = passwordToken.getExpiryDate();
+    	if (expiryDate.before(calendar.getTime())) {
+    		throw new IllegalStateException("Reset Password Link expired");
+    	}
+    	final User user = passwordToken.getUser();
+    	user.setPassword(password);
+    	repo.save(user);
+    }
 
     @Override
     public User save(User entity) {
@@ -127,6 +187,13 @@ public final class UserService extends AbstractService<User, UserRepository> imp
             }
         }
         return super.save(entity);
+    }
+    
+    private String getUrl(HttpServletRequest request, User user, String urlCallback) {
+    	final String token = UUID.randomUUID().toString();
+        final ForgetPasswordToken passwordToken = new ForgetPasswordToken(token, urlCallback, user);
+        passwordTokenRepository.save(passwordToken);
+    	return String.format(urlCallback + "?token=%s", token);
     }
     
     private UserRole getUserRole(String role) {
