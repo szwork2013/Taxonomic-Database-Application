@@ -10,7 +10,8 @@ public class FeedingBehavior implements BaseEntity {
     private Long id;
 
     @ElementCollection
-    @CollectionTable(name = "feeding_behavior_eating_habits")
+    @CollectionTable(name = "feeding_behavior_eating_habits",
+            joinColumns = @JoinColumn(name = "feeding_behavior_id"))
     private List<EatingHabits> eatingHabits;
 
     @Column(name = "expert")

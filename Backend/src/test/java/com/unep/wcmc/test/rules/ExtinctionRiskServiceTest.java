@@ -18,22 +18,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @SpringApplicationConfiguration(classes = Application.class)
 public class ExtinctionRiskServiceTest {
 
-    private KieServices kieServices;
-    private KieContainer kieContainer;
-    private KieSession kieSession;
-
     @Autowired
     private ExtinctionRiskService service;
-
-    @Before
-    public void initialize() {
-        if (kieSession != null) {
-            kieSession.dispose();
-        }
-        this.kieServices = KieServices.Factory.get();
-        this.kieContainer = kieServices.getKieClasspathContainer();
-        this.kieSession = kieContainer.newKieSession("RulesSession");
-    }
 
     @Test
     public void testEndangered_EN() {
@@ -80,12 +66,6 @@ public class ExtinctionRiskServiceTest {
         Assert.assertNotNull(specie);
         Assert.assertEquals(ExtinctionRiskCategory.ENDANGERED,
                 specie.getExtinctionRiskCategory());
-    }
-
-    @Test
-    public void testProcessExtinctionRisksForAllSpecies() {
-        service.processExtinctionRisksForAllSpecies(kieSession);
-        Assert.assertTrue(true);
     }
 
 }
