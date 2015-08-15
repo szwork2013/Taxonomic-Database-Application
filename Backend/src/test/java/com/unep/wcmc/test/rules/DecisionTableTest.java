@@ -21,6 +21,7 @@ public class DecisionTableTest {
     private KieServices kieServices;
     private KieContainer kieContainer;
     private KieSession kieSession;
+    private String drl;
 
     @Before
     public void initialize() throws Exception {
@@ -31,15 +32,15 @@ public class DecisionTableTest {
         this.kieContainer = kieServices.getKieClasspathContainer();
 
         SpreadsheetCompiler compiler = new SpreadsheetCompiler();
-        String drl = compiler.compile(
-                new FileInputStream("src/main/resources/rules/extinction/risk/extinction-rules.xls"), InputType.XLS);
+        this.drl = compiler.compile(
+                new FileInputStream("src/main/resources/rules/extinction/risk/table/extinction-rules.xls"), InputType.XLS);
 
-        this.kieSession = kieContainer.newKieSession("DecisionTableKS");
+        this.kieSession = kieContainer.newKieSession("ExtinctionRisk");
     }
 
     @Test
     public void testSomething() {
-        System.out.println("test");
+        System.out.println(drl);
     }
 
 

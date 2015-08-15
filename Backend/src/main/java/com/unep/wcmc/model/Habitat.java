@@ -2,6 +2,7 @@ package com.unep.wcmc.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 public class Habitat implements BaseEntity {
@@ -9,9 +10,11 @@ public class Habitat implements BaseEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "habitat_type_id")
-    private HabitatType type;
+    @ManyToMany
+    @JoinTable(name = "habitat_habitat_types",
+            joinColumns = @JoinColumn(name = "habitat_id"),
+            inverseJoinColumns = @JoinColumn(name = "habitat_type_id"))
+    private List<HabitatType> types;
 
     @Column(name = "restricted_to_primary_habitats")
     private Boolean restrictedToPrimaryHabitats;
@@ -60,12 +63,12 @@ public class Habitat implements BaseEntity {
         this.id = id;
     }
 
-    public HabitatType getType() {
-        return type;
+    public List<HabitatType> getTypes() {
+        return types;
     }
 
-    public void setType(HabitatType type) {
-        this.type = type;
+    public void setTypes(List<HabitatType> types) {
+        this.types = types;
     }
 
     public Boolean getRestrictedToPrimaryHabitats() {

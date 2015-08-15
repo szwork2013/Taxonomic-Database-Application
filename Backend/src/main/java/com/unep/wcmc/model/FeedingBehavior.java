@@ -1,6 +1,7 @@
 package com.unep.wcmc.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class FeedingBehavior implements BaseEntity {
@@ -8,8 +9,9 @@ public class FeedingBehavior implements BaseEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Embedded
-    private EatingHabits eatingHabits;
+    @ElementCollection
+    @CollectionTable(name = "feeding_behavior_eating_habits")
+    private List<EatingHabits> eatingHabits;
 
     @Column(name = "expert")
     @Enumerated(value = EnumType.ORDINAL)
@@ -35,11 +37,11 @@ public class FeedingBehavior implements BaseEntity {
         this.id = id;
     }
 
-    public EatingHabits getEatingHabits() {
+    public List<EatingHabits> getEatingHabits() {
         return eatingHabits;
     }
 
-    public void setEatingHabits(EatingHabits eatingHabits) {
+    public void setEatingHabits(List<EatingHabits> eatingHabits) {
         this.eatingHabits = eatingHabits;
     }
 

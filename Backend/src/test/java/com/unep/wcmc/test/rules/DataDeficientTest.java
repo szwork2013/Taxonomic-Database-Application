@@ -1,6 +1,5 @@
 package com.unep.wcmc.test.rules;
 
-import com.google.common.collect.Lists;
 import com.unep.wcmc.Application;
 import com.unep.wcmc.model.DistributionArea;
 import com.unep.wcmc.model.ExtinctionRiskCategory;
@@ -31,14 +30,13 @@ public class DataDeficientTest {
         }
         this.kieServices = KieServices.Factory.get();
         this.kieContainer = kieServices.getKieClasspathContainer();
-        this.kieSession = kieContainer.newKieSession("RulesSession");
+        this.kieSession = kieContainer.newKieSession("ExtinctionRisk");
     }
 
     @Test
-    public void testDataDeficient_EN_1() {
+    public void testDataDeficient_DD_1() {
         Species specie = new Species();
         kieSession.setGlobal("species", specie);
-        //kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
 
         Taxonomy taxonomy = new Taxonomy();
         taxonomy.setLimitationsForAssessment(true);
@@ -51,10 +49,9 @@ public class DataDeficientTest {
     }
 
     @Test
-    public void testDataDeficient_EN_2() {
+    public void testDataDeficient_DD_2() {
         Species specie = new Species();
         kieSession.setGlobal("species", specie);
-        //kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
 
         DistributionArea distributionArea = new DistributionArea();
         distributionArea.setOnlyFromFewLocalities(true);
@@ -67,10 +64,9 @@ public class DataDeficientTest {
     }
 
     @Test
-    public void testDataDeficient_EN_3() {
+    public void testDataDeficient_DD_3() {
         Species specie = new Species();
         kieSession.setGlobal("species", specie);
-        //kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
 
         DistributionArea distributionArea = new DistributionArea();
         distributionArea.setOnlyFromFewLocalities(true);
