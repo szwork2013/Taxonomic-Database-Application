@@ -19,9 +19,9 @@ public interface SpeciesRepository extends JpaRepository<Species, Long>, JpaSpec
     @Query(value = "select * from species where levenshtein(scientific_name, :scientificName) <= 3", nativeQuery = true)
     List<Species> findByScientificNameSoundex(@Param("scientificName") String scientificName);
 
-    //List<Species> findByTaxonomyHierarchySpecies(String species);
+    @Query(value = "select s.* from species s join taxonomy t on t.id = s.taxonomy_id where levenshtein(t.species_epiteth, :species) <= 3", nativeQuery = true)
+    List<Species> findByTaxonomyHierarchySpeciesEpitethSoundex(@Param("species") String species);
 
-    //@Query(value = "select s.* from species s join taxonomy t on t.id = s.taxonomy_id where levenshtein(t.species, :species) <= 3", nativeQuery = true)
-    //List<Species> findByTaxonomySpeciesSoundex(@Param("species") String species);
+    List<Species> findByTaxonomyHierarchySpeciesEpiteth(String speciesEpiteth);
 
 }

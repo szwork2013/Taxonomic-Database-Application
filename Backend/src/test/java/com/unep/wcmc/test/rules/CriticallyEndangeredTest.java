@@ -2,14 +2,10 @@ package com.unep.wcmc.test.rules;
 
 import com.unep.wcmc.Application;
 import com.unep.wcmc.model.*;
-import com.unep.wcmc.repository.SpeciesRepository;
+import com.unep.wcmc.service.ExtinctionRiskService;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.kie.api.KieServices;
-import org.kie.api.runtime.KieContainer;
-import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -18,120 +14,121 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @SpringApplicationConfiguration(classes = Application.class)
 public class CriticallyEndangeredTest {
 
-    private KieServices kieServices;
-    private KieContainer kieContainer;
-    private KieSession kieSession;
-
     @Autowired
-    private SpeciesRepository specieRepository;
-
-
-    @Before
-    public void initialize() {
-        if (kieSession != null) {
-            kieSession.dispose();
-        }
-        this.kieServices = KieServices.Factory.get();
-        this.kieContainer = kieServices.getKieClasspathContainer();
-        this.kieSession = kieContainer.newKieSession("RulesSession");
-    }
+    private ExtinctionRiskService service;
 
     @Test
     public void testCriticallyEndangered_EN_1() {
-        Species specie = new Species();
-        kieSession.setGlobal("species", specie);
-        //kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
+        Species species = new Species();
 
-        PopulationTrend trend = new PopulationTrend();
-        // In case of past reduction, is the cause reversible and has ceased?
-        kieSession.insert(trend);
-        kieSession.fireAllRules();
+        DistributionArea distributionArea = new DistributionArea();
+        ExtentOccurrence extentOccurrence = new ExtentOccurrence();
+        extentOccurrence.setEoo(99d);
+        extentOccurrence.setTrend(TrendOccurence.DECLINING);
+        distributionArea.setExtentOccurrence(extentOccurrence);
+        species.setDistributionArea(distributionArea);
 
-        Assert.assertNotNull(specie);
+        PopulationDynamics populationDynamics = new PopulationDynamics();
+        populationDynamics.setPopulationSeverelyFragmented(true);
+        NaturalHistory naturalHistory = new NaturalHistory(populationDynamics);
+        species.setNaturalHistory(naturalHistory);
+
+        service.processExtinctionRiskCalculation(species);
+
+        Assert.assertNotNull(species);
         Assert.assertEquals(ExtinctionRiskCategory.CRITICALLY_ENDANGERED,
-                specie.getExtinctionRiskCategory());
+                species.getExtinctionRiskCategory());
     }
 
     @Test
     public void testCriticallyEndangered_EN_2() {
-        Species specie = new Species();
-        kieSession.setGlobal("species", specie);
-        //kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
+        Species species = new Species();
 
-        PopulationTrend trend = new PopulationTrend();
-        trend.setDeclineReversibleAndCeased(false);
-        // In case of past reduction, is the cause reversible and has ceased?
-        kieSession.insert(trend);
-        kieSession.fireAllRules();
+        PopulationDynamics populationDynamics = new PopulationDynamics();
+        PopulationReduction reductionWithCausesCeased = new PopulationReduction();
+        reductionWithCausesCeased.setReduction(true);
+        reductionWithCausesCeased.setPercentage(91);
+        populationDynamics.setReductionWithCausesCeased(reductionWithCausesCeased);
+        PopulationTrend populationTrend = new PopulationTrend();
+        populationTrend.setPopulationDeclinedBasedOn(PopulationDeclinedBasedOn.DIRECT_OBSERVATION);
+        populationDynamics.setPopulationTrend(populationTrend);
+        NaturalHistory naturalHistory = new NaturalHistory(populationDynamics);
+        species.setNaturalHistory(naturalHistory);
 
-        Assert.assertNotNull(specie);
+        service.processExtinctionRiskCalculation(species);
+
+        Assert.assertNotNull(species);
         Assert.assertEquals(ExtinctionRiskCategory.CRITICALLY_ENDANGERED,
-                specie.getExtinctionRiskCategory());
+                species.getExtinctionRiskCategory());
     }
 
     @Test
     public void testCriticallyEndangered_EN_3() {
-        Species specie = new Species();
-        kieSession.setGlobal("species", specie);
-        //kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
+        Species species = new Species();
 
         DistributionArea distributionArea = new DistributionArea();
-        // Extent of Occurrence (km2) - EOO
-        //distributionArea.setExtendOccurrence(100d);
-        //distributionArea.setTrendExtendOccurence(TrendOccurence.DECLINING);
-        //distributionArea.setTrendOccupancyArea(TrendOccurence.DECLINING);
-        kieSession.insert(distributionArea);
-        kieSession.fireAllRules();
+        ExtentOccurrence extentOccurrence = new ExtentOccurrence();
+        extentOccurrence.setEoo(100d);
+        extentOccurrence.setTrend(TrendOccurence.DECLINING);
+        distributionArea.setExtentOccurrence(extentOccurrence);
+        AreaOccupancy areaOccupancy = new AreaOccupancy();
+        areaOccupancy.setTrend(TrendOccurence.DECLINING);
+        distributionArea.setAreaOccupancy(areaOccupancy);
+        species.setDistributionArea(distributionArea);
 
-        Assert.assertNotNull(specie);
+        service.processExtinctionRiskCalculation(species);
+
+        Assert.assertNotNull(species);
         Assert.assertEquals(ExtinctionRiskCategory.CRITICALLY_ENDANGERED,
-                specie.getExtinctionRiskCategory());
+                species.getExtinctionRiskCategory());
     }
 
     @Test
     public void testCriticallyEndangered_EN_4() {
-        Species specie = new Species();
-        kieSession.setGlobal("species", specie);
-        //kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
+        Species species = new Species();
 
         DistributionArea distributionArea = new DistributionArea();
-        // Extent of Occurrence (km2) - EOO
-        //distributionArea.setExtendOccurrence(100d);
-        //distributionArea.setTrendExtendOccurence(TrendOccurence.DECLINING);
-        kieSession.insert(distributionArea);
+        ExtentOccurrence extentOccurrence = new ExtentOccurrence();
+        extentOccurrence.setEoo(100d);
+        extentOccurrence.setTrend(TrendOccurence.DECLINING);
+        distributionArea.setExtentOccurrence(extentOccurrence);
+        species.setDistributionArea(distributionArea);
 
         Habitat habitat = new Habitat();
         habitat.setContinuingDeclineInHabitatQuality(true);
-        kieSession.insert(habitat);
+        NaturalHistory naturalHistory = new NaturalHistory();
+        naturalHistory.setHabitat(habitat);
+        species.setNaturalHistory(naturalHistory);
 
-        kieSession.fireAllRules();
+        service.processExtinctionRiskCalculation(species);
 
-        Assert.assertNotNull(specie);
+        Assert.assertNotNull(species);
         Assert.assertEquals(ExtinctionRiskCategory.CRITICALLY_ENDANGERED,
-                specie.getExtinctionRiskCategory());
+                species.getExtinctionRiskCategory());
     }
 
     @Test
     public void testCriticallyEndangered_EN_5() {
-        Species specie = new Species();
-        kieSession.setGlobal("species", specie);
-        //kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
+        Species species = new Species();
 
         DistributionArea distributionArea = new DistributionArea();
-        // Extent of Occurrence (km2) - EOO
-        //distributionArea.setExtendOccurrence(100d);
-        //distributionArea.setTrendOccupancyArea(TrendOccurence.DECLINING);
-        kieSession.insert(distributionArea);
+        ExtentOccurrence extentOccurrence = new ExtentOccurrence();
+        extentOccurrence.setEoo(100d);
+        extentOccurrence.setTrend(TrendOccurence.DECLINING);
+        distributionArea.setExtentOccurrence(extentOccurrence);
+        species.setDistributionArea(distributionArea);
 
         Habitat habitat = new Habitat();
         habitat.setContinuingDeclineInHabitatQuality(true);
-        kieSession.insert(habitat);
+        NaturalHistory naturalHistory = new NaturalHistory();
+        naturalHistory.setHabitat(habitat);
+        species.setNaturalHistory(naturalHistory);
 
-        kieSession.fireAllRules();
+        service.processExtinctionRiskCalculation(species);
 
-        Assert.assertNotNull(specie);
+        Assert.assertNotNull(species);
         Assert.assertEquals(ExtinctionRiskCategory.CRITICALLY_ENDANGERED,
-                specie.getExtinctionRiskCategory());
+                species.getExtinctionRiskCategory());
     }
 
 }

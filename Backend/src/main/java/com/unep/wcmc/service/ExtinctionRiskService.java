@@ -71,23 +71,25 @@ public class ExtinctionRiskService {
                     // set the Taxonomy facts
                     session.insert(species.getTaxonomy());
                     // set the Distribution Area facts
-                    session.insert(species.getDistributionArea());
+                    if (species.getDistributionArea() != null) {
+                        session.insert(species.getDistributionArea());
+                        session.insert(species.getDistributionArea().getExtentOccurrence());
+                        session.insert(species.getDistributionArea().getAreaOccupancy());
+                    }
+
                     // set the Natural History facts
                     if (species.getNaturalHistory() != null) {
                         session.insert(species.getNaturalHistory());
                         if (species.getNaturalHistory().getPopulationDynamics() != null) {
                             session.insert(species.getNaturalHistory().getPopulationDynamics());
-                            if (species.getNaturalHistory().getPopulationDynamics().getPopulationTrend() != null) {
-                                session.insert(species.getNaturalHistory().getPopulationDynamics().getPopulationTrend());
-                            }
+                            session.insert(species.getNaturalHistory().getPopulationDynamics().getPopulationTrend());
+                            session.insert(species.getNaturalHistory().getPopulationDynamics().getDensityData());
                         }
                     }
                     // set the Conservation facts
                     if (species.getConservation() != null) {
                         session.insert(species.getConservation());
-                        if (species.getConservation().getExtinctionRisk() != null) {
-                            session.insert(species.getConservation().getExtinctionRisk());
-                        }
+                        session.insert(species.getConservation().getExtinctionRisk());
                     }
                     // set the Threat facts
                     for (Threat threat : species.getThreats()) {
