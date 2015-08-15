@@ -33,7 +33,8 @@ public class DecisionTableTest {
 
         SpreadsheetCompiler compiler = new SpreadsheetCompiler();
         this.drl = compiler.compile(
-                new FileInputStream("src/main/resources/rules/extinction/risk/table/extinction-rules.xls"), InputType.XLS);
+                new FileInputStream("src/main/resources/rules/extinction/risk/table/extinction-rules.xls"),
+                InputType.XLS);
 
         this.kieSession = kieContainer.newKieSession("ExtinctionRisk");
     }

@@ -5,6 +5,7 @@ import com.unep.wcmc.model.DistributionArea;
 import com.unep.wcmc.model.ExtinctionRiskCategory;
 import com.unep.wcmc.model.Species;
 import com.unep.wcmc.model.Taxonomy;
+import com.unep.wcmc.service.ExtinctionRiskService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,6 +13,7 @@ import org.junit.runner.RunWith;
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -19,64 +21,50 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @SpringApplicationConfiguration(classes = Application.class)
 public class DataDeficientTest {
 
-    private KieServices kieServices;
-    private KieContainer kieContainer;
-    private KieSession kieSession;
-
-    @Before
-    public void initialize() {
-        if (kieSession != null) {
-            kieSession.dispose();
-        }
-        this.kieServices = KieServices.Factory.get();
-        this.kieContainer = kieServices.getKieClasspathContainer();
-        this.kieSession = kieContainer.newKieSession("ExtinctionRisk");
-    }
+    @Autowired
+    private ExtinctionRiskService service;
 
     @Test
     public void testDataDeficient_DD_1() {
-        Species specie = new Species();
-        kieSession.setGlobal("species", specie);
-
+        Species species = new Species();
         Taxonomy taxonomy = new Taxonomy();
         taxonomy.setLimitationsForAssessment(true);
-        kieSession.insert(taxonomy);
-        kieSession.fireAllRules();
+        species.setTaxonomy(taxonomy);
 
-        Assert.assertNotNull(specie);
+        service.processExtinctionRiskCalculation(species);
+
+        Assert.assertNotNull(species);
         Assert.assertEquals(ExtinctionRiskCategory.DATA_DEFICIENT,
-                specie.getExtinctionRiskCategory());
+                species.getExtinctionRiskCategory());
     }
 
     @Test
     public void testDataDeficient_DD_2() {
-        Species specie = new Species();
-        kieSession.setGlobal("species", specie);
-
+        Species species = new Species();
         DistributionArea distributionArea = new DistributionArea();
         distributionArea.setOnlyFromFewLocalities(true);
-        kieSession.insert(distributionArea);
-        kieSession.fireAllRules();
+        species.setDistributionArea(distributionArea);
 
-        Assert.assertNotNull(specie);
+        service.processExtinctionRiskCalculation(species);
+
+        Assert.assertNotNull(species);
         Assert.assertEquals(ExtinctionRiskCategory.DATA_DEFICIENT,
-                specie.getExtinctionRiskCategory());
+                species.getExtinctionRiskCategory());
     }
 
     @Test
     public void testDataDeficient_DD_3() {
-        Species specie = new Species();
-        kieSession.setGlobal("species", specie);
-
+        Species species = new Species();
         DistributionArea distributionArea = new DistributionArea();
         distributionArea.setOnlyFromFewLocalities(true);
         distributionArea.setRegionIsWellSampled(false);
-        kieSession.insert(distributionArea);
-        kieSession.fireAllRules();
+        species.setDistributionArea(distributionArea);
 
-        Assert.assertNotNull(specie);
+        service.processExtinctionRiskCalculation(species);
+
+        Assert.assertNotNull(species);
         Assert.assertEquals(ExtinctionRiskCategory.DATA_DEFICIENT,
-                specie.getExtinctionRiskCategory());
+                species.getExtinctionRiskCategory());
     }
 
 }

@@ -30,6 +30,14 @@ public class NaturalHistory implements BaseEntity {
     @JoinColumn(name = "population_dynamics_id")
     private PopulationDynamics populationDynamics;
 
+    public NaturalHistory() {
+        super();
+    }
+
+    public NaturalHistory(PopulationDynamics populationDynamics) {
+        this.populationDynamics = populationDynamics;
+    }
+
     public Long getId() {
         return id;
     }

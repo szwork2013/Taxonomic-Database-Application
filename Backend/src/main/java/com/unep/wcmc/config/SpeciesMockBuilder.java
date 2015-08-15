@@ -117,7 +117,7 @@ public class SpeciesMockBuilder {
         //habitat.setDescription("Description");
         habitat.setRestrictedToPrimaryHabitats(true);
         habitat.setTolerantToHabitatModification("true");
-        habitat.setType(habitatType);
+        //habitat.setType(habitatType);
         //habitat.setVariationInHabitatUse("VariationInHabitatUse");
         densityData.setExtremeFlutuationInSubpopulationsNumber(true);
         densityData.setSubPopulationsNumber(100L);

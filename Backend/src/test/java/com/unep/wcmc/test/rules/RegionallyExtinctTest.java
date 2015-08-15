@@ -1,17 +1,12 @@
 package com.unep.wcmc.test.rules;
 
 import com.unep.wcmc.Application;
-import com.unep.wcmc.model.DistributionArea;
-import com.unep.wcmc.model.ExtinctionRiskCategory;
-import com.unep.wcmc.model.PopulationDynamics;
-import com.unep.wcmc.model.Species;
+import com.unep.wcmc.model.*;
+import com.unep.wcmc.service.ExtinctionRiskService;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.kie.api.KieServices;
-import org.kie.api.runtime.KieContainer;
-import org.kie.api.runtime.KieSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -19,62 +14,49 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @SpringApplicationConfiguration(classes = Application.class)
 public class RegionallyExtinctTest {
 
-    private KieServices kieServices;
-    private KieContainer kieContainer;
-    private KieSession kieSession;
-
-    @Before
-    public void initialize() {
-        if (kieSession != null) {
-            kieSession.dispose();
-        }
-        this.kieServices = KieServices.Factory.get();
-        this.kieContainer = kieServices.getKieClasspathContainer();
-        this.kieSession = kieContainer.newKieSession("RulesSession");
-    }
+    @Autowired
+    private ExtinctionRiskService service;
 
     @Test
     public void testRegionallyExtinct_RE_equals() {
-        Species specie = new Species();
-        kieSession.setGlobal("species", specie);
-        //kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
+        Species species = new Species();
 
         DistributionArea distributionArea = new DistributionArea();
         distributionArea.setEndemicFromBrazil(false);
-        kieSession.insert(distributionArea);
+        species.setDistributionArea(distributionArea);
 
         PopulationDynamics populationDynamics = new PopulationDynamics();
         populationDynamics.setMatureIndividualsNumber(0l);
         populationDynamics.setCaptiveBreedingProgram(false);
-        kieSession.insert(populationDynamics);
+        NaturalHistory naturalHistory = new NaturalHistory(populationDynamics);
+        species.setNaturalHistory(naturalHistory);
 
-        kieSession.fireAllRules();
+        service.processExtinctionRiskCalculation(species);
 
-        Assert.assertNotNull(specie);
+        Assert.assertNotNull(species);
         Assert.assertEquals(ExtinctionRiskCategory.REGIONALLY_EXTINCT,
-                specie.getExtinctionRiskCategory());
+                species.getExtinctionRiskCategory());
     }
 
     @Test
     public void testRegionallyExtinct_RE_notEquals() {
-        Species specie = new Species();
-        kieSession.setGlobal("species", specie);
-        //kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
+        Species species = new Species();
 
         DistributionArea distributionArea = new DistributionArea();
         distributionArea.setEndemicFromBrazil(true);
-        kieSession.insert(distributionArea);
+        species.setDistributionArea(distributionArea);
 
         PopulationDynamics populationDynamics = new PopulationDynamics();
         populationDynamics.setMatureIndividualsNumber(0l);
         populationDynamics.setCaptiveBreedingProgram(true);
-        kieSession.insert(populationDynamics);
+        NaturalHistory naturalHistory = new NaturalHistory(populationDynamics);
+        species.setNaturalHistory(naturalHistory);
 
-        kieSession.fireAllRules();
+        service.processExtinctionRiskCalculation(species);
 
-        Assert.assertNotNull(specie);
+        Assert.assertNotNull(species);
         Assert.assertNotEquals(ExtinctionRiskCategory.REGIONALLY_EXTINCT,
-                specie.getExtinctionRiskCategory());
+                species.getExtinctionRiskCategory());
     }
 
 }

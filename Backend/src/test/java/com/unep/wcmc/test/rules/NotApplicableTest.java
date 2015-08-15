@@ -5,13 +5,11 @@ import com.unep.wcmc.model.Conservation;
 import com.unep.wcmc.model.ExtinctionRisk;
 import com.unep.wcmc.model.ExtinctionRiskCategory;
 import com.unep.wcmc.model.Species;
+import com.unep.wcmc.service.ExtinctionRiskService;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.kie.api.KieServices;
-import org.kie.api.runtime.KieContainer;
-import org.kie.api.runtime.KieSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -19,36 +17,23 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @SpringApplicationConfiguration(classes = Application.class)
 public class NotApplicableTest {
 
-    private KieServices kieServices;
-    private KieContainer kieContainer;
-    private KieSession kieSession;
-
-    @Before
-    public void initialize() {
-        if (kieSession != null) {
-            kieSession.dispose();
-        }
-        this.kieServices = KieServices.Factory.get();
-        this.kieContainer = kieServices.getKieClasspathContainer();
-        this.kieSession = kieContainer.newKieSession("RulesSession");
-    }
+    @Autowired
+    private ExtinctionRiskService service;
 
     @Test
-    public void testNotApplicable_EN_1() {
-        Species specie = new Species();
-        kieSession.setGlobal("species", specie);
-        //kieSession.setGlobal("configuration", Lists.newArrayList(repo.findAll()));
-
+    public void testNotApplicable_NA_1() {
+        Species species = new Species();
         Conservation conservation = new Conservation();
         ExtinctionRisk extinctionRisk = new ExtinctionRisk();
         extinctionRisk.setNationalEvaluationElegible(false);
         conservation.setExtinctionRisk(extinctionRisk);
-        kieSession.insert(conservation);
-        kieSession.fireAllRules();
+        species.setConservation(conservation);
 
-        Assert.assertNotNull(specie);
+        service.processExtinctionRiskCalculation(species);
+
+        Assert.assertNotNull(species);
         Assert.assertEquals(ExtinctionRiskCategory.NOT_APPLICABLE,
-                specie.getExtinctionRiskCategory());
+                species.getExtinctionRiskCategory());
     }
 
 }

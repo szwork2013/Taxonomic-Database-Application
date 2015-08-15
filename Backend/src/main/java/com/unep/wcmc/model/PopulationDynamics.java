@@ -85,6 +85,13 @@ public class PopulationDynamics implements Serializable {
     @Column(name = "captive_breeding_program")
     private Boolean captiveBreedingProgram;
 
+    public PopulationDynamics() {
+        this.reductionWithCausesCeased = new PopulationReduction();
+        this.reductionWithCausesNotCeased = new PopulationReduction();
+        this.projectionFutureReduction = new PopulationReduction();
+        this.reductionIncludePastFuture = new PopulationReduction();
+    }
+
     public Long getId() {
         return id;
     }

@@ -191,11 +191,11 @@ public class Species implements BaseEntity {
         this.enabled = enabled;
     }
 
-    public Set getThreats() {
+    public Set<Threat> getThreats() {
         return threats == null ? new HashSet<Threat>() : threats;
     }
 
-    public void setThreats(Set threats) {
+    public void setThreats(Set<Threat> threats) {
         this.threats = threats;
     }
 
