@@ -15,8 +15,9 @@ public class ThreatCategory implements BaseEntity {
     @Column(name = "custom")
     private Boolean custom;
 
+    private String code;
+
     @OneToOne(fetch = FetchType.EAGER, optional = true)
-    @JoinColumn(name = "parent_id")
     private ThreatCategory threatCategoryParent;
 
     public Long getId() {
@@ -49,5 +50,13 @@ public class ThreatCategory implements BaseEntity {
 
     public void setCustom(Boolean custom) {
         this.custom = custom;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }
