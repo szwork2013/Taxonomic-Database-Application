@@ -43,13 +43,11 @@ public final class SpeciesService extends AbstractService<Species, SpeciesReposi
     }
 
     public List<Species> findBySpeciesName(String species) {
-        return new ArrayList<>();
-        //return repo.findByTaxonomyHierarchySpecies(species);
+        return repo.findByTaxonomyHierarchySpeciesEpiteth(species);
     }
 
     public List<Species> findBySpeciesNameSimilaries(String species) {
-        return new ArrayList<>();
-        //return repo.findByTaxonomySpeciesSoundex(species);
+        return repo.findByTaxonomyHierarchySpeciesEpitethSoundex(species);
     }
 
     public ExceptionOccurrence raiseSpeciesException(Species active, Species suggested,
@@ -75,7 +73,7 @@ public final class SpeciesService extends AbstractService<Species, SpeciesReposi
 
     @Override
     public Species save(Species specie) {
-        //extinctionRiskService.processExtinctionRiskCalculation(specie);
+        extinctionRiskService.processExtinctionRiskCalculation(specie);
         specie.setLastModified(new Date());
         return super.save(specie);
     }

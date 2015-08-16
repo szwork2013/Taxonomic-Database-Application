@@ -35,7 +35,7 @@ public class ExtinctionRiskTest {
         }
         this.kieServices = KieServices.Factory.get();
         this.kieContainer = kieServices.getKieClasspathContainer();
-        this.kieSession = kieContainer.newKieSession("RulesSession");
+        this.kieSession = kieContainer.newKieSession("ExtinctionRisk");
     }
 
     /**

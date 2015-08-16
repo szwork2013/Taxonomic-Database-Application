@@ -9,8 +9,8 @@ import java.util.List;
 
 public interface TaxonomyRepository extends CrudRepository<Taxonomy, Long> {
 
-//    @Query(value = "select * from taxonomy where levenshtein(taxonomy.species, :species)  <= 2", nativeQuery = true)
-//    List<Taxonomy> findByHierarchySpeciesSoundex(@Param("species") String species);
+    @Query(value = "select * from taxonomy where levenshtein(species_epiteth, :species)  <= 2", nativeQuery = true)
+    List<Taxonomy> findByHierarchySpeciesEpitethSoundex(@Param("species") String species);
 
     @Query(value = "select t from Taxonomy t where (:kingdom = 'null' or t.hierarchy.kingdom.name = :kingdom) " +
                     "and (:phylum = 'null' or t.hierarchy.phylum.name = :phylum) " +
