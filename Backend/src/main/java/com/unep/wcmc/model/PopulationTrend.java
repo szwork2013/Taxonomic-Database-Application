@@ -4,7 +4,6 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-
 import java.io.Serializable;
 
 @Embeddable
@@ -25,6 +24,10 @@ public class PopulationTrend implements Serializable {
 
     @Column(name = "other_observations_on_population_dynamics")
     private String otherObservationsOnPopulationDynamics;
+
+    @Column(name = "trend_brazil_population_size")
+    @Enumerated(value = EnumType.ORDINAL)
+    private TrendSize trendBrazilPopulationSize;
     
     public Boolean getDeclineReversibleAndCeased() {
         return declineReversibleAndCeased;
@@ -66,4 +69,12 @@ public class PopulationTrend implements Serializable {
 			String otherObservationsOnPopulationDynamics) {
 		this.otherObservationsOnPopulationDynamics = otherObservationsOnPopulationDynamics;
 	}
+
+    public TrendSize getTrendBrazilPopulationSize() {
+        return trendBrazilPopulationSize;
+    }
+
+    public void setTrendBrazilPopulationSize(TrendSize trendBrazilPopulationSize) {
+        this.trendBrazilPopulationSize = trendBrazilPopulationSize;
+    }
 }

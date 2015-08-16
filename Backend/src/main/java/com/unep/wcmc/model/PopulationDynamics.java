@@ -2,7 +2,6 @@ package com.unep.wcmc.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 public class PopulationDynamics implements Serializable {
@@ -84,6 +83,9 @@ public class PopulationDynamics implements Serializable {
 
     @Column(name = "captive_breeding_program")
     private Boolean captiveBreedingProgram;
+
+    @Embedded
+    private PopulationData populationData;
 
     public PopulationDynamics() {
         this.reductionWithCausesCeased = new PopulationReduction();
@@ -210,5 +212,13 @@ public class PopulationDynamics implements Serializable {
 
     public void setReductionIncludePastFuture(PopulationReduction reductionIncludePastFuture) {
         this.reductionIncludePastFuture = reductionIncludePastFuture;
+    }
+
+    public PopulationData getPopulationData() {
+        return populationData;
+    }
+
+    public void setPopulationData(PopulationData populationData) {
+        this.populationData = populationData;
     }
 }
