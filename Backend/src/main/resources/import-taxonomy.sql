@@ -4784,4 +4784,10 @@ INSERT INTO genus (id, genus) VALUES (3703, 'Saccocalyx');
 INSERT INTO genus (id, genus) VALUES (3704, 'Lophocalyx');
 INSERT INTO genus (id, genus) VALUES (3705, 'Sipunculus');
 
+INSERT INTO eating_habits (name, code) VALUES ('Carnivore','CAR');
+INSERT INTO eating_habits (name, code) VALUES ('Herbivore','HER');
+INSERT INTO eating_habits (name, code) VALUES ('Nectarivore','NEC');
+INSERT INTO eating_habits (name, code) VALUES ('Folivore','FOL');
+INSERT INTO eating_habits (name, code) VALUES ('Granivory', 'GRA');
+
 COMMIT;
