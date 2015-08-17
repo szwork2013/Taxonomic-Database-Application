@@ -48,29 +48,29 @@ INSERT INTO threat_category (id, description, code) VALUES (26, 'Other Economic 
   INSERT INTO threat_category (id, description, parent_id, code) VALUES (44, 'Construction of dams / reservoirs to supply',26,'NONE');
 
   INSERT INTO threat_category (id, description, code) VALUES (45, 'Human Settlement','HUM');
-   INSERT INTO threat_category (id, description,parent_id) VALUES (46, 'Rural settlements',45,'NONE');
-   INSERT INTO threat_category (id, description,parent_id) VALUES (47, 'Boom towns',45,'NONE');
+   INSERT INTO threat_category (id, description,parent_id, code) VALUES (46, 'Rural settlements',45,'NONE');
+   INSERT INTO threat_category (id, description,parent_id, code) VALUES (47, 'Boom towns',45,'NONE');
 
   INSERT INTO threat_category (id, description, code) VALUES (48, 'Fires','FIR');
-   INSERT INTO threat_category (id, description,parent_id) VALUES (49, 'Burned',48,'NONE');
-   INSERT INTO threat_category (id, description,parent_id) VALUES (50, ' Natural origin of fire',48,'NONE');
+   INSERT INTO threat_category (id, description,parent_id, code) VALUES (49, 'Burned',48,'NONE');
+   INSERT INTO threat_category (id, description,parent_id, code) VALUES (50, ' Natural origin of fire',48,'NONE');
 
   INSERT INTO threat_category (id, description, code) VALUES (51, 'Alien Species','ALI');
-   INSERT INTO threat_category (id, description,parent_id) VALUES (52, 'Introduction of exotic species (direct impact on the habitat)',51,'NONE');
-   INSERT INTO threat_category (id, description,parent_id) VALUES (53, ' Competitors',51,'NONE');
-   INSERT INTO threat_category (id, description,parent_id) VALUES (54, ' Predators',51,'NONE');
-   INSERT INTO threat_category (id, description,parent_id) VALUES (55, ' Hybridization',51,'NONE');
-   INSERT INTO threat_category (id, description,parent_id) VALUES (56, ' Pathogens / parasites',51,'NONE');
-   INSERT INTO threat_category (id, description,parent_id) VALUES (57, ' Contact domestic species',51,'NONE');
-   INSERT INTO threat_category (id, description,parent_id) VALUES (58, ' Other;abrir um campo texto de 100 caracteres',51,'NONE');
+   INSERT INTO threat_category (id, description,parent_id, code) VALUES (52, 'Introduction of exotic species (direct impact on the habitat)',51,'NONE');
+   INSERT INTO threat_category (id, description,parent_id, code) VALUES (53, ' Competitors',51,'NONE');
+   INSERT INTO threat_category (id, description,parent_id, code) VALUES (54, ' Predators',51,'NONE');
+   INSERT INTO threat_category (id, description,parent_id, code) VALUES (55, ' Hybridization',51,'NONE');
+   INSERT INTO threat_category (id, description,parent_id, code) VALUES (56, ' Pathogens / parasites',51,'NONE');
+   INSERT INTO threat_category (id, description,parent_id, code) VALUES (57, ' Contact domestic species',51,'NONE');
+   INSERT INTO threat_category (id, description,parent_id, code) VALUES (58, ' Other;abrir um campo texto de 100 caracteres',51,'NONE');
 
   INSERT INTO threat_category (id, description, code) VALUES (59, 'direct extraction (hunting)','DIR');
-   INSERT INTO threat_category (id, description,parent_id) VALUES (60, 'Use subsistence / local barter',59,'NONE');
-   INSERT INTO threat_category (id, description,parent_id) VALUES (61, ' Sports',59,'NONE');
-   INSERT INTO threat_category (id, description,parent_id) VALUES (62, ' Commercial',59,'NONE');
-   INSERT INTO threat_category (id, description,parent_id) VALUES (63, ' Scientific collection',59,'NONE');
-   INSERT INTO threat_category (id, description,parent_id) VALUES (64, ' Pest control',59,'NONE');
-   INSERT INTO threat_category (id, description,parent_id) VALUES (65, ' Coral removal',59,'NONE');
-   INSERT INTO threat_category (id, description,parent_id) VALUES (66, ' Other',59,'NONE');
+   INSERT INTO threat_category (id, description,parent_id, code) VALUES (60, 'Use subsistence / local barter',59,'NONE');
+   INSERT INTO threat_category (id, description,parent_id, code) VALUES (61, ' Sports',59,'NONE');
+   INSERT INTO threat_category (id, description,parent_id, code) VALUES (62, ' Commercial',59,'NONE');
+   INSERT INTO threat_category (id, description,parent_id, code) VALUES (63, ' Scientific collection',59,'NONE');
+   INSERT INTO threat_category (id, description,parent_id, code) VALUES (64, ' Pest control',59,'NONE');
+   INSERT INTO threat_category (id, description,parent_id, code) VALUES (65, ' Coral removal',59,'NONE');
+   INSERT INTO threat_category (id, description,parent_id, code) VALUES (66, ' Other',59,'NONE');
 
 
