@@ -84,6 +84,12 @@ public class PopulationDynamics implements Serializable {
     @Column(name = "captive_breeding_program")
     private Boolean captiveBreedingProgram;
 
+    @Column(name = "connectivity_outside_national_territory")
+    private Boolean connectivityOutsideNationalTerritory;
+
+    @Column(name = "immigration_expected_decrease")
+    private Boolean immigrationExpectedDecrease;
+
     @Embedded
     private PopulationData populationData;
 
@@ -212,6 +218,22 @@ public class PopulationDynamics implements Serializable {
 
     public void setReductionIncludePastFuture(PopulationReduction reductionIncludePastFuture) {
         this.reductionIncludePastFuture = reductionIncludePastFuture;
+    }
+
+    public Boolean getConnectivityOutsideNationalTerritory() {
+        return connectivityOutsideNationalTerritory;
+    }
+
+    public void setConnectivityOutsideNationalTerritory(Boolean connectivityOutsideNationalTerritory) {
+        this.connectivityOutsideNationalTerritory = connectivityOutsideNationalTerritory;
+    }
+
+    public Boolean getImmigrationExpectedDecrease() {
+        return immigrationExpectedDecrease;
+    }
+
+    public void setImmigrationExpectedDecrease(Boolean immigrationExpectedDecrease) {
+        this.immigrationExpectedDecrease = immigrationExpectedDecrease;
     }
 
     public PopulationData getPopulationData() {

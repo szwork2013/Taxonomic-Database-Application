@@ -28,6 +28,12 @@ public class PopulationTrend implements Serializable {
     @Column(name = "trend_brazil_population_size")
     @Enumerated(value = EnumType.ORDINAL)
     private TrendSize trendBrazilPopulationSize;
+
+    @Column(name = "brazil_population_sink")
+    private Boolean brazilPopulationSink;
+
+    @Column(name = "brazil_population_decline_by_foreign")
+    private Boolean brazilPopulationDeclineByForeign;
     
     public Boolean getDeclineReversibleAndCeased() {
         return declineReversibleAndCeased;
@@ -76,5 +82,21 @@ public class PopulationTrend implements Serializable {
 
     public void setTrendBrazilPopulationSize(TrendSize trendBrazilPopulationSize) {
         this.trendBrazilPopulationSize = trendBrazilPopulationSize;
+    }
+
+    public Boolean getBrazilPopulationSink() {
+        return brazilPopulationSink;
+    }
+
+    public void setBrazilPopulationSink(Boolean brazilPopulationSink) {
+        this.brazilPopulationSink = brazilPopulationSink;
+    }
+
+    public Boolean getBrazilPopulationDeclineByForeign() {
+        return brazilPopulationDeclineByForeign;
+    }
+
+    public void setBrazilPopulationDeclineByForeign(Boolean brazilPopulationDeclineByForeign) {
+        this.brazilPopulationDeclineByForeign = brazilPopulationDeclineByForeign;
     }
 }
