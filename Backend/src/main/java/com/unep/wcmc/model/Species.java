@@ -20,6 +20,15 @@ public class Species implements BaseEntity {
     @Column(name = "scientific_name")
     private String scientificName;
 
+    @Column(name = "historiography_natural")
+    private String historiographyNatural;
+
+    @Column(name = "conservation_state")
+    private String conservationState;
+
+    @Column(name = "curiosities")
+    private String curiosities;
+
     @Column(name = "extinction_risk_category")
     @Enumerated(value = EnumType.ORDINAL)
     private ExtinctionRiskCategory extinctionRiskCategory;
@@ -94,6 +103,30 @@ public class Species implements BaseEntity {
 
     public void setScientificName(String scientificName) {
         this.scientificName = scientificName;
+    }
+
+    public String getHistoriographyNatural() {
+        return historiographyNatural;
+    }
+
+    public void setHistoriographyNatural(String historiographyNatural) {
+        this.historiographyNatural = historiographyNatural;
+    }
+
+    public String getConservationState() {
+        return conservationState;
+    }
+
+    public void setConservationState(String conservationState) {
+        this.conservationState = conservationState;
+    }
+
+    public String getCuriosities() {
+        return curiosities;
+    }
+
+    public void setCuriosities(String curiosities) {
+        this.curiosities = curiosities;
     }
 
     public ExtinctionRiskCategory getExtinctionRiskCategory() {

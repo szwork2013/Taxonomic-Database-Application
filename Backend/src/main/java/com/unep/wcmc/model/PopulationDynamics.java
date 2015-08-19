@@ -24,7 +24,7 @@ public class PopulationDynamics implements Serializable {
             @AttributeOverride(name = "percentage",
                     column = @Column(name = "reduction_with_causes_ceased_percent"))
     })
-	private PopulationReduction reductionWithCausesCeased;
+	private PopulationReduction reductionWithCausesCeased = new PopulationReduction();
 
     @Embedded
     @AttributeOverrides({
@@ -35,7 +35,7 @@ public class PopulationDynamics implements Serializable {
             @AttributeOverride(name = "percentage",
                     column = @Column(name = "reduction_with_causes_not_ceased_percent"))
     })
-	private PopulationReduction reductionWithCausesNotCeased;
+	private PopulationReduction reductionWithCausesNotCeased = new PopulationReduction();
 
 	@Embedded
     @AttributeOverrides({
@@ -46,7 +46,7 @@ public class PopulationDynamics implements Serializable {
             @AttributeOverride(name = "percentage",
                     column = @Column(name = "projection_future_reduction_percent"))
     })
-	private PopulationReduction projectionFutureReduction;
+	private PopulationReduction projectionFutureReduction = new PopulationReduction();
 
     @Embedded
     @AttributeOverrides({
@@ -57,7 +57,7 @@ public class PopulationDynamics implements Serializable {
             @AttributeOverride(name = "percentage",
                     column = @Column(name = "reduction_include_past_future_percent"))
     })
-	private PopulationReduction reductionIncludePastFuture;
+	private PopulationReduction reductionIncludePastFuture = new PopulationReduction();
 
     @Column(name = "number_of_mature_individuals")
     private Long matureIndividualsNumber;
@@ -92,13 +92,6 @@ public class PopulationDynamics implements Serializable {
 
     @Embedded
     private PopulationData populationData;
-
-    public PopulationDynamics() {
-        this.reductionWithCausesCeased = new PopulationReduction();
-        this.reductionWithCausesNotCeased = new PopulationReduction();
-        this.projectionFutureReduction = new PopulationReduction();
-        this.reductionIncludePastFuture = new PopulationReduction();
-    }
 
     public Long getId() {
         return id;

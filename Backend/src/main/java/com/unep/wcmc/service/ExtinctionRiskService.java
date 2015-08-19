@@ -1,8 +1,6 @@
 package com.unep.wcmc.service;
 
-import com.unep.wcmc.model.ExtinctionRiskCategory;
-import com.unep.wcmc.model.Species;
-import com.unep.wcmc.model.Threat;
+import com.unep.wcmc.model.*;
 import com.unep.wcmc.repository.SpeciesRepository;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
@@ -81,9 +79,22 @@ public class ExtinctionRiskService {
                     if (species.getNaturalHistory() != null) {
                         session.insert(species.getNaturalHistory());
                         if (species.getNaturalHistory().getPopulationDynamics() != null) {
-                            session.insert(species.getNaturalHistory().getPopulationDynamics());
-                            session.insert(species.getNaturalHistory().getPopulationDynamics().getPopulationTrend());
-                            session.insert(species.getNaturalHistory().getPopulationDynamics().getDensityData());
+                            PopulationDynamics populationDynamics = species.getNaturalHistory().getPopulationDynamics();
+                            if (populationDynamics.getReductionWithCausesCeased() == null) {
+                                populationDynamics.setReductionWithCausesCeased(new PopulationReduction());
+                            }
+                            if (populationDynamics.getReductionWithCausesNotCeased() == null) {
+                                populationDynamics.setReductionWithCausesNotCeased(new PopulationReduction());
+                            }
+                            if (populationDynamics.getReductionIncludePastFuture() == null) {
+                                populationDynamics.setReductionIncludePastFuture(new PopulationReduction());
+                            }
+                            if (populationDynamics.getProjectionFutureReduction() == null) {
+                                populationDynamics.setProjectionFutureReduction(new PopulationReduction());
+                            }
+                            session.insert(populationDynamics);
+                            session.insert(populationDynamics.getPopulationTrend());
+                            session.insert(populationDynamics.getDensityData());
                         }
                     }
                     // set the Conservation facts
