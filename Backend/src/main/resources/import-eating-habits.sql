@@ -1,0 +1,18 @@
+INSERT INTO eating_habits (id, name, code) VALUES (1, 'Carnívoro', 'CAR');
+INSERT INTO eating_habits (id, name, code) VALUES (2, 'Herbívoro', 'HER');
+INSERT INTO eating_habits (id, name, code) VALUES (3, 'Nectívoro', 'NEC');
+INSERT INTO eating_habits (id, name, code) VALUES (4, 'Folívoro', 'FOL');
+INSERT INTO eating_habits (id, name, code) VALUES (5, 'Granívoro', 'GRA');
+INSERT INTO eating_habits (id, name, code) VALUES (6, 'Insetívoro', null);
+INSERT INTO eating_habits (id, name, code) VALUES (7, 'Onívoro', null);
+INSERT INTO eating_habits (id, name, code) VALUES (8, 'Planctófago', null);
+INSERT INTO eating_habits (id, name, code) VALUES (9, 'Detritivoro', null);
+INSERT INTO eating_habits (id, name, code) VALUES (10, 'Frugívoro', null);
+INSERT INTO eating_habits (id, name, code) VALUES (11, 'Hematófago', null);
+INSERT INTO eating_habits (id, name, code) VALUES (12, 'Necrófago', null);
+INSERT INTO eating_habits (id, name, code) VALUES (13, 'Filtrador', null);
+INSERT INTO eating_habits (id, name, code) VALUES (14, 'Gomívoro', null);
+INSERT INTO eating_habits (id, name, code) VALUES (15, 'Sugador de Seiva', null);
+INSERT INTO eating_habits (id, name, code) VALUES (16, 'Piscívoro/Ictiófago', null);
+INSERT INTO eating_habits (id, name, code) VALUES (17, 'Suspensivo', null);
+INSERT INTO eating_habits (id, name, code) VALUES (18, 'Outros', null);
