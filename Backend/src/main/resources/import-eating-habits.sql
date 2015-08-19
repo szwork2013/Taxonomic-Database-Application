@@ -1,0 +1,18 @@
+INSERT INTO eating_habits (id, name, code) VALUES (6, 'Gumivore', 'GUM');
+INSERT INTO eating_habits (id, name, code) VALUES (7, 'Omnivore', 'OMN');
+INSERT INTO eating_habits (id, name, code) VALUES (4, 'Folivore', 'FOL');
+INSERT INTO eating_habits (id, name, code) VALUES (5, 'Granivory', 'GRA');
+INSERT INTO eating_habits (id, name, code) VALUES (1, 'Carnivore', 'CAR');
+INSERT INTO eating_habits (id, name, code) VALUES (2, 'Herbivore', 'HER');
+INSERT INTO eating_habits (id, name, code) VALUES (3, 'Nectarivore', 'NEC');
+INSERT INTO eating_habits (id, name, code) VALUES (8, 'Planktivorous', 'PLA');
+INSERT INTO eating_habits (id, name, code) VALUES (16, 'Piscivore', 'PIS');
+INSERT INTO eating_habits (id, name, code) VALUES (17, 'Suspension', 'SUS');
+INSERT INTO eating_habits (id, name, code) VALUES (18, 'Others', 'OTH');
+INSERT INTO eating_habits (id, name, code) VALUES (11, 'Hematophagy', 'HEM');
+INSERT INTO eating_habits (id, name, code) VALUES (12, 'Necrophagy', 'NEC');
+INSERT INTO eating_habits (id, name, code) VALUES (14, 'Insectivore', 'INS');
+INSERT INTO eating_habits (id, name, code) VALUES (10, 'Nectarivore', 'NET');
+INSERT INTO eating_habits (id, name, code) VALUES (13, 'Filter feeder', 'FIL');
+INSERT INTO eating_habits (id, name, code) VALUES (15, 'Sap feeder', 'SAP');
+INSERT INTO eating_habits (id, name, code) VALUES (9, 'Folivore', 'FOL');
