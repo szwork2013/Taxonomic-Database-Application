@@ -47,7 +47,7 @@ public final class SpeciesService extends AbstractService<Species, SpeciesReposi
     }
 
     public List<Species> findBySpeciesNameSimilaries(String species) {
-        return repo.findByTaxonomyHierarchySpeciesEpitethSoundex(species);
+        return repo.findByNameSoundex(species);
     }
 
     public ExceptionOccurrence raiseSpeciesException(Species active, Species suggested,

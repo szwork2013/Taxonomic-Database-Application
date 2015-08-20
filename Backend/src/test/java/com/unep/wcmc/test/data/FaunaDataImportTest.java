@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -43,6 +44,9 @@ public class FaunaDataImportTest {
 
     @Autowired
     private StateRepository stateRepository;
+
+    @Autowired
+    private CountryRepository countryRepository;
 
     @Autowired
     private DistributionAreaRepository distributionAreaRepository;
@@ -156,18 +160,17 @@ public class FaunaDataImportTest {
     }
 
     @Test
-    @Ignore // ignoring this test case to not be executed all the time
+    //@Ignore // ignoring this test case to not be executed all the time
     public void testImportOccurencesICMBioSpeciesFromCSV() throws Exception {
         // CSV fields
         //kingdom,phylum,class,order,family,genus,specificEpithet,infraspecificEpithet,species,scientificName,taxonRank,group,
         //decimalLatitude,decimalLongitude,geodeticDatum,continent,country,stateProvince,municipality,locality,basisOfRecord,
         // occurrenceRemarks,establishmentMeans,eventDate,habitat,locationRemarks,occurrenceStatus,georeferenceSources,compilador,references
 
-        CSVReader reader = new CSVReader(new FileReader("src/test/resources/Occurences_ICMBio_brazilian_species.csv"));
+        CSVReader reader = new CSVReader(new FileReader("src/main/resources/data/Occurences_ICMBio_brazilian_species.csv"));
         String[] line = reader.readNext();
         while (line != null) {
-            //List<Taxonomy> list = taxonomyRepository.findByHierarchySpeciesSoundex(line[8].trim());
-            List<Taxonomy> list = new ArrayList<>();
+            List<Species> list = specieRepository.findByNameSoundex(line[8].trim());
             if (list != null && !list.isEmpty()) {
                 createOccurence(line, list.get(0));
             }
@@ -175,13 +178,31 @@ public class FaunaDataImportTest {
         }
     }
 
-    private Occurrence createOccurence(String[] line, Taxonomy taxonomy) {
-        DistributionArea distributionArea = new DistributionArea();
+    private Occurrence createOccurence(String[] line, Species species) {
+        DistributionArea distributionArea;
+        if (species.getDistributionArea() != null) {
+            distributionArea = species.getDistributionArea();
+        } else {
+            distributionArea = new DistributionArea();
+            species.setDistributionArea(distributionArea);
+        }
+
         State state = stateRepository.findByCode(line[17].trim());
-        Map map = new Map(line[19].trim(), null, line[29].trim(), null, null, null, false);
-        Occurrence occurrence = null; //new Occurrence(line[12].trim(), line[13].trim(), line[19].trim(), state, map);
-        distributionArea.getOccurrences().add(occurrence);
-        distributionAreaRepository.save(distributionArea);
+        Country country = countryRepository.findByName("Brazil");
+        Occurrence occurrence = new Occurrence(line[12].trim(), line[13].trim(), line[19].trim(), state);
+        occurrence.setCreatedAt(new Date());
+        occurrence.setCountry(country);
+        occurrence.setMunicipality(line[19].trim());
+        occurrence.setCompiler(line[28].trim());
+        occurrence.setReference(line[29].trim());
+
+        List<Occurrence> occurrences = distributionArea.getOccurrences();
+        if (occurrences == null) {
+            occurrences = new ArrayList<>();
+            distributionArea.setOccurrences(occurrences);
+        }
+        occurrences.add(occurrence);
+        specieRepository.save(species);
         return occurrence;
     }
 

@@ -14,6 +14,9 @@ public interface SpeciesRepository extends JpaRepository<Species, Long>, JpaSpec
 
     Species findByName(String name);
 
+    @Query(value = "select * from species where levenshtein(name, :name) <= 3", nativeQuery = true)
+    List<Species> findByNameSoundex(@Param("name") String name);
+
     List<Species> findByScientificName(String scientificName);
 
     @Query(value = "select * from species where levenshtein(scientific_name, :scientificName) <= 3", nativeQuery = true)
