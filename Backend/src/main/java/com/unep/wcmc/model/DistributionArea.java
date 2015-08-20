@@ -68,7 +68,7 @@ public class DistributionArea implements BaseEntity {
     @Column(name = "justification_of_trends")
     private String justificationTrends;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "distribution_area_id")
     private List<Occurrence> occurrences;
 

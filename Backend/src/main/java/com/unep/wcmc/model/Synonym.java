@@ -15,6 +15,14 @@ public class Synonym implements BaseEntity {
 
     private String author;
 
+    public Synonym() {
+        super();
+    }
+
+    public Synonym(String synonym) {
+        this.synonym = synonym;
+    }
+
     public Long getId() {
         return id;
     }

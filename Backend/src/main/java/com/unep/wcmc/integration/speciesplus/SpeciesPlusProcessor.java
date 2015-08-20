@@ -68,10 +68,26 @@ public class SpeciesPlusProcessor implements ItemProcessor<Map<String, Object>, 
                         // create the species data
                         Species species = new Species();
                         species.setTaxonomy(taxonomy);
+                        species.setName(String.valueOf(taxon.get("full_name")));
                         species.setScientificName(String.valueOf(taxon.get("full_name")));
                         List<Map<String, Object>> commonNames = (List<Map<String, Object>>) taxon.get("common_names");
                         if (commonNames != null && !commonNames.isEmpty()) {
-                            species.setName(String.valueOf(commonNames.get(0).get("name")));
+                            List<CommonName> commonNameList = new ArrayList<>();
+                            for (Map<String, Object> commonName : commonNames) {
+                                commonNameList.add(new CommonName(String.valueOf(commonName.get("name"))));
+                            }
+                            taxonomy.setCommonNames(commonNameList);
+                        }
+                        List<Map<String, Object>> synonyms = (List<Map<String, Object>>) taxon.get("synonyms");
+                        if (synonyms != null && !synonyms.isEmpty()) {
+                            List<Synonym> synonymList = new ArrayList<>();
+                            for (Map<String, Object> synonym : synonyms) {
+                                Synonym s = new Synonym();
+                                s.setSynonym(String.valueOf(synonym.get("full_name")));
+                                s.setAuthor(String.valueOf(synonym.get("author_year")));
+                                synonymList.add(s);
+                            }
+                            taxonomy.setSynonyms(synonymList);
                         }
                         return species;
                     }
