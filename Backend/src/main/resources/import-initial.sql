@@ -82,6 +82,41 @@ INSERT INTO conservation_action_type (id, description) VALUES (35, '20. Reproduc
 INSERT INTO conservation_action_type (id, description) VALUES (36, '21. Genetic Bank');
 INSERT INTO conservation_action_type (id, description) VALUES (37, '22. Other');
 
+-- Biomes
+insert into biome (name) values ('Aquatic');
+insert into biome (name) values ('Deserts');
+insert into biome (name) values ('Forest');
+insert into biome (name) values ('Grasslands');
+insert into biome (name) values ('Tundra');
+
+-- River
+insert into river_basin (name) values ('Tapajós');
+insert into river_basin (name) values ('Juruena');
+insert into river_basin (name) values ('Piratucu');
+insert into river_basin (name) values ('Paracori');
+insert into river_basin (name) values ('Acari');
+
+-- Protected Areas
+insert into protected_area (area) values ('Petrópolis Environmental');
+insert into protected_area (area) values ('Piaçabuçu Environmental');
+insert into protected_area (area) values ('Bacia do Rio São Bartolomeu Environmental');
+insert into protected_area (area) values ('Bacia do Rio Descoberto Environmental');
+insert into protected_area (area) values ('Cairuçu Environmental');
+insert into protected_area (area) values ('Quapi-Mirim Environmental');
+insert into protected_area (area) values ('Jericoacoara Environmental');
+insert into protected_area (area) values ('Cananéia-Iguape e Peruíbe Environmental');
+insert into protected_area (area) values ('Serra da Mantiqueira Environmental');
+insert into protected_area (area) values ('Guaraqueçaba Environmental');
+insert into protected_area (area) values ('Fernando de Noronha Environmental');
+insert into protected_area (area) values ('Igarapé Gelado Environmental');
+insert into protected_area (area) values ('Cavernas do Peruaçu Environmental');
+insert into protected_area (area) values ('Carste de Lagoa Santa Environmental');
+insert into protected_area (area) values ('Morro da Pedreira Environmental');
+insert into protected_area (area) values ('Serra de Tabatinga Environmental');
+insert into protected_area (area) values ('Ibirapuitã Environmental');
+insert into protected_area (area) values ('Anhatomirim Environmental');
+insert into protected_area (area) values ('Barra do Rio Mamanguape Environmental');
+
 -- UserRole data
 INSERT INTO user_role (id, name, role) VALUES (1, 'ADMIN', 'ADMIN');
 INSERT INTO user_role (id, name, role) VALUES (2, 'EXPERT', 'EXPERT');
