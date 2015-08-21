@@ -1,6 +1,7 @@
 package com.unep.wcmc.service;
 
 import com.unep.wcmc.model.ExceptionOccurrence;
+import com.unep.wcmc.model.ExtinctionRiskCriteria;
 import com.unep.wcmc.model.IntegrationSource;
 import com.unep.wcmc.model.Species;
 import com.unep.wcmc.repository.ExceptionOccurrenceRepository;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -73,6 +75,7 @@ public final class SpeciesService extends AbstractService<Species, SpeciesReposi
 
     @Override
     public Species save(Species specie) {
+        specie.setExtinctionRiskCriterias(new HashSet<ExtinctionRiskCriteria>());
         extinctionRiskService.processExtinctionRiskCalculation(specie);
         specie.setLastModified(new Date());
         return super.save(specie);
