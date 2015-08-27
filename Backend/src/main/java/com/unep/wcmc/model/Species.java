@@ -1,6 +1,7 @@
 package com.unep.wcmc.model;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -32,6 +33,12 @@ public class Species implements BaseEntity {
     @Column(name = "extinction_risk_category")
     @Enumerated(value = EnumType.ORDINAL)
     private ExtinctionRiskCategory extinctionRiskCategory;
+
+    @ElementCollection
+    @CollectionTable(name = "specie_tropic_positions", joinColumns = @JoinColumn(name = "species_id"))
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "tropic_position")
+    private Set<TropicPosition> tropicPositions;
 
     @ElementCollection
     @CollectionTable(name = "extinction_risk_criteria", joinColumns = @JoinColumn(name = "species_id"))
@@ -239,4 +246,13 @@ public class Species implements BaseEntity {
     public void removeThreat(Threat threat){
         getThreats().remove(threat);
     }
+
+    public Set<TropicPosition> getTropicPositions() {
+        return tropicPositions;
+    }
+
+    public void setTropicPositions(Set<TropicPosition> tropicPositions) {
+        this.tropicPositions = tropicPositions;
+    }
+
 }
