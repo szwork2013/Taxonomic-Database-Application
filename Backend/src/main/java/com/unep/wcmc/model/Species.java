@@ -69,6 +69,9 @@ public class Species implements BaseEntity {
                     nullable = false, updatable = false) })
     private Set<Threat> threats;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade =  CascadeType.ALL, orphanRemoval = true)
+    private Set<Image> images;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cover_photo_id")
     private Image coverPhoto;
@@ -248,11 +251,22 @@ public class Species implements BaseEntity {
     }
 
     public Set<TropicPosition> getTropicPositions() {
-        return tropicPositions;
+        return tropicPositions == null ? new HashSet<TropicPosition>() : tropicPositions;
     }
 
     public void setTropicPositions(Set<TropicPosition> tropicPositions) {
         this.tropicPositions = tropicPositions;
     }
 
+    public Set<Image> getImages() {
+        return images == null ? new HashSet<Image>() : images;
+    }
+
+    public void setImages(Set<Image> images) {
+        this.images = images;
+    }
+
+    public void addImage(Image image){
+        getImages().add(image);
+    }
 }

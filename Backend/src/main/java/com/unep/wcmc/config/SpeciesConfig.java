@@ -47,5 +47,5 @@ public class SpeciesConfig {
         characterEncodingFilter.setEncoding("UTF-8");
         characterEncodingFilter.setForceEncoding(true);
         return characterEncodingFilter;
-    }    
+    }
 }

@@ -2,6 +2,8 @@ package com.unep.wcmc.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +27,9 @@ import com.unep.wcmc.service.BaseService;
  */
 public abstract class AbstractController<E extends BaseEntity, 
 										 S extends BaseService<E>> {
+
+    protected static Logger log = LoggerFactory.getLogger(AbstractController.class);
+
     private static final SuccessResponse SUCCESS_RESPONSE = new SuccessResponse();
 	@Autowired
 	protected S service;
