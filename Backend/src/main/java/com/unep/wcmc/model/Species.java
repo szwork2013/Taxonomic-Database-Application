@@ -1,6 +1,7 @@
 package com.unep.wcmc.model;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -34,6 +35,12 @@ public class Species implements BaseEntity {
     private ExtinctionRiskCategory extinctionRiskCategory;
 
     @ElementCollection
+    @CollectionTable(name = "specie_tropic_positions", joinColumns = @JoinColumn(name = "species_id"))
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "tropic_position")
+    private Set<TropicPosition> tropicPositions;
+
+    @ElementCollection
     @CollectionTable(name = "extinction_risk_criteria", joinColumns = @JoinColumn(name = "species_id"))
     @Enumerated(value = EnumType.STRING)
     @Column(name = "criteria")
@@ -61,6 +68,9 @@ public class Species implements BaseEntity {
             inverseJoinColumns = { @JoinColumn(name = "threat_id",
                     nullable = false, updatable = false) })
     private Set<Threat> threats;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade =  CascadeType.ALL, orphanRemoval = true)
+    private Set<Image> images;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cover_photo_id")
@@ -238,5 +248,25 @@ public class Species implements BaseEntity {
 
     public void removeThreat(Threat threat){
         getThreats().remove(threat);
+    }
+
+    public Set<TropicPosition> getTropicPositions() {
+        return tropicPositions == null ? new HashSet<TropicPosition>() : tropicPositions;
+    }
+
+    public void setTropicPositions(Set<TropicPosition> tropicPositions) {
+        this.tropicPositions = tropicPositions;
+    }
+
+    public Set<Image> getImages() {
+        return images == null ? new HashSet<Image>() : images;
+    }
+
+    public void setImages(Set<Image> images) {
+        this.images = images;
+    }
+
+    public void addImage(Image image){
+        getImages().add(image);
     }
 }

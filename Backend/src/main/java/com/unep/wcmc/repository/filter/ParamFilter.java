@@ -44,5 +44,6 @@ final class ParamFilter {
 	@JsonProperty("municipality")
 	public String municipality;
 
+
 	public ParamFilter() {}
 }
