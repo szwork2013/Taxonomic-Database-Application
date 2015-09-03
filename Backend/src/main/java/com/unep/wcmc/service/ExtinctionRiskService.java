@@ -62,6 +62,8 @@ public class ExtinctionRiskService {
             try {
                 // using the LEAST CONCERN as default
                 //species.setExtinctionRiskCategory(ExtinctionRiskCategory.LEAST_CONCERN);
+                species.setExtinctionRiskCategory(null);
+                species.getExtinctionRiskCriterias().clear();
                 // global variables
                 session.insert(species);
                 session.setGlobal("species", species);
