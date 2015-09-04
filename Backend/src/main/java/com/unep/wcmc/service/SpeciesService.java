@@ -75,6 +75,10 @@ public final class SpeciesService extends AbstractService<Species, SpeciesReposi
 
     @Override
     public Species save(Species specie) {
+        if (specie.getId() != null) {
+            Species existing = super.get(specie.getId());
+            specie.setThreats(existing.getThreats());
+        }
         extinctionRiskService.processExtinctionRiskCalculation(specie);
         specie.setLastModified(new Date());
         return super.save(specie);

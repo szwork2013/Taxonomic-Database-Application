@@ -21,4 +21,5 @@ public final class ThreatsService extends AbstractService<Threat, ThreatsReposit
         speciesService.save(entity.getSpecies());
         return entity;
     }
+
 }

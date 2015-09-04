@@ -1,7 +1,9 @@
 package com.unep.wcmc.controller;
 
-import com.unep.wcmc.domain.SuccessResponse;
-import com.unep.wcmc.model.*;
+import com.unep.wcmc.model.Image;
+import com.unep.wcmc.model.Species;
+import com.unep.wcmc.model.Threat;
+import com.unep.wcmc.model.ThreatCategory;
 import com.unep.wcmc.repository.filter.SpeciesFilter;
 import com.unep.wcmc.service.SpeciesService;
 import com.unep.wcmc.service.ThreatCategoryService;
@@ -10,17 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.validation.Valid;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/species")
@@ -59,6 +55,7 @@ public class SpeciesController extends AbstractController<Species, SpeciesServic
         Species sp = service.get(id);
 
         sp.getThreats().remove(threatsService.get(threatId));
+        threatsService.delete(threatId);
 
         return service.save(sp);
     }
