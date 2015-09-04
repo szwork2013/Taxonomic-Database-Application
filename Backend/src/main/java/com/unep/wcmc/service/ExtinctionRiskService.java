@@ -62,8 +62,6 @@ public class ExtinctionRiskService {
     public void processExtinctionRiskCalculation(Species species, KieSession session) {
         if (session != null) {
             try {
-                // using the LEAST CONCERN as default
-                //species.setExtinctionRiskCategory(ExtinctionRiskCategory.LEAST_CONCERN);
                 species.setExtinctionRiskCategory(null);
                 species.setExtinctionRiskCriterias(new HashSet<ExtinctionRiskCriteria>());
                 // global variables
@@ -118,6 +116,10 @@ public class ExtinctionRiskService {
                 LOGGER.debug(e.getMessage());
             } finally {
                 session.destroy();
+                // using the LEAST CONCERN as default
+                if (species.getExtinctionRiskCategory() == null) {
+                    species.setExtinctionRiskCategory(ExtinctionRiskCategory.LEAST_CONCERN);
+                }
             }
         }
     }

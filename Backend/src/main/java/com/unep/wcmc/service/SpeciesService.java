@@ -1,9 +1,6 @@
 package com.unep.wcmc.service;
 
-import com.unep.wcmc.model.ExceptionOccurrence;
-import com.unep.wcmc.model.ExtinctionRiskCriteria;
-import com.unep.wcmc.model.IntegrationSource;
-import com.unep.wcmc.model.Species;
+import com.unep.wcmc.model.*;
 import com.unep.wcmc.repository.ExceptionOccurrenceRepository;
 import com.unep.wcmc.repository.IntegrationSourceRepository;
 import com.unep.wcmc.repository.SpeciesRepository;
