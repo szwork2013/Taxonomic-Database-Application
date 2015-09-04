@@ -75,7 +75,6 @@ public final class SpeciesService extends AbstractService<Species, SpeciesReposi
 
     @Override
     public Species save(Species specie) {
-        specie.setExtinctionRiskCriterias(new HashSet<ExtinctionRiskCriteria>());
         extinctionRiskService.processExtinctionRiskCalculation(specie);
         specie.setLastModified(new Date());
         return super.save(specie);

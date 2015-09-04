@@ -62,11 +62,7 @@ public class Species implements BaseEntity {
     @JoinColumn(name = "conservation_id")
     private Conservation conservation;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "specie_threat", joinColumns = {
-            @JoinColumn(name = "specie_id", nullable = false, updatable = false) },
-            inverseJoinColumns = { @JoinColumn(name = "threat_id",
-                    nullable = false, updatable = false) })
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "species")
     private Set<Threat> threats;
 
     @OneToMany(fetch = FetchType.LAZY, cascade =  CascadeType.ALL, orphanRemoval = true)
@@ -244,10 +240,12 @@ public class Species implements BaseEntity {
 
     public void addThreat(Threat threat){
         getThreats().add(threat);
+        threat.setSpecies(this);
     }
 
     public void removeThreat(Threat threat){
         getThreats().remove(threat);
+        threat.setSpecies(null);
     }
 
     public Set<TropicPosition> getTropicPositions() {

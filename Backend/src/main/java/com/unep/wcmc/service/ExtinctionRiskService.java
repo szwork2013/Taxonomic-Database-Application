@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
+
 @Service
 public class ExtinctionRiskService {
 
@@ -63,7 +65,7 @@ public class ExtinctionRiskService {
                 // using the LEAST CONCERN as default
                 //species.setExtinctionRiskCategory(ExtinctionRiskCategory.LEAST_CONCERN);
                 species.setExtinctionRiskCategory(null);
-                species.getExtinctionRiskCriterias().clear();
+                species.setExtinctionRiskCriterias(new HashSet<ExtinctionRiskCriteria>());
                 // global variables
                 session.insert(species);
                 session.setGlobal("species", species);
