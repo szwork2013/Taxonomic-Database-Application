@@ -100,7 +100,19 @@ public class SpeciesController extends AbstractController<Species, SpeciesServic
                 sp.addImage(img);
 
                 if(coverPhoto){
-                    sp.setCoverPhoto(img);
+
+                    //to fix the bug The fix for HHH-6848 causes IllegalStateException
+                    // when merging an entity results in merging more than one representation of the same detached entity.
+                    //https://hibernate.atlassian.net/browse/HHH-9106
+
+                    Image coverImg = new Image(file);
+                    coverImg.setTitle(title);
+                    coverImg.setAuthor(author);
+                    coverImg.setLegend(legend);
+                    coverImg.setAuthor(author);
+                    coverImg.setDescription(description);
+
+                    sp.setCoverPhoto(coverImg);
                 }
 
                 return service.save(sp);
