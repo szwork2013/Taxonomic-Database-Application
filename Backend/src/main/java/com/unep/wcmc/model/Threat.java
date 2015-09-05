@@ -1,5 +1,7 @@
 package com.unep.wcmc.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -41,6 +43,11 @@ public class Threat implements BaseEntity {
 
     @Embedded
     private FishingThreat fishingThreat;
+
+    @ManyToOne
+    @JoinColumn(name = "specie_id")
+    @JsonIgnore
+    private Species species;
 
     public Threat(){
     }
@@ -150,5 +157,13 @@ public class Threat implements BaseEntity {
 
     public void setCategory(ThreatCategory category) {
         this.category = category;
+    }
+
+    public Species getSpecies() {
+        return species;
+    }
+
+    public void setSpecies(Species species) {
+        this.species = species;
     }
 }

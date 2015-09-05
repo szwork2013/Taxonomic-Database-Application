@@ -1,9 +1,6 @@
 package com.unep.wcmc.service;
 
-import com.unep.wcmc.model.ExceptionOccurrence;
-import com.unep.wcmc.model.ExtinctionRiskCriteria;
-import com.unep.wcmc.model.IntegrationSource;
-import com.unep.wcmc.model.Species;
+import com.unep.wcmc.model.*;
 import com.unep.wcmc.repository.ExceptionOccurrenceRepository;
 import com.unep.wcmc.repository.IntegrationSourceRepository;
 import com.unep.wcmc.repository.SpeciesRepository;
@@ -75,7 +72,10 @@ public final class SpeciesService extends AbstractService<Species, SpeciesReposi
 
     @Override
     public Species save(Species specie) {
-        specie.setExtinctionRiskCriterias(new HashSet<ExtinctionRiskCriteria>());
+        if (specie.getId() != null) {
+            Species existing = super.get(specie.getId());
+            specie.setThreats(existing.getThreats());
+        }
         extinctionRiskService.processExtinctionRiskCalculation(specie);
         specie.setLastModified(new Date());
         return super.save(specie);
