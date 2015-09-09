@@ -23,7 +23,9 @@ public final class SpeciesSpecification {
 			@Override
 			public Predicate toPredicate(Root<Species> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 
+				final Subquery<Long> specieQuery = query.subquery(Long.class);
 				final List<Predicate> predicates = new ArrayList<>();
+				query.distinct(true);
 
 				final Join<Species, DistributionArea> distributionArea = root.join("distributionArea",JoinType.LEFT);
 				final Join<Species, Conservation> conservation = root.join("conservation", JoinType.LEFT);
@@ -41,8 +43,16 @@ public final class SpeciesSpecification {
 					predicates.add(cb.equal(occurrenceStates.get("name"), filter.getOccurrenceState()));
 				}
 				if (!isEmpty(filter.getOccurrenceBiomes())) {
-					final Join<DistributionArea, Biome> occurrenceBiomes = distributionArea.join("occurrenceBiomes", JoinType.LEFT);
-					predicates.add(cb.equal(occurrenceBiomes.get("name"), filter.getOccurrenceBiomes()));
+
+					final Root<DistributionArea> distributionAreaRoot = specieQuery.from(DistributionArea.class);
+					final Join<DistributionArea, Biome> occurrenceBiomes = distributionAreaRoot.join("occurrence_biomes");
+
+					specieQuery.select(occurrenceBiomes.<Long>get("biome_id"));
+
+					specieQuery.where(cb.equal(occurrenceBiomes.get("name"), filter.getOccurrenceBiomes()));
+
+					//final Join<DistributionArea, Biome> occurrenceBiomes = distributionArea.join("occurrenceBiomes", JoinType.LEFT);
+					predicates.add(cb.in(distributionAreaRoot.get("occurrenceBiomes")).value(specieQuery));
 				}
 				if (!isEmpty(filter.getOccurrenceProtectedAreas())) {
 					final Join<DistributionArea, ProtectedArea> occurrenceProtectedAreas =
