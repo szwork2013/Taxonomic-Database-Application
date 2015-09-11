@@ -2,11 +2,11 @@
 
 cd /opt/Taxonomic-Database-Application/
 
-echo "Stopping the WSO2 ESB..."
-sudo service wso2-esb stop
+#echo "Stopping the WSO2 ESB..."
+#sudo service wso2-esb stop
 
-echo "Stopping the PostgreSQL..."
-sudo service postgresql stop
+#echo "Stopping the PostgreSQL..."
+#sudo service postgresql stop
 
 echo "Stopping the frontend..."
 sudo service taxonomic-web stop
@@ -17,11 +17,11 @@ sudo service taxonomic-db stop
 echo "Updating the project files..."
 sudo git pull
 
-echo "Starting the PostgreSQL..."
-sudo service postgresql start
+#echo "Starting the PostgreSQL..."
+#sudo service postgresql start
 
-echo "Starting the WSO2 ESB..."
-sudo service wso2-esb start
+#echo "Starting the WSO2 ESB..."
+#sudo service wso2-esb start
 
 echo "Starting the backend REST API..."
 cd ./Backend
