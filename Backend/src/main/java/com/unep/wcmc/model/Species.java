@@ -1,5 +1,7 @@
 package com.unep.wcmc.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
@@ -64,9 +66,6 @@ public class Species implements BaseEntity {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "species")
     private Set<Threat> threats;
-
-    @OneToMany(fetch = FetchType.LAZY, cascade =  CascadeType.ALL, orphanRemoval = true)
-    private Set<Image> images;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cover_photo_id")
@@ -254,17 +253,5 @@ public class Species implements BaseEntity {
 
     public void setTropicPositions(Set<TropicPosition> tropicPositions) {
         this.tropicPositions = tropicPositions;
-    }
-
-    public Set<Image> getImages() {
-        return images == null ? new HashSet<Image>() : images;
-    }
-
-    public void setImages(Set<Image> images) {
-        this.images = images;
-    }
-
-    public void addImage(Image image){
-        getImages().add(image);
     }
 }

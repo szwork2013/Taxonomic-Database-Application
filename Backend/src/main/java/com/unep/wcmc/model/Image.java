@@ -13,8 +13,11 @@ public class Image extends Multimedia {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    public Image(){
-    }
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "specie_id")
+    private Species specie;
+
+    public Image(){}
 
     public Image(MultipartFile file){
 
@@ -39,5 +42,13 @@ public class Image extends Multimedia {
     @Override
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Species getSpecie() {
+        return specie;
+    }
+
+    public void setSpecie(Species specie) {
+        this.specie = specie;
     }
 }
