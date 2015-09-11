@@ -80,7 +80,6 @@ public class SpeciesController extends AbstractController<Species, SpeciesServic
         return service.save(sp);
     }
 
-    @PreAuthorize("isAuthenticated()")
     @RequestMapping(method= RequestMethod.POST, value="uploadfile")
     public Species uploadFile(@RequestParam("id") Long id,
                               @RequestParam("title") String title,

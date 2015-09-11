@@ -37,6 +37,10 @@ public abstract class Multimedia implements BaseEntity {
     @JoinColumn(name = "file_id")
     private Attachment attachment;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "specie_id")
+    private Species specie;
+
     public String getLegend() {
         return legend;
     }
@@ -115,5 +119,13 @@ public abstract class Multimedia implements BaseEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Species getSpecie() {
+        return specie;
+    }
+
+    public void setSpecie(Species specie) {
+        this.specie = specie;
     }
 }

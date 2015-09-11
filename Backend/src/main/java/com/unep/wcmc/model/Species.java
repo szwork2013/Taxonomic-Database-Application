@@ -256,18 +256,6 @@ public class Species implements BaseEntity {
         this.tropicPositions = tropicPositions;
     }
 
-    public Set<Image> getImages() {
-        return images == null ? new HashSet<Image>() : images;
-    }
-
-    public void setImages(Set<Image> images) {
-        this.images = images;
-    }
-
-    public void addImage(Image image){
-        getImages().add(image);
-    }
-
     public List<Appendix> getAppendixes() {
         return appendixes;
     }
