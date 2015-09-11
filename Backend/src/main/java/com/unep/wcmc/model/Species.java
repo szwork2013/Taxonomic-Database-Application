@@ -1,10 +1,7 @@
 package com.unep.wcmc.model;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class Species implements BaseEntity {
@@ -82,6 +79,10 @@ public class Species implements BaseEntity {
 
     @Enumerated(EnumType.ORDINAL)
     private SpeciesType type;
+
+    @ElementCollection
+    @CollectionTable(name = "species_appendix", joinColumns = @JoinColumn(name = "species_id"))
+    private List<Appendix> appendixes;
 
     @Column(nullable = false)
     private boolean enabled;
@@ -266,5 +267,13 @@ public class Species implements BaseEntity {
 
     public void addImage(Image image){
         getImages().add(image);
+    }
+
+    public List<Appendix> getAppendixes() {
+        return appendixes;
+    }
+
+    public void setAppendixes(List<Appendix> appendixes) {
+        this.appendixes = appendixes;
     }
 }
