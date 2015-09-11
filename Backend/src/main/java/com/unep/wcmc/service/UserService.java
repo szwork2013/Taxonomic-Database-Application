@@ -9,11 +9,13 @@ import java.util.UUID;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 
+import com.unep.wcmc.exception.*;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
@@ -24,9 +26,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 
-import com.unep.wcmc.exception.UserAlreadyExistException;
-import com.unep.wcmc.exception.UserNotFoundException;
-import com.unep.wcmc.exception.UserRoleNotFoundException;
 import com.unep.wcmc.model.ForgetPasswordToken;
 import com.unep.wcmc.model.User;
 import com.unep.wcmc.model.UserRole;
@@ -46,6 +45,8 @@ public final class UserService extends AbstractService<User, UserRepository> imp
 
     @Autowired
     private UserRoleRepository userRoleRepo;
+    @Autowired
+    private UserRepository userRepo;
 	@Autowired
 	private ForgetPasswordTokenRepository passwordTokenRepository;
 	@Autowired
@@ -59,6 +60,10 @@ public final class UserService extends AbstractService<User, UserRepository> imp
     public User registerNewUser(User user) {
         validateUser(user, repo.findByEmail(user.getEmail()));
         validateUser(user, repo.findByUsername(user.getUsername()));
+        final String role = user.getRole();
+        user.setUserRole(getUserRole(role));
+        // setting the user enabled temporary to allow new users to log in on the web site
+        user.setEnabled(true);
         return save(user);
     }
     
@@ -68,9 +73,17 @@ public final class UserService extends AbstractService<User, UserRepository> imp
         if (user == null) {
             throw new UserNotFoundException("User not found");
         }
-        validateUser(editedUser, repo.findByEmail(editedUser.getEmail()));
-        validateUser(editedUser, repo.findByUsername(editedUser.getUsername()));
+        validateUser(editedUser, userRepo.findByEmail(editedUser.getEmail()));
+        validateUser(editedUser, userRepo.findByUsername(editedUser.getUsername()));
+        // setting the fields to update
         editedUser.setPassword(user.getPassword());
+        editedUser.setEnabled(user.isEnabled());
+        editedUser.setUserRole(user.getUserRole());
+        editedUser.setAddress(user.getAddress());
+        editedUser.setPhoneNumber(user.getPhoneNumber());
+        editedUser.setFirstName(user.getFirstName());
+        editedUser.setLastName(user.getLastName());
+        // saving the user
         return save(editedUser);
     }
     
@@ -104,11 +117,7 @@ public final class UserService extends AbstractService<User, UserRepository> imp
         	save(user);
         }
     }
-    
-    /*
-     * (non-Javadoc)
-     * @see org.springframework.security.core.userdetails.UserDetailsService#loadUserByUsername(java.lang.String)
-     */
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         final User user = repo.findByUsername(username);
@@ -160,8 +169,30 @@ public final class UserService extends AbstractService<User, UserRepository> imp
             }
         };
         emailSender.send(preparator);
-    } 
-    
+    }
+
+    public User changePassword(User user, String password, String oldPassword) {
+        if (!user.getPassword().equals(oldPassword)) {
+            throw new InvalidPasswordException("Passwords do not match");
+        }
+        detailsChecker.check(user);
+        user.setPassword(password);
+        return userRepo.save(user);
+    }
+
+    public void forgetPassword(String email) {
+        final User user = findByEmail(email);
+        if (user == null) {
+            throw new EmailNotFoundException("email not found");
+        }
+        final SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(email);
+        message.setSubject("Reset Password");
+        message.setText("Reset Password");
+        message.setFrom(environment.getProperty("support.email"));
+        emailSender.send(message);
+    }
+
     public void resetPassword(String token, String password) {
     	final ForgetPasswordToken passwordToken = passwordTokenRepository.findByToken(token);
     	if (passwordToken == null) {
@@ -188,7 +219,7 @@ public final class UserService extends AbstractService<User, UserRepository> imp
         }
         return super.save(entity);
     }
-    
+
     private String getUrl(HttpServletRequest request, User user, String urlCallback) {
     	final String token = UUID.randomUUID().toString();
         final ForgetPasswordToken passwordToken = new ForgetPasswordToken(token, urlCallback, user);
@@ -206,4 +237,6 @@ public final class UserService extends AbstractService<User, UserRepository> imp
     	}
     	return userRole;
     }
+
+
 }

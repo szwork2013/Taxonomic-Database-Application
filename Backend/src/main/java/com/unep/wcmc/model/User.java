@@ -2,15 +2,7 @@ package com.unep.wcmc.model;
 
 import java.util.Collection;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -82,6 +74,9 @@ public final class User implements UserDetails, BaseEntity {
     @OneToOne
     @JoinColumn(name = "user_role_id", nullable = false)
     private UserRole userRole;
+
+    @Transient
+    private String role;
 
     public User() {
     }
@@ -218,6 +213,14 @@ public final class User implements UserDetails, BaseEntity {
     @Override
     public boolean isEnabled() {
         return enabled;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @Override
