@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,18 +28,21 @@ public class SpeciesController extends AbstractController<Species, SpeciesServic
     @Autowired
     ThreatsService threatsService;
 
+    @PreAuthorize("isAnonymous() or isAuthenticated()")
     @RequestMapping(method = RequestMethod.POST, value = "/search", produces = "application/json")
     public Page<Species> search(@Valid @RequestBody SpeciesFilter filter,
     								  @PageableDefault(page = 0, size = 30) Pageable pageable) {
         return service.findByFilter(filter, pageable);
     }
 
+    @PreAuthorize("isAnonymous() or isAuthenticated()")
     @RequestMapping(method = RequestMethod.POST, value = "/autocomplete", produces = "application/json")
     public Page<Species> autoComplete(@Valid @RequestBody SpeciesFilter filter,
     									 @PageableDefault(page = 0, size = 30) Pageable pageable) {
         return service.findByTerm(filter, pageable);
     }
 
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(method= RequestMethod.POST, value = "/addthreat", produces = "application/json")
     public Species addThreat(@RequestBody HashMap<String,String> params){
 
@@ -49,6 +53,7 @@ public class SpeciesController extends AbstractController<Species, SpeciesServic
         return service.save(sp);
     }
 
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(method= RequestMethod.DELETE, value = "/removethreat/{id}/{threatId}", produces = "application/json")
     public Species removeThreat(@PathVariable Long id, @PathVariable Long threatId){
 
@@ -60,6 +65,7 @@ public class SpeciesController extends AbstractController<Species, SpeciesServic
         return service.save(sp);
     }
 
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(method= RequestMethod.POST, value = "/addcustomthreat", produces = "application/json")
     public Species removeThreat(@RequestBody HashMap<String,String> params){
 
@@ -74,6 +80,7 @@ public class SpeciesController extends AbstractController<Species, SpeciesServic
         return service.save(sp);
     }
 
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(method= RequestMethod.POST, value="uploadfile")
     public Species uploadFile(@RequestParam("id") Long id,
                               @RequestParam("title") String title,
@@ -94,7 +101,7 @@ public class SpeciesController extends AbstractController<Species, SpeciesServic
                       img.setLegend(legend);
                       img.setAuthor(author);
                       img.setDescription(description);
-                sp.addImage(img);
+                      img.setSpecie(sp);
 
                 if(coverPhoto){
 
