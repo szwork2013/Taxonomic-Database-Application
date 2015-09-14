@@ -22,7 +22,7 @@ public class JobRunnerTest {
     private JobRunner jobRunner;
 
     @Test
-    //@Ignore // Ignoring this test case to not be executed all the time
+    @Ignore // Ignoring this test case to not be executed all the time
     public void testStartSpeciesPlus() throws Exception {
         JobRuntime jobRuntime = jobRunner.start(SPECIES_PLUS.name());
         Assert.assertNotNull(jobRuntime);
@@ -34,7 +34,7 @@ public class JobRunnerTest {
     }
 
     @Test
-    @Ignore // Ignoring this test case to not be executed all the time
+    //@Ignore // Ignoring this test case to not be executed all the time
     public void testStartFaunaJob() throws Exception {
         JobRuntime jobRuntime = jobRunner.start(FAUNA.name());
         Assert.assertNotNull(jobRuntime);

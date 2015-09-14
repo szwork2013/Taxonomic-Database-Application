@@ -11,9 +11,7 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.Map;
 
 @Component
@@ -77,7 +75,7 @@ public class SpeciesPlusProcessor implements ItemProcessor<Map<String, Object>, 
                         // processing the Common Names
                         List<Map<String, Object>> commonNames = (List<Map<String, Object>>) taxon.get("common_names");
                         if (commonNames != null && !commonNames.isEmpty()) {
-                            List<CommonName> commonNameList = new ArrayList<>();
+                            Set<CommonName> commonNameList = new HashSet<>();
                             for (Map<String, Object> commonName : commonNames) {
                                 commonNameList.add(new CommonName(String.valueOf(commonName.get("name"))));
                             }
@@ -86,7 +84,7 @@ public class SpeciesPlusProcessor implements ItemProcessor<Map<String, Object>, 
                         // processing the Synonyms
                         List<Map<String, Object>> synonyms = (List<Map<String, Object>>) taxon.get("synonyms");
                         if (synonyms != null && !synonyms.isEmpty()) {
-                            List<Synonym> synonymList = new ArrayList<>();
+                            Set<Synonym> synonymList = new HashSet<>();
                             for (Map<String, Object> synonym : synonyms) {
                                 Synonym s = new Synonym();
                                 s.setSynonym(String.valueOf(synonym.get("full_name")));
@@ -99,7 +97,7 @@ public class SpeciesPlusProcessor implements ItemProcessor<Map<String, Object>, 
                         List<Map<String, Object>> citesListings = (List<Map<String, Object>>)
                                 taxon.get("cites_listings");
                         if (citesListings != null) {
-                            List<Appendix> appendixList = new ArrayList<>();
+                            Set<Appendix> appendixList = new HashSet<>();
                             for (Map<String, Object> appendix : citesListings) {
                                 Appendix app = new Appendix();
                                 app.setType(String.valueOf(appendix.get("appendix")));

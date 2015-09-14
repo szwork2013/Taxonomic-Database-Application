@@ -7,7 +7,9 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Component
 @SuppressWarnings("all")
@@ -38,7 +40,7 @@ public class FaunaProcessor implements ItemProcessor<String[], Species> {
         taxonomy.setHierarchy(hierarchy);
 
         // setting the Species common names
-        List<CommonName> commonNameList = new ArrayList<>();
+        Set<CommonName> commonNameList = new HashSet<>();
         String[] commonNames = line[10].trim().split(",");
         for (String name : commonNames) {
             commonNameList.add(new CommonName(name));

@@ -1,4 +1,4 @@
-package com.unep.wcmc.filter;
+package com.unep.wcmc.security;
 
 import java.io.IOException;
 
@@ -28,10 +28,6 @@ public final class AuthenticationFilter extends GenericFilterBean {
         this.tokenAuthenticationService = tokenAuthenticationService;
     }
     
-    /*
-     * (non-Javadoc)
-     * @see javax.servlet.Filter#doFilter(javax.servlet.ServletRequest, javax.servlet.ServletResponse, javax.servlet.FilterChain)
-     */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         final HttpServletRequest httpRequest = (HttpServletRequest)request;

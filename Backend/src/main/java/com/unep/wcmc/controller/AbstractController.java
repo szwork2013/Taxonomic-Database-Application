@@ -34,6 +34,7 @@ public abstract class AbstractController<E extends BaseEntity,
     protected static Logger log = LoggerFactory.getLogger(AbstractController.class);
 
     private static final SuccessResponse SUCCESS_RESPONSE = new SuccessResponse();
+
 	@Autowired
 	protected S service;
 

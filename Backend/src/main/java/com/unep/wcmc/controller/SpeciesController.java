@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletContext;
@@ -18,7 +19,7 @@ import java.util.HashMap;
 
 @RestController
 @RequestMapping("/species")
-public class SpeciesController extends AbstractController<Species, SpeciesService> {
+public class SpeciesController extends AbstractController<Species, SpeciesService> implements ServletContextAware {
 
     @Autowired
     ThreatCategoryService threatCategoryService;
@@ -26,8 +27,13 @@ public class SpeciesController extends AbstractController<Species, SpeciesServic
     ThreatsService threatsService;
     @Autowired
     MultimediaService multimediaService;
-    @Autowired
+
     ServletContext ctx;
+
+    @Override
+    public void setServletContext(ServletContext servletContext) {
+        ctx = servletContext;
+    }
 
     @PreAuthorize("isAnonymous() or isAuthenticated()")
     @RequestMapping(method = RequestMethod.POST, value = "/search", produces = "application/json")
@@ -81,6 +87,7 @@ public class SpeciesController extends AbstractController<Species, SpeciesServic
         return service.save(sp);
     }
 
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(method= RequestMethod.POST, value="uploadfile")
     public Species uploadFile(@RequestParam("id") Long id,
                               @RequestParam("title") String title,
