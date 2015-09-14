@@ -1,13 +1,8 @@
 package com.unep.wcmc.controller;
 
-import com.unep.wcmc.model.Image;
-import com.unep.wcmc.model.Species;
-import com.unep.wcmc.model.Threat;
-import com.unep.wcmc.model.ThreatCategory;
+import com.unep.wcmc.model.*;
 import com.unep.wcmc.repository.filter.SpeciesFilter;
-import com.unep.wcmc.service.SpeciesService;
-import com.unep.wcmc.service.ThreatCategoryService;
-import com.unep.wcmc.service.ThreatsService;
+import com.unep.wcmc.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +11,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletContext;
 import javax.validation.Valid;
+import java.io.File;
 import java.util.HashMap;
 
 @RestController
@@ -27,6 +24,10 @@ public class SpeciesController extends AbstractController<Species, SpeciesServic
     ThreatCategoryService threatCategoryService;
     @Autowired
     ThreatsService threatsService;
+    @Autowired
+    MultimediaService multimediaService;
+    @Autowired
+    ServletContext ctx;
 
     @PreAuthorize("isAnonymous() or isAuthenticated()")
     @RequestMapping(method = RequestMethod.POST, value = "/search", produces = "application/json")
@@ -92,40 +93,43 @@ public class SpeciesController extends AbstractController<Species, SpeciesServic
         Species sp = service.get(id);
 
         if (!file.isEmpty()) {
+
+            log.info(ctx.getMimeType(file.getOriginalFilename()));
+
+            String mimeType = ctx.getMimeType(file.getOriginalFilename());
+
             try {
+                    Multimedia media = new Multimedia(file);
+                    media.setTitle(title);
+                    media.setAuthor(author);
+                    media.setLegend(legend);
+                    media.setAuthor(author);
+                    media.setDescription(description);
+                    media.setSpecie(sp);
 
-                Image img = new Image(file);
-                      img.setTitle(title);
-                      img.setAuthor(author);
-                      img.setLegend(legend);
-                      img.setAuthor(author);
-                      img.setDescription(description);
-                      img.setSpecie(sp);
+                    if(coverPhoto && mimeType.startsWith("image/")){
+                        //to fix the bug The fix for HHH-6848 causes IllegalStateException
+                        // when merging an entity results in merging more than one representation of the same detached entity.
+                        //https://hibernate.atlassian.net/browse/HHH-9106
+                        Multimedia mediaPhoto = new Multimedia(file);
+                        mediaPhoto.setTitle(title);
+                        mediaPhoto.setAuthor(author);
+                        mediaPhoto.setLegend(legend);
+                        mediaPhoto.setAuthor(author);
+                        mediaPhoto.setDescription(description);
+                        sp.setCoverPhoto(multimediaService.save(mediaPhoto));
+                    }
 
-                if(coverPhoto){
-
-                    //to fix the bug The fix for HHH-6848 causes IllegalStateException
-                    // when merging an entity results in merging more than one representation of the same detached entity.
-                    //https://hibernate.atlassian.net/browse/HHH-9106
-
-                    Image coverImg = new Image(file);
-                    coverImg.setTitle(title);
-                    coverImg.setAuthor(author);
-                    coverImg.setLegend(legend);
-                    coverImg.setAuthor(author);
-                    coverImg.setDescription(description);
-
-                    sp.setCoverPhoto(coverImg);
-                }
-
-                return service.save(sp);
+                    multimediaService.save(media);
 
             } catch (Exception e) {
                 log.error(e.getMessage());
             }
         }
 
-        return sp;
+        return service.save(sp);
     }
+
+
 }
 

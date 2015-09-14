@@ -55,7 +55,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.exceptionHandling().and().anonymous().and().servletApi().and().headers().cacheControl();
         httpSecurity.authorizeRequests()
                // .antMatchers("/**").denyAll()
-                .antMatchers(HttpMethod.POST, "/login").permitAll();
+                .antMatchers(HttpMethod.POST, "/login").permitAll()
+                .antMatchers(HttpMethod.GET, "/media/image/**").permitAll();
         httpSecurity.logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "POST"))
                 .logoutSuccessHandler(logoutHandler)

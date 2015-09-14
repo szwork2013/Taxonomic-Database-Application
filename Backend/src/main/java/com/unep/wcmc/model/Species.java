@@ -66,7 +66,7 @@ public class Species implements BaseEntity {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cover_photo_id")
-    private Image coverPhoto;
+    private Multimedia coverPhoto;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cover_map_id")
@@ -190,11 +190,11 @@ public class Species implements BaseEntity {
         this.conservation = conservation;
     }
 
-    public Image getCoverPhoto() {
+    public Multimedia getCoverPhoto() {
         return coverPhoto;
     }
 
-    public void setCoverPhoto(Image coverPhoto) {
+    public void setCoverPhoto(Multimedia coverPhoto) {
         this.coverPhoto = coverPhoto;
     }
 
