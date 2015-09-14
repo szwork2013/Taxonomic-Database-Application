@@ -2,15 +2,7 @@ package com.unep.wcmc.model;
 
 import java.util.Collection;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -36,6 +28,8 @@ import com.unep.wcmc.validator.Phone;
                 @UniqueConstraint(columnNames = { "email" }), })
 public final class User implements UserDetails, BaseEntity {
 
+    public enum OrganizationType { GOVERNMENT, UNIVERSITY, NGO, PRIVATE, OTHER }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -54,34 +48,36 @@ public final class User implements UserDetails, BaseEntity {
     @Size(min = 4, max = 100)
     private String password;
 
-    @Column
     private String firstName;
 
-    @Column
     private String lastName;
 
-    @Column
     private String address;
     
-    @Column
     private String neighbourhood;
     
-    @Column
     private String municipality;
     
-    @Column
     private String postalCode;
 
-    @Phone
-    @Column
-    private String phoneNumber;
+    private String organizationName;
 
-    @Column(nullable = false)
-    private boolean enabled;
+    @Enumerated(EnumType.ORDINAL)
+    private OrganizationType organizationType;
+
+    @Phone
+    private String phoneNumber;
 
     @OneToOne
     @JoinColumn(name = "user_role_id", nullable = false)
     private UserRole userRole;
+
+
+    @Column(nullable = false)
+    private boolean enabled;
+
+    @Transient
+    private String role;
 
     public User() {
     }
@@ -218,6 +214,30 @@ public final class User implements UserDetails, BaseEntity {
     @Override
     public boolean isEnabled() {
         return enabled;
+    }
+
+    public String getOrganizationName() {
+        return organizationName;
+    }
+
+    public void setOrganizationName(String organizationName) {
+        this.organizationName = organizationName;
+    }
+
+    public OrganizationType getOrganizationType() {
+        return organizationType;
+    }
+
+    public void setOrganizationType(OrganizationType organizationType) {
+        this.organizationType = organizationType;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @Override
