@@ -42,9 +42,10 @@ define(['app'], function (app) {
             );
         };
 
-        service.resetPassword = function ( model, callback ){
+        service.resetPassword = function ( email, callback ){
 
-            $http.post( $rootScope.getHost() + "users/resetpassword", model )
+            $http.post( $rootScope.getHost() + "users/forgetpassword?email=" + email +
+                "&callback=" + $rootScope.getHost(), null )
                 .success(function (data, status, headers, config) {
                     callback(data, status, headers, config);
                 })
