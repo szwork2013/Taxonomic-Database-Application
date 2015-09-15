@@ -11,10 +11,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.web.filter.CharacterEncodingFilter;
+
+import javax.servlet.Filter;
 
 @SpringBootApplication
 @EnableScheduling
+@EnableAsync
 public class Application {
 
     private static Logger log = LoggerFactory.getLogger(Application.class);
@@ -35,11 +40,15 @@ public class Application {
         return KieServices.Factory.get().getKieClasspathContainer();
     }
 
+    /**
+     * Defining the JAVERS object for DIFFs comparasion features
+     *
+     * @return
+     */
     @Bean
     public Javers javers() {
         return JaversBuilder.javers()
                 .withObjectAccessHook(new ObjectAccessHook() {
-                    @Override
                     public <T> T access(T entity) {
                         if (entity instanceof BaseEntity) {
                             BaseEntity base = (BaseEntity) entity;
@@ -47,8 +56,16 @@ public class Application {
                                 base.setId(-1l);
                         }
                         return entity;
-                    }})
-                .build();
+                    }
+                }).build();
+    }
+
+    @Bean
+    public Filter characterEncodingFilter() {
+        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
+        characterEncodingFilter.setEncoding("UTF-8");
+        characterEncodingFilter.setForceEncoding(true);
+        return characterEncodingFilter;
     }
 
    /* @Bean

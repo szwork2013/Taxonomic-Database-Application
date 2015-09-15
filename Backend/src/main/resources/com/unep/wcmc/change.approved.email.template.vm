@@ -1,0 +1,19 @@
+<html>
+    <body>
+        <h3>Hi ${user.username}!</h3>
+        <div>
+            Your metadata change was approved.
+        </div>
+        <div>
+       	    <a href="${url}">Access the Species data</a>
+        </div>
+        Cheers,
+        <div>
+			Ficha de Especies
+		</div>
+    </body>
+</html>
+
+	
+
+	
