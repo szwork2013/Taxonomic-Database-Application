@@ -1,12 +1,21 @@
 package com.unep.wcmc.model;
 
+import org.javers.core.metamodel.annotation.DiffIgnore;
+
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
+@NamedEntityGraph(name = "Species.detail", includeAllAttributes = true,
+        attributeNodes = {
+            @NamedAttributeNode(value = "taxonomy", subgraph = "taxonomy")},
+        subgraphs = {
+                @NamedSubgraph(name = "taxonomy", attributeNodes = {
+                        @NamedAttributeNode("commonNames"), @NamedAttributeNode("synonyms")})
+        })
 public class Species implements BaseEntity {
 
     public enum SpeciesType { FAUNA, FLORA }
@@ -32,6 +41,7 @@ public class Species implements BaseEntity {
 
     @Column(name = "extinction_risk_category")
     @Enumerated(value = EnumType.ORDINAL)
+    @DiffIgnore
     private ExtinctionRiskCategory extinctionRiskCategory;
 
     @ElementCollection
@@ -44,6 +54,7 @@ public class Species implements BaseEntity {
     @CollectionTable(name = "extinction_risk_criteria", joinColumns = @JoinColumn(name = "species_id"))
     @Enumerated(value = EnumType.STRING)
     @Column(name = "criteria")
+    @DiffIgnore
     private Set<ExtinctionRiskCriteria> extinctionRiskCriterias;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -65,12 +76,9 @@ public class Species implements BaseEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "species")
     private Set<Threat> threats;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade =  CascadeType.ALL, orphanRemoval = true)
-    private Set<Image> images;
-
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cover_photo_id")
-    private Image coverPhoto;
+    private Multimedia coverPhoto;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cover_map_id")
@@ -78,13 +86,21 @@ public class Species implements BaseEntity {
 
     @Column(name = "last_modified")
     @Temporal(TemporalType.TIMESTAMP)
+    @DiffIgnore
     private Date lastModified;
 
     @Enumerated(EnumType.ORDINAL)
     private SpeciesType type;
 
+    @ElementCollection
+    @CollectionTable(name = "species_appendix", joinColumns = @JoinColumn(name = "species_id"))
+    private Set<Appendix> appendixes;
+
     @Column(nullable = false)
     private boolean enabled;
+
+    @Transient
+    private String changeRequestDesc;
 
     // Getters and setters
     public Long getId() {
@@ -190,11 +206,11 @@ public class Species implements BaseEntity {
         this.conservation = conservation;
     }
 
-    public Image getCoverPhoto() {
+    public Multimedia getCoverPhoto() {
         return coverPhoto;
     }
 
-    public void setCoverPhoto(Image coverPhoto) {
+    public void setCoverPhoto(Multimedia coverPhoto) {
         this.coverPhoto = coverPhoto;
     }
 
@@ -256,15 +272,19 @@ public class Species implements BaseEntity {
         this.tropicPositions = tropicPositions;
     }
 
-    public Set<Image> getImages() {
-        return images == null ? new HashSet<Image>() : images;
+    public Set<Appendix> getAppendixes() {
+        return appendixes;
     }
 
-    public void setImages(Set<Image> images) {
-        this.images = images;
+    public void setAppendixes(Set<Appendix> appendixes) {
+        this.appendixes = appendixes;
     }
 
-    public void addImage(Image image){
-        getImages().add(image);
+    public String getChangeRequestDesc() {
+        return changeRequestDesc;
+    }
+
+    public void setChangeRequestDesc(String changeRequestDesc) {
+        this.changeRequestDesc = changeRequestDesc;
     }
 }

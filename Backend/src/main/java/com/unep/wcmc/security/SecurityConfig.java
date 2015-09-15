@@ -1,8 +1,5 @@
-package com.unep.wcmc.config;
+package com.unep.wcmc.security;
 
-import com.unep.wcmc.filter.AuthenticationFilter;
-import com.unep.wcmc.filter.LoginFilter;
-import com.unep.wcmc.filter.LogoutHandler;
 import com.unep.wcmc.service.TokenAuthenticationService;
 import com.unep.wcmc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +33,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 @EnableSpringDataWebSupport
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -51,11 +48,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         final LogoutHandler logoutHandler = new LogoutHandler(tokenAuthenticationService);
-        httpSecurity.addFilterBefore(new CORSFilterConfig(), ChannelProcessingFilter.class);
+        httpSecurity.addFilterBefore(new CORSFilter(), ChannelProcessingFilter.class);
         httpSecurity.exceptionHandling().and().anonymous().and().servletApi().and().headers().cacheControl();
         httpSecurity.authorizeRequests()
-                //.antMatchers("/**").denyAll()
-                .antMatchers(HttpMethod.POST, "/login").permitAll();
+               // .antMatchers("/**").denyAll()
+                .antMatchers(HttpMethod.POST, "/login").permitAll()
+                .antMatchers(HttpMethod.GET, "/media/image/**").permitAll();
         httpSecurity.logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "POST"))
                 .logoutSuccessHandler(logoutHandler)

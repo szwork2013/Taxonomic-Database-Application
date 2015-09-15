@@ -97,7 +97,7 @@ public class FaunaWriter implements ItemWriter<Species> {
                 species.setEnabled(true);
 //            }
         }
-        return speciesService.save(species);
+        return speciesService.doSave(species);
 
     }
 

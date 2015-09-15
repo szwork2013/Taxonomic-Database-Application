@@ -1,10 +1,23 @@
 package com.unep.wcmc.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.*;
+import java.io.IOException;
 import java.util.Date;
 
-@MappedSuperclass
-public abstract class Multimedia implements BaseEntity {
+@Entity
+@JsonIgnoreProperties({"specie"})
+public class Multimedia implements BaseEntity {
+
+    protected static Logger log = LoggerFactory.getLogger(Multimedia.class);
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "title")
     private String title;
@@ -36,6 +49,27 @@ public abstract class Multimedia implements BaseEntity {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "file_id")
     private Attachment attachment;
+
+    @OneToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "specie_id")
+    private Species specie;
+
+    public Multimedia(){}
+
+    public Multimedia(MultipartFile file){
+
+        try {
+
+            this.setAttachment(new Attachment(file.getBytes()));
+            this.setFilename(file.getOriginalFilename());
+            this.setMimeType(file.getContentType());
+            this.setDate(new Date());
+            this.setSize(file.getSize());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public String getLegend() {
         return legend;
@@ -115,5 +149,21 @@ public abstract class Multimedia implements BaseEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Species getSpecie() {
+        return specie;
+    }
+
+    public void setSpecie(Species specie) {
+        this.specie = specie;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

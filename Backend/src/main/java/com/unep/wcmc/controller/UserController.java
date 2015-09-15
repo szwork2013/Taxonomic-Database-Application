@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +31,7 @@ import com.unep.wcmc.service.UserService;
 @RestController
 @RequestMapping("/users")
 public class UserController extends AbstractController<User, UserService> {
-	
+
     @Secured("ROLE_ANONYMOUS")
     @RequestMapping(value = "/signup", method= RequestMethod.POST)
     public User signUp(@Valid @RequestBody User user) {
@@ -100,11 +102,36 @@ public class UserController extends AbstractController<User, UserService> {
     }
 
     @Secured("ROLE_ANONYMOUS")
+    @RequestMapping(method= RequestMethod.GET, value="{id}")
+    public Object view(@PathVariable String id) {
+        final Long entityId = Long.valueOf(id);
+        return service.get(entityId);
+    }
+
+    @Secured("ROLE_ANONYMOUS")
     @RequestMapping(value = "/forgetpassword", method= RequestMethod.POST)
     public SuccessResponse forgetPassword(@RequestParam(value = "email") String email,
     									  @RequestParam(value = "callback") String urlCallback,
     									  HttpServletRequest request) {
     	service.forgetPassword(email, urlCallback, request);
         return new SuccessResponse();
-    }            
+    }
+
+    @RequestMapping(value = "/changepassword", method= RequestMethod.POST)
+    @PreAuthorize("hasAuthority('PERM_CHANGE_PASSWORD')")
+    public User changePassword(@RequestParam(value = "password") String password,
+                               @RequestParam(value = "oldpassword") String oldPassword) {
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User)authentication.getDetails();
+        user = service.findByEmail(user.getEmail());
+        return service.changePassword(user, password, oldPassword);
+    }
+
+//    @RequestMapping(value = "/forgetpassword", method= RequestMethod.POST)
+//    @PreAuthorize("hasAuthority('PERM_REQUEST_NEW_PASSWORD')")
+//    public SuccessResponse forgetPassword(@RequestParam(value = "email") String email) {
+//        service.forgetPassword(email);
+//        return new SuccessResponse();
+//    }
+
 }

@@ -3,6 +3,8 @@ package com.unep.wcmc.service;
 import com.google.common.collect.Lists;
 import com.unep.wcmc.model.BaseEntity;
 import com.unep.wcmc.model.Species;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 
@@ -22,6 +24,8 @@ public abstract class AbstractService<E extends BaseEntity, R extends CrudReposi
 	
 	@Autowired
 	protected R repo;
+
+	protected static Logger log = LoggerFactory.getLogger(AbstractService.class);
 	
 	/*
 	 * (non-Javadoc)

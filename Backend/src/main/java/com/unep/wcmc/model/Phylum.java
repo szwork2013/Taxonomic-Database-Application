@@ -1,5 +1,7 @@
 package com.unep.wcmc.model;
 
+import org.javers.core.metamodel.annotation.DiffIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -15,6 +17,7 @@ public class Phylum implements BaseEntity {
 
     @Column(name = "last_modified")
     @Temporal(TemporalType.TIMESTAMP)
+    @DiffIgnore
     private Date lastModified;
 
     public Phylum() {

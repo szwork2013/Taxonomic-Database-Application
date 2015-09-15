@@ -5,6 +5,11 @@ INSERT INTO biome (id, name) VALUES (3, 'Cerrado');
 INSERT INTO biome (id, name) VALUES (4, 'Mata Atlântica');
 INSERT INTO biome (id, name) VALUES (5, 'Pampas');
 INSERT INTO biome (id, name) VALUES (6, 'Pantanal');
+insert into biome (id, name) values (7, 'Aquatic');
+insert into biome (id, name) values (8, 'Deserts');
+insert into biome (id, name) values (9, 'Forest');
+insert into biome (id, name) values (10, 'Grasslands');
+insert into biome (id, name) values (11, 'Tundra');
 
 -- IntegrationSource data
 INSERT INTO integration_source (id, source, name) VALUES (1, 'FLORA', 'JBRJ IPT - Flora');
@@ -81,13 +86,6 @@ INSERT INTO conservation_action_type (id, description) VALUES (34, '19. Limitati
 INSERT INTO conservation_action_type (id, description) VALUES (35, '20. Reproduction in captivity / artificial propagation');
 INSERT INTO conservation_action_type (id, description) VALUES (36, '21. Genetic Bank');
 INSERT INTO conservation_action_type (id, description) VALUES (37, '22. Other');
-
--- Biomes
-insert into biome (name) values ('Aquatic');
-insert into biome (name) values ('Deserts');
-insert into biome (name) values ('Forest');
-insert into biome (name) values ('Grasslands');
-insert into biome (name) values ('Tundra');
 
 -- River
 insert into river_basin (name) values ('Tapajós');

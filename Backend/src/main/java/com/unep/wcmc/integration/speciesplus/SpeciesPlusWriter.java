@@ -187,6 +187,13 @@ public class SpeciesPlusWriter implements ItemWriter<Species> {
             existing.setScientificName(species.getScientificName());
             existing.setTaxonomy(species.getTaxonomy());
             existing.setEnabled(true);
+            existing.setAppendixes(species.getAppendixes());
+            if (existing.getConservation() != null) {
+                existing.getConservation().setExtinctionRisk(species.getConservation().getExtinctionRisk());
+                existing.getConservation().setConventions(species.getConservation().getConventions());
+            } else {
+                existing.setConservation(species.getConservation());
+            }
             return speciesService.save(existing);
 
         } else {
