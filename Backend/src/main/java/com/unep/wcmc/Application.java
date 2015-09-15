@@ -1,5 +1,9 @@
 package com.unep.wcmc;
 
+import com.unep.wcmc.model.BaseEntity;
+import org.javers.core.Javers;
+import org.javers.core.JaversBuilder;
+import org.javers.core.graph.ObjectAccessHook;
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.slf4j.Logger;
@@ -8,7 +12,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.web.multipart.MultipartResolver;
 
 @SpringBootApplication
 @EnableScheduling
@@ -30,6 +33,22 @@ public class Application {
     @Bean
     public KieContainer kieContainer() {
         return KieServices.Factory.get().getKieClasspathContainer();
+    }
+
+    @Bean
+    public Javers javers() {
+        return JaversBuilder.javers()
+                .withObjectAccessHook(new ObjectAccessHook() {
+                    @Override
+                    public <T> T access(T entity) {
+                        if (entity instanceof BaseEntity) {
+                            BaseEntity base = (BaseEntity) entity;
+                            if (base.getId() == null)
+                                base.setId(-1l);
+                        }
+                        return entity;
+                    }})
+                .build();
     }
 
    /* @Bean

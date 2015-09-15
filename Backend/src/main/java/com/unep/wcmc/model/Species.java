@@ -1,11 +1,21 @@
 package com.unep.wcmc.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.javers.core.metamodel.annotation.DiffIgnore;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
+@NamedEntityGraph(name = "Species.detail", includeAllAttributes = true,
+        attributeNodes = {
+            @NamedAttributeNode(value = "taxonomy", subgraph = "taxonomy")},
+        subgraphs = {
+                @NamedSubgraph(name = "taxonomy", attributeNodes = {
+                        @NamedAttributeNode("commonNames"), @NamedAttributeNode("synonyms")})
+        })
 public class Species implements BaseEntity {
 
     public enum SpeciesType { FAUNA, FLORA }
@@ -74,6 +84,7 @@ public class Species implements BaseEntity {
 
     @Column(name = "last_modified")
     @Temporal(TemporalType.TIMESTAMP)
+    @DiffIgnore
     private Date lastModified;
 
     @Enumerated(EnumType.ORDINAL)
@@ -81,10 +92,13 @@ public class Species implements BaseEntity {
 
     @ElementCollection
     @CollectionTable(name = "species_appendix", joinColumns = @JoinColumn(name = "species_id"))
-    private List<Appendix> appendixes;
+    private Set<Appendix> appendixes;
 
     @Column(nullable = false)
     private boolean enabled;
+
+    @Transient
+    private String changeRequestDesc;
 
     // Getters and setters
     public Long getId() {
@@ -256,11 +270,19 @@ public class Species implements BaseEntity {
         this.tropicPositions = tropicPositions;
     }
 
-    public List<Appendix> getAppendixes() {
+    public Set<Appendix> getAppendixes() {
         return appendixes;
     }
 
-    public void setAppendixes(List<Appendix> appendixes) {
+    public void setAppendixes(Set<Appendix> appendixes) {
         this.appendixes = appendixes;
+    }
+
+    public String getChangeRequestDesc() {
+        return changeRequestDesc;
+    }
+
+    public void setChangeRequestDesc(String changeRequestDesc) {
+        this.changeRequestDesc = changeRequestDesc;
     }
 }

@@ -1,21 +1,26 @@
 package com.unep.wcmc.service;
 
-import com.unep.wcmc.model.*;
+import com.unep.wcmc.model.ChangeLog;
+import com.unep.wcmc.model.ExceptionOccurrence;
+import com.unep.wcmc.model.IntegrationSource;
+import com.unep.wcmc.model.Species;
+import com.unep.wcmc.repository.ChangeLogRepository;
 import com.unep.wcmc.repository.ExceptionOccurrenceRepository;
 import com.unep.wcmc.repository.IntegrationSourceRepository;
 import com.unep.wcmc.repository.SpeciesRepository;
 import com.unep.wcmc.repository.filter.SpeciesFilter;
 import com.unep.wcmc.repository.filter.SpeciesSimpleSpecification;
 import com.unep.wcmc.repository.filter.SpeciesSpecification;
+import com.unep.wcmc.security.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
+
+import static com.unep.wcmc.model.UserRole.RoleType.*;
 
 @Service
 public final class SpeciesService extends AbstractService<Species, SpeciesRepository> {
@@ -29,6 +34,17 @@ public final class SpeciesService extends AbstractService<Species, SpeciesReposi
     @Autowired
     private ExceptionOccurrenceRepository exceptionRepo;
 
+    @Autowired
+    private MetadataService metadataService;
+
+    @Autowired
+    private ChangeLogRepository changeLogRepo;
+
+    /**
+     * Find Species by the common name
+     * @param commonName
+     * @return
+     */
     public Species findByCommonName(String commonName) {
         return repo.findByName(commonName);
     }
@@ -55,9 +71,19 @@ public final class SpeciesService extends AbstractService<Species, SpeciesReposi
     }
 
 
+    /**
+     * Raise species data exception into the database
+     *
+     * @param active
+     * @param suggested
+     * @param severity
+     * @param source
+     * @return
+     */
     public ExceptionOccurrence raiseSpeciesException(Species active, Species suggested,
                                                      ExceptionOccurrence.Severity severity,
                                                      IntegrationSource.Source source) {
+
         ExceptionOccurrence exception = new ExceptionOccurrence();
         exception.setActive(active);
         exception.setSuggested(suggested);
@@ -70,15 +96,41 @@ public final class SpeciesService extends AbstractService<Species, SpeciesReposi
         return exceptionRepo.save(exception);
     }
 
+    /**
+     * Save the species data into the database processing the extinction risk algorithm
+     *
+     * @param species
+     * @return
+     */
+    public Species doSave(Species species) {
+        extinctionRiskService.processExtinctionRiskCalculation(species);
+        species.setLastModified(new Date());
+
+        return super.save(species);
+    }
+
+    /**
+     * Save the species data or the metadata into the database according with the logged user privileges.
+     *
+     * @param species
+     * @return
+     */
     @Override
-    public Species save(Species specie) {
-        if (specie.getId() != null) {
-            Species existing = super.get(specie.getId());
-            specie.setThreats(existing.getThreats());
+    public Species save(Species species) {
+        if (SecurityUtils.hasAnyRole(ADMIN, SUPERADMIN, EXPERT)) {
+            if (species.getId() != null) {
+                Species existing = super.get(species.getId());
+                species.setThreats(existing.getThreats());
+            }
+            return doSave(species);
+
+        } else if (SecurityUtils.hasRole(PUBLIC_USER)) {
+            if (species.getId() != null) {
+                List<ChangeLog> changeLogs = metadataService.processMetadata(species);
+                changeLogRepo.save(changeLogs);
+            }
         }
-        extinctionRiskService.processExtinctionRiskCalculation(specie);
-        specie.setLastModified(new Date());
-        return super.save(specie);
+        return species;
     }
 
     public Page<Species> findByTerm(SpeciesFilter filter, Pageable pageable) {

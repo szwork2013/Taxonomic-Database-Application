@@ -3,6 +3,7 @@ package com.unep.wcmc.repository;
 import com.unep.wcmc.model.Species;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -26,5 +27,8 @@ public interface SpeciesRepository extends JpaRepository<Species, Long>, JpaSpec
     List<Species> findByTaxonomyHierarchySpeciesEpitethSoundex(@Param("species") String species);
 
     List<Species> findByTaxonomyHierarchySpeciesEpiteth(String speciesEpiteth);
+
+    @EntityGraph(value = "Species.detail", type = EntityGraph.EntityGraphType.LOAD)
+    Species getFetchLoadedById(Long id);
 
 }

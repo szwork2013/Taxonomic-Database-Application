@@ -1,4 +1,4 @@
-package com.unep.wcmc.filter;
+package com.unep.wcmc.security;
 
 import java.io.IOException;
 
@@ -44,10 +44,6 @@ public final class LoginFilter extends AbstractAuthenticationProcessingFilter {
         setAuthenticationManager(authManager);
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter#attemptAuthentication(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
-     */
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, 
                                                 HttpServletResponse response)  throws AuthenticationException, IOException, ServletException {
@@ -57,10 +53,6 @@ public final class LoginFilter extends AbstractAuthenticationProcessingFilter {
         return getAuthenticationManager().authenticate(loginToken);
     }
     
-    /*
-     * (non-Javadoc)
-     * @see org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter#successfulAuthentication(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, javax.servlet.FilterChain, org.springframework.security.core.Authentication)
-     */
     @Override
     protected void successfulAuthentication(HttpServletRequest request, 
                                             HttpServletResponse response, 

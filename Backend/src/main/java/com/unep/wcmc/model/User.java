@@ -1,18 +1,18 @@
 package com.unep.wcmc.model;
 
-import java.util.Collection;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.collect.Lists;
+import com.unep.wcmc.validator.Phone;
+import org.hibernate.validator.constraints.Email;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.Email;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.unep.wcmc.validator.Phone;
+import java.util.Collection;
 
 /**
  * Model that represents an user within Fichas de Especies 
@@ -176,7 +176,7 @@ public final class User implements UserDetails, BaseEntity {
     @Override
     @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return userRole.getAuthorities();
+        return Lists.newArrayList(new SimpleGrantedAuthority(userRole.getRole()));
     }
 
     @Override

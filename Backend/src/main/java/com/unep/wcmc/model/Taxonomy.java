@@ -1,8 +1,11 @@
 package com.unep.wcmc.model;
 
+import org.javers.core.metamodel.annotation.DiffIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Taxonomy implements BaseEntity {
@@ -19,11 +22,11 @@ public class Taxonomy implements BaseEntity {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "taxonomy_id")
-    private List<CommonName> commonNames;
+    private Set<CommonName> commonNames;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "taxonomy_id")
-    private List<Synonym> synonyms;
+    private Set<Synonym> synonyms;
 
     @Column(name = "notes")
     private String notes;
@@ -42,6 +45,7 @@ public class Taxonomy implements BaseEntity {
 
     @Column(name = "last_modified")
     @Temporal(TemporalType.TIMESTAMP)
+    @DiffIgnore
     private Date lastModified;
 
     @Column(nullable = false)
@@ -87,19 +91,19 @@ public class Taxonomy implements BaseEntity {
         this.enabled = enabled;
     }
 
-    public List<CommonName> getCommonNames() {
+    public Set<CommonName> getCommonNames() {
         return commonNames;
     }
 
-    public void setCommonNames(List<CommonName> commonNames) {
+    public void setCommonNames(Set<CommonName> commonNames) {
         this.commonNames = commonNames;
     }
 
-    public List<Synonym> getSynonyms() {
+    public Set<Synonym> getSynonyms() {
         return synonyms;
     }
 
-    public void setSynonyms(List<Synonym> synonyms) {
+    public void setSynonyms(Set<Synonym> synonyms) {
         this.synonyms = synonyms;
     }
 
