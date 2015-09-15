@@ -1,13 +1,14 @@
 package com.unep.wcmc.repository;
 
 import com.unep.wcmc.model.ChangeLog;
-import com.unep.wcmc.model.User;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+public interface ChangeLogRepository extends JpaRepository<ChangeLog, Long> {
 
-public interface ChangeLogRepository extends CrudRepository<ChangeLog, Long> {
+    Page<ChangeLog> findBySpeciesId(Long speciesId, Pageable pageable);
 
-    List<ChangeLog> findByRequestedByUsername(String username);
+    Page<ChangeLog> findBySpeciesIdAndRequestedByUsername(Long speciesId, String username, Pageable pageable);
 
 }

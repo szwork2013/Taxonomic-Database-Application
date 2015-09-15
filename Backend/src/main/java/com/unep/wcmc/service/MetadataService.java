@@ -1,8 +1,8 @@
 package com.unep.wcmc.service;
 
+import com.unep.wcmc.helper.ReflectionUtils;
 import com.unep.wcmc.model.ChangeLog;
 import com.unep.wcmc.model.Species;
-import com.unep.wcmc.repository.ChangeLogRepository;
 import com.unep.wcmc.repository.SpeciesRepository;
 import com.unep.wcmc.repository.UserRepository;
 import com.unep.wcmc.security.SecurityUtils;
@@ -11,10 +11,15 @@ import org.javers.common.collections.Optional;
 import org.javers.core.Javers;
 import org.javers.core.diff.Change;
 import org.javers.core.diff.Diff;
-import org.javers.core.diff.changetype.*;
+import org.javers.core.diff.changetype.NewObject;
+import org.javers.core.diff.changetype.PropertyChange;
+import org.javers.core.diff.changetype.ReferenceChange;
+import org.javers.core.diff.changetype.ValueChange;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,21 +35,16 @@ public class MetadataService {
     private SpeciesRepository speciesRepo;
 
     @Autowired
-    private SpeciesService speciesService;
-
-    @Autowired
     private UserRepository userRepo;
 
-    @Autowired
-    private ChangeLogRepository changeLogRepo;
+    @PersistenceContext
+    private EntityManager entityManager;
 
-    public List<ChangeLog> processMetadata(Species species) {
+    public List<ChangeLog> retrieveMetadata(Species species) {
         List<ChangeLog> result = new ArrayList<>();
 
         Species existing = speciesRepo.getFetchLoadedById(species.getId());
         Diff diff = javers.compare(existing, species);
-
-        //species.get
 
         if (diff.hasChanges()) {
             // processing the value changes on diff
@@ -104,54 +104,49 @@ public class MetadataService {
             change = new NewObject(change.getAffectedGlobalId(), cdo);
 
         }
-        System.out.println(change);
         return change;
     }
 
-    public Species processValueChange(ValueChange valueChange, ChangeLog changeLog) throws Exception {
-        String property = valueChange.getPropertyName();
+    protected void processValueChange(ValueChange valueChange, ChangeLog changeLog) throws Exception {
+        Class clazz = Class.forName(valueChange.getAffectedGlobalId().getCdoClass().getName());
+        String property = null;
+        if (!clazz.equals(Species.class)) {
+            property = ReflectionUtils.findAttributeName(Species.class, clazz, "") +
+                    "." + valueChange.getPropertyName();
+        } else {
+            property = valueChange.getPropertyName();
+        }
         Object value = valueChange.getRight();
         PropertyUtils.setProperty(changeLog.getSpecies(), property, value);
-        return speciesService.doSave(changeLog.getSpecies());
     }
 
-    public Species processNewObjectChange(ReferenceChange refChange, ChangeLog changeLog) throws Exception {
+    protected void processNewObjectChange(ReferenceChange refChange, ChangeLog changeLog) throws Exception {
         Optional<Object> cdo = javers.getJsonConverter().fromJson(changeLog.getNewAddLog(), Optional.class);
         if (cdo.get() != null) {
             PropertyUtils.setProperty(changeLog.getSpecies(), refChange.getPropertyName(), cdo.get());
-            return speciesService.doSave(changeLog.getSpecies());
         }
-        return null;
     }
 
-    public Species processRemoveObjectChange(ReferenceChange refChange, ChangeLog changeLog) throws Exception {
+    protected void processRemoveObjectChange(ReferenceChange refChange, ChangeLog changeLog) throws Exception {
         Optional<Object> cdo = javers.getJsonConverter().fromJson(changeLog.getNewAddLog(), Optional.class);
         if (cdo.get() != null) {
             PropertyUtils.setProperty(changeLog.getSpecies(), refChange.getPropertyName(), cdo.get());
-            return speciesService.doSave(changeLog.getSpecies());
         }
-        return null;
     }
 
-    public Species approveMetadata(ChangeLog changeLog) throws Exception {
-        Species result = null;
-        changeLog = changeLogRepo.findOne(changeLog.getId());
+    public ChangeLog applyMetadata(ChangeLog changeLog) throws Exception {
         if (changeLog.getStatus() == ChangeLog.ChangeStatus.REQUESTED) {
             Change change = loadFromChangeLog(changeLog);
             if (change instanceof ValueChange) {
-                result = processValueChange((ValueChange) change, changeLog);
+                processValueChange((ValueChange) change, changeLog);
             } else if (change instanceof ReferenceChange) {
                 if (changeLog.getType() == ChangeLog.ChangeType.NEW_OBJECT) {
-                    result = processNewObjectChange((ReferenceChange) change, changeLog);
+                    processNewObjectChange((ReferenceChange) change, changeLog);
                 } else if (changeLog.getType() == ChangeLog.ChangeType.REMOVED_OBJECT) {
-
+                    // TODO removeObject metadata change
                 }
             }
-            changeLog.setReviewedBy(userRepo.findByUsername(SecurityUtils.getUser()));
-            changeLog.setStatus(ChangeLog.ChangeStatus.ACCEPTED);
-            changeLog.setUpdatedAt(new Date());
-            changeLogRepo.save(changeLog);
         }
-        return result;
+        return changeLog;
     }
 }

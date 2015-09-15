@@ -1,5 +1,6 @@
 package com.unep.wcmc.security;
 
+import com.unep.wcmc.model.User;
 import com.unep.wcmc.model.UserRole;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -34,9 +35,15 @@ public class SecurityUtils {
         if (authentication == null)
             return false;
 
-        for (GrantedAuthority auth : authentication.getAuthorities()) {
-            if (role.equals(auth.getAuthority()))
-                return true;
+        // NOTE: GrantedAuthority is not working properly using user details instead
+        //for (GrantedAuthority auth : authentication.getAuthorities()) {
+        //    if (role.equals(auth.getAuthority()))
+        //        return true;
+        //}
+
+        Object details = authentication.getDetails();
+        if (details instanceof User) {
+            return role.equals(((User) details).getUserRole().getRole());
         }
 
         return false;

@@ -1,10 +1,8 @@
 package com.unep.wcmc.service;
 
-import com.unep.wcmc.model.ChangeLog;
 import com.unep.wcmc.model.ExceptionOccurrence;
 import com.unep.wcmc.model.IntegrationSource;
 import com.unep.wcmc.model.Species;
-import com.unep.wcmc.repository.ChangeLogRepository;
 import com.unep.wcmc.repository.ExceptionOccurrenceRepository;
 import com.unep.wcmc.repository.IntegrationSourceRepository;
 import com.unep.wcmc.repository.SpeciesRepository;
@@ -35,10 +33,7 @@ public final class SpeciesService extends AbstractService<Species, SpeciesReposi
     private ExceptionOccurrenceRepository exceptionRepo;
 
     @Autowired
-    private MetadataService metadataService;
-
-    @Autowired
-    private ChangeLogRepository changeLogRepo;
+    private ChangeLogService changeLogService;
 
     /**
      * Find Species by the common name
@@ -126,8 +121,7 @@ public final class SpeciesService extends AbstractService<Species, SpeciesReposi
 
         } else if (SecurityUtils.hasRole(PUBLIC_USER)) {
             if (species.getId() != null) {
-                List<ChangeLog> changeLogs = metadataService.processMetadata(species);
-                changeLogRepo.save(changeLogs);
+                changeLogService.saveChangeLogs(species);
             }
         }
         return species;
