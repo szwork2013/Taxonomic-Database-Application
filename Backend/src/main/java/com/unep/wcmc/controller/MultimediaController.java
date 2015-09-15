@@ -66,4 +66,9 @@ public class MultimediaController {
     public Page<Multimedia> listImages(@RequestParam("id") Long id,  @PageableDefault(page = 0, size = 4) Pageable pageable){
         return multimediaService.findAllBySpecie(speciesService.get(id), pageable);
     }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/search", produces = "application/json")
+    public Page<Multimedia> listImages(@RequestParam("id") Long id, @RequestParam("title") String title, @PageableDefault(page = 0, size = 4) Pageable pageable){
+        return multimediaService.findAllBySpecieAndTitle(speciesService.get(id), title, pageable);
+    }
 }

@@ -9,4 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface MultimediaRepository extends JpaRepository<Multimedia, Long> {
 
     Page<Multimedia> findAllBySpecie(Species specie, Pageable pageable);
+
+    Page<Multimedia> findAllBySpecieAndTitleStartingWith(Species specie, String title, Pageable pageable);
 }

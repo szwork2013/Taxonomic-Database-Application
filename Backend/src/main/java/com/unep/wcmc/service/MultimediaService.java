@@ -13,4 +13,8 @@ public class MultimediaService extends AbstractService<Multimedia, MultimediaRep
     public Page<Multimedia> findAllBySpecie(Species specie, Pageable pageable) {
         return repo.findAllBySpecie(specie, pageable);
     }
+
+    public Page<Multimedia> findAllBySpecieAndTitle(Species specie, String title, Pageable pageable) {
+        return repo.findAllBySpecieAndTitleStartingWith(specie, title, pageable);
+    }
 }
