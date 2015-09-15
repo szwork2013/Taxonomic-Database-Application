@@ -41,6 +41,7 @@ public class Species implements BaseEntity {
 
     @Column(name = "extinction_risk_category")
     @Enumerated(value = EnumType.ORDINAL)
+    @DiffIgnore
     private ExtinctionRiskCategory extinctionRiskCategory;
 
     @ElementCollection
@@ -53,6 +54,7 @@ public class Species implements BaseEntity {
     @CollectionTable(name = "extinction_risk_criteria", joinColumns = @JoinColumn(name = "species_id"))
     @Enumerated(value = EnumType.STRING)
     @Column(name = "criteria")
+    @DiffIgnore
     private Set<ExtinctionRiskCriteria> extinctionRiskCriterias;
 
     @OneToOne(cascade = CascadeType.ALL)

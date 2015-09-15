@@ -39,7 +39,7 @@ public class MetadataServiceTest {
         distributionArea.setEndemicFromBrazil(true);
         species.setDistributionArea(distributionArea);
 
-        List<ChangeLog> changes = metadataService.processMetadata(species);
+        List<ChangeLog> changes = metadataService.retrieveMetadata(species);
         System.out.println(changes);
 
 
@@ -57,8 +57,8 @@ public class MetadataServiceTest {
     public void approveMetadata() throws Exception {
         ChangeLog changeLog = new ChangeLog();
         changeLog.setId(1l);
-        Species species = metadataService.approveMetadata(changeLog);
-        System.out.println(species);
+        changeLog = metadataService.applyMetadata(changeLog);
+        System.out.println(changeLog);
     }
 
 }
