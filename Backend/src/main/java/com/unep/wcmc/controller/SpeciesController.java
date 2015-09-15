@@ -137,10 +137,13 @@ public class SpeciesController extends AbstractController<Species, SpeciesServic
         return service.save(sp);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/deletemedia/{id}", produces = "application/json")
-    public Boolean deleteMedia(@PathVariable("id") Long id){
+    @RequestMapping(method = RequestMethod.DELETE, value = "/deletemedia/{id}/{specie_id}", produces = "application/json")
+    public Species deleteMedia(@PathVariable("id") Long id, @PathVariable("specie_id") Long specie_id){
 
-        return multimediaService.delete(id);
+        Species sp = service.get(specie_id);
+        multimediaService.delete(id);
+
+        return service.save(sp);
     }
 }
 

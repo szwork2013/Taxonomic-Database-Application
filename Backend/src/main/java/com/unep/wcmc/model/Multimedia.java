@@ -50,7 +50,7 @@ public class Multimedia implements BaseEntity {
     @JoinColumn(name = "file_id")
     private Attachment attachment;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "specie_id")
     private Species specie;
 
