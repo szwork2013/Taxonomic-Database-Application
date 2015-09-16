@@ -81,6 +81,7 @@ public class ExtinctionRiskService {
                     // set the Natural History facts
                     if (species.getNaturalHistory() != null) {
                         session.insert(species.getNaturalHistory());
+                        session.insert(species.getNaturalHistory().getHabitat());
                         if (species.getNaturalHistory().getPopulationDynamics() != null) {
                             PopulationDynamics populationDynamics = species.getNaturalHistory().getPopulationDynamics();
                             if (populationDynamics.getReductionWithCausesCeased() == null) {
