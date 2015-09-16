@@ -55,7 +55,7 @@ define(['app','auth/factory/authenticationFactory'], function () {
              */
             $scope.resetPasswordFormSubmit = function(){
                 loadingScreen();
-                AuthenticationService.resetPassword( $scope.user , function(response, status) {
+                AuthenticationService.resetPassword( $scope.user.email , function(response, status) {
 
                     $('#loading').fadeToggle('400');
 

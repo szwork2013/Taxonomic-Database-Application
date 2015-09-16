@@ -31,6 +31,7 @@ public class Multimedia implements BaseEntity {
     @Column(name = "author")
     private String author;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date")
     private Date date;
 
@@ -56,16 +57,13 @@ public class Multimedia implements BaseEntity {
 
     public Multimedia(){}
 
-    public Multimedia(MultipartFile file){
-
+    public Multimedia(MultipartFile file) {
         try {
-
             this.setAttachment(new Attachment(file.getBytes()));
             this.setFilename(file.getOriginalFilename());
             this.setMimeType(file.getContentType());
             this.setDate(new Date());
             this.setSize(file.getSize());
-
         } catch (IOException e) {
             e.printStackTrace();
         }

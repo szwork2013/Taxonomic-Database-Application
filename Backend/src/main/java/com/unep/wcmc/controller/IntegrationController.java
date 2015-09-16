@@ -21,7 +21,7 @@ public class IntegrationController {
     @Autowired
     private IntegrationService service;
 
-    //@PreAuthorize("isAuthenticated() and hasRole('ADMIN')")
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(path = "/start/{source}", method = RequestMethod.GET)
     public Object start(@PathVariable String source) {
         try {
@@ -32,7 +32,7 @@ public class IntegrationController {
         }
     }
 
-    //@PreAuthorize("isAuthenticated() and hasRole('ADMIN')")
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(path = "/stop/{source}", method = RequestMethod.GET)
     public Object stop(@PathVariable String source) {
         try {
@@ -49,7 +49,7 @@ public class IntegrationController {
         return service.findLatestHistory(IntegrationSource.Source.valueOf(source));
     }
 
-    //@PreAuthorize("isAuthenticated() and hasRole('ADMIN')")
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(path = "/history", method = RequestMethod.GET)
     public List<IntegrationHistory> getLatestHistory() {
         return service.findAllLatestHistory();
