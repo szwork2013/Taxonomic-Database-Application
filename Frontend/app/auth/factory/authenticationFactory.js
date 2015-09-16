@@ -16,10 +16,11 @@ define(['app'], function (app) {
 
             $http.post( $rootScope.getHost() + "login", model )
                 .success(function (data, status, headers, config) {
-
-                    //$http.defaults.headers.common['X-AUTH-TOKEN'] = data.token;
                     $window.sessionStorage.user = data.user.username;
+                    $window.sessionStorage.userId = data.user.id;
+                    $window.sessionStorage.userRole = data.user.userRole.role;
                     $window.sessionStorage.tokenSecret = data.token;
+                    $http.defaults.headers.common['X-AUTH-TOKEN'] = data.token;
 
                     callback(data, status, headers, config);
                 })
@@ -41,9 +42,10 @@ define(['app'], function (app) {
             );
         };
 
-        service.resetPassword = function ( model, callback ){
+        service.resetPassword = function ( email, callback ){
 
-            $http.post( $rootScope.getHost() + "users/resetpassword", model )
+            $http.post( $rootScope.getHost() + "users/forgetpassword?email=" + email +
+                "&callback=" + $rootScope.getHost(), null )
                 .success(function (data, status, headers, config) {
                     callback(data, status, headers, config);
                 })
@@ -56,29 +58,32 @@ define(['app'], function (app) {
         service.logout = function( callback ){
 
             $window.sessionStorage.user = null;
+            $window.sessionStorage.userId = null;
+            $window.sessionStorage.userRole = null;
             $window.sessionStorage.tokenSecret = null;
+            $http.defaults.headers.common['X-AUTH-TOKEN'] = null;
 
             $rootScope.username = null;
             $rootScope.logged = false;
 
             callback({}, 200);
 
-           /*$http.get( $rootScope.getHost() + "logout" )
-                .success(function (data, status, headers, config) {
-
-                    console.log(data);
-                    $window.sessionStorage.user = null;
-                    $window.sessionStorage.tokenSecret = null;
-
-                    $rootScope.username = null;
-                    $rootScope.logged = false;
-
-                    callback(data, status, headers, config);
-                })
-                .error(function(data, status, headers, config){
-                    callback(data, status, headers, config);
-                }
-            );*/
+            //$http.get( $rootScope.getHost() + "logout" )
+            //    .success(function (data, status, headers, config) {
+            //        console.log(data);
+            //        $window.sessionStorage.user = null;
+            //        $window.sessionStorage.userId = null;
+            //        $window.sessionStorage.tokenSecret = null;
+            //
+            //        $rootScope.username = null;
+            //        $rootScope.logged = false;
+            //
+            //        callback(data, status, headers, config);
+            //    })
+            //    .error(function(data, status, headers, config){
+            //        callback(data, status, headers, config);
+            //    }
+            // );
         };
 
         service.isAuthenticated = function(){

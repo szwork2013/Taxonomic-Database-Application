@@ -10,6 +10,7 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 
 import com.unep.wcmc.exception.*;
+import com.unep.wcmc.helper.MailUtils;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -45,16 +46,22 @@ public final class UserService extends AbstractService<User, UserRepository> imp
 
     @Autowired
     private UserRoleRepository userRoleRepo;
+
     @Autowired
     private UserRepository userRepo;
+
 	@Autowired
 	private ForgetPasswordTokenRepository passwordTokenRepository;
+
 	@Autowired
     private JavaMailSender emailSender;
+
     @Autowired
     private Environment environment;
+
     @Autowired
-    private VelocityEngine velocityEngine;
+    private MailUtils mailUtils;
+
     private final AccountStatusUserDetailsChecker detailsChecker = new AccountStatusUserDetailsChecker();
     
     public User registerNewUser(User user) {
@@ -76,13 +83,8 @@ public final class UserService extends AbstractService<User, UserRepository> imp
         validateUser(editedUser, userRepo.findByEmail(editedUser.getEmail()));
         validateUser(editedUser, userRepo.findByUsername(editedUser.getUsername()));
         // setting the fields to update
-        editedUser.setPassword(user.getPassword());
-        editedUser.setEnabled(user.isEnabled());
         editedUser.setUserRole(user.getUserRole());
-        editedUser.setAddress(user.getAddress());
-        editedUser.setPhoneNumber(user.getPhoneNumber());
-        editedUser.setFirstName(user.getFirstName());
-        editedUser.setLastName(user.getLastName());
+        editedUser.setEnabled(user.isEnabled());
         // saving the user
         return save(editedUser);
     }
@@ -151,24 +153,17 @@ public final class UserService extends AbstractService<User, UserRepository> imp
         return repo.findByFirstNameContaining(name, pageable);
     }
     
-    public void forgetPassword(final String email, final String urlCallback, final HttpServletRequest request) {
+    public void forgetPassword(String email, String urlCallback) {
         final User user = repo.findByEmail(email);
         if (user == null) {
-            throw new IllegalArgumentException("email not found");
+            throw new IllegalArgumentException("User email not found");
         }
-        final MimeMessagePreparator preparator = new MimeMessagePreparator() {
-            public void prepare(MimeMessage mimeMessage) throws Exception {
-            	final Map<String, Object> model = new HashMap<String, Object>();
-            	final MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
-                message.setTo(email);
-                message.setFrom(environment.getProperty("support.email"));
-                model.put("username", user.getUsername());
-                model.put("url", getUrl(request, user, urlCallback));
-                String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "com/unep/wcmc/email.template.vm", "UTF-8", model);
-                message.setText(text, true);
-            }
-        };
-        emailSender.send(preparator);
+
+        Map<String, Object> mailParameters = new HashMap<>();
+        mailParameters.put("username", user.getUsername());
+        mailParameters.put("url", getUrl(user, urlCallback));
+        mailUtils.sendEmail(email, environment.getProperty("support.email"), "Reset Password",
+                MailUtils.FORGOT_PASSWORD_TEMPLATE, mailParameters);
     }
 
     public User changePassword(User user, String password, String oldPassword) {
@@ -220,7 +215,7 @@ public final class UserService extends AbstractService<User, UserRepository> imp
         return super.save(entity);
     }
 
-    private String getUrl(HttpServletRequest request, User user, String urlCallback) {
+    private String getUrl(User user, String urlCallback) {
     	final String token = UUID.randomUUID().toString();
         final ForgetPasswordToken passwordToken = new ForgetPasswordToken(token, urlCallback, user);
         passwordTokenRepository.save(passwordToken);

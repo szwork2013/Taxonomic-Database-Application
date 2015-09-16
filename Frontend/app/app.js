@@ -6,7 +6,7 @@ define(['include'], function ( angularAMD ) {
 
 	app.config(['$stateProvider','$provide', '$urlRouterProvider','$httpProvider',
 
-		function ($stateProvider, $provide, $urlRouterProvider, $httpProvider) {
+		function ($stateProvider, $provide, $urlRouterProvider, $httpProvider, toastr) {
 
 		$urlRouterProvider.otherwise('/login');
 
@@ -62,27 +62,72 @@ define(['include'], function ( angularAMD ) {
 					controllerUrl: 'home/controllers/homeController'
 				}));
 
-		$provide.factory('authInterceptor', function ($rootScope, $q, $window) {
+			$provide.factory('authInterceptor', function ($rootScope, $q, $window) {
 
-			return {
-				request: function (config) {
-					config.headers = config.headers || {};
-					if ($window.sessionStorage.tokenSecret) {
-						config.headers['X-Auth-Token'] = $window.sessionStorage.tokenSecret;
-						//$httpProvider.defaults.headers.common['X-AUTH-TOKEN']= $window.sessionStorage.tokenSecret;
+				return {
+					request: function (config) {
+						config.headers = config.headers || {};
+						if ($window.sessionStorage.tokenSecret != null && $window.sessionStorage.tokenSecret != "null") {
+							config.headers['X-AUTH-TOKEN'] = $window.sessionStorage.tokenSecret;
+							$rootScope.username = $window.sessionStorage.user;
+							$rootScope.userId = $window.sessionStorage.userId;
+							$rootScope.userRole = $window.sessionStorage.userRole;
+							$rootScope.logged = true;
+						} else {
+							$rootScope.username = null;
+							$rootScope.userId = null;
+							$rootScope.userRole = null;
+							$rootScope.logged = false;
+						}
+						return config;
+					},
+					response: function (response) {
+						if (response.status === 401) {
+							// handle the case where the user is not authenticated
+						}
+						return response || $q.when(response);
 					}
-					return config;
-				},
-				response: function (response) {
-					if (response.status === 401) {
-						//$state.go('login');
-					}
-					return response || $q.when(response);
-				}
-			};
-		});
+				};
+			});
 
-			//$httpProvider.interceptors.push('authInterceptor');
+			$provide.factory('errorHandlerInterceptor', function ($rootScope, $q, $window, $location, toastr) {
+
+				return {
+					request: function(config) {
+						return config;
+					},
+					requestError : function(rejection) {
+						return rejection;
+					},
+					responseError : function(rejection) {
+						if( rejection.status === 401 ) {
+							$location.path('login');
+							toastr.error(rejection.data, 'Error!');
+							return $q.reject(rejection);
+						}
+						if( rejection.status === 400 ) {
+							$location.path('login');
+							toastr.error(rejection.data, 'Error!');
+							return $q.reject(rejection);
+						}
+						if( rejection.status === 404 ) {
+							toastr.error(rejection.data, 'Error!');
+							return $q.reject(rejection);
+						}
+
+						if( rejection.status >= 500) {
+							toastr.error(rejection.data, 'Error!');
+							return $q.reject(rejection);
+						}
+
+						return $q.reject(rejection);
+
+					}
+				};
+			});
+
+			$httpProvider.interceptors.push('authInterceptor');
+			$httpProvider.interceptors.push('errorHandlerInterceptor');
 
 	}]);
 

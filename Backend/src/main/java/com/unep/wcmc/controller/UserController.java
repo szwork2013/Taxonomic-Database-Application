@@ -32,31 +32,21 @@ import com.unep.wcmc.service.UserService;
 @RequestMapping("/users")
 public class UserController extends AbstractController<User, UserService> {
 
-    @Secured("ROLE_ANONYMOUS")
     @RequestMapping(value = "/signup", method= RequestMethod.POST)
     public User signUp(@Valid @RequestBody User user) {
         return service.registerNewUser(user);
     }
     
     @RequestMapping(value = "/changelanguage", method= RequestMethod.POST)
-    @PreAuthorize("hasAuthority('PERM_CHANGE_LANGUAGE')")
     public void changeLanguage() {
     }
 
-   /* @Secured("ROLE_ANONYMOUS")
-    @RequestMapping(value = "/isauthenticated", method= RequestMethod.GET)
-    public SuccessResponse isAuthenticated() {
-        return new SuccessResponse(service.isAuthenticated().toString());
-    }*/
-    
     @RequestMapping(value = "/changerole/{id}/role/{role}", method= RequestMethod.POST)
-    @PreAuthorize("hasAuthority('PERM_CHANGE_USER_ROLE')")
     public SuccessResponse changeUserRoles(@PathVariable String id, @PathVariable String role) {
     	service.assignUserRoles(id, role);
     	return new SuccessResponse("changed user role");
     }
 
-    @Secured("ROLE_ANONYMOUS")
     @RequestMapping(value = "/resetpassword", method= RequestMethod.POST)
     public SuccessResponse resetPassword(@RequestParam(value = "token") String token, @RequestParam(value = "password") String password) {
     	service.resetPassword(token, password);
@@ -64,28 +54,24 @@ public class UserController extends AbstractController<User, UserService> {
     }        
     
     @RequestMapping(value = "/assignrole/{id}/grant/role/{role}", method= RequestMethod.POST)
-    @PreAuthorize("hasAuthority('PERM_ASSIGN_ROLE')")
     public SuccessResponse assignUserRoles(@PathVariable String id, @PathVariable String role) {
     	service.assignUserRoles(id, role);
     	return new SuccessResponse("role granted");
     }
     
     @RequestMapping(method= RequestMethod.PUT, value="/deactiveuser/{id}")
-    @PreAuthorize("hasAuthority('PERM_DEACTIVATE_USER')")
     public SuccessResponse deactiveUser(@PathVariable String id) {
     	service.setUserEnabled(id, false);
     	return new SuccessResponse("user deactivated");
     }
 
     @RequestMapping(method= RequestMethod.PUT, value="/activeuser/{id}")
-    @PreAuthorize("hasAuthority('PERM_ACTIVATE_USER')")
     public SuccessResponse activeUser(@PathVariable String id) {
     	service.setUserEnabled(id, true);
     	return new SuccessResponse("user activated");
     }
     
     @RequestMapping(method= RequestMethod.PUT, value="{id}")
-    //@PreAuthorize("hasAuthority('PERM_UPDATE_PERSONAL_INFO')")
     public User edit(@Valid @RequestBody User editedUser, @PathVariable String id) {
         return service.updatePersonalInfor(editedUser, id);
     }
@@ -101,24 +87,20 @@ public class UserController extends AbstractController<User, UserService> {
         return service.findByFilter("", pageable);
     }
 
-    @Secured("ROLE_ANONYMOUS")
     @RequestMapping(method= RequestMethod.GET, value="{id}")
     public Object view(@PathVariable String id) {
         final Long entityId = Long.valueOf(id);
         return service.get(entityId);
     }
 
-    @Secured("ROLE_ANONYMOUS")
     @RequestMapping(value = "/forgetpassword", method= RequestMethod.POST)
     public SuccessResponse forgetPassword(@RequestParam(value = "email") String email,
-    									  @RequestParam(value = "callback") String urlCallback,
-    									  HttpServletRequest request) {
-    	service.forgetPassword(email, urlCallback, request);
+    									  @RequestParam(value = "callback") String urlCallback) {
+    	service.forgetPassword(email, urlCallback);
         return new SuccessResponse();
     }
 
     @RequestMapping(value = "/changepassword", method= RequestMethod.POST)
-    @PreAuthorize("hasAuthority('PERM_CHANGE_PASSWORD')")
     public User changePassword(@RequestParam(value = "password") String password,
                                @RequestParam(value = "oldpassword") String oldPassword) {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
