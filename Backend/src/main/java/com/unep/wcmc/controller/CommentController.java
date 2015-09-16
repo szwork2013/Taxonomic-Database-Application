@@ -28,9 +28,10 @@ public class CommentController extends AbstractController<Comment, CommentServic
     @Autowired
     SpeciesService speciesService;
 
-    @RequestMapping(method= RequestMethod.POST, produces = "application/json")
-    public Comment add(@RequestBody Comment comment){
+    @RequestMapping(value ="add/{specie_id}" , method= RequestMethod.POST, produces = "application/json")
+    public Comment add(@RequestBody Comment comment, @PathVariable Long specie_id){
 
+        comment.setSpecie(speciesService.get(specie_id));
         comment.setUser(activeUserAccessor.getActiveUser());
         comment.setCreated(new Date());
 
