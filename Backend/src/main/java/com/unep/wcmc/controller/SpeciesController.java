@@ -57,7 +57,7 @@ public class SpeciesController extends AbstractController<Species, SpeciesServic
         Species sp = service.get(new Long(params.get("id")));
         sp.addThreat(new Threat(thc));
 
-        return service.save(sp);
+        return service.doSave(sp);
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -69,7 +69,7 @@ public class SpeciesController extends AbstractController<Species, SpeciesServic
         sp.getThreats().remove(threatsService.get(threatId));
         threatsService.delete(threatId);
 
-        return service.save(sp);
+        return service.doSave(sp);
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -84,7 +84,7 @@ public class SpeciesController extends AbstractController<Species, SpeciesServic
 
         sp.addThreat(th);
 
-        return service.save(sp);
+        return service.doSave(sp);
     }
 
     @PreAuthorize("isAuthenticated()")

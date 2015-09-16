@@ -61,13 +61,15 @@ public final class ChangeLogService extends AbstractService<ChangeLog, ChangeLog
      */
     public void saveChangeLogs(Species species) {
         List<ChangeLog> changeLogs = metadataService.retrieveMetadata(species);
-        repo.save(changeLogs);
+        if (changeLogs != null && !changeLogs.isEmpty()) {
+            repo.save(changeLogs);
 
-        // NOTE: only sending emails to the ADMIN (EXPERTs should be associated with the specie anywhere)
-        List<User> adminList = userRepo.findByUserRoleRole(UserRole.RoleType.ADMIN.name());
-        for (ChangeLog changeLog : changeLogs) {
-            sendEmail("Metadata change requested for Species #" + changeLog.getSpecies().getId(),
-                    MailUtils.CHANGE_REQUESTED_TEMPLATE, changeLog, adminList);
+            // NOTE: only sending emails to the ADMIN (EXPERTs should be associated with the specie anywhere)
+            List<User> adminList = userRepo.findByUserRoleRole(UserRole.RoleType.ADMIN.name());
+            for (ChangeLog changeLog : changeLogs) {
+                sendEmail("Metadata change requested for Species #" + changeLog.getSpecies().getId(),
+                        MailUtils.CHANGE_REQUESTED_TEMPLATE, changeLog, adminList);
+            }
         }
     }
 
