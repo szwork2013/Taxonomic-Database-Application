@@ -3,7 +3,6 @@ package com.unep.wcmc.security;
 import com.unep.wcmc.model.User;
 import com.unep.wcmc.model.UserRole;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
