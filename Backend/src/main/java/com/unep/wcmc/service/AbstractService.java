@@ -27,38 +27,22 @@ public abstract class AbstractService<E extends BaseEntity, R extends CrudReposi
 
 	protected static Logger log = LoggerFactory.getLogger(AbstractService.class);
 	
-	/*
-	 * (non-Javadoc)
-	 * @see com.unep.wcmc.service.BaseService#save(java.lang.Object)
-	 */
 	@Override
 	public E save(E entity) {
 		return repo.save(entity);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see com.unep.wcmc.service.BaseService#list()
-	 */
 	@Override
 	public List<E> list() {
 		return Lists.newArrayList(repo.findAll());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see com.unep.wcmc.service.BaseService#delete(java.lang.Long)
-	 */
 	@Override
 	public Boolean delete(Long id) {
 		repo.delete(id);
 		return Boolean.TRUE;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see com.unep.wcmc.service.BaseService#get(java.lang.Long)
-	 */
 	@Override
 	public E get(Long id) {
 		return repo.findOne(id);

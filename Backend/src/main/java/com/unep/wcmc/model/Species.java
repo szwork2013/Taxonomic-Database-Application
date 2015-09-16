@@ -94,6 +94,7 @@ public class Species implements BaseEntity {
 
     @ElementCollection
     @CollectionTable(name = "species_appendix", joinColumns = @JoinColumn(name = "species_id"))
+    @DiffIgnore
     private Set<Appendix> appendixes;
 
     @Column(nullable = false)

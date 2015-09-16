@@ -91,50 +91,20 @@ public class SpeciesController extends AbstractController<Species, SpeciesServic
     @RequestMapping(method= RequestMethod.POST, value="uploadfile")
     public Species uploadFile(@RequestParam("id") Long id,
                               @RequestParam("title") String title,
-                              @RequestParam("author") String author,
                               @RequestParam("legend") String legend,
                               @RequestParam("description") String description,
                               @RequestParam("cover_photo") Boolean coverPhoto,
                               @RequestParam("file") MultipartFile file) {
 
-        Species sp = service.get(id);
-
+        Species species = service.get(id);
         if (!file.isEmpty()) {
-
             log.info(ctx.getMimeType(file.getOriginalFilename()));
 
             String mimeType = ctx.getMimeType(file.getOriginalFilename());
-
-            try {
-                    Multimedia media = new Multimedia(file);
-                    media.setTitle(title);
-                    media.setAuthor(author);
-                    media.setLegend(legend);
-                    media.setAuthor(author);
-                    media.setDescription(description);
-                    media.setSpecie(sp);
-
-                    if(coverPhoto && mimeType.startsWith("image/")){
-                        //to fix the bug The fix for HHH-6848 causes IllegalStateException
-                        // when merging an entity results in merging more than one representation of the same detached entity.
-                        //https://hibernate.atlassian.net/browse/HHH-9106
-                        Multimedia mediaPhoto = new Multimedia(file);
-                        mediaPhoto.setTitle(title);
-                        mediaPhoto.setAuthor(author);
-                        mediaPhoto.setLegend(legend);
-                        mediaPhoto.setAuthor(author);
-                        mediaPhoto.setDescription(description);
-                        sp.setCoverPhoto(multimediaService.save(mediaPhoto));
-                    }
-
-                    multimediaService.save(media);
-
-            } catch (Exception e) {
-                log.error(e.getMessage());
-            }
+            multimediaService.save(file, mimeType, title, legend, coverPhoto, description, species);
         }
 
-        return service.save(sp);
+        return species;
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/deletemedia/{id}/{specie_id}", produces = "application/json")
