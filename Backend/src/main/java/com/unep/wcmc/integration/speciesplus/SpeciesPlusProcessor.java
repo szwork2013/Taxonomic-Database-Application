@@ -101,8 +101,12 @@ public class SpeciesPlusProcessor implements ItemProcessor<Map<String, Object>, 
                             for (Map<String, Object> appendix : citesListings) {
                                 Appendix app = new Appendix();
                                 app.setType(String.valueOf(appendix.get("appendix")));
-                                app.setAnnotation(String.valueOf(appendix.get("annotation")));
-                                app.setHashAnnotation(String.valueOf(appendix.get("hash_annotation")));
+                                if (appendix.get("annotation") != null) {
+                                    app.setAnnotation(String.valueOf(appendix.get("annotation")));
+                                }
+                                if (appendix.get("hash_annotation") != null) {
+                                    app.setHashAnnotation(String.valueOf(appendix.get("hash_annotation")));
+                                }
                                 appendixList.add(app);
                             }
                             species.setAppendixes(appendixList);
@@ -145,61 +149,67 @@ public class SpeciesPlusProcessor implements ItemProcessor<Map<String, Object>, 
 
             // processing Cites Listings
             List<Map<String, Object>> citesListings = (List<Map<String, Object>>)
-                    taxon.get("cites_listings");
-            for (Map<String, Object> cite : citesListings) {
-                Map<String, Object> party = (Map<String, Object>) cite.get("party");
-                if ("BR".equals(String.valueOf(party.get("iso_code2")))) {
-                    ConventionItem item = new ConventionItem();
-                    item.setName(String.valueOf(cite.get("appendix")));
-                    try {
-                        Date date = DateUtils.parseDate(String.valueOf(cite.get("effective_at")),
-                                new String[]{"yyyy-MM-dd"});
-                        item.setYear(date.getYear() + 1900);
-                    } catch (Exception ex) {
-                        item.setYear(null);
+                    citiesLegislation.get("cites_listings");
+            if (citesListings != null) {
+                for (Map<String, Object> cite : citesListings) {
+                    Map<String, Object> party = (Map<String, Object>) cite.get("party");
+                    if (party != null && "BR".equals(String.valueOf(party.get("iso_code2")))) {
+                        ConventionItem item = new ConventionItem();
+                        item.setName(String.valueOf(cite.get("appendix")));
+                        try {
+                            Date date = DateUtils.parseDate(String.valueOf(cite.get("effective_at")),
+                                    new String[]{"yyyy-MM-dd"});
+                            item.setYear(date.getYear() + 1900);
+                        } catch (Exception ex) {
+                            item.setYear(null);
+                        }
+                        item.setObservation(String.valueOf(cite.get("annotation")));
+                        conventionList.add(item);
                     }
-                    item.setObservation(String.valueOf(cite.get("annotation")));
-                    conventionList.add(item);
                 }
             }
 
             // processing Cites Quotas
             List<Map<String, Object>> citesQuotas = (List<Map<String, Object>>)
-                    taxon.get("cites_quotas");
-            for (Map<String, Object> cite : citesQuotas) {
-                Map<String, Object> geoEntity = (Map<String, Object>) cite.get("geo_entity");
-                if ("BR".equals(String.valueOf(geoEntity.get("iso_code2")))) {
-                    ConventionItem item = new ConventionItem();
-                    item.setName(String.valueOf(cite.get("quota")));
-                    try {
-                        Date date = DateUtils.parseDate(String.valueOf(cite.get("publication_date")),
-                                new String[]{"yyyy-MM-dd"});
-                        item.setYear(date.getYear() + 1900);
-                    } catch (Exception ex) {
-                        item.setYear(null);
+                    citiesLegislation.get("cites_quotas");
+            if (citesQuotas != null) {
+                for (Map<String, Object> cite : citesQuotas) {
+                    Map<String, Object> geoEntity = (Map<String, Object>) cite.get("geo_entity");
+                    if (geoEntity != null && "BR".equals(String.valueOf(geoEntity.get("iso_code2")))) {
+                        ConventionItem item = new ConventionItem();
+                        item.setName(String.valueOf(cite.get("quota")));
+                        try {
+                            Date date = DateUtils.parseDate(String.valueOf(cite.get("publication_date")),
+                                    new String[]{"yyyy-MM-dd"});
+                            item.setYear(date.getYear() + 1900);
+                        } catch (Exception ex) {
+                            item.setYear(null);
+                        }
+                        item.setObservation(String.valueOf(cite.get("notes")));
+                        conventionList.add(item);
                     }
-                    item.setObservation(String.valueOf(cite.get("notes")));
-                    conventionList.add(item);
                 }
             }
 
             // processing Cites Suspensions
             List<Map<String, Object>> citesSuspensions = (List<Map<String, Object>>)
-                    taxon.get("cites_suspensions");
-            for (Map<String, Object> cite : citesSuspensions) {
-                Map<String, Object> geoEntity = (Map<String, Object>) cite.get("geo_entity");
-                if ("BR".equals(String.valueOf(geoEntity.get("iso_code2")))) {
-                    ConventionItem item = new ConventionItem();
-                    item.setName(String.valueOf(cite.get("name")));
-                    try {
-                        Date date = DateUtils.parseDate(String.valueOf(cite.get("start_date")),
-                                new String[]{"yyyy-MM-dd"});
-                        item.setYear(date.getYear() + 1900);
-                    } catch (Exception ex) {
-                        item.setYear(null);
+                    citiesLegislation.get("cites_suspensions");
+            if (citesSuspensions != null) {
+                for (Map<String, Object> cite : citesSuspensions) {
+                    Map<String, Object> geoEntity = (Map<String, Object>) cite.get("geo_entity");
+                    if (geoEntity != null && "BR".equals(String.valueOf(geoEntity.get("iso_code2")))) {
+                        ConventionItem item = new ConventionItem();
+                        item.setName(String.valueOf(cite.get("name")));
+                        try {
+                            Date date = DateUtils.parseDate(String.valueOf(cite.get("start_date")),
+                                    new String[]{"yyyy-MM-dd"});
+                            item.setYear(date.getYear() + 1900);
+                        } catch (Exception ex) {
+                            item.setYear(null);
+                        }
+                        item.setObservation(String.valueOf(cite.get("notes")));
+                        conventionList.add(item);
                     }
-                    item.setObservation(String.valueOf(cite.get("notes")));
-                    conventionList.add(item);
                 }
             }
             conventions.setConventionItems(conventionList);
@@ -217,10 +227,10 @@ public class SpeciesPlusProcessor implements ItemProcessor<Map<String, Object>, 
             List<ExtinctionRiskAssessment> assessmentList = new ArrayList<>();
             // processing Cites Listings
             List<Map<String, Object>> citesListings = (List<Map<String, Object>>)
-                    taxon.get("cites_listings");
+                    citiesLegislation.get("cites_listings");
             for (Map<String, Object> cite : citesListings) {
                 Map<String, Object> party = (Map<String, Object>) cite.get("party");
-                if (!"BR".equals(String.valueOf(party.get("iso_code2")))) {
+                if (party!= null && !"BR".equals(String.valueOf(party.get("iso_code2")))) {
                     ExtinctionRiskAssessment riskAssessment = new ExtinctionRiskAssessment();
                     // TODO: Add this new state field? Ask to Thomas about it
                     //riskAssessment.setState(String.valueOf(party.get("iso_code2")));
