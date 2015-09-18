@@ -25,17 +25,17 @@ public final class SpeciesSpecification {
 
 				final Subquery<Long> specieQuery = query.subquery(Long.class);
 				final List<Predicate> predicates = new ArrayList<>();
-				query.distinct(true);
+				//query.distinct(true);
 
-				final Join<Species, DistributionArea> distributionArea = root.join("distributionArea",JoinType.LEFT);
-				final Join<Species, Conservation> conservation = root.join("conservation", JoinType.LEFT);
-				final Join<Species, NaturalHistory> naturalHistory = root.join("naturalHistory", JoinType.LEFT);
-				final Join<Species, Threat> threat = root.join("threats", JoinType.LEFT);
+				//final Join<Species, DistributionArea> distributionArea = root.join("distributionArea",JoinType.LEFT);
+				//final Join<Species, Conservation> conservation = root.join("conservation", JoinType.LEFT);
+				////final Join<Species, NaturalHistory> naturalHistory = root.join("naturalHistory", JoinType.LEFT);
+				//final Join<Species, Threat> threat = root.join("threats", JoinType.LEFT);
 
 				predicates.add(cb.equal(root.<Boolean>get("enabled"), true));
 				predicates.add(searchByName(root, query, cb));
 				
-				if (!isEmpty(filter.getEndemicFromBrazil())) {
+				/*if (!isEmpty(filter.getEndemicFromBrazil())) {
 					predicates.add(cb.equal(distributionArea.get("endemicFromBrazil"), filter.getEndemicFromBrazil()));
 				}
 				if (!isEmpty(filter.getOccurrenceState())) {
@@ -70,16 +70,16 @@ public final class SpeciesSpecification {
 					final Join<Habitat, HabitatType> habitatType = habitat.join("types", JoinType.LEFT);
 					predicates.add(cb.equal(habitatType.<Long>get("id"), filter.getHabitat()));
 				}
-
+*/
 //				if (!isEmpty(filter.getActionPlan())) {
 //					predicates.add(cb.equal(conservationPath.<ConservationAction>get("conservationAction").<String>get("benefitedActionPlan"),
 //							filter.getActionPlan()));
 //				}
 
-				if (!isEmpty(filter.getInNationalEndangeredFauna())) {
+				/*if (!isEmpty(filter.getInNationalEndangeredFauna())) {
 					predicates.add(cb.equal(conservation.<Conventions>get("conventions").<Boolean>get("presenceNationalEndangeredFauna"),
 							filter.getInNationalEndangeredFauna()));
-				}
+				}*/
 //				if (!isEmpty(filter.getUfState())) {
 //					predicates.add(cb.equal(threat.<ThreatStatus>get("threatStatus").<String>get("ufState"),
 //							filter.getUfState()));
