@@ -12,7 +12,6 @@ import java.util.Date;
 import java.util.List;
 
 import static com.unep.wcmc.integration.JobRuntime.JobVariable.EXCEPTIONS_COUNT;
-import static com.unep.wcmc.integration.JobRuntime.JobVariable.INSERTS_COUNT;
 import static com.unep.wcmc.integration.JobRuntime.JobVariable.UPDATES_COUNT;
 
 @Component
@@ -52,16 +51,139 @@ public class SpeciesPlusWriter implements ItemWriter<Species> {
     public void write(List<? extends Species> items) throws Exception {
         for (Species species : items) {
             raiseException = false;
-            Taxonomy taxonomy = species.getTaxonomy();
-            Hierarchy hierarchy = writeTaxonomyHierarchy(taxonomy.getHierarchy(), species);
-            taxonomy.setHierarchy(hierarchy);
-            taxonomy = writeTaxonomy(taxonomy);
-            species.setTaxonomy(taxonomy);
-            writeSpecies(species);
+
+            // verifying if the species already exists and updates if true
+            //Species existing = speciesService.findByScientificName(species.getScientificName());
+
+            // NOTE: temporary using the species name as JOIN condition (requested by Thomas WCMC)
+            Species existing = speciesService.findByCommonName(species.getScientificName());
+            if (existing != null) {
+                updateExistingSpecies(species, existing);
+            } else {
+                saveNewSpecies(species);
+            }
         }
     }
 
-    private Hierarchy writeTaxonomyHierarchy(Hierarchy hierarchy, Species species) {
+    private Species updateExistingSpecies(Species species, Species existing) {
+        JobRuntime runtime = jobRunner.getJobRuntime(IntegrationSource.Source.SPECIES_PLUS.name());
+        UPDATES_COUNT.increment(runtime);
+        // set the values to update
+        existing.setName(species.getName());
+        //existing.setScientificName(species.getScientificName()); // TODO ask Thomas if that should be updated?
+        existing.setEnabled(true);
+
+        Taxonomy taxonomy = existing.getTaxonomy();
+        // add common names
+        if (species.getTaxonomy().getCommonNames() != null) {
+            if (taxonomy.getCommonNames() != null) {
+                taxonomy.getCommonNames().addAll(species.getTaxonomy().getCommonNames());
+            } else {
+                taxonomy.setCommonNames(species.getTaxonomy().getCommonNames());
+            }
+        }
+        // add synomyns
+        if (species.getTaxonomy().getSynonyms() != null) {
+            if (taxonomy.getSynonyms() != null) {
+                taxonomy.getSynonyms().addAll(species.getTaxonomy().getSynonyms());
+            } else {
+                taxonomy.setSynonyms(species.getTaxonomy().getSynonyms());
+            }
+        }
+        // add appendixes and conservation data imported
+        if (species.getAppendixes() != null) {
+            if (existing.getAppendixes() != null) {
+                existing.getAppendixes().addAll(species.getAppendixes());
+            } else {
+                existing.setAppendixes(species.getAppendixes());
+            }
+        }
+        // add conservation
+        if (existing.getConservation() != null) {
+            Conservation conservation = existing.getConservation();
+            // add the other lists of assesments
+            if (species.getConservation().getExtinctionRisk() != null) {
+                if (conservation.getExtinctionRisk() != null) {
+                    if (conservation.getExtinctionRisk().getOtherListsAssessments() != null) {
+                        conservation.getExtinctionRisk().getOtherListsAssessments().addAll(
+                                species.getConservation().getExtinctionRisk().getOtherListsAssessments());
+                    } else {
+                        conservation.getExtinctionRisk().setOtherListsAssessments(
+                                species.getConservation().getExtinctionRisk().getOtherListsAssessments());
+                    }
+                } else {
+                    conservation.setExtinctionRisk(species.getConservation().getExtinctionRisk());
+                }
+            }
+            // add the conventions items data
+            if (species.getConservation().getConventions() != null) {
+                if (conservation.getConventions() != null) {
+                    if (conservation.getConventions().getConventionItems() != null) {
+                        conservation.getConventions().getConventionItems().addAll(
+                                species.getConservation().getConventions().getConventionItems());
+                    } else {
+                        conservation.getConventions().setConventionItems(
+                                species.getConservation().getConventions().getConventionItems());
+                    }
+                } else {
+                    conservation.setConventions(species.getConservation().getConventions());
+                }
+            }
+        } else {
+            existing.setConservation(species.getConservation());
+        }
+        // save the species data
+        return speciesService.doSave(existing);
+    }
+
+    private Species saveNewSpecies(Species species) {
+        JobRuntime runtime = jobRunner.getJobRuntime(IntegrationSource.Source.SPECIES_PLUS.name());
+        // validating if there are similar species in the database
+        //List<Species> similaries = speciesService.findByScientificNameSimilaries(species.getScientificName());
+
+        // NOTE: only processing Fauna species at this time
+        species.setType(Species.SpeciesType.FAUNA);
+
+        // Validate the --NEW-- Species taxonomy to be persisted
+        validateTaxonomy(species);
+
+        // NOTE: temporary using the species name as JOIN condition (requested by Thomas WCMC)
+        List<Species> similaries = speciesService.findBySpeciesNameSimilaries(species.getScientificName());
+        if (similaries != null && !similaries.isEmpty()) {
+            EXCEPTIONS_COUNT.increment(runtime);
+            species.setType(similaries.get(0).getType());
+            species.setEnabled(false);
+            species = speciesService.doSave(species);
+            speciesService.raiseSpeciesException(similaries.get(0), species,
+                    ExceptionOccurrence.Severity.MAJOR, IntegrationSource.Source.SPECIES_PLUS);
+            return species;
+        } else {
+            EXCEPTIONS_COUNT.increment(runtime);
+            species.setEnabled(false);
+            species = speciesService.doSave(species);
+            speciesService.raiseSpeciesException(species, species,
+                    ExceptionOccurrence.Severity.MAJOR, IntegrationSource.Source.SPECIES_PLUS);
+            return species;
+        }
+    }
+
+    private void validateTaxonomy(Species species) {
+        Taxonomy taxonomy = species.getTaxonomy();
+        Hierarchy hierarchy = validateHierarchy(taxonomy.getHierarchy(), species);
+        taxonomy.setHierarchy(hierarchy);
+        // validate if the taxonomy data exists on the database
+        List<Taxonomy> taxonomyList = taxonomyService.findByHierarchy(taxonomy);
+        if (taxonomyList == null || taxonomyList.isEmpty()) {
+            taxonomy.setEnabled(false);
+            taxonomy.setLastModified(new Date());
+            taxonomyService.save(taxonomy);
+        } else {
+            taxonomy = taxonomyList.get(0);
+        }
+        species.setTaxonomy(taxonomy);
+    }
+
+    private Hierarchy validateHierarchy(Hierarchy hierarchy, Species species) {
         // validate if the hierarchy data exists on the database
         Kingdom kingdom = null;
         if (hierarchy.getKingdom() != null) {
@@ -108,7 +230,7 @@ public class SpeciesPlusWriter implements ItemWriter<Species> {
             }
         }
         // process the genus data
-        Genus genus = writeGenus(hierarchy.getGenus(), species);
+        Genus genus = validateGenus(hierarchy.getGenus(), species);
         // initialize the hierarchy values
         hierarchy.init(kingdom, phylum, hierarchyClass, hierarchyOrder, family, genus, null, null);
         return hierarchy;
@@ -120,7 +242,7 @@ public class SpeciesPlusWriter implements ItemWriter<Species> {
      * @param species
      * @return
      */
-    private Genus writeGenus(Genus genus, Species species) {
+    private Genus validateGenus(Genus genus, Species species) {
         // process the genus data
         Genus result = null;
         if (genus != null) {
@@ -145,80 +267,6 @@ public class SpeciesPlusWriter implements ItemWriter<Species> {
             }
         }
         return genus;
-    }
-
-    private Taxonomy writeTaxonomy(Taxonomy taxonomy) {
-        // validate if the taxonomy data exists on the database
-        List<Taxonomy> taxonomyList = taxonomyService.findByHierarchy(taxonomy);
-        if (taxonomyList == null || taxonomyList.isEmpty()) {
-            taxonomy.setEnabled(false);
-            taxonomy.setLastModified(new Date());
-            taxonomyService.save(taxonomy);
-        } else {
-            taxonomy = taxonomyList.get(0);
-        }
-        return taxonomy;
-    }
-
-    private Species writeSpecies(Species species) {
-        // NOTE: only processing Fauna species at this time
-        species.setType(Species.SpeciesType.FAUNA);
-
-        JobRuntime runtime = jobRunner.getJobRuntime(IntegrationSource.Source.SPECIES_PLUS.name());
-        // validating if taxonomy is broken then an exception should be raised
-        if (raiseException) {
-            EXCEPTIONS_COUNT.increment(runtime);
-            species.setEnabled(false);
-            species = speciesService.save(species);
-            speciesService.raiseSpeciesException(species, species,
-                    ExceptionOccurrence.Severity.MAJOR,
-                    IntegrationSource.Source.SPECIES_PLUS);
-            return species;
-        }
-        // verifying if the species already exists and updates if true
-        //Species existing = speciesService.findByScientificName(species.getScientificName());
-
-        // NOTE: temporary using the species name as JOIN condition (requested by Thomas WCMC)
-        List<Species> existingList = speciesService.findBySpeciesName(species.getScientificName());
-        if (existingList != null && !existingList.isEmpty()) {
-            Species existing = existingList.get(0);
-            UPDATES_COUNT.increment(runtime);
-            existing.setName(species.getName());
-            existing.setScientificName(species.getScientificName());
-            existing.setTaxonomy(species.getTaxonomy());
-            existing.setEnabled(true);
-            existing.setAppendixes(species.getAppendixes());
-            if (existing.getConservation() != null) {
-                existing.getConservation().setExtinctionRisk(species.getConservation().getExtinctionRisk());
-                existing.getConservation().setConventions(species.getConservation().getConventions());
-            } else {
-                existing.setConservation(species.getConservation());
-            }
-            return speciesService.save(existing);
-
-        } else {
-            // validating if there are similar species in the database
-            //List<Species> similaries = speciesService.findByScientificNameSimilaries(species.getScientificName());
-
-            // NOTE: temporary using the species name as JOIN condition (requested by Thomas WCMC)
-            List<Species> similaries = speciesService.findBySpeciesNameSimilaries(species.getScientificName());
-            if (similaries != null && !similaries.isEmpty()) {
-                EXCEPTIONS_COUNT.increment(runtime);
-                species.setType(similaries.get(0).getType());
-                species.setEnabled(false);
-                species = speciesService.save(species);
-                speciesService.raiseSpeciesException(similaries.get(0), species,
-                        ExceptionOccurrence.Severity.MAJOR, IntegrationSource.Source.SPECIES_PLUS);
-                return species;
-            } else {
-                EXCEPTIONS_COUNT.increment(runtime);
-                species.setEnabled(false);
-                species = speciesService.save(species);
-                speciesService.raiseSpeciesException(species, species,
-                        ExceptionOccurrence.Severity.MAJOR, IntegrationSource.Source.SPECIES_PLUS);
-                return species;
-            }
-        }
     }
 
 }
