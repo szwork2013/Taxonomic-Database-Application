@@ -155,7 +155,8 @@ public class SpeciesPlusProcessor implements ItemProcessor<Map<String, Object>, 
                     Map<String, Object> party = (Map<String, Object>) cite.get("party");
                     if (party != null && "BR".equals(String.valueOf(party.get("iso_code2")))) {
                         ConventionItem item = new ConventionItem();
-                        item.setName(String.valueOf(cite.get("appendix")));
+                        item.setName("CITES listings");
+                        item.setCategory(String.valueOf(cite.get("appendix")));
                         try {
                             Date date = DateUtils.parseDate(String.valueOf(cite.get("effective_at")),
                                     new String[]{"yyyy-MM-dd"});
@@ -163,7 +164,9 @@ public class SpeciesPlusProcessor implements ItemProcessor<Map<String, Object>, 
                         } catch (Exception ex) {
                             item.setYear(null);
                         }
-                        item.setObservation(String.valueOf(cite.get("annotation")));
+                        if (cite.get("annotation") != null) {
+                            item.setObservation(String.valueOf(cite.get("annotation")));
+                        }
                         conventionList.add(item);
                     }
                 }
@@ -177,7 +180,8 @@ public class SpeciesPlusProcessor implements ItemProcessor<Map<String, Object>, 
                     Map<String, Object> geoEntity = (Map<String, Object>) cite.get("geo_entity");
                     if (geoEntity != null && "BR".equals(String.valueOf(geoEntity.get("iso_code2")))) {
                         ConventionItem item = new ConventionItem();
-                        item.setName(String.valueOf(cite.get("quota")));
+                        item.setName("CITES Quotas");
+                        item.setCategory("Quota: " + String.valueOf(cite.get("quota")));
                         try {
                             Date date = DateUtils.parseDate(String.valueOf(cite.get("publication_date")),
                                     new String[]{"yyyy-MM-dd"});
@@ -185,7 +189,9 @@ public class SpeciesPlusProcessor implements ItemProcessor<Map<String, Object>, 
                         } catch (Exception ex) {
                             item.setYear(null);
                         }
-                        item.setObservation(String.valueOf(cite.get("notes")));
+                        if (cite.get("notes") != null) {
+                            item.setObservation(String.valueOf(cite.get("notes")));
+                        }
                         conventionList.add(item);
                     }
                 }
@@ -199,7 +205,8 @@ public class SpeciesPlusProcessor implements ItemProcessor<Map<String, Object>, 
                     Map<String, Object> geoEntity = (Map<String, Object>) cite.get("geo_entity");
                     if (geoEntity != null && "BR".equals(String.valueOf(geoEntity.get("iso_code2")))) {
                         ConventionItem item = new ConventionItem();
-                        item.setName(String.valueOf(cite.get("name")));
+                        item.setName("CITES Suspentions");
+                        item.setCategory(String.valueOf(cite.get("name")));
                         try {
                             Date date = DateUtils.parseDate(String.valueOf(cite.get("start_date")),
                                     new String[]{"yyyy-MM-dd"});
@@ -207,7 +214,9 @@ public class SpeciesPlusProcessor implements ItemProcessor<Map<String, Object>, 
                         } catch (Exception ex) {
                             item.setYear(null);
                         }
-                        item.setObservation(String.valueOf(cite.get("notes")));
+                        if (cite.get("notes") != null) {
+                            item.setObservation(String.valueOf(cite.get("notes")));
+                        }
                         conventionList.add(item);
                     }
                 }
@@ -230,7 +239,7 @@ public class SpeciesPlusProcessor implements ItemProcessor<Map<String, Object>, 
                     citiesLegislation.get("cites_listings");
             for (Map<String, Object> cite : citesListings) {
                 Map<String, Object> party = (Map<String, Object>) cite.get("party");
-                if (party!= null && !"BR".equals(String.valueOf(party.get("iso_code2")))) {
+                if (party == null || !"BR".equals(String.valueOf(party.get("iso_code2")))) {
                     ExtinctionRiskAssessment riskAssessment = new ExtinctionRiskAssessment();
                     // TODO: Add this new state field? Ask to Thomas about it
                     //riskAssessment.setState(String.valueOf(party.get("iso_code2")));
@@ -243,7 +252,9 @@ public class SpeciesPlusProcessor implements ItemProcessor<Map<String, Object>, 
                         riskAssessment.setYear(null);
                     }
                     riskAssessment.setCriteria("CITES listings");
-                    riskAssessment.setJustification(String.valueOf(cite.get("annotation")));
+                    if (cite.get("annotation") != null) {
+                        riskAssessment.setJustification(String.valueOf(cite.get("annotation")));
+                    }
                     assessmentList.add(riskAssessment);
                 }
             }

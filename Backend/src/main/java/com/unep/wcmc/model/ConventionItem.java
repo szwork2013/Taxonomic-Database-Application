@@ -8,6 +8,8 @@ public class ConventionItem implements Serializable {
 
     private String name;
 
+    private String category;
+
     private Integer year;
 
     private String observation;
@@ -26,6 +28,14 @@ public class ConventionItem implements Serializable {
 
     public void setYear(Integer year) {
         this.year = year;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getObservation() {
