@@ -29,7 +29,8 @@
     "magnific-popup": "~1.0.0",
     "angular-input-modified": "~2.2.1",
     "angular-toastr": "~1.4.1",
-    "highcharts-ng": "~0.0.8"
+    "highcharts-ng": "~0.0.8",
+    "webui-popover": "https://github.com/sandywalker/webui-popover.git#~1.1.5"
   },
   "devDependencies": {
     "holderjs": "~2.3.1",

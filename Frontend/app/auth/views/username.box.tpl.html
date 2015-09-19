@@ -1,0 +1,24 @@
+<ul class="list-inline user-meta" >
+    <li ng-show="!logged"><a ui-sref="signup"><i class="fa fa-edit"></i> Register </a></li>
+    <li ng-show="!logged"><a login-show style="cursor: pointer"><i class="fa fa-user"></i> Sign in </a></li>
+    <li ng-show="logged">
+        <i class="fa fa-user"></i>
+        <span class="username-login-box">&nbsp;{{name}}</span>
+        <i class="fa fa-caret-down user-detail"></i>
+    </li>
+    <li>
+        <span class="dropdown-wrap language-dropdown">
+            <select name="language" id="language">
+                <option value="en">English</option>
+                <option value="span">Portuguese</option>
+            </select>
+        </span>
+    </li>
+</ul>
+<div id="box_template" style="display: none">
+    <p>{{name}}<span><i ng-click="closePopover()" class="fa fa-close pull-right" style="color:#249953;"></i></span></p>
+    <br/>
+    <a data-ui-sref="groups">Groups</a><br/>
+    <a data-ui-sref="settings">Setting</a><br/>
+    <a ng-click="logoutFunc()" class="logoutBt">Logout</a>
+</div>

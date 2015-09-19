@@ -10,23 +10,7 @@
                 </div>
             </div>
             <div class="col-md-6 text-right">
-
-                <ul class="list-inline user-meta">
-                    <li ng-show="!logged"><a data-ui-sref="login"><i class="fa fa-user"></i> Login </a></li>
-                    <li ng-show="logged"><i class="fa fa-user"></i>&nbsp;{{username}}</li>
-                    <li ng-show="logged"><a ng-click="logout()" style="cursor: pointer;">Logout</a></li>
-                    <li>
-
-							<span class="dropdown-wrap language-dropdown">
-								<select name="language" id="language">
-                                    <option value="en">English</option>
-                                    <option value="span">Spanish</option>
-                                </select>
-							</span>
-
-                    </li>
-                </ul>
-
+                <div username-box logged="logged" name="username" placement="bottom"></div>
             </div>
         </div>
     </div>
